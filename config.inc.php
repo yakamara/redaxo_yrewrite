@@ -20,7 +20,6 @@ if ($REX['MOD_REWRITE'] !== false)
   require_once $UrlRewriteBasedir.'/classes/class.rex_yrewrite.inc.php';
 
   // rex_yrewrite::setDomain(domain, mount_id, start_id, 404_id, www);
-  rex_yrewrite::setDomain("default", 34, 1, 1, true);
   rex_yrewrite::setDomain("domain.de", 34, 1, 1, true);
   rex_yrewrite::setPathFile($REX['INCLUDE_PATH'].'/generated/files/pathlist.php');
 
@@ -30,7 +29,8 @@ if ($REX['MOD_REWRITE'] !== false)
     $extensionPoints = array(
       'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED',
       'ART_ADDED',   'ART_UPDATED',   'ART_DELETED',
-      /*'CLANG_ADDED', 'CLANG_UPDATED', 'CLANG_DELETED',*/
+      'CLANG_ADDED', 'CLANG_UPDATED', 'CLANG_DELETED',
+      /*'ARTICLE_GENERATED'*/
       'ALL_GENERATED');
     foreach($extensionPoints as $extensionPoint) {
       rex_register_extension($extensionPoint, $extension);
