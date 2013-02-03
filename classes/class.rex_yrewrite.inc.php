@@ -53,21 +53,19 @@ class rex_yrewrite
       self::$use_levenshtein = $use_levenshtein;
   }
 
-  static function setDomain($name, $mount_article_id, $start_article_id, $notfound_article_id, $www = true) 
+  static function setDomain($name, $mount_article_id, $start_article_id, $notfound_article_id) 
   {
     self::$domainsByMountId[$mount_article_id] = array(
       "domain" => $name,
       "mount_article_id" => $mount_article_id, 
       "start_article_id" => $start_article_id, 
       "notfound_article_id" => $notfound_article_id,
-      "include_www" => $www
     );
     self::$domainsByName[$name] = array(
       "domain" => $name,
       "mount_article_id" => $mount_article_id, 
       "start_article_id" => $start_article_id, 
       "notfound_article_id" => $notfound_article_id,
-      "include_www" => $www
     );
   }
 
@@ -335,6 +333,23 @@ class rex_yrewrite
     return $path;
   }
   
+
+  // ----------------------------------------------------
+  
+  static function setShowLink($params) 
+  {
+    global $REX,$I18N;
+    $return = array();
+    foreach($params["subject"] as $a) {
+      if(strip_tags($a) == $I18N->msg('show')) {
+        $return[] = '<a href="/' . rex_getUrl($params["article_id"],$params["clang"]) . '" onclick="window.open(this.href); return false;" '. rex_tabindex() .'>' . $I18N->msg('show') . '</a>';
+      } else {
+        $return[] = $a;
+      }
+    }
+    return $return;
+  }
+
 
 }
 

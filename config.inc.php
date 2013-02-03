@@ -40,6 +40,7 @@ if ($REX['MOD_REWRITE'] !== false)
   // get ARTICLE_ID from URL
   rex_yrewrite::prepare();
   rex_register_extension('URL_REWRITE', 'rex_yrewrite::rewrite');
+  rex_register_extension('PAGE_CONTENT_MENU', 'rex_yrewrite::setShowLink');
   
 }
 
