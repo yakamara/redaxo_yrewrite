@@ -338,7 +338,7 @@ class rex_yrewrite
   
   static function setShowLink($params) 
   {
-    global $REX,$I18N;
+    global $I18N;
     $return = array();
     foreach($params["subject"] as $a) {
       if(strip_tags($a) == $I18N->msg('show')) {
