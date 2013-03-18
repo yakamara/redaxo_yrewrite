@@ -1,36 +1,9 @@
 <?php
 
 /**
- * URL-Rewrite Addon
- * @author redaxo team
- * @package redaxo4.4.3
- */
-
-/**
- * URL Fullnames Rewrite Anleitung:
- *
- *   1) .htaccess file in das root verzeichnis:
- *     RewriteEngine On
- *     #RewriteCond %{HTTP_HOST} ^domain.tld [NC]
- *     #RewriteRule ^(.*)$ http://www.domain.tld/$1 [L,R=301]
- *     #RewriteBase /
- *     RewriteCond %{REQUEST_FILENAME} !-f
- *     RewriteCond %{REQUEST_FILENAME} !-d
- *     RewriteCond %{REQUEST_FILENAME} !-l
- *     RewriteCond %{REQUEST_URI} !^redaxo/.*
- *     RewriteCond %{REQUEST_URI} !^files/.*
- *     RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [L]
- *
- *   2) .htaccess file in das redaxo/ verzeichnis:
- *     RewriteEngine Off
- *
- *   3) im Template folgende Zeile AM ANFANG des <head> ergänzen:
- *   <base href="http://www.meine_domain.de/pfad/zum/frontend" />
- *
- *   4) Specials->Regenerate All starten
- *
- *   5) ggf. Rewrite-Base der .htaccess Datei anpassen
- *
+ * YREWRITE Addon
+ * @author jan.kristinus@yakamara.de
+ * @package redaxo4.5
  */
 
 class rex_yrewrite
@@ -41,10 +14,10 @@ class rex_yrewrite
   * - call_by_article_id: forward, not_allowed
   */
 
-
   static $use_levenshtein = false;
   static $domainsByMountId = array();
   static $domainsByName = array();
+  static $AliasDomains = array();
   static $pathfile = "";
   static $call_by_article_id = 'allowed'; // forward, allowed, not_allowed
   static $pathes = array();
@@ -53,22 +26,30 @@ class rex_yrewrite
       self::$use_levenshtein = $use_levenshtein;
   }
 
-  static function setDomain($name, $mount_article_id, $start_article_id, $notfound_article_id, $www = true) 
+
+  // ----- domain
+
+  static function setDomain($name, $domain_article_id, $start_article_id, $notfound_article_id) 
   {
-    self::$domainsByMountId[$mount_article_id] = array(
+    self::$domainsByMountId[$domain_article_id] = array(
       "domain" => $name,
-      "mount_article_id" => $mount_article_id, 
+      "domain_article_id" => $domain_article_id, 
       "start_article_id" => $start_article_id, 
       "notfound_article_id" => $notfound_article_id,
-      "include_www" => $www
     );
     self::$domainsByName[$name] = array(
       "domain" => $name,
-      "mount_article_id" => $mount_article_id, 
+      "domain_article_id" => $domain_article_id, 
       "start_article_id" => $start_article_id, 
       "notfound_article_id" => $notfound_article_id,
-      "include_www" => $www
     );
+  }
+
+  static function setAliasDomain($from_domain, $to_domain) 
+  {
+    if(isset(self::$domainsByName[$to_domain])) {
+      self::$AliasDomains[$from_domain] = $to_domain;
+    }
   }
 
   static function setPathFile($pathfile) 
@@ -81,6 +62,30 @@ class rex_yrewrite
     self::$pathes = json_decode($content, true);
   }
 
+  // ----- article
+  
+  static function getDomainByArticleId($aid) {
+    foreach(self::$domainsByName as $domain => $v) {
+      if(isset(self::$pathes[$domain][$aid])) {
+        return $domain;
+      }
+    }
+    return "default";
+  }  
+
+  static function getArticleIdByUrl($domain, $url) {
+    foreach(self::$pathes[$domain] as $c_article_id => $c_o) {
+      foreach($c_o as $c_clang => $c_url) {
+        if($url == $c_url) {
+          return $c_article_id;
+        }
+      }
+    }
+    return false;
+  }
+
+  // ----- url
+  
   static function prepare()
   {
     global $REX;
@@ -118,8 +123,29 @@ class rex_yrewrite
 
       // no domain found -> set default
       if(!isset(self::$pathes[$domain])) {
-        $domain = "default";
+      
+        // check for aliases
+        if(isset(self::$AliasDomains[$domain])) {
+          $domain = self::$AliasDomains[$domain];
+          // forward to original domain permanent move 301
+          
+          $http = "http://";
+          if($_SERVER["SERVER_PORT"] == 443) {
+            $http = "https://";
+          }
+
+          header ('HTTP/1.1 301 Moved Permanently');
+          header ('Location: '.$http.$domain.'/'.$url);
+          exit;
+          
+        } else {
+          $domain = "default";
+        }
       }
+
+      $REX['DOMAIN_ARTICLE_ID'] = self::$domainsByName[$domain]['domain_article_id'];
+      $REX['START_ARTICLE_ID'] = self::$domainsByName[$domain]['start_article_id'];
+      $REX['NOTFOUND_ARTICLE_ID'] = self::$domainsByName[$domain]['notfound_article_id'];
 
       // if no path -> startarticle
       if($url == "") {
@@ -129,7 +155,7 @@ class rex_yrewrite
 
       // normal exact check
       foreach(self::$pathes[$domain] as $i_id => $i_cls) {
-        if($i_cls[$REX["CUR_CLANG"]] == $url) {
+        if($i_cls[$REX["CUR_CLANG"]] == $url || $i_cls[$REX["CUR_CLANG"]].'/' == $url) {
           $REX['ARTICLE_ID'] = $i_id;
           return true;
         }
@@ -159,7 +185,9 @@ class rex_yrewrite
       */
       }
 
+      // no article found -> domain not found article
       $REX['ARTICLE_ID'] = self::$domainsByName[$domain]['notfound_article_id'];
+
       return true;
     }
   }
@@ -235,7 +263,8 @@ class rex_yrewrite
       
     $where = '';
     switch($params['extension_point']) {
-      // ------- sprachabhängig, einen artikel aktualisieren
+    
+      // clang and id specific update
       case 'CAT_DELETED':
       case 'ART_DELETED':
         foreach(self::$pathes as $domain => $c) {
@@ -248,8 +277,7 @@ class rex_yrewrite
       case 'ART_UPDATED':
         $where = '(id='. $params['id'] .' AND clang='. $params['clang'] .') OR (path LIKE "%|'. $params['id'] .'|%" AND clang='. $params['clang'] .')';
         break;
-      // ------- alles aktualisieren
-      /*ARTICLE_GENERATED*/
+      // update_all / ARTICLE_GENERATED
       case 'CLANG_ADDED':
       case 'CLANG_UPDATED':
       case 'CLANG_DELETED':
@@ -263,7 +291,7 @@ class rex_yrewrite
     if($where != '') {
       $db = new rex_sql();
       // $db->debugsql=true;
-      $db->setQuery('SELECT id,clang,path,startpage FROM '. $REX['TABLE_PREFIX'] .'article WHERE '. $where.' and revision=0');
+      $db->setQuery('SELECT id,clang,path,startpage,yrewrite_url FROM '. $REX['TABLE_PREFIX'] .'article WHERE '. $where.' and revision=0');
       
       while($db->hasNext())
       {
@@ -308,6 +336,10 @@ class rex_yrewrite
     		$pathname = preg_replace('/[-]{1,}/', '-', $pathname);
         $pathname = substr($pathname,0,strlen($pathname)-1).'.html';
 
+        if($db->getValue('yrewrite_url') != "") {
+          $pathname = $db->getValue('yrewrite_url');
+        }
+
         self::$pathes[$domain][$db->getValue('id')][$db->getValue('clang')] = $pathname;
 
         $db->next();
@@ -335,6 +367,23 @@ class rex_yrewrite
     return $path;
   }
   
+
+  // ----- page
+  
+  static function setShowLink($params) 
+  {
+    global $I18N;
+    $return = array();
+    foreach($params["subject"] as $a) {
+      if(strip_tags($a) == $I18N->msg('show')) {
+        $return[] = '<a href="/' . rex_getUrl($params["article_id"],$params["clang"]) . '" onclick="window.open(this.href); return false;" '. rex_tabindex() .'>' . $I18N->msg('show') . '</a>';
+      } else {
+        $return[] = $a;
+      }
+    }
+    return $return;
+  }
+
 
 }
 
