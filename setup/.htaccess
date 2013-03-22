@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^images/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+
+RewriteCond %{REQUEST_URI} !^redaxo/.*
+RewriteCond %{REQUEST_URI} !^files/.*
+
+RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [L]

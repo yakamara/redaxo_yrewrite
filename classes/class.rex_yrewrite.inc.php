@@ -19,6 +19,7 @@ class rex_yrewrite
   static $domainsByName = array();
   static $AliasDomains = array();
   static $pathfile = "";
+  static $configfile = "";
   static $call_by_article_id = 'allowed'; // forward, allowed, not_allowed
   static $pathes = array();
 
@@ -26,6 +27,16 @@ class rex_yrewrite
       self::$use_levenshtein = $use_levenshtein;
   }
 
+
+  static function init() 
+  {
+    global $REX;
+    rex_yrewrite::setDomain("default", 0, $REX["START_ARTICLE_ID"], $REX["NOTFOUND_ARTICLE_ID"]);
+    self::$pathfile = $REX['INCLUDE_PATH'].'/generated/files/yrewrite_pathlist.php';
+    self::$configfile = $REX['INCLUDE_PATH'].'/generated/files/yrewrite_config.php';
+    self::readConfig();
+    self::readPathFile();
+  }
 
   // ----- domain
 
@@ -50,16 +61,6 @@ class rex_yrewrite
     if(isset(self::$domainsByName[$to_domain])) {
       self::$AliasDomains[$from_domain] = $to_domain;
     }
-  }
-
-  static function setPathFile($pathfile) 
-  {
-    self::$pathfile = $pathfile;
-    if(!file_exists(self::$pathfile)) {
-      self::generatePathFile(array());
-    }
-    $content = file_get_contents(self::$pathfile);
-    self::$pathes = json_decode($content, true);
   }
 
   // ----- article
@@ -146,6 +147,7 @@ class rex_yrewrite
       $REX['DOMAIN_ARTICLE_ID'] = self::$domainsByName[$domain]['domain_article_id'];
       $REX['START_ARTICLE_ID'] = self::$domainsByName[$domain]['start_article_id'];
       $REX['NOTFOUND_ARTICLE_ID'] = self::$domainsByName[$domain]['notfound_article_id'];
+      $REX['SERVER'] = $domain;
 
       // if no path -> startarticle
       if($url == "") {
@@ -192,7 +194,7 @@ class rex_yrewrite
     }
   }
 
-  static function rewrite($params)
+  static function rewrite($params = array(), $yparams = array())
   {
     // Url wurde von einer anderen Extension bereits gesetzt
     if($params['subject'] != '') {
@@ -221,15 +223,16 @@ class rex_yrewrite
     // same domain id check
     if(isset(self::$pathes[$domain][$id][$clang])) {
       $path = '/'.self::$pathes[$domain][$id][$clang];
-      if($REX["REDAXO"]) {
-        $path = self::$pathes[$domain][$id][$clang];
-      }
+      // if($REX["REDAXO"]) { $path = self::$pathes[$domain][$id][$clang]; }
     }
 
     if($path == "") {
       foreach(self::$pathes as $i_domain => $i_id) {
         if(isset(self::$pathes[$i_domain][$id][$clang])) {
-          $path = $www.$i_domain.'/'.self::$pathes[$i_domain][$id][$clang];
+          if($i_domain == "default")
+            $path = '/'.self::$pathes[$i_domain][$id][$clang];
+          else 
+            $path = $www.$i_domain.'/'.self::$pathes[$i_domain][$id][$clang];
           break;
         }
       }
@@ -366,22 +369,59 @@ class rex_yrewrite
     }
     return $path;
   }
-  
 
-  // ----- page
+
+  // ----- func
   
-  static function setShowLink($params) 
+  static function checkUrl($url) {
+    if (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $url)) {
+      return false;
+    }  
+    return true;
+  }
+
+
+  // ----- generate
+  
+  static function generateConfig() 
   {
-    global $I18N;
-    $return = array();
-    foreach($params["subject"] as $a) {
-      if(strip_tags($a) == $I18N->msg('show')) {
-        $return[] = '<a href="/' . rex_getUrl($params["article_id"],$params["clang"]) . '" onclick="window.open(this.href); return false;" '. rex_tabindex() .'>' . $I18N->msg('show') . '</a>';
-      } else {
-        $return[] = $a;
+    $filecontent = '<?php '."\n";
+    $gc = rex_sql::factory();
+    $domains = $gc->getArray('select * from rex_yrewrite_domain');
+    foreach($domains as $domain) {
+      if($domain["domain"] != "") {
+        if($domain["alias_domain"] != "") {
+          $filecontent .= "\n".'rex_yrewrite::setAliasDomain("'.$domain["domain"].'", "'.$domain["alias_domain"].'");';
+        } else if ($domain["mount_id"] > 0 && $domain["start_id"] > 0 && $domain["notfound_id"] > 0){
+          $filecontent .= "\n".'rex_yrewrite::setDomain("'.$domain["domain"].'", '.$domain["mount_id"].', '.$domain["start_id"].', '.$domain["notfound_id"].');';
+        }
       }
     }
-    return $return;
+    rex_put_file_contents(self::$configfile, $filecontent);
+  }
+  
+  static function readConfig() 
+  {
+    if(!file_exists(self::$configfile)) {
+      rex_yrewrite::generateConfig();
+    }
+    include self::$configfile;
+  }
+  
+  static function readPathFile() 
+  {
+    if(!file_exists(self::$pathfile)) {
+      self::generatePathFile(array());
+    }
+    $content = file_get_contents(self::$pathfile);
+    self::$pathes = json_decode($content, true);
+  } 
+
+  static function copyHtaccess() {
+    global $REX;
+    $src = $REX["INCLUDE_PATH"].'/addons/yrewrite/setup/.htaccess';
+    $des = $REX["INCLUDE_PATH"].'/../../.htaccess';
+    copy ($src, $des);
   }
 
 
