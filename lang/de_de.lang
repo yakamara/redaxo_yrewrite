@@ -1,4 +1,34 @@
+yrewrite = YRewrite
+
+# content page
 yrewrite_rewriter = URL Umschreibung
 yrewrite_mode = URL
 yrewrite_customurl = Benutzerdefinierte URL
 yrewrite_update = URL aktualisieren
+
+yrewrite_domains = Domains
+yrewrite_article_urls = Artikel URLs
+yrewrite_setup = Setup
+
+
+yrewrite_add_domain = Domain hinzufügen
+yrewrite_edit_domain = Domain editieren
+yrewrite_domain_deleted = Domain wurde gelöscht. Cache wurde gelöscht.
+yrewrite_domain_updated = Domain wurde aktualisiert. Cache wurde gelöscht.
+
+yrewrite_domain = Domain
+yrewrite_mount_id = Startpunkt der Domain
+yrewrite_start_id = Startartikel der Domain
+yrewrite_notfound_id = 404 Artikel
+yrewrite_alias_domain = Alias Domain
+
+yrewrite_domain_already_defined = Domain wurde bereits definiert
+
+yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
+yrewrite_htaccess_set = .htaccess Datei setzen
+
+yrewrite_htaccess_info = Um YRewrite lauffähig zu bekommen, muss eine .htaccess Datei im Root Ordner gesetzt werden. Sollte eine andere .htaccess bereits vorhanden sein, wird diese ersetzt und ist nicht wiederherstellbar.
+
+yrewrite_info_headline = Verwendung von YRewrite
+
+yrewrite_info_text = Da YRewrite für Multidomainlösungen gedacht ist, gibt es bestimmte Vorraussetzungen. Dazu gehört, dass YRewrite nicht in Unterordnern der Domains läuft. Weiterhin werden alle URL Ersetzungen über YRewrite geregelt. D.h. es kann vorkommen, dass eine URL situationsbedingt auch den Domainnamen enthält. In den Templates bitte auch deswegen keinen base Tag verwenden. Sollte etwas durcheinanderkommen, durch Eigenentwicklungen oder ähnlichem, bitte den allgemeinen Cache löschen, das ermöglicht YRewrite die Config- und Url-Dateien neu zu erstellen. Weiterhin muss Mod-Rewrite über die Systemeinstellungen in REDAXO aktiviert sein.

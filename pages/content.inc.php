@@ -18,23 +18,33 @@ $data = $data[0];
 
 if (rex_post('save', 'boolean') == 1) {
 
-  if(substr($yrewrite_url,0,1) == "/" or substr($yrewrite_url,-1) == "/") {
+  $url_status = true;
+
+  if($yrewrite_url == "") {
+
+  } else if(substr($yrewrite_url,0,1) == "/" or substr($yrewrite_url,-1) == "/") {
   
     echo rex_warning('Bitte in der URL kein / am Anfang und am Ende');
+    $url_status = false;
   
   } else if (strlen($yrewrite_url) > 250) {
   
     echo rex_warning('Die URL darf nicht länger als 250 Zeichen sein');
+    $url_status = false;
 
   } else if (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url)) {
   
     echo rex_warning('Die URL ist nicht korrekt. Schreibweise beachten. Nur a-z 0-9 -');
+    $url_status = false;
 
-  } else if ( ($aid = rex_yrewrite::getArticleIdByUrl($domain,$yrewrite_url)) && $aid !=  $article_id) {
+  } else if ( ($a = rex_yrewrite::getArticleIdByUrl($domain, $yrewrite_url)) && (key($a) != $article_id || current($a) != $clang) ) {
 
     echo rex_warning('Diese URL existiert bereits');
+    $url_status = false;
 
-  } else {
+  }
+  
+  if($url_status) {
   
     $sql = rex_sql::factory();
     $sql->setTable($REX['TABLE_PREFIX'] . "article");
@@ -101,7 +111,6 @@ echo '
   </div>
 </div>';
 ?>
-
 <script type="text/javascript">
 jQuery(document).ready(function() {
 
@@ -114,8 +123,16 @@ jQuery(document).ready(function() {
 });
 
 function updateCustomUrlPreview() {
-	var base = 'http[s]://<?php echo $domain; ?>/';
-	var autoUrl = '<?php echo rex_getUrl($REX["ARTICLE_ID"], $REX["CUR_CLANG"]); ?>';
+  var base = 'http[s]://<?php echo $domain; ?>/';
+	var autoUrl = '<?php 
+	    $url = rex_getUrl($REX["ARTICLE_ID"], $REX["CUR_CLANG"]); 
+	    $url = str_replace('http://'.$domain,'',$url);
+	    $url = str_replace('https://'.$domain,'',$url);
+	    $url = substr($url,1);
+	    echo $url;
+	    ?>';
+	    
+	    
 	var customUrl = jQuery('#custom-url').val();
 	var curUrl = '';
 
