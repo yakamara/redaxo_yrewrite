@@ -10,6 +10,7 @@ yrewrite_domains = Domains
 yrewrite_article_urls = Artikel URLs
 yrewrite_setup = Setup
 
+yrewrite_startarticleisalways = Dies ist der Startartikel der Domain "{0}" und kann nicht verändert werden. Die URL ist hier immer "/"
 
 yrewrite_add_domain = Domain hinzufügen
 yrewrite_edit_domain = Domain editieren
@@ -21,8 +22,13 @@ yrewrite_mount_id = Startpunkt der Domain
 yrewrite_start_id = Startartikel der Domain
 yrewrite_notfound_id = 404 Artikel
 yrewrite_alias_domain = Alias Domain
+yrewrite_alias_domains = Alias Domains
+
+yrewrite_alias_domain_refersto = Diese Domain wird weitergeleitet
+yrewrite_domain_willbereferdto = auf diese Domain
 
 yrewrite_domain_already_defined = Domain wurde bereits definiert
+yrewrite_no_domain_defined = Es wurde keine Domain definiert
 
 yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
 yrewrite_htaccess_set = .htaccess Datei setzen

@@ -22,11 +22,12 @@ class rex_yrewrite
   static $configfile = "";
   static $call_by_article_id = 'allowed'; // forward, allowed, not_allowed
   static $pathes = array();
+  static $scheme = "classic"; // "path";
+
 
   static function setLevenshtein($use_levenshtein = true) {
       self::$use_levenshtein = $use_levenshtein;
   }
-
 
   static function init() 
   {
@@ -65,7 +66,17 @@ class rex_yrewrite
 
   // ----- article
   
-  static function getDomainByArticleId($aid) {
+  static function getFullURLbyArticleId($id, $clang = 0) 
+  {  
+    $params = array();
+    $params['id'] = $id;
+    $params['clang'] = $clang;
+    
+    return rex_yrewrite::rewrite($params, array(), true);
+  }
+  
+  static function getDomainByArticleId($aid) 
+  {
     foreach(self::$domainsByName as $domain => $v) {
       if(isset(self::$pathes[$domain][$aid])) {
         return $domain;
@@ -74,8 +85,8 @@ class rex_yrewrite
     return "default";
   }  
 
-  static function getArticleIdByUrl($domain, $url) {
-  
+  static function getArticleIdByUrl($domain, $url) 
+  {
     foreach(self::$pathes[$domain] as $c_article_id => $c_o) {
       foreach($c_o as $c_clang => $c_url) {
         if($url == $c_url) {
@@ -85,6 +96,18 @@ class rex_yrewrite
     }
     return false;
 
+  }
+
+  static function isDomainStartarticle($aid) 
+  {
+    foreach(self::$domainsByMountId as $d) {
+      if($d["start_article_id"] == $aid) {
+        return true;
+      }
+    }
+  
+    return false;
+  
   }
 
   // ----- url
@@ -102,10 +125,13 @@ class rex_yrewrite
 
       // call_by_article allowed
       if(self::$call_by_article_id == "allowed" && rex_request("article_id","int")>0) {
-        return true;
+        $url = rex_getUrl(rex_request("article_id","int"));
+
+      } else {
+        $url = urldecode($_SERVER['REQUEST_URI']);
+
       }
 
-      $url = urldecode($_SERVER['REQUEST_URI']);
       $domain = $_SERVER['HTTP_HOST'];
       $port = $_SERVER['SERVER_PORT'];
       
@@ -197,20 +223,20 @@ class rex_yrewrite
     }
   }
 
-  static function rewrite($params = array(), $yparams = array())
+  static function rewrite($params = array(), $yparams = array(), $fullpath = false)
   {
     // Url wurde von einer anderen Extension bereits gesetzt
-    if($params['subject'] != '') {
+    if(isset($params['subject']) && $params['subject'] != '') {
   		return $params['subject'];
     }
 
     global $REX;
     
     $id         = $params['id'];
-    $name       = $params['name'];
+    $name       = @$params['name'];
     $clang      = $params['clang'];
-    $divider    = $params['divider'];
-    $urlparams  = $params['params'];
+    $divider    = @$params['divider'];
+    $urlparams  = @$params['params'];
 
     $url = urldecode($_SERVER['REQUEST_URI']);
     $domain = $_SERVER['HTTP_HOST'];
@@ -224,7 +250,7 @@ class rex_yrewrite
     $path = "";
 
     // same domain id check
-    if(isset(self::$pathes[$domain][$id][$clang])) {
+    if(!$fullpath && isset(self::$pathes[$domain][$id][$clang])) {
       $path = '/'.self::$pathes[$domain][$id][$clang];
       // if($REX["REDAXO"]) { $path = self::$pathes[$domain][$id][$clang]; }
     }
@@ -324,25 +350,46 @@ class rex_yrewrite
           }
         }
 
-        // _____ Artikelnamen anhängen + .html
-        $ooa = OOArticle::getArticleById($db->getValue('id'), $clang);
-        if($ooa->isStartArticle()) {
-          $ooc = $ooa->getCategory();
-          $catname = $ooc->getName();
-          $pathname = rex_yrewrite::appendToPath($pathname, $catname);
-        } else {
-  				$name = $ooa->getName();
-  				$pathname = rex_yrewrite::appendToPath($pathname, $name);
-  			}
+        // _____ URL SCHEME
         
-        // _____ Sprachenkey zuerst
+        if(self::$scheme == "path") {
+        
+          if(self::$domainsByName[$domain]["start_article_id"] == $db->getValue('id')) {
+            $pathname = '';
+          } else {
+            $ooa = OOArticle::getArticleById($db->getValue('id'), $clang);
+            if($ooa->isStartArticle()) {
+              $ooc = $ooa->getCategory();
+              $pathname = rex_yrewrite::appendToPath($pathname, $ooc->getName());
+            } else {
+      				$ooa = OOArticle::getArticleById($db->getValue('id'), $clang);
+      				$pathname = rex_yrewrite::appendToPath($pathname, $ooa->getName());
+      			}
+            $pathname = preg_replace('/[-]{1,}/', '-', $pathname);
+          }
+          
+        } else {
+        
+          if(self::$domainsByName[$domain]["start_article_id"] == $db->getValue('id')) {
+            $pathname = '';
+          } else {
+            $ooa = OOArticle::getArticleById($db->getValue('id'), $clang);
+            if($ooa->isStartArticle()) {
+              $ooc = $ooa->getCategory();
+              $pathname = rex_yrewrite::appendToPath($pathname, $ooc->getName());
+            } else {
+      				$pathname = rex_yrewrite::appendToPath($pathname, $ooa->getName());
+      			}
+        		$pathname = preg_replace('/[-]{1,}/', '-', $pathname);
+            $pathname = substr($pathname,0,strlen($pathname)-1).'.html';
+          }      
+        }
+
+        // _____ langkey first
         
         if (count($REX['CLANG']) > 1) {
           $pathname = $REX['CLANG'][$clang].'/'.$pathname;
         }
-        
-    		$pathname = preg_replace('/[-]{1,}/', '-', $pathname);
-        $pathname = substr($pathname,0,strlen($pathname)-1).'.html';
 
         if($db->getValue('yrewrite_url') != "") {
           $pathname = $db->getValue('yrewrite_url');
@@ -378,7 +425,8 @@ class rex_yrewrite
 
   // ----- func
   
-  static function checkUrl($url) {
+  static function checkUrl($url) 
+  {
     if (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $url)) {
       return false;
     }  

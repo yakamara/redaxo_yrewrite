@@ -11,12 +11,13 @@ $clang = $params['clang'];
 $ctype = rex_request('ctype');
 $yrewrite_url = stripslashes(rex_request('yrewrite_url'));
 $domain = rex_yrewrite::getDomainByArticleId($article_id);
+$isStartarticle = rex_yrewrite::isDomainStartarticle($article_id);
 
 $sql = rex_sql::factory();
 $data = $sql->getArray('SELECT * FROM '. $REX['TABLE_PREFIX'] .'article WHERE id=' . $article_id . ' AND clang=' . $clang);
 $data = $data[0];
 
-if (rex_post('save', 'boolean') == 1) {
+if (rex_post('save', 'boolean') == 1 && !$isStartarticle) {
 
   $url_status = true;
 
@@ -70,7 +71,13 @@ if (rex_post('save', 'boolean') == 1) {
   $yrewrite_url = $data["yrewrite_url"];
 }
 
-echo '
+if($isStartarticle) {
+
+  echo rex_warning($I18N->msg("yrewrite_startarticleisalways",$domain));
+
+} else {
+
+  echo '
 <div class="rex-content-body" id="yrewrite-contentpage">
 	<div class="rex-content-body-2">
 		<div class="rex-form" id="rex-form-content-metamode">
@@ -145,5 +152,10 @@ function updateCustomUrlPreview() {
 	jQuery('#custom-url-preview').html(curUrl);
 }
 
-</script>
+</script> <?php
+
+}
+
+
+
 

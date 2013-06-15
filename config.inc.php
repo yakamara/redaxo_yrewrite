@@ -66,6 +66,15 @@ if ($REX["REDAXO"]) {
   );
   $domainsPage->setHref('index.php?page=yrewrite&subpage=');
 
+  $AliasDomainsPage = new rex_be_page($I18N->msg("yrewrite_alias_domains"), array(
+      'page' => 'yrewrite',
+      'subpage' => 'alias_domains'
+    )
+  );
+  $AliasDomainsPage->setHref('index.php?page=yrewrite&subpage=alias_domains');
+
+
+
   $urlsPage = new rex_be_page($I18N->msg("yrewrite_article_urls"), array(
       'page' => 'yrewrite',
       'subpage' => 'article_urls'
@@ -81,7 +90,7 @@ if ($REX["REDAXO"]) {
   $setupPage->setHref('index.php?page=yrewrite&subpage=setup');
 
   $REX['ADDON']['pages'][$mypage] = array (
-    $domainsPage, $setupPage
+    $domainsPage, $AliasDomainsPage, $setupPage
   );
 
 }
@@ -111,12 +120,12 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
           rex_register_extension($extensionPoint, $extension);
         }
       }
-
-      // get ARTICLE_ID from URL
-      if (!$REX["REDAXO"]) {
-        rex_yrewrite::prepare();
-      }
       rex_register_extension('URL_REWRITE', 'rex_yrewrite::rewrite');
+
+          // get ARTICLE_ID from URL
+          if (!$REX["REDAXO"]) {
+              rex_yrewrite::prepare();
+          }
 
   }, '', REX_EXTENSION_EARLY);
 
