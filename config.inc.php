@@ -27,6 +27,10 @@ $REX['ADDON']['version'][$mypage] = "1.1";
 $REX['ADDON']['author'][$mypage] = "Jan Kristinus";
 $REX['ADDON']['supportpage'][$mypage] = 'www.redaxo.org/de/forum';
 
+$UrlRewriteBasedir = dirname(__FILE__);
+require_once $UrlRewriteBasedir.'/classes/class.rex_yrewrite.inc.php';
+
+
 if ($REX["REDAXO"]) {
 
   $I18N->appendFile($REX['INCLUDE_PATH'].'/addons/'.$mypage.'/lang/');
@@ -101,9 +105,6 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
   rex_register_extension('ADDONS_INCLUDED', function($params) {
   
     global $REX;
-
-      $UrlRewriteBasedir = dirname(__FILE__);
-      require_once $UrlRewriteBasedir.'/classes/class.rex_yrewrite.inc.php';
 
       rex_yrewrite::init();
     
