@@ -331,22 +331,26 @@ class rex_yrewrite
         $pathname = '';
         $clang = $db->getValue('clang');
         
-        // _____ pfad über kategorien bauen
-        $domain = "default";
-        $path = trim($db->getValue('path'), '|');
-        if($path != '') {
-          $path = explode('|', $path);
-          $path = array_reverse($path,true);
+        if (array_key_exists($id, self::$domainsByMountId)) {
+          $domain = self::$domainsByMountId[$id]["domain"];
+        } else {
+          // _____ pfad über kategorien bauen
+          $domain = "default";
+          $path = trim($db->getValue('path'), '|');
+          if($path != '') {
+            $path = explode('|', $path);
+            $path = array_reverse($path,true);
           
-          foreach ($path as $p) {
-            if(array_key_exists($p, self::$domainsByMountId)) {
-              $domain = self::$domainsByMountId[$p]["domain"];
-              break;
-            }
-            $ooc = OOCategory::getCategoryById($p, $clang);
+            foreach ($path as $p) {
+              if(array_key_exists($p, self::$domainsByMountId)) {
+                $domain = self::$domainsByMountId[$p]["domain"];
+                break;
+              }
+              $ooc = OOCategory::getCategoryById($p, $clang);
 
-            $name = $ooc->getName();
-            $pathname = rex_yrewrite::prependToPath($pathname, $name);
+              $name = $ooc->getName();
+              $pathname = rex_yrewrite::prependToPath($pathname, $name);
+            }
           }
         }
 
