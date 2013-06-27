@@ -329,6 +329,7 @@ class rex_yrewrite
       {
       
         $pathname = '';
+        $id = $db->getValue('id');
         $clang = $db->getValue('clang');
         
         if (array_key_exists($id, self::$domainsByMountId)) {
