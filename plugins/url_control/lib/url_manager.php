@@ -22,7 +22,7 @@ class url_manager extends url_control
         $url_path = substr($url_path, strpos($url_path, '/'));
 
         $sql = rex_sql::factory();
-//		$sql->debugsql = true;
+//        $sql->debugsql = true;
         $sql->setQuery('SELECT  *
                         FROM    ' . $REX['TABLE_PREFIX'] . 'url_control_manager
                         WHERE   status = "1"
@@ -32,8 +32,7 @@ class url_manager extends url_control
                                 url = "' . mysql_real_escape_string($url_path) . '"
                             )
                     ');
-        if ($sql->getRows() == 1)
-        {
+        if ($sql->getRows() == 1) {
             $method = $sql->getValue('method');
             $params = unserialize($sql->getValue('method_parameters'));
             switch ($method) {
@@ -41,11 +40,11 @@ class url_manager extends url_control
                 case 'article':
                     if ($params['article']['action'] == 'view') {
                         return array(
-                            'article_id' => (int)$params['article']['article_id'],
-                            'clang'      => (int)$params['article']['clang'],
+                            'article_id' => (int) $params['article']['article_id'],
+                            'clang'      => (int) $params['article']['clang'],
                         );
                     } elseif ($params['article']['action'] == 'redirect') {
-                        $url = rex_getUrl((int)$params['article']['article_id'], (int)$params['article']['clang']);
+                        $url = rex_getUrl((int) $params['article']['article_id'], (int) $params['article']['clang']);
                         self::redirect($url, $params['http_type']['code']);
                     }
                     break;
@@ -62,7 +61,7 @@ class url_manager extends url_control
     public static function redirect($url, $code)
     {
         global $REX;
-        header('Location: '.trim($url), true, $code);
+        header('Location: ' . trim($url), true, $code);
         header('Content-Type: text/html');
         echo '
 <!DOCTYPE html>

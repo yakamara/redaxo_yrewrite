@@ -29,15 +29,15 @@ if ($func == '') {
                 FROM        ' . $REX['TABLE_PREFIX'] . 'url_control_generate';
 
     $list = rex_list::factory($query, 30, 'url_control_generate');
-//	$list->debug = true;
+//    $list->debug = true;
     $list->setNoRowsMessage($I18N->msg('b_no_results'));
     $list->setCaption($I18N->msg('b_tables'));
     $list->addTableAttribute('summary', $I18N->msg('b_tables'));
 
     $list->addTableColumnGroup(array(40, '*', 150, 80, 80, '153'));
 
-    $header = '<a class="rex-i-element rex-i-generic-add" href="'. $list->getUrl(array('func' => 'add')) .'"><span class="rex-i-element-text">'. $I18N->msg('b_add_entry', $I18N->msg('b_table')) .'</span></a>';
-    $list->addColumn($header, '###id###', 0, array('<th class="rex-icon">###VALUE###</th>','<td class="rex-small">###VALUE###</td>'));
+    $header = '<a class="rex-i-element rex-i-generic-add" href="' . $list->getUrl(array('func' => 'add')) . '"><span class="rex-i-element-text">' . $I18N->msg('b_add_entry', $I18N->msg('b_table')) . '</span></a>';
+    $list->addColumn($header, '###id###', 0, array('<th class="rex-icon">###VALUE###</th>', '<td class="rex-small">###VALUE###</td>'));
 
     $list->removeColumn('id');
     $list->removeColumn('clang');
@@ -103,21 +103,21 @@ if ($func == 'add' || $func == 'edit') {
     $legend = $func == 'edit' ? $I18N->msg('b_edit') : $I18N->msg('b_add');
 
     $form = new rex_form($REX['TABLE_PREFIX'] . 'url_control_generate', $I18N->msg('b_table') . ' ' . $legend, 'id=' . $oid, 'post', false);
-	//$form->debug = true;
+    //$form->debug = true;
 
-    if($func == 'edit') {
+    if ($func == 'edit') {
         $form->addParam('oid', $oid);
     }
 
-    $field =& $form->addLinkmapField('article_id');
+    $field = & $form->addLinkmapField('article_id');
     $field->setLabel($I18N->msg('b_article'));
 
 
     if (count($REX['CLANG']) >= 2) {
-        $field =& $form->addSelectField('clang');
+        $field = & $form->addSelectField('clang');
         $field->setLabel($I18N->msg('b_language'));
         $field->setAttribute('style', 'width: 200px;');
-        $select =& $field->getSelect();
+        $select = & $field->getSelect();
         $select->setSize(1);
 
         foreach ($REX['CLANG'] as $key => $value) {
@@ -127,11 +127,11 @@ if ($func == 'add' || $func == 'edit') {
     }
 
 
-    $field =& $form->addSelectField('table');
+    $field = & $form->addSelectField('table');
     $field->setLabel($I18N->msg('b_table'));
     $field->setAttribute('onchange', 'url_generate_table(this);');
     $field->setAttribute('style', 'width: 200px;');
-    $select =& $field->getSelect();
+    $select = & $field->getSelect();
     $select->setSize(1);
     $select->addOption($I18N->msg('b_no_table_selected'), '');
 
@@ -149,7 +149,7 @@ if ($func == 'add' || $func == 'edit') {
     $table_id = $field->getAttribute('id');
 
 
-    $fieldContainer =& $form->addContainerField('table_parameters');
+    $fieldContainer = & $form->addContainerField('table_parameters');
     $fieldContainer->setAttribute('style', 'display: none');
 
 
@@ -162,11 +162,11 @@ if ($func == 'add' || $func == 'edit') {
 
             $name       = $table . '_name';
 
-            $f1 =& $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes = array());
+            $f1 = & $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes = array());
             $f1->setLabel($I18N->msg('b_url'));
             $f1->setAttribute('style', 'width: 200px;');
             $f1->setNotice($I18N->msg('b_url_control_generate_notice_name'));
-            $select =& $f1->getSelect();
+            $select = & $f1->getSelect();
             $select->setSize(1);
             $select->addOptions($options, true);
 
@@ -174,11 +174,11 @@ if ($func == 'add' || $func == 'edit') {
 
             $name       = $table . '_id';
 
-            $f2 =& $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes = array());
+            $f2 = & $fieldContainer->addGroupedField($group, $type, $name, $value, $attributes = array());
             $f2->setLabel($I18N->msg('b_id'));
             $f2->setAttribute('style', 'width: 200px;');
             $f2->setNotice($I18N->msg('b_url_control_generate_notice_id'));
-            $select =& $f2->getSelect();
+            $select = & $f2->getSelect();
             $select->setSize(1);
             $select->addOptions($options, true);
 
