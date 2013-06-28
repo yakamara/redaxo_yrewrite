@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%url_control_generate` (
   `url` TEXT DEFAULT NULL,
   `table` varchar(255) NOT NULL,
   `table_parameters` text NOT NULL,
-  
+
   `createdate` INT(11) NOT NULL,
   `createuser` VARCHAR(255) NOT NULL,
   `updatedate` INT(11) NOT NULL,
