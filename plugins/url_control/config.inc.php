@@ -62,7 +62,7 @@ $REX['ADDON'][$myself]['rewriter']     = $rewriter;
 $mysubpages = array('url_control_generate', 'url_control_manager');
 
 //$REX['ADDON'][$addon]['SUBPAGES'][] = array ('url_generate' , $I18N->msg('b_url_generate'));
-if ($REX['USER']){ // && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm('url_control[]'))) {
+if (isset($REX['USER'])){ // && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm('url_control[]'))) {
 
     if ($rewriter[$addon]['pages']) {
         foreach ($mysubpages as $mysubpage) {
