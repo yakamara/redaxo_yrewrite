@@ -62,14 +62,14 @@ $REX['ADDON'][$myself]['rewriter']     = $rewriter;
 $mysubpages = array('url_control_generate', 'url_control_manager');
 
 //$REX['ADDON'][$addon]['SUBPAGES'][] = array ('url_generate' , $I18N->msg('b_url_generate'));
-if (isset($REX['USER'])){ // && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm('url_control[]'))) {
+if (isset($REX['USER'])) { // && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm('url_control[]'))) {
 
     if ($rewriter[$addon]['pages']) {
         foreach ($mysubpages as $mysubpage) {
             $be_page = new rex_be_page($I18N->msg('b_' . $mysubpage), array(
-                    'page'      => $addon,
-                    'subpage'   => $mysubpage
-                )
+                'page'      => $addon,
+                'subpage'   => $mysubpage
+            )
             );
             $be_page->setHref('index.php?page=' . $addon . '&subpage=' . $mysubpage);
             $REX['ADDON']['pages'][$addon][] = $be_page;
@@ -87,14 +87,14 @@ if (isset($REX['USER'])){ // && ($REX['USER']->isAdmin() || $REX['USER']->hasPer
 $subpage = rex_request('subpage', 'string');
 if (rex_request('page', 'string') == $addon &&  in_array($subpage, $mysubpages)) {
     $file = str_replace('control_', '', $subpage);
-    $REX['ADDON']['navigation'][$addon]['path'] = $REX['INCLUDE_PATH'].'/addons/' . $addon . '/plugins/' . $myself . '/pages/' . $file . '.php';
+    $REX['ADDON']['navigation'][$addon]['path'] = $REX['INCLUDE_PATH'] . '/addons/' . $addon . '/plugins/' . $myself . '/pages/' . $file . '.php';
 }
 
 
 if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
-    require_once($basedir . '/lib/url_control.php');
-    require_once($basedir . '/lib/url_generate.php');
-    require_once($basedir . '/lib/url_manager.php');
+    require_once $basedir . '/lib/url_control.php';
+    require_once $basedir . '/lib/url_generate.php';
+    require_once $basedir . '/lib/url_manager.php';
 
     $extension_point    = $rewriter[$addon]['extension_point'];
     $extension_function = $rewriter[$addon]['extension_function'];
@@ -106,4 +106,3 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
     //rex_register_extension('ADDONS_INCLUDED', 'url_control::init');
 
 }
-
