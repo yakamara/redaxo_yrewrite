@@ -61,14 +61,7 @@ class url_control
         if (!$params) {
             $params = url_generate::getArticleParams();
         }
-
-        if ((int) $params['article_id'] > 0) {
-            $REX['ARTICLE_ID'] = $params['article_id'];
-            $REX['CUR_CLANG']  = $params['clang'];
-            return true;
-        } else {
-            return false;
-        }
+        return $params;
     }
 
 

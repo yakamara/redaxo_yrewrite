@@ -196,8 +196,20 @@ class rex_yrewrite
 
       }
 
-      if(rex_register_extension_point('YREWRITE_PREPARE', '', array()) ) {
-        return true;
+      $params = rex_register_extension_point('YREWRITE_PREPARE', '', array());
+
+      if(isset($params["article_id"]) && $params["article_id"] > 0) {
+
+        if(isset($params["clang"]) && $params["clang"] > 0) {
+          $clang = $params["clang"];
+        }
+
+        if ( ($article = OOArticle::getArticleById($params["article_id"], $clang)) ) {
+          $REX['ARTICLE_ID'] = $params["article_id"];
+          $REX['CUR_CLANG'] = $clang;
+          return true;
+        }
+
       }
 
       // Check levenshtein
