@@ -27,15 +27,17 @@ if($func != "") {
   
   $xform->setObjectparams("main_table","rex_yrewrite_domain");
 
-  $xform->setValueField("text",array("domain",$I18N->msg("yrewrite_domain")));
+  $xform->setValueField("text",array("domain",$I18N->msg("yrewrite_domain_info")));
   $xform->setValueField("be_link",array("mount_id",$I18N->msg("yrewrite_mount_id")));
   $xform->setValueField("be_link",array("start_id",$I18N->msg("yrewrite_start_id")));
   $xform->setValueField("be_link",array("notfound_id",$I18N->msg("yrewrite_notfound_id")));
   // $xform->setValueField("text",array("clang","clang"));
 
   $xform->setValidateField("unique",array("domain",$I18N->msg("yrewrite_domain_already_defined")));
-
-  // TODO:
+  $xform->setValidateField("empty",array("domain",$I18N->msg("yrewrite_no_domain_defined")));
+  $xform->setValidateField("empty",array("mount_id",$I18N->msg("yrewrite_no_mount_id_defined")));
+  $xform->setValidateField("empty",array("start_id",$I18N->msg("yrewrite_no_start_id_defined")));
+  $xform->setValidateField("empty",array("notfound_id",$I18N->msg("yrewrite_no_not_found_id_defined")));
 
   if($func == "delete") {
   

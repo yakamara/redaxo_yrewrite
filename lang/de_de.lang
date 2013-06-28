@@ -7,12 +7,14 @@ yrewrite_customurl = Benutzerdefinierte URL
 yrewrite_update = URL aktualisieren
 
 yrewrite_domains = Domains
+yrewrite_domain_info = Domains [www.domain.de]
 yrewrite_article_urls = Artikel URLs
 yrewrite_setup = Setup
 
 yrewrite_startarticleisalways = Dies ist der Startartikel der Domain "{0}" und kann nicht verändert werden. Die URL ist hier immer "/"
 
 yrewrite_add_domain = Domain hinzufügen
+yrewrite_domain_added = Domain wurde hinzugefügt
 yrewrite_edit_domain = Domain editieren
 yrewrite_domain_deleted = Domain wurde gelöscht. Cache wurde gelöscht.
 yrewrite_domain_updated = Domain wurde aktualisiert. Cache wurde gelöscht.
@@ -29,6 +31,10 @@ yrewrite_domain_willbereferdto = auf diese Domain
 
 yrewrite_domain_already_defined = Domain wurde bereits definiert
 yrewrite_no_domain_defined = Es wurde keine Domain definiert
+yrewrite_no_mount_id_defined = Bitte eine Mount Id eingeben
+yrewrite_no_start_id_defined = Bitte einen Startikel auswählen
+yrewrite_no_not_found_id_defined = Bitte einen 404 Artikel auswählen
+
 
 yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
 yrewrite_htaccess_set = .htaccess Datei setzen

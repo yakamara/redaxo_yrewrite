@@ -32,7 +32,7 @@ class rex_yrewrite
   static function init() 
   {
     global $REX;
-    rex_yrewrite::setDomain("default", 0, $REX["START_ARTICLE_ID"], $REX["NOTFOUND_ARTICLE_ID"]);
+    rex_yrewrite::setDomain("undefined", 0, $REX["START_ARTICLE_ID"], $REX["NOTFOUND_ARTICLE_ID"]);
     self::$pathfile = $REX['INCLUDE_PATH'].'/generated/files/yrewrite_pathlist.php';
     self::$configfile = $REX['INCLUDE_PATH'].'/generated/files/yrewrite_config.php';
     self::readConfig();
@@ -82,7 +82,7 @@ class rex_yrewrite
         return $domain;
       }
     }
-    return "default";
+    return "undefined";
   }  
 
   static function getArticleIdByUrl($domain, $url) 
@@ -150,7 +150,7 @@ class rex_yrewrite
         $url = substr($url, 0, $pos);
       }
 
-      // no domain found -> set default
+      // no domain found -> set undefined
       if(!isset(self::$pathes[$domain])) {
       
         // check for aliases
@@ -168,7 +168,7 @@ class rex_yrewrite
           exit;
           
         } else {
-          $domain = "default";
+          $domain = "undefined";
         }
       }
 
@@ -258,7 +258,7 @@ class rex_yrewrite
     if($path == "") {
       foreach(self::$pathes as $i_domain => $i_id) {
         if(isset(self::$pathes[$i_domain][$id][$clang])) {
-          if($i_domain == "default")
+          if($i_domain == "undefined")
             $path = '/'.self::$pathes[$i_domain][$id][$clang];
           else 
             $path = $www.$i_domain.'/'.self::$pathes[$i_domain][$id][$clang];
@@ -324,36 +324,39 @@ class rex_yrewrite
       $db = new rex_sql();
       // $db->debugsql=true;
       $db->setQuery('SELECT id,clang,path,startpage,yrewrite_url FROM '. $REX['TABLE_PREFIX'] .'article WHERE '. $where.' and revision=0');
-      
       while($db->hasNext())
       {
-      
         $pathname = '';
         $clang = $db->getValue('clang');
-        
-        // _____ pfad über kategorien bauen
-        $domain = "default";
-        $path = trim($db->getValue('path'), '|');
-        if($path != '') {
-          $path = explode('|', $path);
-          $path = array_reverse($path,true);
-          
-          foreach ($path as $p) {
-            if(array_key_exists($p, self::$domainsByMountId)) {
-              $domain = self::$domainsByMountId[$p]["domain"];
-              break;
-            }
-            $ooc = OOCategory::getCategoryById($p, $clang);
+        $id = $db->getValue('id');
 
-            $name = $ooc->getName();
-            $pathname = rex_yrewrite::prependToPath($pathname, $name);
+        // _____ pfad über kategorien bauen
+        if (array_key_exists($id, self::$domainsByMountId)) {
+          $domain = self::$domainsByMountId[$id]["domain"];
+
+        } else {
+          $domain = "undefined";
+          $path = trim($db->getValue('path'), '|');
+
+          if($path != '') {
+            $path = explode('|', $path);
+            $path = array_reverse($path,true);
+
+            foreach ($path as $p) {
+              if(array_key_exists($p, self::$domainsByMountId)) {
+                $domain = self::$domainsByMountId[$p]["domain"];
+                break;
+              }
+              $ooc = OOCategory::getCategoryById($p, $clang);
+
+              $name = $ooc->getName();
+              $pathname = rex_yrewrite::prependToPath($pathname, $name);
+            }
           }
         }
-
         // _____ URL SCHEME
         
         if(self::$scheme == "path") {
-        
           if(self::$domainsByName[$domain]["start_article_id"] == $db->getValue('id')) {
             $pathname = '';
           } else {
