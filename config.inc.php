@@ -115,8 +115,8 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
         if ($REX['REDAXO']) {
             $extension = 'rex_yrewrite::generatePathFile';
             $extensionPoints = array(
-                'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED',
-                'ART_ADDED',   'ART_UPDATED',   'ART_DELETED',
+                'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',
+                'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',
                 'CLANG_ADDED', 'CLANG_UPDATED', 'CLANG_DELETED',
                 /*'ARTICLE_GENERATED'*/
                 'ALL_GENERATED'

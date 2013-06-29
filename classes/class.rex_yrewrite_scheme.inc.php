@@ -37,6 +37,11 @@ class rex_yrewrite_scheme
         return false;
     }
 
+    public function getRedirection(OOArticle $art)
+    {
+        return false;
+    }
+
     protected function normalize($string, $clang = 0)
     {
         $string = str_replace(
