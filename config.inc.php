@@ -29,6 +29,9 @@ $REX['ADDON']['supportpage'][$mypage] = 'www.redaxo.org/de/forum';
 
 $UrlRewriteBasedir = dirname(__FILE__);
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite.inc.php';
+require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_scheme.inc.php';
+
+rex_yrewrite::setScheme(new rex_yrewrite_scheme());
 
 
 if ($REX['REDAXO']) {
@@ -106,28 +109,28 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
 
         global $REX;
 
-            rex_yrewrite::init();
+        rex_yrewrite::init();
 
-            // if anything changes -> refresh PathFile
-            if ($REX['REDAXO']) {
-                $extension = 'rex_yrewrite::generatePathFile';
-                $extensionPoints = array(
-                    'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED',
-                    'ART_ADDED',   'ART_UPDATED',   'ART_DELETED',
-                    'CLANG_ADDED', 'CLANG_UPDATED', 'CLANG_DELETED',
-                    /*'ARTICLE_GENERATED'*/
-                    'ALL_GENERATED'
-                );
-                foreach ($extensionPoints as $extensionPoint) {
-                    rex_register_extension($extensionPoint, $extension);
-                }
+        // if anything changes -> refresh PathFile
+        if ($REX['REDAXO']) {
+            $extension = 'rex_yrewrite::generatePathFile';
+            $extensionPoints = array(
+                'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',
+                'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',
+                'CLANG_ADDED', 'CLANG_UPDATED', 'CLANG_DELETED',
+                /*'ARTICLE_GENERATED'*/
+                'ALL_GENERATED'
+            );
+            foreach ($extensionPoints as $extensionPoint) {
+                rex_register_extension($extensionPoint, $extension);
             }
-            rex_register_extension('URL_REWRITE', 'rex_yrewrite::rewrite');
+        }
+        rex_register_extension('URL_REWRITE', 'rex_yrewrite::rewrite');
 
-                    // get ARTICLE_ID from URL
-                    if (!$REX['REDAXO']) {
-                            rex_yrewrite::prepare();
-                    }
+        // get ARTICLE_ID from URL
+        if (!$REX['REDAXO']) {
+            rex_yrewrite::prepare();
+        }
 
     }, '', REX_EXTENSION_EARLY);
 
