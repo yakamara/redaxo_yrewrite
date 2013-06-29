@@ -21,7 +21,7 @@ class rex_yrewrite
     static $pathfile = '';
     static $configfile = '';
     static $call_by_article_id = 'allowed'; // forward, allowed, not_allowed
-    static $pathes = array();
+    static $paths = array();
     /**
      * @var rex_yrewrite_scheme
      */
@@ -87,7 +87,7 @@ class rex_yrewrite
     static function getDomainByArticleId($aid)
     {
         foreach (self::$domainsByName as $domain => $v) {
-            if (isset(self::$pathes[$domain][$aid])) {
+            if (isset(self::$paths[$domain][$aid])) {
                 return $domain;
             }
         }
@@ -96,7 +96,7 @@ class rex_yrewrite
 
     static function getArticleIdByUrl($domain, $url)
     {
-        foreach (self::$pathes[$domain] as $c_article_id => $c_o) {
+        foreach (self::$paths[$domain] as $c_article_id => $c_o) {
             foreach ($c_o as $c_clang => $c_url) {
                 if ($url == $c_url) {
                     return array($c_article_id => $c_clang);
@@ -165,7 +165,7 @@ class rex_yrewrite
             }
 
             // no domain found -> set undefined
-            if (!isset(self::$pathes[$domain])) {
+            if (!isset(self::$paths[$domain])) {
 
                 // check for aliases
                 if (isset(self::$AliasDomains[$domain])) {
@@ -198,7 +198,7 @@ class rex_yrewrite
             }
 
             // normal exact check
-            foreach (self::$pathes[$domain] as $i_id => $i_cls) {
+            foreach (self::$paths[$domain] as $i_id => $i_cls) {
 
                 foreach ($REX['CLANG'] as $clang => $clang_name) {
                     if ($i_cls[$clang] == $url || $i_cls[$clang] . '/' == $url) {
@@ -229,7 +229,7 @@ class rex_yrewrite
             // Check levenshtein
             if (self::$use_levenshtein) {
             /*
-                foreach (self::$pathes as $key => $var) {
+                foreach (self::$paths as $key => $var) {
                     foreach ($var as $k => $v) {
                         $levenshtein[levenshtein($path, $v)] = $key.'#'.$k;
                     }
@@ -275,18 +275,18 @@ class rex_yrewrite
         $path = '';
 
         // same domain id check
-        if (!$fullpath && isset(self::$pathes[$domain][$id][$clang])) {
-            $path = '/' . self::$pathes[$domain][$id][$clang];
-            // if($REX["REDAXO"]) { $path = self::$pathes[$domain][$id][$clang]; }
+        if (!$fullpath && isset(self::$paths[$domain][$id][$clang])) {
+            $path = '/' . self::$paths[$domain][$id][$clang];
+            // if($REX["REDAXO"]) { $path = self::$paths[$domain][$id][$clang]; }
         }
 
         if ($path == '') {
-            foreach (self::$pathes as $i_domain => $i_id) {
-                if (isset(self::$pathes[$i_domain][$id][$clang])) {
+            foreach (self::$paths as $i_domain => $i_id) {
+                if (isset(self::$paths[$i_domain][$id][$clang])) {
                     if ($i_domain == 'undefined') {
-                        $path = '/' . self::$pathes[$i_domain][$id][$clang];
+                        $path = '/' . self::$paths[$i_domain][$id][$clang];
                     } else {
-                        $path = $www . $i_domain . '/' . self::$pathes[$i_domain][$id][$clang];
+                        $path = $www . $i_domain . '/' . self::$paths[$i_domain][$id][$clang];
                     }
                     break;
                 }
@@ -328,7 +328,7 @@ class rex_yrewrite
             if (!is_string($url)) {
                 $url = self::$scheme->appendArticle($path, $art);
             }
-            self::$pathes[$domain][$art->getId()][$art->getClang()] = ltrim($url, '/');
+            self::$paths[$domain][$art->getId()][$art->getClang()] = ltrim($url, '/');
         };
 
         $generatePaths = function ($domain, $path, OOCategory $cat) use (&$generatePaths, $setDomain, $setPath) {
@@ -347,8 +347,8 @@ class rex_yrewrite
             // clang and id specific update
             case 'CAT_DELETED':
             case 'ART_DELETED':
-                foreach (self::$pathes as $domain => $c) {
-                    unset(self::$pathes[$domain][$params['id']]);
+                foreach (self::$paths as $domain => $c) {
+                    unset(self::$paths[$domain][$params['id']]);
                 }
                 break;
 
@@ -380,7 +380,7 @@ class rex_yrewrite
             case 'CLANG_UPDATED':
             case 'ALL_GENERATED':
             default:
-                self::$pathes = array();
+                self::$paths = array();
                 foreach ($REX['CLANG'] as $clangId => $clangName) {
                     $domain = 'undefined';
                     $path = self::$scheme->getClang($clangId);
@@ -394,7 +394,7 @@ class rex_yrewrite
                 break;
         }
 
-        rex_put_file_contents(self::$pathfile, json_encode(self::$pathes));
+        rex_put_file_contents(self::$pathfile, json_encode(self::$paths));
     }
 
 
@@ -442,7 +442,7 @@ class rex_yrewrite
             self::generatePathFile(array());
         }
         $content = file_get_contents(self::$pathfile);
-        self::$pathes = json_decode($content, true);
+        self::$paths = json_decode($content, true);
     }
 
     static function copyHtaccess()
