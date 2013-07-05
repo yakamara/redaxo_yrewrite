@@ -35,6 +35,13 @@ yrewrite_no_mount_id_defined = Bitte eine Mount Id eingeben
 yrewrite_no_start_id_defined = Bitte einen Startikel auswählen
 yrewrite_no_not_found_id_defined = Bitte einen 404 Artikel auswählen
 
+yrewrite_warning_noslash = Bitte in der URL kein / am Anfang und am Ende
+yrewrite_warning_nottolong = Die URL darf nicht länger als 250 Zeichen sein
+yrewrite_warning_chars = Die URL ist nicht korrekt. Schreibweise beachten. Nur a-z 0-9 -
+yrewrite_warning_urlexists = Diese URL existiert bereits {0}
+yrewrite_warning_otherarticle = Zum anderen Artikel
+yrewrite_urlupdated = Url wurde aktualisiert
+
 
 yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
 yrewrite_htaccess_set = .htaccess Datei setzen
@@ -48,3 +55,5 @@ yrewrite_info_text = Da YRewrite für Multidomainlösungen gedacht ist, gibt es 
 yrewrite_install_xform_version_problem = Bitte installieren Sie das XForm Addon in Version {0}
 yrewrite_install_redaxo_version_problem = Die REDAXO Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
 yrewrite_install_php_version_problem = Die PHP Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
+
+yrewrite_notactivebecauseofmodrewrite = YRewrite funktioniert nur wenn ModRewrite aktiviert ist.

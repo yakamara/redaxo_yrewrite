@@ -1,5 +1,9 @@
 <?php
 
+if ( !$REX['MOD_REWRITE'] ) {
+  echo rex_warning($I18N->msg("yrewrite_notactivebecauseofmodrewrite"));
+}
+
 $func = rex_request('func', 'string');
 
 if ($func != '') {

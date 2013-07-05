@@ -25,22 +25,24 @@ if (rex_post('save', 'boolean') == 1 && !$isStartarticle) {
 
     } elseif (substr($yrewrite_url, 0, 1) == '/' or substr($yrewrite_url, -1) == '/') {
 
-        echo rex_warning('Bitte in der URL kein / am Anfang und am Ende');
+        echo rex_warning($I18N->msg("yrewrite_warning_noslash"));
         $url_status = false;
 
     } elseif (strlen($yrewrite_url) > 250) {
 
-        echo rex_warning('Die URL darf nicht länger als 250 Zeichen sein');
+        echo rex_warning($I18N->msg("yrewrite_warning_nottolong"));
         $url_status = false;
 
     } elseif (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url)) {
 
-        echo rex_warning('Die URL ist nicht korrekt. Schreibweise beachten. Nur a-z 0-9 -');
+        echo rex_warning($I18N->msg("yrewrite_warning_chars"));
         $url_status = false;
 
     } elseif ( ($a = rex_yrewrite::getArticleIdByUrl($domain, $yrewrite_url)) && (key($a) != $article_id || current($a) != $clang) ) {
 
-        echo rex_warning('Diese URL existiert bereits');
+        $art = '<a href="index.php?page=content&article_id='.key($a).'&mode=edit&clang='.current($a).'&ctype=1">'.$I18N->msg("yrewrite_warning_otherarticle").'</a>';
+
+        echo rex_warning($I18N->msg("yrewrite_warning_urlexists", $art) );
         $url_status = false;
 
     }
@@ -60,7 +62,7 @@ if (rex_post('save', 'boolean') == 1 && !$isStartarticle) {
                 'extension_point' => 'ART_UPDATED'
             ));
 
-            echo rex_info('Url wurde aktualisiert');
+            echo rex_info($I18N->msg("yrewrite_urlupdated") );
 
         }
 
