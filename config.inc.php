@@ -26,7 +26,8 @@ $REX['ADDON']['name'][$mypage] = 'YRewrite';
 $REX['ADDON']['version'][$mypage] = '1.1';
 $REX['ADDON']['author'][$mypage] = 'Jan Kristinus';
 $REX['ADDON']['supportpage'][$mypage] = 'www.redaxo.org/de/forum';
-
+$REX['ADDON']['perm'][$mypage] = 'admin[]';
+  
 $UrlRewriteBasedir = dirname(__FILE__);
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_scheme.inc.php';
