@@ -165,7 +165,7 @@ class rex_yrewrite
             }
 
             $http = 'http://';
-            if ($_SERVER['SERVER_PORT'] == 443) {
+            if ($_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off') ) {
                 $http = 'https://';
             }
 
