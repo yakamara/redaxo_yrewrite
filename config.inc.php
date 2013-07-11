@@ -12,13 +12,13 @@
 
 - clang integrieren  / domain.de -> aid:5,clang:1 / domain.en -> aid:2,clang:0
 - cache refresh wenn url neu geschrieben
-- MarketingURLs mit weiterleitungen / auch extern und auf dateien
 - Validierungen bei domains anpassen
 - article urls auch über das addon selbst erstellen können
 
-*/
+forward
+-  Externe URL nach "http://" prüfen
 
-// ini_set("display_errors",1);
+*/
 
 $mypage = 'yrewrite';
 
@@ -31,9 +31,9 @@ $REX['ADDON']['perm'][$mypage] = 'admin[]';
 $UrlRewriteBasedir = dirname(__FILE__);
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_scheme.inc.php';
+require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_forward.inc.php';
 
 rex_yrewrite::setScheme(new rex_yrewrite_scheme());
-
 
 if ($REX['REDAXO']) {
 
@@ -81,14 +81,12 @@ if ($REX['REDAXO']) {
     );
     $AliasDomainsPage->setHref('index.php?page=yrewrite&subpage=alias_domains');
 
-
-
-    $urlsPage = new rex_be_page($I18N->msg('yrewrite_article_urls'), array(
+    $forwardPage = new rex_be_page($I18N->msg('yrewrite_forward'), array(
         'page' => 'yrewrite',
-        'subpage' => 'article_urls'
+        'subpage' => 'forward'
     )
     );
-    $urlsPage->setHref('index.php?page=yrewrite&subpage=article_urls');
+    $forwardPage->setHref('index.php?page=yrewrite&subpage=forward');
 
     $setupPage = new rex_be_page($I18N->msg('yrewrite_setup'), array(
         'page' => 'yrewrite',
@@ -98,7 +96,7 @@ if ($REX['REDAXO']) {
     $setupPage->setHref('index.php?page=yrewrite&subpage=setup');
 
     $REX['ADDON']['pages'][$mypage] = array (
-        $domainsPage, $AliasDomainsPage, $setupPage
+        $domainsPage, $AliasDomainsPage, $forwardPage, $setupPage
     );
 
 }
@@ -134,6 +132,10 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
         }
 
     }, '', REX_EXTENSION_EARLY);
+
+    rex_register_extension('YREWRITE_PREPARE', function ($params) {
+        return rex_yrewrite_forward::getForward($params);
+    });
 
 
 }

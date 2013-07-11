@@ -57,3 +57,44 @@ yrewrite_install_redaxo_version_problem = Die REDAXO Version reicht nicht aus. E
 yrewrite_install_php_version_problem = Die PHP Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
 
 yrewrite_notactivebecauseofmodrewrite = YRewrite funktioniert nur wenn ModRewrite aktiviert ist.
+
+yrewrite_forward = Weiterleitungen
+yrewrite_forward_no_domain_selected = Bitte eine Domain auswählen
+yrewrite_forward_status = Status
+yrewrite_forward_active = aktiv
+yrewrite_forward_inactive = inaktiv
+yrewrite_forward_url = aufgerufene Url
+yrewrite_forward_type = Weiterleitung an
+
+yrewrite_forward_type_article = Artikel
+yrewrite_forward_type_extern = eigener Link
+yrewrite_forward_type_media = Media
+
+yrewrite_forward_article_id = Artikel
+yrewrite_forward_clang = Sprache
+yrewrite_forward_extern = externer, eigener Link
+yrewrite_forward_media = Media
+
+yrewrite_forward_add = Weiterleitung erstellen
+yrewrite_forward_edit = Weiterleitung editieren
+
+yrewrite_forward_method = Was soll passieren
+yrewrite_forward_to = Weiterleitung zu URL
+yrewrite_forward_direct = Direkter Aufruf
+
+yrewrite_forward_added = Weiterleitung wurde hinzugefügt
+yrewrite_forward_updated = Weiterleitung wurde aktualisiert
+yrewrite_forward_deleted = Weiterleitung wurde gelöscht
+
+yrewrite_forward_enter_url = Bitte eine URL eintragen 
+
+yrewrite_forward_domainurl_already_defined = Diese Domain/Url Kombination existiert bereits
+
+yrewrite_forward_move_method = Art der Weiterleitung
+
+yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte Url existiert nicht mehr
+yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
+yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein
+
+
+

@@ -164,6 +164,11 @@ class rex_yrewrite
                 $url = substr($url, 0, $pos);
             }
 
+            $http = 'http://';
+            if ($_SERVER['SERVER_PORT'] == 443) {
+                $http = 'https://';
+            }
+
             // no domain found -> set undefined
             if (!isset(self::$paths['paths'][$domain])) {
 
@@ -171,11 +176,6 @@ class rex_yrewrite
                 if (isset(self::$AliasDomains[$domain])) {
                     $domain = self::$AliasDomains[$domain];
                     // forward to original domain permanent move 301
-
-                    $http = 'http://';
-                    if ($_SERVER['SERVER_PORT'] == 443) {
-                        $http = 'https://';
-                    }
 
                     header('HTTP/1.1 301 Moved Permanently');
                     header('Location: ' . $http . $domain . '/' . $url);
@@ -210,7 +210,7 @@ class rex_yrewrite
 
             }
 
-            $params = rex_register_extension_point('YREWRITE_PREPARE', '', array());
+            $params = rex_register_extension_point('YREWRITE_PREPARE', '', array('url' =>$url, 'domain' => $domain, 'port' => $port, 'http' => $http));
 
             if (isset($params['article_id']) && $params['article_id'] > 0) {
 

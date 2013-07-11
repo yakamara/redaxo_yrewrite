@@ -15,9 +15,9 @@ switch ($subpage) {
         break;
     case ('alias_domains');
         break;
-    case ('article_urls');
-        break;
     case ('setup');
+        break;
+    case ('forward');
         break;
     default:
     {
