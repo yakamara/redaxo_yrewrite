@@ -142,8 +142,13 @@ class rex_yrewrite
                 $url = rex_getUrl(rex_request('article_id', 'int'));
 
             } else {
+                if (!isset($_SERVER['REQUEST_URI'])) {
+                    $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+                    if (isset($_SERVER['QUERY_STRING'])) {
+                        $_SERVER['REQUEST_URI'] .= '?'.$_SERVER['QUERY_STRING'];
+                    }
+                } 
                 $url = urldecode($_SERVER['REQUEST_URI']);
-
             }
 
             $domain = $_SERVER['HTTP_HOST'];
