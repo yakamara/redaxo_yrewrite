@@ -29,7 +29,6 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_forward` (
     `clang` int(11) NOT NULL,
     `extern` varchar(255) NOT NULL,
     `media` varchar(255) NOT NULL,
-    `method` varchar(255) NOT NULL,
     `movetype` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');

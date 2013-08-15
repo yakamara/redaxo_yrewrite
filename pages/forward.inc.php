@@ -25,7 +25,6 @@ if ($func != '') {
     $xform->setValidateField('empty', array('url', $I18N->msg('yrewrite_forward_enter_url')));
     $xform->setValueField('text', array('url', $I18N->msg('yrewrite_forward_url')));
     $xform->setValidateField('unique', array('domain,url', $I18N->msg('yrewrite_forward_domainurl_already_defined')));
-    $xform->setValueField('hidden', array('method', $I18N->msg('yrewrite_forward_method'),'forward'));
     $xform->setValueField('select', array('movetype', $I18N->msg('yrewrite_forward_move_method'), $I18N->msg("yrewrite_forward_301").'=301,'.$I18N->msg("yrewrite_forward_303").'=303,'.$I18N->msg("yrewrite_forward_307").'=307','','303'));
     $xform->setValueField('select', array('type', $I18N->msg('yrewrite_forward_type'),''.$I18N->msg("yrewrite_forward_type_article").'=article,'.$I18N->msg("yrewrite_forward_type_extern").'=extern,'.$I18N->msg("yrewrite_forward_type_media").'=media'));
 
@@ -146,10 +145,7 @@ if ($showlist) {
     $list->removeColumn('clang');
     $list->removeColumn('extern');
     $list->removeColumn('media');
-    $list->removeColumn('method');
     $list->removeColumn('movetype');
-
-
 
     // $list->setColumnLabel('status', $I18N->msg('b_function'));
     $list->setColumnParams('status', array('func' => 'status', 'oid' => '###id###'));
@@ -166,34 +162,6 @@ $str = "<span class=\"rex-offline\">".$I18N->msg("yrewrite_forward_inactive")."<
 return $str;'
         )
     );
-
-    /*
-    $list->setColumnFormat(
-                    $field["f1"],
-                    'custom',
-                    array('rex_xform_'.$field['type_name'], 'getListValue'),
-                    array('field' => $field, 'fields' => $fields));
-
-            if(method_exists('rex_xform_'.$field['type_name'],'getListValue')) {
-                $list->setColumnFormat(
-                    $field["f1"],
-                    'custom',
-                    array('rex_xform_'.$field['type_name'], 'getListValue'),
-                    array('field' => $field, 'fields' => $fields));
-            }
-        }
-
-        if($field["type_id"] == "value") {
-            if($field["list_hidden"] == 1) {
-                $list->removeColumn($field["f1"]);
-            }else {
-                $list->setColumnSortable($field["f1"]);
-                $list->setColumnLabel($field["f1"],$field["f2"]);
-            }
-        }
-    }
-
-    */
 
     $list->addColumn($I18N->msg('delete'), $I18N->msg('delete'));
     $list->setColumnParams($I18N->msg('delete'), array('data_id' => '###id###', 'func' => 'delete'));
