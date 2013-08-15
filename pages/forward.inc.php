@@ -18,7 +18,7 @@ if ($func != '') {
     $xform->setObjectparams('main_table', 'rex_yrewrite_forward');
 
     $xform->setValueField('select', array('status', $I18N->msg('yrewrite_forward_status'),''.$I18N->msg("yrewrite_forward_active").'=1,'.$I18N->msg("yrewrite_forward_inactive").'=0'));
-    $xform->setValueField('select_sql', array('domain', $I18N->msg('yrewrite_domain') . '', 'select domain as id,domain as name from rex_yrewrite_forward where alias_domain = ""'));
+    $xform->setValueField('select_sql', array('domain', $I18N->msg('yrewrite_domain') . '', 'select domain as id,domain as name from rex_yrewrite_domain where alias_domain = ""'));
     $xform->setValidateField('preg_match', array('url', '/^[%_\.+\-a-zA-Z0-9]+$/', $I18N->msg('yrewrite_warning_chars')));
     // $I18N->msg('yrewrite_warning_noslash')
     $xform->setValidateField('size_range', array('url', 1, 255, $I18N->msg('yrewrite_warning_nottolong')));
