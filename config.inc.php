@@ -26,8 +26,8 @@ $REX['ADDON']['name'][$mypage] = 'YRewrite';
 $REX['ADDON']['version'][$mypage] = '1.1';
 $REX['ADDON']['author'][$mypage] = 'Jan Kristinus';
 $REX['ADDON']['supportpage'][$mypage] = 'www.redaxo.org/de/forum';
-$REX['ADDON']['perm'][$mypage] = 'admin[]';
-  
+$REX['PERM'][] = 'yrewrite[forward]';
+
 $UrlRewriteBasedir = dirname(__FILE__);
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_scheme.inc.php';
@@ -66,38 +66,60 @@ if ($REX['REDAXO']) {
 
     }
 
-    // ----- backend pages for domains und urls
-    $domainsPage = new rex_be_page($I18N->msg('yrewrite_domains'), array(
-        'page' => 'yrewrite',
-        'subpage' => ''
-    )
-    );
-    $domainsPage->setHref('index.php?page=yrewrite&subpage=');
 
-    $AliasDomainsPage = new rex_be_page($I18N->msg('yrewrite_alias_domains'), array(
-        'page' => 'yrewrite',
-        'subpage' => 'alias_domains'
-    )
-    );
-    $AliasDomainsPage->setHref('index.php?page=yrewrite&subpage=alias_domains');
+    if( $REX['USER'] && $REX['USER']->isAdmin()) {
+    
+        // ----- backend pages for domains und urls
+        $domainsPage = new rex_be_page($I18N->msg('yrewrite_domains'), array(
+            'page' => 'yrewrite',
+            'subpage' => ''
+          )
+        );
+        $domainsPage->setHref('index.php?page=yrewrite&subpage=');
+    
+        $AliasDomainsPage = new rex_be_page($I18N->msg('yrewrite_alias_domains'), array( 
+            'page' => 'yrewrite',
+            'subpage' => 'alias_domains'
+          )
+        );
+        $AliasDomainsPage->setHref('index.php?page=yrewrite&subpage=alias_domains');
+      
+        $forwardPage = new rex_be_page($I18N->msg('yrewrite_forward'), array(
+          'page' => 'yrewrite',
+          'subpage' => 'forward'
+          )
+        );
+        $forwardPage->setHref('index.php?page=yrewrite&subpage=forward');
+    
+        $setupPage = new rex_be_page($I18N->msg('yrewrite_setup'), array(
+            'page' => 'yrewrite',
+            'subpage' => 'setup'
+          )
+        );
+        $setupPage->setHref('index.php?page=yrewrite&subpage=setup');
+    
+        $REX['ADDON']['pages'][$mypage] = array (
+            $domainsPage, $AliasDomainsPage, $forwardPage, $setupPage
+        );
+  
+    } else if( $REX['USER'] && $REX['USER']->hasPerm("yrewrite[forward]")) {
+   
+       // ----- backend pages for domains und urls
+      
+        $forwardPage = new rex_be_page($I18N->msg('yrewrite_forward'), array(
+          'page' => 'yrewrite',
+          'subpage' => 'forward'
+          )
+        );
+        $forwardPage->setHref('index.php?page=yrewrite&subpage=forward');
+    
+        $REX['ADDON']['pages'][$mypage] = array (
+            $forwardPage
+        );
 
-    $forwardPage = new rex_be_page($I18N->msg('yrewrite_forward'), array(
-        'page' => 'yrewrite',
-        'subpage' => 'forward'
-    )
-    );
-    $forwardPage->setHref('index.php?page=yrewrite&subpage=forward');
-
-    $setupPage = new rex_be_page($I18N->msg('yrewrite_setup'), array(
-        'page' => 'yrewrite',
-        'subpage' => 'setup'
-    )
-    );
-    $setupPage->setHref('index.php?page=yrewrite&subpage=setup');
-
-    $REX['ADDON']['pages'][$mypage] = array (
-        $domainsPage, $AliasDomainsPage, $forwardPage, $setupPage
-    );
+   
+   
+   }
 
 }
 
