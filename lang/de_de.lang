@@ -30,6 +30,7 @@ yrewrite_alias_domain_refersto = Diese Domain wird weitergeleitet
 yrewrite_domain_willbereferdto = auf diese Domain
 
 yrewrite_domain_already_defined = Domain wurde bereits definiert
+yrewrite_mount_id_already_defined = Startpunkt der Domain ist bereits belegt
 yrewrite_no_domain_defined = Es wurde keine Domain definiert
 yrewrite_no_mount_id_defined = Bitte eine Mount Id eingeben
 yrewrite_no_start_id_defined = Bitte einen Startikel auswählen

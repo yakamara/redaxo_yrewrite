@@ -35,9 +35,10 @@ if ($func != '') {
 
     $xform->setValidateField('unique', array('domain', $I18N->msg('yrewrite_domain_already_defined')));
     $xform->setValidateField('empty', array('domain', $I18N->msg('yrewrite_no_domain_defined')));
-    $xform->setValidateField('empty', array('mount_id', $I18N->msg('yrewrite_no_mount_id_defined')));
+    // $xform->setValidateField('empty', array('mount_id', $I18N->msg('yrewrite_no_mount_id_defined')));
     $xform->setValidateField('empty', array('start_id', $I18N->msg('yrewrite_no_start_id_defined')));
     $xform->setValidateField('empty', array('notfound_id', $I18N->msg('yrewrite_no_not_found_id_defined')));
+    $xform->setValidateField('unique', array('mount_id', $I18N->msg('yrewrite_mount_id_already_defined')));
 
     if ($func == 'delete') {
 

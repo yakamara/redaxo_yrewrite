@@ -325,8 +325,12 @@ class rex_yrewrite
         global $REX;
 
         $setDomain = function (&$domain, &$path, OORedaxo $element) {
-            if (isset(rex_yrewrite::$domainsByMountId[$element->getId()])) {
-                $domain = rex_yrewrite::$domainsByMountId[$element->getId()]['domain'];
+            $element_id = $element->getId();
+            if (isset(rex_yrewrite::$domainsByMountId[$element_id])) {
+                $domain = rex_yrewrite::$domainsByMountId[$element_id]['domain'];
+                $path = rex_yrewrite::$scheme->getClang($element->getClang());
+            } else if ( $element->getParentId() == 0 ) {
+                $domain = rex_yrewrite::$domainsByMountId[0]['domain'];
                 $path = rex_yrewrite::$scheme->getClang($element->getClang());
             }
         };
@@ -445,7 +449,7 @@ class rex_yrewrite
             if ($domain['domain'] != '') {
                 if ($domain['alias_domain'] != '') {
                     $filecontent .= "\n" . 'rex_yrewrite::setAliasDomain("' . $domain['domain'] . '", "' . $domain['alias_domain'] . '");';
-                } elseif ($domain['mount_id'] > 0 && $domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
+                } elseif ($domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
                     $filecontent .= "\n" . 'rex_yrewrite::setDomain("' . $domain['domain'] . '", ' . $domain['mount_id'] . ', ' . $domain['start_id'] . ', ' . $domain['notfound_id'] . ');';
                 }
             }
