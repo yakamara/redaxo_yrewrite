@@ -32,6 +32,7 @@ $UrlRewriteBasedir = dirname(__FILE__);
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_scheme.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_forward.inc.php';
+require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_seo.inc.php';
 
 rex_yrewrite::setScheme(new rex_yrewrite_scheme());
 
@@ -44,14 +45,22 @@ if ($REX['REDAXO']) {
         rex_register_extension('PAGE_CONTENT_MENU', function ($params) {
             global $REX, $I18N;
             $class = '';
-            if ($params['mode'] == 'yrewrite') {
+            if ($params['mode'] == 'yrewrite_url') {
                 $class = 'class="rex-active"';
             }
-            $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode') . '</a>';
+            $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_url&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_url') . '</a>';
+            array_splice($params['subject'], '-2', '-2', $page);
+
+            $class = '';
+            if ($params['mode'] == 'yrewrite_seo') {
+              $class = 'class="rex-active"';
+            }
+            $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_seo&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_seo') . '</a>';
             array_splice($params['subject'], '-2', '-2', $page);
 
             array_pop($params['subject']);
             $params['subject'][] = '<a href="' . rex_getUrl($params['article_id'], $params['clang']) . '" target="_blank">' . $I18N->msg('show') . '</a>';
+
 
             return $params['subject'];
         });
@@ -59,8 +68,10 @@ if ($REX['REDAXO']) {
         rex_register_extension('PAGE_CONTENT_OUTPUT', function ($params) {
             global $REX, $I18N;
 
-            if ($params['mode'] == 'yrewrite') {
-                include $REX['INCLUDE_PATH'] . '/addons/yrewrite/pages/content.inc.php';
+            if ($params['mode'] == 'yrewrite_url') {
+                include $REX['INCLUDE_PATH'] . '/addons/yrewrite/pages/content_url.inc.php';
+            } else if ($params['mode'] == 'yrewrite_seo') {
+              include $REX['INCLUDE_PATH'] . '/addons/yrewrite/pages/content_seo.inc.php';
             }
         });
 
@@ -132,6 +143,11 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
 
         rex_yrewrite::init();
 
+        if (rex_request("rex_yrewrite_func","string") == "robots") {
+            $robots = new rex_yrewrite_seo();
+            $robots->sendRobotsTxt();
+        }
+
         // if anything changes -> refresh PathFile
         if ($REX['REDAXO']) {
             $extension = 'rex_yrewrite::generatePathFile';
@@ -154,6 +170,13 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
         }
 
     }, '', REX_EXTENSION_EARLY);
+
+    if (rex_request("rex_yrewrite_func","string") == "sitemap") {
+        rex_register_extension('ADDONS_INCLUDED', function ($params) {
+            $sitemap = new rex_yrewrite_seo();
+            $sitemap->sendSitemap();
+        }, '', REX_EXTENSION_LATE);
+    }
 
     rex_register_extension('YREWRITE_PREPARE', function ($params) {
         return rex_yrewrite_forward::getForward($params);

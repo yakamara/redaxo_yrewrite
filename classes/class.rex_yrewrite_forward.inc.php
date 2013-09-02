@@ -28,34 +28,32 @@ class rex_yrewrite_forward
 
       $domain = $params["domain"];
       if($domain == "undefined") {
-        $domain = "";
+          $domain = "";
       }
       $url = $params["url"];
-      $port = $params["port"];
-      $http = $params["http"];
 
       foreach(self::$paths as $p) {
       
-        if($p["domain"] == $domain && ( $p["url"] == $url || $p["url"] . '/' == $url) ) {
-          $forward_url = "";
-          if($p["type"] == "article" && ($art = OOArticle::getArticleById($p["article_id"],$p["clang"])) ) {
-              $forward_url = rex_getUrl($p["article_id"],$p["clang"]);
+          if($p["domain"] == $domain && ( $p["url"] == $url || $p["url"] . '/' == $url) ) {
+              $forward_url = "";
+              if($p["type"] == "article" && ($art = OOArticle::getArticleById($p["article_id"],$p["clang"])) ) {
+                  $forward_url = rex_getUrl($p["article_id"],$p["clang"]);
 
-          } else if($p["type"] == "media" && ($media = OOMedia::getMediaByFileName($p["media"]))) {
-              $forward_url = '/files/'.$p["media"];
-            
-          } else if($p["type"] == "extern" && $p["extern"] != "") {
-              $forward_url = $p["extern"];
+              } else if($p["type"] == "media" && ($media = OOMedia::getMediaByFileName($p["media"]))) {
+                  $forward_url = '/files/'.$p["media"];
+
+              } else if($p["type"] == "extern" && $p["extern"] != "") {
+                  $forward_url = $p["extern"];
+
+              }
+
+              if($forward_url != "") {
+                  header('HTTP/1.1 '.self::$movetypes[$p["movetype"]]);
+                  header('Location: ' . $forward_url);
+                  exit;
+              }
 
           }
-
-          if($forward_url != "") {
-            header('HTTP/1.1 '.self::$movetypes[$p["movetype"]]);
-            header('Location: ' . $forward_url);
-            exit;
-          }
-    
-        }
       
       }
      return false;

@@ -86,7 +86,7 @@ if ($isStartarticle) {
             <form action="index.php" method="post" enctype="multipart/form-data" id="yrewrite-form" name="yrewrite-form">
                 <input type="hidden" name="page" value="content" />
                 <input type="hidden" name="article_id" value="' . $article_id . '" />
-                <input type="hidden" name="mode" value="yrewrite" />
+                <input type="hidden" name="mode" value="yrewrite_url" />
                 <input type="hidden" name="save" value="1" />
                 <input type="hidden" name="clang" value="' . $clang . '" />
                 <input type="hidden" name="ctype" value="' . $ctype . '" />

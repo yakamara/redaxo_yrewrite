@@ -2,7 +2,8 @@ yrewrite = YRewrite
 
 # content page
 yrewrite_rewriter = URL Umschreibung
-yrewrite_mode = URL
+yrewrite_mode_url = URL
+yrewrite_mode_seo = SEO
 yrewrite_customurl = Benutzerdefinierte URL
 yrewrite_update = URL aktualisieren
 
@@ -42,6 +43,31 @@ yrewrite_warning_chars = Die URL ist nicht korrekt. Schreibweise beachten. Nur a
 yrewrite_warning_urlexists = Diese URL existiert bereits {0}
 yrewrite_warning_otherarticle = Zum anderen Artikel
 yrewrite_urlupdated = Url wurde aktualisiert
+
+yrewrite_seotitle = Titel
+yrewrite_seodescription = Description
+yrewrite_seokeywords = Keywords
+yrewrite_seopriority = Wichtigkeit:
+yrewrite_seochangefreq = Aktualisierungshäufigkeit:
+
+yrewrite_seoupdated = Seo Daten wurden aktualisiert.
+yrewrite_seoupdate_failed = Bei der Akualisierung sind Fehler aufgetreten. Bitte YRewrite reinstallieren.
+
+yrewrite_seopriority_0_0 = unbedeutend [0.0]
+yrewrite_seopriority_0_1 = sehr unwichtig [0.1]
+yrewrite_seopriority_0_3 = unwichtig [0.3]
+yrewrite_seopriority_0_5 = normal [0.5]
+yrewrite_seopriority_0_7 = wichtig [0.7]
+yrewrite_seopriority_1_0 = sehr wichtig [1.0]
+
+yrewrite_seochangefreq_daily = täglich [daily]
+yrewrite_seochangefreq_hourly = stündlich [hourly]
+yrewrite_seochangefreq_weekly = wöchentlich [weekly]
+yrewrite_seochangefreq_monthly = monatlich [monthly]
+yrewrite_seochangefreq_yearly = jährlich [yearly]
+yrewrite_seochangefreq_never = nie [never]
+yrewrite_seochangefreq_always = immer [always]
+
 
 
 yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt

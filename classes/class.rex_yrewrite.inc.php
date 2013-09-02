@@ -151,8 +151,6 @@ class rex_yrewrite
                 $url = urldecode($_SERVER['REQUEST_URI']);
             }
 
-            $domain = $_SERVER['HTTP_HOST'];
-            $port = $_SERVER['SERVER_PORT'];
 
             // because of server differences
             if (substr($url, 0, 1) == '/') {
@@ -169,9 +167,11 @@ class rex_yrewrite
                 $url = substr($url, 0, $pos);
             }
 
+            $domain = self::getHost();
+
             $http = 'http://';
-            if ($_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off') ) {
-                $http = 'https://';
+            if(self::isHttps()) {
+              $http = 'https://';
             }
 
             // no domain found -> set undefined
@@ -186,6 +186,11 @@ class rex_yrewrite
                     header('Location: ' . $http . $domain . '/' . $url);
                     exit;
 
+                // no domain, no alias, domain with root mountpoint ?
+                } else if ( isset(rex_yrewrite::$domainsByMountId[0]) ) {
+                    $domain = rex_yrewrite::$domainsByMountId[0]['domain'];
+
+                // no root domain -> undefined
                 } else {
                     $domain = 'undefined';
                 }
@@ -215,7 +220,7 @@ class rex_yrewrite
 
             }
 
-            $params = rex_register_extension_point('YREWRITE_PREPARE', '', array('url' =>$url, 'domain' => $domain, 'port' => $port, 'http' => $http));
+            $params = rex_register_extension_point('YREWRITE_PREPARE', '', array('url' =>$url, 'domain' => $domain, 'http' => $http));
 
             if (isset($params['article_id']) && $params['article_id'] > 0) {
 
@@ -273,10 +278,9 @@ class rex_yrewrite
 
         //$url = urldecode($_SERVER['REQUEST_URI']);
         $domain = $_SERVER['HTTP_HOST'];
-        $port = $_SERVER['SERVER_PORT'];
 
         $www = 'http://';
-        if ($port == 443) {
+        if(self::isHttps()) {
             $www = 'https://';
         }
 
@@ -329,10 +333,11 @@ class rex_yrewrite
             if (isset(rex_yrewrite::$domainsByMountId[$element_id])) {
                 $domain = rex_yrewrite::$domainsByMountId[$element_id]['domain'];
                 $path = rex_yrewrite::$scheme->getClang($element->getClang());
+
             } else if ( $element->getParentId() == 0 ) {
                 $domain = rex_yrewrite::$domainsByMountId[0]['domain'];
-                $path = rex_yrewrite::$scheme->getClang($element->getClang());
             }
+
         };
 
         $setPath = function ($domain, $path, OOArticle $art) use ($setDomain) {
@@ -482,5 +487,38 @@ class rex_yrewrite
         copy($src, $des);
     }
 
+    static function isHttps() {
+      if ( $_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off') ) {
+        return true;
+      }
+      return false;
+    }
+
+    static function deleteCache() {
+      self::$paths = array();
+      unlink(rex_yrewrite::$configfile);
+      unlink(rex_yrewrite::$pathfile);
+      self::init();
+    }
+
+    static function getFullPath($link = '')
+    {
+        $domain = self::getHost();
+        $http = 'http://';
+        if(self::isHttps()) {
+          $http = 'https://';
+        }
+        return $http.$domain.'/'.$link;
+    }
+
+    static function getHost() {
+      $domain = $_SERVER['HTTP_HOST'];
+      if (!isset(rex_yrewrite::$paths['paths'][$domain])) {
+        if (isset(rex_yrewrite::$AliasDomains[$domain])) {
+          $domain = rex_yrewrite::$AliasDomains[$domain];
+        }
+      }
+      return $domain;
+    }
 
 }

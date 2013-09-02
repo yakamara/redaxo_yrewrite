@@ -3,6 +3,9 @@ RewriteBase /
 
 RewriteRule ^images/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2
 
+RewriteRule ^sitemap\.xml$ index.php?rex_yrewrite_func=sitemap [NC,L]
+RewriteRule ^robots\.txt$ index.php?rex_yrewrite_func=robots [NC,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l

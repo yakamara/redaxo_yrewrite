@@ -45,6 +45,7 @@ if ($func != '') {
         $d = rex_sql::factory();
         $d->setQuery('delete from rex_yrewrite_domain where id=' . $data_id);
         echo rex_info($I18N->msg('yrewrite_domain_deleted'));
+        rex_yrewrite::deleteCache();
         $info = rex_generateAll();
 
     } elseif ($func == 'edit') {
@@ -59,6 +60,7 @@ if ($func != '') {
 
         if ($xform->objparams['actions_executed']) {
             echo rex_info($I18N->msg('yrewrite_domain_updated'));
+            rex_yrewrite::deleteCache();
             $info = rex_generateAll();
         } else {
             $showlist = false;
@@ -77,6 +79,7 @@ if ($func != '') {
 
         if ($xform->objparams['actions_executed']) {
             echo rex_info($I18N->msg('yrewrite_domain_added'));
+            rex_yrewrite::deleteCache();
             $info = rex_generateAll();
         } else {
             $showlist = false;
