@@ -8,53 +8,115 @@
 
 class rex_yrewrite_seo
 {
+    public
+        $article = NULL,
+        $domain = NULL;
 
-    static $priority = array("1.0", "0.7", "0.5", "0.3", "0.1", "0.0");
-    static $priority_default = "0.5";
-    static $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never');
-    static $changefreq_default = 'weekly';
+    static
+        $priority = array("1.0", "0.7", "0.5", "0.3", "0.1", "0.0"),
+        $priority_default = "0.5",
+        $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'),
+        $changefreq_default = 'weekly';
 
-    // TODO:
-    /*
-    public function getMeta($art, $field = 'title') {
-        switch($field) {
-            case("title"):
-              return "title";
-              break;
-
-            case("description"):
-              return "description";
-              break;
-
-          case("keywords"):
-              return "keywords";
-              break;
-        }
-        return '';
-    }
-    */
-
-    public function sendRobotsTxt()
+    public function rex_yrewrite_seo($article_id = 0)
     {
+        global $REX;
+
+        if($article_id == 0) {
+          $article_id = $REX["ARTICLE_ID"];
+        }
+
+        if( ($article = OOArticle::getArticleById($article_id)) ) {
+            $this->article = $article;
+            $this->domain = rex_yrewrite::getDomainByArticleId($article_id);
+        }
+
+    }
+
+    public function getMetaTags() {
+        return
+          '<title>'.$this->getTitle().'</title>'.
+          "\n".'<meta name="description" content="'.$this->getDescription().'">'. //  lang="de"
+          "\n".'<meta name="keywords" content="'.$this->getKeywords().'">'; //  lang="de"
+    }
+
+    public function getTitle()
+    {
+        global $REX;
+        $title_scheme = trim(rex_yrewrite::$domainsByName[$this->domain]['title_scheme']);
+        if($title_scheme == '') {
+            $title_scheme = '%YT / %T / %SN ';
+        }
+
+        $ytitle = '';
+        if($this->article && $this->article->getValue('yrewrite_title') != "") {
+          $ytitle = $this->article->getValue('yrewrite_title');
+        }
+
+        $title = $title_scheme;
+        $title = str_replace('%YT', $ytitle, $title);
+        $title = str_replace('%T', $this->article->getValue('name'), $title);
+        $title = str_replace('%SN', $REX['SERVERNAME'], $title);
+
+        // TODO: ersetzungen noch überlegen - in welcher Form ?
+        // %C = Kategoriename ?
+        // %P = PATH ?
+
+        return $title;
+    }
+
+    public function getDescription()
+    {
+        $description = rex_yrewrite::$domainsByName[$this->domain]['description'];
+        if($this->article && $this->article->getValue('yrewrite_description') != "") {
+            $description = $this->article->getValue('yrewrite_description');
+        }
+        return $description;
+    }
+
+    public function getKeywords()
+    {
+        $keywords = rex_yrewrite::$domainsByName[$this->domain]['keywords'];
+        if($this->article && $this->article->getValue('yrewrite_keywords') != "") {
+            $keywords = $this->article->getValue('yrewrite_keywords');
+        }
+        return $keywords;
+    }
+
+  // ----- global static functions
+
+    public function sendRobotsTxt($domain = "")
+    {
+        if($domain == "") {
+          $domain = rex_yrewrite::getHost();
+        }
+
         header("Content-Type: text/plain");
         // header content length ?
         $content = 'Sitemap: '.rex_yrewrite::getFullPath('sitemap.xml');
         $content .= "\n\n".'User-agent: *';
         $content .= "\n".'Disallow:';
 
-        // TODO: weitere robots disallows rein.
+        if (isset(rex_yrewrite::$domainsByName[$domain])) {
+            $robots = rex_yrewrite::$domainsByName[$domain]["robots"];
+            if($robots != "") {
+                $content .= "\n".$robots;
+            }
+        }
 
         echo $content;
         exit;
     }
 
-    public function sendSitemap()
+    public function sendSitemap($domain = "")
     {
         global $REX;
 
-        $sitemap = array();
+        if($domain == "") {
+            $domain = rex_yrewrite::getHost();
+        }
 
-        $domain = rex_yrewrite::getHost();
+        $sitemap = array();
         if ( isset(rex_yrewrite::$paths['paths'][$domain]) ) {
 
             // var_dump(rex_yrewrite::$domainsByName[$domain]);
@@ -64,12 +126,12 @@ class rex_yrewrite_seo
 
                 if( ($article = OOArticle::getArticleById($article_id)) ) {
 
-                    $changefreq = $article->getValue('yrewrite_seochangefreq');
+                    $changefreq = $article->getValue('yrewrite_changefreq');
                     if(!in_array($changefreq,self::$changefreq)) {
                         $changefreq = self::$changefreq_default;
                     }
 
-                    $priority = $article->getValue('yrewrite_seopriority');
+                    $priority = $article->getValue('yrewrite_priority');
 
                     if(!in_array($priority,self::$priority)) {
                         $priority = self::$priority_default;

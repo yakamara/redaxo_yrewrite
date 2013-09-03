@@ -27,6 +27,13 @@ yrewrite_notfound_id = 404 Artikel
 yrewrite_alias_domain = Alias Domain
 yrewrite_alias_domains = Alias Domains
 
+yrewrite_domain_title_scheme = Titel Schema
+yrewrite_domain_description = Beschreibung
+yrewrite_domain_keywords = Suchbegriffe
+yrewrite_domain_robots = Robotsdatei
+
+
+
 yrewrite_alias_domain_refersto = Diese Domain wird weitergeleitet
 yrewrite_domain_willbereferdto = auf diese Domain
 
@@ -47,26 +54,26 @@ yrewrite_urlupdated = Url wurde aktualisiert
 yrewrite_seotitle = Titel
 yrewrite_seodescription = Description
 yrewrite_seokeywords = Keywords
-yrewrite_seopriority = Wichtigkeit:
-yrewrite_seochangefreq = Aktualisierungshäufigkeit:
+yrewrite_priority = Wichtigkeit:
+yrewrite_changefreq = Aktualisierungshäufigkeit:
 
 yrewrite_seoupdated = Seo Daten wurden aktualisiert.
 yrewrite_seoupdate_failed = Bei der Akualisierung sind Fehler aufgetreten. Bitte YRewrite reinstallieren.
 
-yrewrite_seopriority_0_0 = unbedeutend [0.0]
-yrewrite_seopriority_0_1 = sehr unwichtig [0.1]
-yrewrite_seopriority_0_3 = unwichtig [0.3]
-yrewrite_seopriority_0_5 = normal [0.5]
-yrewrite_seopriority_0_7 = wichtig [0.7]
-yrewrite_seopriority_1_0 = sehr wichtig [1.0]
+yrewrite_priority_0_0 = unbedeutend [0.0]
+yrewrite_priority_0_1 = sehr unwichtig [0.1]
+yrewrite_priority_0_3 = unwichtig [0.3]
+yrewrite_priority_0_5 = normal [0.5]
+yrewrite_priority_0_7 = wichtig [0.7]
+yrewrite_priority_1_0 = sehr wichtig [1.0]
 
-yrewrite_seochangefreq_daily = täglich [daily]
-yrewrite_seochangefreq_hourly = stündlich [hourly]
-yrewrite_seochangefreq_weekly = wöchentlich [weekly]
-yrewrite_seochangefreq_monthly = monatlich [monthly]
-yrewrite_seochangefreq_yearly = jährlich [yearly]
-yrewrite_seochangefreq_never = nie [never]
-yrewrite_seochangefreq_always = immer [always]
+yrewrite_changefreq_daily = täglich [daily]
+yrewrite_changefreq_hourly = stündlich [hourly]
+yrewrite_changefreq_weekly = wöchentlich [weekly]
+yrewrite_changefreq_monthly = monatlich [monthly]
+yrewrite_changefreq_yearly = jährlich [yearly]
+yrewrite_changefreq_never = nie [never]
+yrewrite_changefreq_always = immer [always]
 
 
 

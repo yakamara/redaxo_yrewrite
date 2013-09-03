@@ -14,7 +14,6 @@ class rex_yrewrite
     * - call_by_article_id: forward, not_allowed
     */
 
-    static $use_levenshtein = false;
     static $domainsByMountId = array();
     static $domainsByName = array();
     static $AliasDomains = array();
@@ -32,12 +31,6 @@ class rex_yrewrite
         rex_yrewrite::$scheme = $scheme;
     }
 
-
-    static function setLevenshtein($use_levenshtein = true)
-    {
-        rex_yrewrite::$use_levenshtein = $use_levenshtein;
-    }
-
     static function init()
     {
         global $REX;
@@ -50,19 +43,27 @@ class rex_yrewrite
 
     // ----- domain
 
-    static function setDomain($name, $domain_article_id, $start_article_id, $notfound_article_id)
+    static function setDomain($name, $domain_article_id, $start_article_id, $notfound_article_id, $title_scheme = '', $description = '', $keywords = '', $robots = '')
     {
         rex_yrewrite::$domainsByMountId[$domain_article_id] = array(
             'domain' => $name,
             'domain_article_id' => $domain_article_id,
             'start_article_id' => $start_article_id,
             'notfound_article_id' => $notfound_article_id,
+            'robots' => $robots,
+            'title_scheme' => $title_scheme,
+            'description' => $description,
+            'keywords' => $keywords,
         );
         rex_yrewrite::$domainsByName[$name] = array(
             'domain' => $name,
             'domain_article_id' => $domain_article_id,
             'start_article_id' => $start_article_id,
             'notfound_article_id' => $notfound_article_id,
+            'robots' => $robots,
+            'title_scheme' => $title_scheme,
+            'description' => $description,
+            'keywords' => $keywords,
         );
     }
 
@@ -236,21 +237,6 @@ class rex_yrewrite
 
             }
 
-            // Check levenshtein
-            if (rex_yrewrite::$use_levenshtein) {
-            /*
-                foreach (rex_yrewrite::$paths['paths'] as $key => $var) {
-                    foreach ($var as $k => $v) {
-                        $levenshtein[levenshtein($path, $v)] = $key.'#'.$k;
-                    }
-                }
-                ksort($levenshtein);
-                $best = explode('#', array_shift($levenshtein));
-                rex_yrewrite::setArticleId($best[0]);
-                $clang = $best[1];
-            */
-            }
-
             // no article found -> domain not found article
             $REX['ARTICLE_ID'] = rex_yrewrite::$domainsByName[$domain]['notfound_article_id'];
 
@@ -389,6 +375,7 @@ class rex_yrewrite
             case 'ART_ADDED':
             case 'ART_UPDATED':
             case 'ART_STATUS':
+                rex_deleteCacheArticle($params['id']);
                 $domain = 'undefined';
                 $path = rex_yrewrite::$scheme->getClang($params['clang']);
                 $art = OOArticle::getArticleById($params['id'], $params['clang']);
@@ -455,7 +442,15 @@ class rex_yrewrite
                 if ($domain['alias_domain'] != '') {
                     $filecontent .= "\n" . 'rex_yrewrite::setAliasDomain("' . $domain['domain'] . '", "' . $domain['alias_domain'] . '");';
                 } elseif ($domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
-                    $filecontent .= "\n" . 'rex_yrewrite::setDomain("' . $domain['domain'] . '", ' . $domain['mount_id'] . ', ' . $domain['start_id'] . ', ' . $domain['notfound_id'] . ');';
+                    $filecontent .= "\n" . 'rex_yrewrite::setDomain(
+                      "' . $domain['domain'] . '", ' . $domain['mount_id'] . ',
+                      ' . $domain['start_id'] . ',
+                      ' . $domain['notfound_id'] . ',
+                      "'.htmlspecialchars($domain['title_scheme']).'",
+                      "'.htmlspecialchars($domain['description']).'",
+                      "'.htmlspecialchars($domain['keywords']).'",
+                      "'.htmlspecialchars($domain['robots']).'"
+                      );';
                 }
             }
         }
@@ -495,9 +490,10 @@ class rex_yrewrite
     }
 
     static function deleteCache() {
+      rex_generateAll();
       self::$paths = array();
-      unlink(rex_yrewrite::$configfile);
-      unlink(rex_yrewrite::$pathfile);
+      @unlink(rex_yrewrite::$configfile);
+      @unlink(rex_yrewrite::$pathfile);
       self::init();
     }
 

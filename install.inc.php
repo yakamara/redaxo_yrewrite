@@ -7,11 +7,11 @@ $REX['ADDON']['install']['yrewrite'] = 1;
 
 $sql = rex_sql::factory();
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_url` VARCHAR( 255 ) NOT NULL ;');
-$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_seopriority` FLOAT(1,1) NOT NULL ;');
-$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_seochangefreq` VARCHAR( 10 ) NOT NULL ;');
-$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_seotitle` VARCHAR( 255 ) NOT NULL ;');
-$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_seodescription` TEXT NOT NULL ;');
-$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_seokeywords` TEXT NOT NULL ;');
+$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_priority` FLOAT(1,1) NOT NULL DEFAULT 0.5 ;');
+$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_changefreq` VARCHAR( 10 ) NOT NULL ;');
+$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_title` VARCHAR( 255 ) NOT NULL ;');
+$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_description` TEXT NOT NULL ;');
+$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_keywords` TEXT NOT NULL ;');
 
 
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_domain` (
@@ -38,6 +38,13 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_forward` (
     `movetype` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+
+
+$sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `robots` TEXT NOT NULL ;');
+$sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `title_scheme` varchar(255) NOT NULL;');
+$sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `description` varchar(255) NOT NULL;');
+$sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `keywords` varchar(255) NOT NULL;');
+
 
 $I18N->appendFile($REX['INCLUDE_PATH'] . '/addons/yrewrite/lang');
 
