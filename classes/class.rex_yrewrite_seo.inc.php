@@ -18,7 +18,7 @@ class rex_yrewrite_seo
         $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'),
         $changefreq_default = 'weekly',
         $robots_default = "User-agent: *\nDisallow",
-        $title_scheme_default = '%YT / %T / %SN';
+        $title_scheme_default = '%T / %SN';
 
     public function rex_yrewrite_seo($article_id = 0)
     {
@@ -55,15 +55,13 @@ class rex_yrewrite_seo
         if($this->article && $this->article->getValue('yrewrite_title') != "") {
           $ytitle = $this->article->getValue('yrewrite_title');
         }
+        if($ytitle == '') {
+          $ytitle = $this->article->getValue('name');
+        }
 
         $title = $title_scheme;
-        $title = str_replace('%YT', $ytitle, $title);
-        $title = str_replace('%T', $this->article->getValue('name'), $title);
+        $title = str_replace('%T', $ytitle, $title);
         $title = str_replace('%SN', $REX['SERVERNAME'], $title);
-
-        // TODO: ersetzungen noch überlegen - in welcher Form ?
-        // %C = Kategoriename ?
-        // %P = PATH ?
 
         return $this->cleanString($title);
     }
@@ -93,16 +91,15 @@ class rex_yrewrite_seo
 
         header("Content-Type: text/plain");
         // header content length ?
-        $content = 'Sitemap: '.rex_yrewrite::getFullPath('sitemap.xml');
+        $content = 'Sitemap: '.rex_yrewrite::getFullPath('sitemap.xml')."\n\n";
 
 
         if (isset(rex_yrewrite::$domainsByName[$domain])) {
             $robots = rex_yrewrite::$domainsByName[$domain]["robots"];
             if($robots != "") {
-                $content .= "\n".$robots;
+                $content .= $robots;
             } else {
-                $content .= "\n\n".'User-agent: *';
-                $content .= "\n".'Disallow:';
+                $content .= self::$robots_default;
             }
         }
 

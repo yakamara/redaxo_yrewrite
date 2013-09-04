@@ -43,6 +43,18 @@ if ($func != '') {
     $xform->setValueField('textarea', array('description', $I18N->msg('yrewrite_domain_description'),'','','short'));
     $xform->setValueField('textarea', array('robots', $I18N->msg('yrewrite_domain_robots'),rex_yrewrite_seo::$robots_default,'','short'));
 
+?>
+<script>
+  jQuery(document).ready(function () {
+      jQuery("#xform-formular-title_scheme").append('<span style="display:block; margin-left:230px; font-size:10px"><?php echo $I18N->msg('yrewrite_domain_title_scheme_info'); ?></span>');
+      jQuery("#xform-formular-description").append('<span style="display:block; margin-left:230px; font-size:10px;"></span>');
+      jQuery("#xform-formular-description textarea").bind ("change input keyup keydown keypress mouseup mousedown cut copy paste",function (e) {
+          var v = jQuery(this).val().replace(/(\r\n|\n|\r)/gm, "").length;
+          jQuery("#xform-formular-description").find('span').html( v + ' <?php echo $I18N->msg('yrewrite_domain_description_info'); ?>');
+      return true;
+      }).trigger("keydown");
+  });
+</script><?php
 
     if ($func == 'delete') {
 

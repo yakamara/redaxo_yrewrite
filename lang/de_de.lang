@@ -9,7 +9,7 @@ yrewrite_customurl = Benutzerdefinierte URL
 yrewrite_update = URL aktualisieren
 
 yrewrite_domains = Domains
-yrewrite_domain_info = Domains [www.domain.de]
+yrewrite_domain_info = Domain [www.domain.de]
 yrewrite_article_urls = Artikel URLs
 yrewrite_setup = Setup
 
@@ -28,8 +28,10 @@ yrewrite_notfound_id = 404 Artikel
 yrewrite_alias_domain = Alias Domain
 yrewrite_alias_domains = Alias Domains
 
-yrewrite_domain_title_scheme = Titel Schema
-yrewrite_domain_description = Beschreibung
+yrewrite_domain_title_scheme = Seitentitel Schema
+yrewrite_domain_title_scheme_info = %T=SEO-Title oder Artikelname, %SN=Servename
+yrewrite_domain_description = Seitenbeschreibung (wenn Artikelbeschreibung leer ist)
+yrewrite_domain_description_info = Zeichen / Empfehlung: 160 Zeichen
 yrewrite_domain_robots = Robotsdatei
 
 yrewrite_root = --- Root Ebene --- [0]
