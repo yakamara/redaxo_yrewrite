@@ -41,7 +41,6 @@ if ($func != '') {
 
     $xform->setValueField('text', array('title_scheme', $I18N->msg('yrewrite_domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default));
     $xform->setValueField('textarea', array('description', $I18N->msg('yrewrite_domain_description'),'','','short'));
-    $xform->setValueField('textarea', array('keywords', $I18N->msg('yrewrite_domain_keywords'),'','','short'));
     $xform->setValueField('textarea', array('robots', $I18N->msg('yrewrite_domain_robots'),rex_yrewrite_seo::$robots_default,'','short'));
 
 
@@ -155,7 +154,6 @@ if ($showlist) {
     $list->removeColumn('robots', 'robots');
     $list->removeColumn('title_scheme', 'title_scheme');
     $list->removeColumn('description', 'description');
-    $list->removeColumn('keywords', 'keywords');
 
     echo $list->get();
 

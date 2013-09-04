@@ -11,8 +11,6 @@ $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_priority` FLOAT(1,1) NOT
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_changefreq` VARCHAR( 10 ) NOT NULL ;');
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_title` VARCHAR( 255 ) NOT NULL ;');
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_description` TEXT NOT NULL ;');
-$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_keywords` TEXT NOT NULL ;');
-
 
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_domain` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -39,12 +37,9 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_forward` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
-
 $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `robots` TEXT NOT NULL ;');
 $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `title_scheme` varchar(255) NOT NULL;');
 $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `description` varchar(255) NOT NULL;');
-$sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `keywords` varchar(255) NOT NULL;');
-
 
 $I18N->appendFile($REX['INCLUDE_PATH'] . '/addons/yrewrite/lang');
 

@@ -113,7 +113,6 @@ if ($showlist) {
     $list->removeColumn('robots', 'robots');
     $list->removeColumn('title_scheme', 'title_scheme');
     $list->removeColumn('description', 'description');
-    $list->removeColumn('keywords', 'keywords');
 
     echo $list->get();
 

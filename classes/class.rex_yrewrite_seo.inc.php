@@ -39,14 +39,13 @@ class rex_yrewrite_seo
     public function getMetaTags() {
         return
           '<title>'.$this->getTitle().'</title>'.
-          "\n".'<meta name="description" content="'.$this->getDescription().'">'. //  lang="de"
-          "\n".'<meta name="keywords" content="'.$this->getKeywords().'">'; //  lang="de"
+          "\n".'<meta name="description" content="'.$this->getDescription().'">'; //  lang="de"
     }
 
     public function getTitle()
     {
         global $REX;
-        $title_scheme = trim(rex_yrewrite::$domainsByName[$this->domain]['title_scheme']);
+        $title_scheme = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['title_scheme']));
         if($title_scheme == '') {
             $title_scheme = self::$title_scheme_default;
         }
@@ -65,28 +64,25 @@ class rex_yrewrite_seo
         // %C = Kategoriename ?
         // %P = PATH ?
 
-        return $title;
+        return $this->cleanString($title);
     }
 
     public function getDescription()
     {
-        $description = rex_yrewrite::$domainsByName[$this->domain]['description'];
+        $description = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['description']));
         if($this->article && $this->article->getValue('yrewrite_description') != "") {
             $description = $this->article->getValue('yrewrite_description');
         }
-        return $description;
+        return $this->cleanString($description);
     }
 
-    public function getKeywords()
-    {
-        $keywords = rex_yrewrite::$domainsByName[$this->domain]['keywords'];
-        if($this->article && $this->article->getValue('yrewrite_keywords') != "") {
-            $keywords = $this->article->getValue('yrewrite_keywords');
-        }
-        return $keywords;
+    public function cleanString($str) {
+        return str_replace(array("\n","\r"),array(' ',''), $str);
+
     }
 
-  // ----- global static functions
+
+    // ----- global static functions
 
     public function sendRobotsTxt($domain = "")
     {

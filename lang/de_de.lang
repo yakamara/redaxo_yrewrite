@@ -30,7 +30,6 @@ yrewrite_alias_domains = Alias Domains
 
 yrewrite_domain_title_scheme = Titel Schema
 yrewrite_domain_description = Beschreibung
-yrewrite_domain_keywords = Suchbegriffe
 yrewrite_domain_robots = Robotsdatei
 
 yrewrite_root = --- Root Ebene --- [0]
@@ -54,7 +53,6 @@ yrewrite_urlupdated = Url wurde aktualisiert
 
 yrewrite_seotitle = Titel
 yrewrite_seodescription = Description
-yrewrite_seokeywords = Keywords
 yrewrite_priority = Wichtigkeit:
 yrewrite_changefreq = Aktualisierungshäufigkeit:
 

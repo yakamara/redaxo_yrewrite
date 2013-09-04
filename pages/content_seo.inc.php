@@ -39,7 +39,6 @@ $xform->setObjectparams('getdata', true);
 
 $xform->setValueField('text', array('yrewrite_title', $I18N->msg('yrewrite_seotitle')));
 $xform->setValueField('textarea', array('yrewrite_description', $I18N->msg('yrewrite_seodescription'),'','','short'));
-$xform->setValueField('textarea', array('yrewrite_keywords', $I18N->msg('yrewrite_seokeywords'),'','','short'));
 
 $xform->setValueField('select', array('yrewrite_changefreq', $I18N->msg('yrewrite_changefreq'), implode(",",$select_changefreq), '', rex_yrewrite_seo::$changefreq_default));
 $xform->setValueField('select', array('yrewrite_priority', $I18N->msg('yrewrite_priority'), implode(",",$select_priority), '', rex_yrewrite_seo::$priority_default));
