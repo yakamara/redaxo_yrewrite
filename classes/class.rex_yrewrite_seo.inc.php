@@ -18,8 +18,7 @@ class rex_yrewrite_seo
         $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'),
         $changefreq_default = 'weekly',
         $robots_default = "User-agent: *\nDisallow",
-        $title_scheme_default = '%YT / %T / %SN'
-    ;
+        $title_scheme_default = '%YT / %T / %SN';
 
     public function rex_yrewrite_seo($article_id = 0)
     {
@@ -36,10 +35,12 @@ class rex_yrewrite_seo
 
     }
 
-    public function getMetaTags() {
-        return
-          '<title>'.$this->getTitle().'</title>'.
-          "\n".'<meta name="description" content="'.$this->getDescription().'">'; //  lang="de"
+    public function getTitleTag() {
+        return '<title>'.htmlspecialchars($this->getTitle()).'</title>'; //  lang="de"
+    }
+
+    public function getDescriptionTag() {
+        return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
     }
 
     public function getTitle()
@@ -93,13 +94,15 @@ class rex_yrewrite_seo
         header("Content-Type: text/plain");
         // header content length ?
         $content = 'Sitemap: '.rex_yrewrite::getFullPath('sitemap.xml');
-        $content .= "\n\n".'User-agent: *';
-        $content .= "\n".'Disallow:';
+
 
         if (isset(rex_yrewrite::$domainsByName[$domain])) {
             $robots = rex_yrewrite::$domainsByName[$domain]["robots"];
             if($robots != "") {
                 $content .= "\n".$robots;
+            } else {
+                $content .= "\n\n".'User-agent: *';
+                $content .= "\n".'Disallow:';
             }
         }
 
