@@ -10,144 +10,58 @@ $article_id = $params['article_id'];
 $clang = $params['clang'];
 $ctype = rex_request('ctype');
 
-$yrewrite_title = rex_request('yrewrite_title','string');
-$yrewrite_description = rex_request('yrewrite_description','string');
-$yrewrite_keywords = rex_request('yrewrite_keywords','string');
-$yrewrite_priority = rex_request('yrewrite_priority','string');
-$yrewrite_changefreq = rex_request('yrewrite_changefreq','string');
-
-$sel_priority = new rex_select();
-$sel_priority->setSize(1);
-$sel_priority->setName('yrewrite_priority');
-
+$select_priority = array();
 foreach(rex_yrewrite_seo::$priority as $priority) {
-    $sel_priority->addOption($I18N->msg("yrewrite_priority_".str_replace(".","_",$priority)),$priority);
+  $select_priority[] = $I18N->msg("yrewrite_priority_".str_replace(".","_",$priority)).'='.$priority;
 }
 
-$sel_changefreq = new rex_select();
-$sel_changefreq->setSize(1);
-$sel_changefreq->setName('yrewrite_changefreq');
+$select_changefreq = array();
 foreach(rex_yrewrite_seo::$changefreq as $changefreq) {
-    $sel_changefreq->addOption($I18N->msg('yrewrite_changefreq_'.$changefreq),$changefreq);
+  $select_changefreq[] = $I18N->msg("yrewrite_changefreq_".$changefreq).'='.$changefreq;
+
 }
 
+$xform = new rex_xform;
+// $xform->setDebug(TRUE);
+$xform->setHiddenField('page', 'content');
+$xform->setHiddenField('mode', 'yrewrite_seo');
+$xform->setHiddenField('save', '1');
+$xform->setHiddenField('article_id', $article_id);
+$xform->setHiddenField('clang', $clang);
+$xform->setHiddenField('ctype', $ctype);
 
-$sql = rex_sql::factory();
-// $sql->debugsql = 1;
-$data = $sql->getArray('SELECT * FROM ' . $REX['TABLE_PREFIX'] . 'article WHERE id=' . $article_id . ' AND clang=' . $clang);
-$data = $data[0];
+$xform->setObjectparams('form_showformafterupdate', 1);
 
-if (rex_post('save', 'boolean') == 1) {
+$xform->setObjectparams('main_table', $REX['TABLE_PREFIX'] . 'article');
+$xform->setObjectparams('main_id', $article_id);
+$xform->setObjectparams('main_where', 'id='.$article_id);
+$xform->setObjectparams('getdata', true);
 
-    $sql = rex_sql::factory();
-    $sql->setTable($REX['TABLE_PREFIX'] . 'article');
-    // $sql->debugsql = 1;
-    $sql->setWhere('id=' . $article_id . ' AND clang=' . $clang);
-    $sql->setValue('yrewrite_title', $yrewrite_title);
-    $sql->setValue('yrewrite_description', $yrewrite_description);
-    $sql->setValue('yrewrite_keywords', $yrewrite_keywords);
-    $sql->setValue('yrewrite_priority', $yrewrite_priority);
-    $sql->setValue('yrewrite_changefreq', $yrewrite_changefreq);
-    if ($sql->update()) {
-        echo rex_info($I18N->msg("yrewrite_seoupdated") );
-        rex_deleteCacheArticle($article_id, $clang);
-    } else {
-        echo rex_warning($I18N->msg("yrewrite_seoupdate_failed") );
-    }
+$xform->setValueField('text', array('yrewrite_title', $I18N->msg('yrewrite_seotitle')));
+$xform->setValueField('textarea', array('yrewrite_description', $I18N->msg('yrewrite_seodescription'),'','','short'));
+$xform->setValueField('textarea', array('yrewrite_keywords', $I18N->msg('yrewrite_seokeywords'),'','','short'));
+
+$xform->setValueField('select', array('yrewrite_changefreq', $I18N->msg('yrewrite_changefreq'), implode(",",$select_changefreq), '', rex_yrewrite_seo::$changefreq_default));
+$xform->setValueField('select', array('yrewrite_priority', $I18N->msg('yrewrite_priority'), implode(",",$select_priority), '', rex_yrewrite_seo::$priority_default));
+
+$xform->setActionField('db', array($REX['TABLE_PREFIX'] . 'article', 'id=' . $article_id));
+$xform->setObjectparams('submit_btn_label', $I18N->msg('update'));
+$form = $xform->getForm();
+
+if ($xform->objparams['actions_executed']) {
+
+  echo rex_info($I18N->msg("yrewrite_seoupdated") );
+  rex_deleteCacheArticle($article_id, $clang);
 
 } else {
 
-    $yrewrite_title = $data['yrewrite_title'];
-    $yrewrite_description = $data['yrewrite_description'];
-    $yrewrite_keywords = $data['yrewrite_keywords'];
-    $yrewrite_priority = $data['yrewrite_priority'];
-    $yrewrite_changefreq = $data['yrewrite_changefreq'];
-
-    if ($yrewrite_changefreq == "") {
-        $yrewrite_changefreq = rex_yrewrite_seo::$changefreq_default;
-    }
-
-    if ($yrewrite_priority == "") {
-        $yrewrite_priority = rex_yrewrite_seo::$priority_default;
-    }
-
 }
 
-$sel_priority->setSelected($yrewrite_priority);
-$sel_changefreq->setSelected($yrewrite_changefreq);
+echo '<div class="clearer"></div>
+<div class="rex-addon-output" >
+<h3 class="rex-hl2">' . $I18N->msg('yrewrite_rewriter_seo') . '</h3>
+<div class="rex-addon-content" >';
 
+echo $form;
 
-  echo '
-<div class="rex-content-body" id="yrewrite-contentpage">
-    <div class="rex-content-body-2">
-        <div class="rex-form" id="rex-form-content-metamode">
-            <form action="index.php" method="post" enctype="multipart/form-data" id="yrewrite-form" name="yrewrite-form">
-                <input type="hidden" name="page" value="content" />
-                <input type="hidden" name="article_id" value="' . $article_id . '" />
-                <input type="hidden" name="mode" value="yrewrite_seo" />
-                <input type="hidden" name="save" value="1" />
-                <input type="hidden" name="clang" value="' . $clang . '" />
-                <input type="hidden" name="ctype" value="' . $ctype . '" />
-
-                <fieldset class="rex-form-col-1">
-                  <legend>' . $I18N->msg('yrewrite_rewriter') . '</legend>
-
-                  <div class="rex-form-wrapper">
-
-                        <div class="rex-form-row">
-                            <p class="rex-form-text" style="margin-bottom: -3px;">
-                            <label for="custom-seotitle">' . $I18N->msg('yrewrite_seotitle') . '</label>
-                            <input type="text" value="' . htmlspecialchars($yrewrite_title) . '" name="yrewrite_title" id="custom-seotitle" class="rex-form-text">
-                            </p>
-                        </div>
-
-                        <div class="rex-form-row">
-                            <p class="rex-form-textarea" style="margin-bottom: -3px;">
-                            <label for="custom-seodescription">' . $I18N->msg('yrewrite_seodescription') . '</label>
-                            <textarea rows="5" cols="50" name="yrewrite_description" id="custom-seodescription" class="rex-form-textarea">' . htmlspecialchars($yrewrite_description) . '</textarea>
-                            </p>
-                        </div>
-
-                        <div class="rex-form-row">
-                            <p class="rex-form-textarea" style="margin-bottom: -3px;">
-                            <label for="custom-seokeywords">' . $I18N->msg('yrewrite_seokeywords') . '</label>
-                            <textarea rows="5" cols="50" name="yrewrite_keywords" id="custom-seokeywords" class="rex-form-textarea">' . htmlspecialchars($yrewrite_keywords) . '</textarea>
-                            </p>
-                        </div>
-
-                        <div class="rex-form-row">
-                            <p class="rex-form-text" style="margin-bottom: -3px;">
-                            <label for="custom-url">' . $I18N->msg('yrewrite_changefreq') . '</label>
-                            '.$sel_changefreq->get().'
-                            </p>
-                         </div>
-
-                        <div class="rex-form-row"><p class="rex-form-text" style="margin-bottom: -3px;">
-                            <label for="custom-url">' . $I18N->msg('yrewrite_priority') . '</label>
-                            '.$sel_priority->get().'
-                            </p>
-                        </div>
-
-                        <div class="rex-form-row">
-                            <p class="rex-form-col-a rex-form-submit">
-                                <input type="submit" value="' . $I18N->msg('update') . '" name="save" class="rex-form-submit">
-                                <br/><br/>
-                            </p>
-                        </div>
-                        <div class="rex-clearer"></div>
-              </div>
-
-          </fieldset>
-
-            </form>
-        </div>
-    </div>
-</div>';
-  ?>
-  <script type="text/javascript">
-    jQuery(document).ready(function() {
-
-    });
-
-  </script> <?php
-
+echo '</div></div>';
