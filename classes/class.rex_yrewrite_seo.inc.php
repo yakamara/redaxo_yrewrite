@@ -16,7 +16,10 @@ class rex_yrewrite_seo
         $priority = array("1.0", "0.7", "0.5", "0.3", "0.1", "0.0"),
         $priority_default = "0.5",
         $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'),
-        $changefreq_default = 'weekly';
+        $changefreq_default = 'weekly',
+        $robots_default = "User-agent: *\nDisallow",
+        $title_scheme_default = '%YT / %T / %SN'
+    ;
 
     public function rex_yrewrite_seo($article_id = 0)
     {
@@ -45,7 +48,7 @@ class rex_yrewrite_seo
         global $REX;
         $title_scheme = trim(rex_yrewrite::$domainsByName[$this->domain]['title_scheme']);
         if($title_scheme == '') {
-            $title_scheme = '%YT / %T / %SN ';
+            $title_scheme = self::$title_scheme_default;
         }
 
         $ytitle = '';

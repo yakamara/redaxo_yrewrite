@@ -2,6 +2,7 @@ yrewrite = YRewrite
 
 # content page
 yrewrite_rewriter = URL Umschreibung
+yrewrite_rewriter_seo = SEO Daten
 yrewrite_mode_url = URL
 yrewrite_mode_seo = SEO
 yrewrite_customurl = Benutzerdefinierte URL
@@ -32,7 +33,7 @@ yrewrite_domain_description = Beschreibung
 yrewrite_domain_keywords = Suchbegriffe
 yrewrite_domain_robots = Robotsdatei
 
-
+yrewrite_root = --- Root Ebene --- [0]
 
 yrewrite_alias_domain_refersto = Diese Domain wird weitergeleitet
 yrewrite_domain_willbereferdto = auf diese Domain

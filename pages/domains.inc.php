@@ -4,9 +4,6 @@ $showlist = true;
 $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');
 
-// $I18N->msg("yrewrite")
-// <div class="rex-addon-output"><h2 class="rex-hl2">Folgende Anfragen stehen an</h2><!-- <div class="rex-addon-content"> </div> --></div>
-
 /* TODO:
 
 // VALIDATES bei den domains
@@ -40,10 +37,12 @@ if ($func != '') {
     $xform->setValidateField('empty', array('notfound_id', $I18N->msg('yrewrite_no_not_found_id_defined')));
     $xform->setValidateField('unique', array('mount_id', $I18N->msg('yrewrite_mount_id_already_defined')));
 
-    // $xform->setValueField('text', array('title_scheme', $I18N->msg('yrewrite_domain_title_scheme')));
-    // $xform->setValueField('textarea', array('description', $I18N->msg('yrewrite_domain_description')));
-    // $xform->setValueField('textarea', array('keywords', $I18N->msg('yrewrite_domain_keywords')));
-    // $xform->setValueField('textarea', array('robots', $I18N->msg('yrewrite_domain_robots')));
+    $xform->setValueField('fieldset', array('seo',$I18N->msg('yrewrite_rewriter_seo')));
+
+    $xform->setValueField('text', array('title_scheme', $I18N->msg('yrewrite_domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default));
+    $xform->setValueField('textarea', array('description', $I18N->msg('yrewrite_domain_description'),'','','short'));
+    $xform->setValueField('textarea', array('keywords', $I18N->msg('yrewrite_domain_keywords'),'','','short'));
+    $xform->setValueField('textarea', array('robots', $I18N->msg('yrewrite_domain_robots'),rex_yrewrite_seo::$robots_default,'','short'));
 
 
     if ($func == 'delete') {
@@ -101,13 +100,31 @@ if ($func != '') {
 
 if ($showlist) {
 
+    function rex_yrewrite_show_article($params) {
+        global $I18N;
+        $id = $params['list']->getValue($params['field']);
+        if($id == 0) {
+            return $I18N->msg('yrewrite_root');
+        } else {
+            if(($article = OOArticle::getArticleById($id))) {
+                if($article->isStartArticle()) {
+                    $link = 'index.php?page=structure&category_id='.$id.'&clang=0';
+                } else {
+                    $link ='index.php?page=content&article_id='.$id.'&mode=edit&clang=0';
+                }
+                return $article->getName().' [<a href="'.$link.'">'.$id.'</a>]';
+            }
+        }
+      return '['.$id.']';
+    }
+
+
     $sql = 'SELECT * FROM rex_yrewrite_domain where alias_domain = ""';
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');
     $list->addParam('page', 'yrewrite');
     $list->addParam('subpage', '');
-
 
     $header = '<a class="rex-i-element rex-i-generic-add" href="' . $list->getUrl(array('func' => 'add')) . '"><span class="rex-i-element-text">' . $I18N->msg('yrewrite_add_domain') . '</span></a>';
     $list->addColumn($header, '###id###', 0, array('<th class="rex-icon">###VALUE###</th>', '<td class="rex-small">###VALUE###</td>'));
@@ -122,53 +139,16 @@ if ($showlist) {
     $list->setColumnLabel('start_id', $I18N->msg('yrewrite_start_id'));
     $list->setColumnLabel('notfound_id', $I18N->msg('yrewrite_notfound_id'));
 
-        /*
-        $list->setColumnFormat(
-                        "mount_id",
-                        'custom',
-                            array('rex_xform_be_link', 'getListValue'),
-                            array('field' => 'mount_id', 'fields' => $fields)
-                        );*/
-
-        /*
-        $list->setColumnFormat(
-                        $field["f1"],
-                        'custom',
-                        array('rex_xform_'.$field['type_name'], 'getListValue'),
-                        array('field' => $field, 'fields' => $fields));
-
-
-
-                if(method_exists('rex_xform_'.$field['type_name'],'getListValue')) {
-                    $list->setColumnFormat(
-                        $field["f1"],
-                        'custom',
-                        array('rex_xform_'.$field['type_name'], 'getListValue'),
-                        array('field' => $field, 'fields' => $fields));
-                }
-            }
-
-            if($field["type_id"] == "value") {
-                if($field["list_hidden"] == 1) {
-                    $list->removeColumn($field["f1"]);
-                }else {
-                    $list->setColumnSortable($field["f1"]);
-                    $list->setColumnLabel($field["f1"],$field["f2"]);
-                }
-            }
-        }
-
-        $list->addColumn($I18N->msg('edit'),$I18N->msg('edit'));
-        $list->setColumnParams($I18N->msg('edit'), array("data_id"=>"###id###","func"=>"edit","start"=>rex_request("start","string")));
-
-        */
-
     $list->addColumn($I18N->msg('delete'), $I18N->msg('delete'));
     $list->setColumnParams($I18N->msg('delete'), array('data_id' => '###id###', 'func' => 'delete'));
     $list->addLinkAttribute($I18N->msg('delete'), 'onclick', 'return confirm(\' id=###id### ' . $I18N->msg('delete') . ' ?\')');
 
     $list->addColumn($I18N->msg('edit'), $I18N->msg('edit'));
     $list->setColumnParams($I18N->msg('edit'), array('data_id' => '###id###', 'func' => 'edit', 'start' => rex_request('start', 'string')));
+
+    $list->setColumnFormat('mount_id', 'custom', 'rex_yrewrite_show_article', array());
+    $list->setColumnFormat('start_id', 'custom', 'rex_yrewrite_show_article', array());
+    $list->setColumnFormat('notfound_id', 'custom', 'rex_yrewrite_show_article', array());
 
     $list->removeColumn('clang');
     $list->removeColumn('alias_domain', 'alias_domain');
