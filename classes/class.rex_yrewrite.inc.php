@@ -492,8 +492,6 @@ class rex_yrewrite
     static function deleteCache() {
       rex_generateAll();
       self::$paths = array();
-      @unlink(rex_yrewrite::$configfile);
-      @unlink(rex_yrewrite::$pathfile);
       self::init();
     }
 
