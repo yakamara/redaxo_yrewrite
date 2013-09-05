@@ -121,6 +121,12 @@ class rex_yrewrite_seo
             // var_dump(rex_yrewrite::$domainsByName[$domain]);
             // var_dump(rex_yrewrite::$paths['paths'][$domain]);
 
+            $domain_article_id = rex_yrewrite::$domainsByName[$domain]['domain_article_id'];
+            $paths = 0;
+            if( ($dai = OOArticle::getArticleById($domain_article_id)) ) {
+              $paths = count($dai->getParentTree());
+            }
+
             foreach(rex_yrewrite::$paths['paths'][$domain] as $article_id => $path) {
 
                 if( ($article = OOArticle::getArticleById($article_id)) && $article->isOnline() && self::checkArticlePerm($article)) {
@@ -131,9 +137,16 @@ class rex_yrewrite_seo
                     }
 
                     $priority = $article->getValue('yrewrite_priority');
-
                     if(!in_array($priority,self::$priority)) {
-                        $priority = self::$priority_default;
+                        $article_paths = count($article->getParentTree());
+                        $prio = $article_paths - $paths -1;
+                        if($prio < 0) $prio = 0;
+
+                        if (isset(self::$priority[$prio])) {
+                          $priority = self::$priority[$prio];
+                        } else {
+                          $priority = self::$priority_default;
+                        }
                     }
 
                     $sitemap[] =
