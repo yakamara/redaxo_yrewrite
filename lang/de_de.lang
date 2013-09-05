@@ -84,8 +84,12 @@ yrewrite_htaccess_set = .htaccess Datei setzen
 yrewrite_htaccess_info = Um YRewrite lauffähig zu bekommen, muss eine .htaccess Datei im Root Ordner gesetzt werden. Sollte eine andere .htaccess bereits vorhanden sein, wird diese ersetzt und ist nicht wiederherstellbar.
 
 yrewrite_info_headline = Verwendung von YRewrite
+yrewrite_info_text = Da YRewrite für <b>Multidomainlösungen</b> gedacht ist, gibt es bestimmte Vorraussetzungen. Dazu gehört, dass YRewrite <b>nicht in Unterordnern</b> der Domains läuft. Weiterhin werden alle URL Ersetzungen über YRewrite geregelt. D.h. es kann vorkommen, dass eine URL situationsbedingt auch den Domainnamen enthält. In den Templates bitte auch deswegen <b>keinen base Tag verwenden</b>. Sollte etwas durcheinanderkommen, durch Eigenentwicklungen oder ähnlichem, bitte den allgemeinen Cache löschen, das ermöglicht YRewrite die Config- und Url-Dateien neu zu erstellen. Weiterhin muss <b>Mod-Rewrite über die Systemeinstellungen in REDAXO aktiviert</b> sein.
 
-yrewrite_info_text = Da YRewrite für Multidomainlösungen gedacht ist, gibt es bestimmte Vorraussetzungen. Dazu gehört, dass YRewrite nicht in Unterordnern der Domains läuft. Weiterhin werden alle URL Ersetzungen über YRewrite geregelt. D.h. es kann vorkommen, dass eine URL situationsbedingt auch den Domainnamen enthält. In den Templates bitte auch deswegen keinen base Tag verwenden. Sollte etwas durcheinanderkommen, durch Eigenentwicklungen oder ähnlichem, bitte den allgemeinen Cache löschen, das ermöglicht YRewrite die Config- und Url-Dateien neu zu erstellen. Weiterhin muss Mod-Rewrite über die Systemeinstellungen in REDAXO aktiviert sein.
+yrewrite_info_seo = Verwendung der SEO Optionen
+yrewrite_info_seo_text = Folgenden Code bitte <b>ins Template</b> in den &lt;head&gt; Bereich setzen. Keinen eigenen title und meta-description-tag verwenden.
+
+yrewrite_info_sitemaprobots = sitemap.xml und robots.txt
 
 yrewrite_install_xform_version_problem = Bitte installieren Sie das XForm Addon in Version {0}
 yrewrite_install_redaxo_version_problem = Die REDAXO Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
