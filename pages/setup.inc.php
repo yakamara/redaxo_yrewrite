@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * YREWRITE Addon
+ * @author jan.kristinus@yakamara.de
+ * @package redaxo4.5
+ */
+
 if ( !$REX['MOD_REWRITE'] ) {
   echo rex_warning($I18N->msg("yrewrite_notactivebecauseofmodrewrite"));
 }

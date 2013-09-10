@@ -6,20 +6,6 @@
  * @package redaxo4.5
  */
 
-
-/*
-* TODOS:
-
-- clang integrieren  / domain.de -> aid:5,clang:1 / domain.en -> aid:2,clang:0
-- cache refresh wenn url neu geschrieben
-- Validierungen bei domains anpassen
-- article urls auch über das addon selbst erstellen können
-
-forward
--  Externe URL nach "http://" prüfen
-
-*/
-
 $mypage = 'yrewrite';
 
 $REX['ADDON']['name'][$mypage] = 'YRewrite';

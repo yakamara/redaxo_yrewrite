@@ -3,6 +3,7 @@
 /**
  * YREWRITE Addon
  * @author jan.kristinus@yakamara.de
+ * @author gregor.harlan@redaxo.org
  * @package redaxo4.5
  */
 

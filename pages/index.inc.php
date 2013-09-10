@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * YREWRITE Addon
+ * @author jan.kristinus@yakamara.de
+ * @package redaxo4.5
+ */
+
 require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
 $page = rex_request('page', 'string');

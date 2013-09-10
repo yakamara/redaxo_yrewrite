@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * YREWRITE Addon
+ * @author jan.kristinus@yakamara.de
+ * @package redaxo4.5
+ */
+
 $showlist = true;
 $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');

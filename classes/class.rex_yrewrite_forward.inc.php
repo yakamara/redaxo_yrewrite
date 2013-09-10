@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * YREWRITE Addon
+ * @author jan.kristinus@yakamara.de
+ * @package redaxo4.5
+ */
+
 class rex_yrewrite_forward
 {
 

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * YREWRITE Addon
+ * @author gregor.harlan@redaxo.org
+ * @package redaxo4.5
+ */
+
 class rex_yrewrite_scheme
 {
     protected $suffix = '.html';

@@ -1,17 +1,14 @@
 <?php
 
+/**
+ * YREWRITE Addon
+ * @author jan.kristinus@yakamara.de
+ * @package redaxo4.5
+ */
+
 $showlist = true;
 $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');
-
-/* TODO:
-
-// VALIDATES bei den domains
-// - es muss mount_id, start_id und notfound_id
-// - Domain ohne http://
-
-*/
-
 
 if ($func != '') {
 
