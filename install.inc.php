@@ -13,7 +13,7 @@ $REX['ADDON']['install']['yrewrite'] = 1;
 
 $sql = rex_sql::factory();
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_url` VARCHAR( 255 ) NOT NULL ;');
-$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_priority` VARCHAR( 5 ) NOT NULL default = ``;');
+$sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_priority` VARCHAR( 5 ) NOT NULL;');
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_changefreq` VARCHAR( 10 ) NOT NULL ;');
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_title` VARCHAR( 255 ) NOT NULL ;');
 $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_description` TEXT NOT NULL ;');
