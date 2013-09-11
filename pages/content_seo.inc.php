@@ -34,7 +34,7 @@ $xform->setObjectparams('form_showformafterupdate', 1);
 
 $xform->setObjectparams('main_table', $REX['TABLE_PREFIX'] . 'article');
 $xform->setObjectparams('main_id', $article_id);
-$xform->setObjectparams('main_where', 'id='.$article_id);
+$xform->setObjectparams('main_where', 'id='.$article_id.' and clang='.$clang);
 $xform->setObjectparams('getdata', true);
 
 $xform->setValueField('text', array('yrewrite_title', $I18N->msg('yrewrite_seotitle')));
