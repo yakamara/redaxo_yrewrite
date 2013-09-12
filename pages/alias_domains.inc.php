@@ -26,7 +26,7 @@ if ($func != '') {
 
     $xform->setValidateField('empty', array('domain', $I18N->msg('yrewrite_no_domain_defined')));
     $xform->setValidateField('empty', array('alias_domain', $I18N->msg('yrewrite_no_domain_defined')));
-    $xform->setValidateField('unique', array('domain,alias_domain', $I18N->msg('yrewrite_domain_already_defined')));
+    $xform->setValidateField('unique', array('domain', $I18N->msg('yrewrite_domain_already_defined')));
 
     if ($func == 'delete') {
 

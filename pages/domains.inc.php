@@ -32,7 +32,19 @@ if ($func != '') {
     // $xform->setValidateField('empty', array('mount_id', $I18N->msg('yrewrite_no_mount_id_defined')));
     $xform->setValidateField('empty', array('start_id', $I18N->msg('yrewrite_no_start_id_defined')));
     $xform->setValidateField('empty', array('notfound_id', $I18N->msg('yrewrite_no_not_found_id_defined')));
-    $xform->setValidateField('unique', array('mount_id', $I18N->msg('yrewrite_mount_id_already_defined')));
+
+    // unique: mount_id,alias_domain
+    // unique auf 2 Feldern funktioniert erst ab xform version 4.5.1
+    // deswegen noch als customfunction
+    $xform->setValidateField('customfunction', array('mount_id', 'rex_yrewrite_domaincheck', $xform, $I18N->msg('yrewrite_mount_id_already_defined')));
+
+    function rex_yrewrite_domaincheck ($field, $value, $xform) {
+        $sql = 'select '.$field.' from '.$xform->objparams["main_table"].' where '.$field.'="'.mysql_real_escape_string($value).'" and alias_domain="" AND !('.$xform->objparams["main_where"].')';
+        $a = rex_sql::factory();
+        $result = $a->getArray($sql);
+        if(count($result)>0) return true;
+        return false;
+    }
 
     $xform->setValueField('fieldset', array('seo',$I18N->msg('yrewrite_rewriter_seo')));
 
