@@ -38,6 +38,17 @@ class rex_yrewrite_seo
     public function getTitleTag() {
         return '<title>'.htmlspecialchars($this->getTitle()).'</title>'; //  lang="de"
     }
+    
+    
+    /* Erweiterung für SEO Navigations <a title=""> */
+	public function getLinkTitleByArticleId($article_id) {
+		 if( ($article = OOArticle::getArticleById($article_id)) ) {
+			return htmlspecialchars($article->getValue('yrewrite_title')); //  lang="de" 
+		 }
+        
+    }
+	/* Ende */
+
 
     public function getDescriptionTag() {
         return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
