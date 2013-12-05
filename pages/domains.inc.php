@@ -22,6 +22,7 @@ if ($func != '') {
     $xform->setObjectparams('main_table', 'rex_yrewrite_domain');
 
     $xform->setValueField('text', array('domain', $I18N->msg('yrewrite_domain_info')));
+    $xform->setValueField('text', array('server_name', 'Server Name:'));
     $xform->setValueField('be_link', array('mount_id', $I18N->msg('yrewrite_mount_id')));
     $xform->setValueField('be_link', array('start_id', $I18N->msg('yrewrite_start_id')));
     $xform->setValueField('be_link', array('notfound_id', $I18N->msg('yrewrite_notfound_id')));
@@ -51,6 +52,7 @@ if ($func != '') {
     $xform->setValueField('text', array('title_scheme', $I18N->msg('yrewrite_domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default));
     $xform->setValueField('textarea', array('description', $I18N->msg('yrewrite_domain_description'),'','','short'));
     $xform->setValueField('textarea', array('robots', $I18N->msg('yrewrite_domain_robots'),rex_yrewrite_seo::$robots_default,'','short'));
+    $xform->setValueField('textarea', array('analytics_code', 'Analytics-Code','','','short'));
 
 ?>
 <script>
@@ -153,8 +155,11 @@ if ($showlist) {
     $list->setColumnSortable('id');
 
     $list->removeColumn('id');
+    $list->removeColumn('analytics_code');
+    # $list->removeColumn('server_name');
 
     $list->setColumnLabel('domain', $I18N->msg('yrewrite_domain'));
+    $list->setColumnLabel('server_name', 'Server-Name');
     $list->setColumnLabel('mount_id', $I18N->msg('yrewrite_mount_id'));
     $list->setColumnLabel('start_id', $I18N->msg('yrewrite_start_id'));
     $list->setColumnLabel('notfound_id', $I18N->msg('yrewrite_notfound_id'));

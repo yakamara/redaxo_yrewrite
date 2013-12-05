@@ -38,9 +38,34 @@ class rex_yrewrite_seo
     public function getTitleTag() {
         return '<title>'.htmlspecialchars($this->getTitle()).'</title>'; //  lang="de"
     }
+	
+	
+	/* Erweiterung für SEO Navigations <a title=""> */
+	public function getLinkTitleByArticleId($article_id) {
+		 if( ($article = OOArticle::getArticleById($article_id)) ) {
+			return htmlspecialchars($article->getValue('yrewrite_title')); //  lang="de" 
+		 }
+        
+    }
+	/* Ende */
+	
+	/* Erweiterung für eigenen ServerName */
+	public function getDomainServerNameText() {
+		return htmlspecialchars($this->getDomainServerName());
+	}
+	/* Ende */
+	
+	
+	/* Erweiterung für Analytics Code */
+	public function getAnalyticsCodeTag() {
+		return html_entity_decode($this->getAnalyticsCode());
+	}
+	/* Ende */
+	
+	
 
     public function getDescriptionTag() {
-        return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
+        return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'" />'; //  lang="de"
     }
 
     public function getTitle()
@@ -61,7 +86,12 @@ class rex_yrewrite_seo
 
         $title = $title_scheme;
         $title = str_replace('%T', $ytitle, $title);
-        $title = str_replace('%SN', $REX['SERVERNAME'], $title);
+        if($this->getDomainServerName() != '')
+        {
+	      $title = str_replace('%SN', htmlspecialchars($this->getDomainServerName()), $title);  
+        } else {
+	      $title = str_replace('%SN', $REX['SERVERNAME'], $title);
+        }
 
         return $this->cleanString($title);
     }
@@ -69,11 +99,32 @@ class rex_yrewrite_seo
     public function getDescription()
     {
         $description = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['description']));
+
         if($this->article && $this->article->getValue('yrewrite_description') != "") {
             $description = $this->article->getValue('yrewrite_description');
         }
         return $this->cleanString($description);
     }
+    
+    
+    /* Erweiterung Eigener ServerName */
+    public function getDomainServerName()
+    {
+        $domain_server_name = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['server_name']));      
+        return $this->cleanString($domain_server_name);
+    }
+    /* Erweiterung Ende */
+    
+    
+    /* Erweiterung  Analytics Code*/
+    public function getAnalyticsCode()
+    {
+        $analytics_code = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['analytics_code']));
+        return $this->cleanString($analytics_code);
+    }
+    /* Erweiterung Ende */
+    
+
 
     public function cleanString($str) {
         return str_replace(array("\n","\r"),array(' ',''), $str);
