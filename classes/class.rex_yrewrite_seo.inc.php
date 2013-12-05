@@ -39,6 +39,7 @@ class rex_yrewrite_seo
         return '<title>'.htmlspecialchars($this->getTitle()).'</title>'; //  lang="de"
     }
 	
+	
 	/* Erweiterung für SEO Navigations <a title=""> */
 	public function getLinkTitleByArticleId($article_id) {
 		 if( ($article = OOArticle::getArticleById($article_id)) ) {
@@ -49,12 +50,16 @@ class rex_yrewrite_seo
 	/* Ende */
 	
 	/* Erweiterung für eigenen ServerName */
-	
 	public function getDomainServerNameText() {
 		return htmlspecialchars($this->getDomainServerName());
 	}
+	/* Ende */
 	
 	
+	/* Erweiterung für Analytics Code */
+	public function getAnalyticsCodeTag() {
+		return html_entity_decode($this->getAnalyticsCode());
+	}
 	/* Ende */
 	
 	
@@ -102,11 +107,22 @@ class rex_yrewrite_seo
     }
     
     
+    /* Erweiterung Eigener ServerName */
     public function getDomainServerName()
     {
         $domain_server_name = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['server_name']));      
         return $this->cleanString($domain_server_name);
     }
+    /* Erweiterung Ende */
+    
+    
+    /* Erweiterung  Analytics Code*/
+    public function getAnalyticsCode()
+    {
+        $analytics_code = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['analytics_code']));
+        return $this->cleanString($analytics_code);
+    }
+    /* Erweiterung Ende */
     
 
 

@@ -96,6 +96,7 @@ if ($showlist) {
 
     $list->removeColumn('id');
     $list->removeColumn('server_name');
+    $list->removeColumn('analytics_code');
 
     $list->setColumnLabel('domain', $I18N->msg('yrewrite_domain'));
     $list->setColumnLabel('alias_domain', $I18N->msg('yrewrite_alias_domain'));

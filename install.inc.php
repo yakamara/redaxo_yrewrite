@@ -28,6 +28,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_domain` (
     `notfound_id` int(11) NOT NULL,
     `alias_domain` varchar(255) NOT NULL,
     `server_name` varchar(255) NOT NULL,
+    `analytics_code` text NOT NULL,
     `clang` int(11) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');

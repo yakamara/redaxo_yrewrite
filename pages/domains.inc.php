@@ -52,6 +52,7 @@ if ($func != '') {
     $xform->setValueField('text', array('title_scheme', $I18N->msg('yrewrite_domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default));
     $xform->setValueField('textarea', array('description', $I18N->msg('yrewrite_domain_description'),'','','short'));
     $xform->setValueField('textarea', array('robots', $I18N->msg('yrewrite_domain_robots'),rex_yrewrite_seo::$robots_default,'','short'));
+    $xform->setValueField('textarea', array('analytics_code', 'Analytics-Code','','','short'));
 
 ?>
 <script>
@@ -154,6 +155,7 @@ if ($showlist) {
     $list->setColumnSortable('id');
 
     $list->removeColumn('id');
+    $list->removeColumn('analytics_code');
     # $list->removeColumn('server_name');
 
     $list->setColumnLabel('domain', $I18N->msg('yrewrite_domain'));

@@ -44,7 +44,7 @@ class rex_yrewrite
 
     // ----- domain
 
-    static function setDomain($name, $domain_article_id, $start_article_id, $notfound_article_id, $title_scheme = '', $description = '', $robots = '', $server_name = '')
+    static function setDomain($name, $domain_article_id, $start_article_id, $notfound_article_id, $title_scheme = '', $description = '', $robots = '', $server_name = '', $analytics_code = '')
     {
         rex_yrewrite::$domainsByMountId[$domain_article_id] = array(
             'domain' => $name,
@@ -54,7 +54,8 @@ class rex_yrewrite
             'robots' => $robots,
             'title_scheme' => $title_scheme,
             'description' => $description,
-            'server_name' => $server_name
+            'server_name' => $server_name,
+            'analytics_code' => $analytics_code
         );
         rex_yrewrite::$domainsByName[$name] = array(
             'domain' => $name,
@@ -64,7 +65,8 @@ class rex_yrewrite
             'robots' => $robots,
             'title_scheme' => $title_scheme,
             'description' => $description,
-            'server_name' => $server_name
+            'server_name' => $server_name,
+            'analytics_code' => $analytics_code
         );
     }
 
@@ -450,7 +452,8 @@ class rex_yrewrite
                       "'.htmlspecialchars($domain['title_scheme']).'",
                       "'.htmlspecialchars($domain['description']).'",
                       "'.htmlspecialchars($domain['robots']).'",
-                      "'.htmlspecialchars($domain['server_name']).'"
+                      "'.htmlspecialchars($domain['server_name']).'",
+                      "'.htmlspecialchars(stripslashes($domain['analytics_code'])).'"
                       );';
                 }
             }
