@@ -44,7 +44,7 @@ class rex_yrewrite
 
     // ----- domain
 
-    static function setDomain($name, $domain_article_id, $start_article_id, $notfound_article_id, $title_scheme = '', $description = '', $robots = '')
+    static function setDomain($name, $domain_article_id, $start_article_id, $notfound_article_id, $title_scheme = '', $description = '', $robots = '', $server_name = '')
     {
         rex_yrewrite::$domainsByMountId[$domain_article_id] = array(
             'domain' => $name,
@@ -54,6 +54,7 @@ class rex_yrewrite
             'robots' => $robots,
             'title_scheme' => $title_scheme,
             'description' => $description,
+            'server_name' => $server_name
         );
         rex_yrewrite::$domainsByName[$name] = array(
             'domain' => $name,
@@ -63,6 +64,7 @@ class rex_yrewrite
             'robots' => $robots,
             'title_scheme' => $title_scheme,
             'description' => $description,
+            'server_name' => $server_name
         );
     }
 
@@ -447,7 +449,8 @@ class rex_yrewrite
                       ' . $domain['notfound_id'] . ',
                       "'.htmlspecialchars($domain['title_scheme']).'",
                       "'.htmlspecialchars($domain['description']).'",
-                      "'.htmlspecialchars($domain['robots']).'"
+                      "'.htmlspecialchars($domain['robots']).'",
+                      "'.htmlspecialchars($domain['server_name']).'"
                       );';
                 }
             }
