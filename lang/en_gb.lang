@@ -1,1 +1,139 @@
-yrewrite_mode = URL
+yrewrite = YRewrite
+
+# content page
+yrewrite_rewriter = Rewrite URLs
+yrewrite_rewriter_seo = SEO Data
+yrewrite_mode_url = URL
+yrewrite_mode_seo = SEO
+yrewrite_customurl = Custom URL
+yrewrite_update = update URL
+
+yrewrite_domains = Domains
+yrewrite_domain_info = Domain [www.domain.de]
+yrewrite_article_urls = Article URLs
+yrewrite_setup = Setup
+
+yrewrite_startarticleisalways = This is the startarticle of domain "{0}" and cannot be changed. This URL is allways "/"
+
+yrewrite_add_domain = Add Domain
+yrewrite_domain_added = Domain added hinzugefügt
+yrewrite_edit_domain = Edit Domain
+yrewrite_domain_deleted = Domain deleted. Cache deleted.
+yrewrite_domain_updated = Domain updated. Cache deleted.
+
+yrewrite_domain = Domain
+yrewrite_mount_id = Mountarticle of Domain
+yrewrite_start_id = Startarticle of domain
+yrewrite_notfound_id = 404 Artikel
+yrewrite_alias_domain = Alias Domain
+yrewrite_alias_domains = Alias Domains
+
+yrewrite_domain_title_scheme = Pagetitle scheme
+yrewrite_domain_title_scheme_info = %T=SEO-Title or articlname, %SN=Servername
+yrewrite_domain_description = Pagedescription (if articledescription is empty)
+yrewrite_domain_description_info = Chars / Recommendation: 160 Chars
+yrewrite_domain_robots = Robotsfile
+
+yrewrite_root = --- Root --- [0]
+
+yrewrite_alias_domain_refersto = This domain will be redirected
+yrewrite_domain_willbereferdto = to this domain
+
+yrewrite_domain_already_defined = Domain already defined
+yrewrite_mount_id_already_defined = Mount id already defined
+yrewrite_no_domain_defined = Please set a domain
+yrewrite_no_mount_id_defined = Please choose a mount id
+yrewrite_no_start_id_defined = Please select a startarticle
+yrewrite_no_not_found_id_defined = Please select a 404 article
+
+yrewrite_warning_noslash = Bitte in der URL kein / am Anfang und am Ende
+yrewrite_warning_nottolong = Die URL darf nicht länger als 250 Zeichen sein
+yrewrite_warning_chars = Die URL ist nicht korrekt. Schreibweise beachten. Nur a-z 0-9 -
+yrewrite_warning_urlexists = Diese URL existiert bereits {0}
+yrewrite_warning_otherarticle = Zum anderen Artikel
+yrewrite_urlupdated = Url wurde aktualisiert
+
+yrewrite_seotitle = Titel
+yrewrite_seodescription = Description
+yrewrite_priority = Wichtigkeit:
+yrewrite_changefreq = Aktualisierungshäufigkeit:
+
+yrewrite_seoupdated = Seo data updated.
+yrewrite_seoupdate_failed = An error Bei der Akualisierung sind Fehler aufgetreten. Bitte YRewrite reinstallieren.
+
+yrewrite_priority_0_0 = unbedeutend [0.0]
+yrewrite_priority_0_1 = sehr unwichtig [0.1]
+yrewrite_priority_0_3 = unwichtig [0.3]
+yrewrite_priority_0_5 = normal [0.5]
+yrewrite_priority_0_7 = wichtig [0.7]
+yrewrite_priority_1_0 = sehr wichtig [1.0]
+
+yrewrite_changefreq_daily = täglich [daily]
+yrewrite_changefreq_hourly = stündlich [hourly]
+yrewrite_changefreq_weekly = wöchentlich [weekly]
+yrewrite_changefreq_monthly = monatlich [monthly]
+yrewrite_changefreq_yearly = jährlich [yearly]
+yrewrite_changefreq_never = nie [never]
+yrewrite_changefreq_always = immer [always]
+
+
+
+yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
+yrewrite_htaccess_set = .htaccess Datei setzen
+
+yrewrite_htaccess_info = Um YRewrite lauffähig zu bekommen, muss eine .htaccess Datei im Root Ordner gesetzt werden. Sollte eine andere .htaccess bereits vorhanden sein, wird diese ersetzt und ist nicht wiederherstellbar.
+
+yrewrite_info_headline = Verwendung von YRewrite
+yrewrite_info_text = Da YRewrite für <b>Multidomainlösungen</b> gedacht ist, gibt es bestimmte Vorraussetzungen. Dazu gehört, dass YRewrite <b>nicht in Unterordnern</b> der Domains läuft. Weiterhin werden alle URL Ersetzungen über YRewrite geregelt. D.h. es kann vorkommen, dass eine URL situationsbedingt auch den Domainnamen enthält. In den Templates bitte auch deswegen <b>keinen base Tag verwenden</b>. Sollte etwas durcheinanderkommen, durch Eigenentwicklungen oder ähnlichem, bitte den allgemeinen Cache löschen, das ermöglicht YRewrite die Config- und Url-Dateien neu zu erstellen. Weiterhin muss <b>Mod-Rewrite über die Systemeinstellungen in REDAXO aktiviert</b> sein.
+
+yrewrite_info_seo = Verwendung der SEO Optionen
+yrewrite_info_seo_text = Folgenden Code bitte <b>ins Template</b> in den &lt;head&gt; Bereich setzen. Keinen eigenen title und meta-description-tag verwenden.
+
+yrewrite_info_sitemaprobots = sitemap.xml und robots.txt
+
+yrewrite_install_xform_version_problem = Bitte installieren Sie das XForm Addon in Version {0}
+yrewrite_install_redaxo_version_problem = Die REDAXO Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
+yrewrite_install_php_version_problem = Die PHP Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
+
+yrewrite_notactivebecauseofmodrewrite = YRewrite funktioniert nur wenn ModRewrite aktiviert ist.
+
+yrewrite_forward = Weiterleitungen
+yrewrite_forward_no_domain_selected = Bitte eine Domain auswählen
+yrewrite_forward_status = Status
+yrewrite_forward_active = active
+yrewrite_forward_inactive = inactive
+yrewrite_forward_url = aufgerufene Url
+yrewrite_forward_type = Redirect to
+
+yrewrite_forward_type_article = Article
+yrewrite_forward_type_extern = eigener Link
+yrewrite_forward_type_media = Media
+
+yrewrite_forward_article_id = Article
+yrewrite_forward_clang = Language
+yrewrite_forward_extern = Extern link
+yrewrite_forward_media = Media
+
+yrewrite_forward_add = Add redirect
+yrewrite_forward_edit = Edit redirec
+
+yrewrite_forward_method = Was soll passieren
+yrewrite_forward_to = Redirect to URL
+yrewrite_forward_direct = Direkter Aufruf
+
+yrewrite_forward_added = Redirect added
+yrewrite_forward_updated = Redirect updated
+yrewrite_forward_deleted = Redirect deleted
+
+yrewrite_forward_enter_url = Please enter an URL 
+
+yrewrite_forward_domainurl_already_defined = Diese Domain/Url Kombination existiert bereits
+
+yrewrite_forward_move_method = Type of redirect
+
+yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte Url existiert nicht mehr
+yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
+yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein
+
+
+
