@@ -29,7 +29,7 @@ yrewrite_alias_domain = Alias Domain
 yrewrite_alias_domains = Alias Domains
 
 yrewrite_domain_title_scheme = Seitentitel Schema
-yrewrite_domain_title_scheme_info = %T=SEO-Title oder Artikelname, %SN=Servername
+yrewrite_domain_title_scheme_info = %T=SEO-Title oder Artikelname, %SN=Servename
 yrewrite_domain_description = Seitenbeschreibung (wenn Artikelbeschreibung leer ist)
 yrewrite_domain_description_info = Zeichen / Empfehlung: 160 Zeichen
 yrewrite_domain_robots = Robotsdatei
@@ -48,7 +48,7 @@ yrewrite_no_not_found_id_defined = Bitte einen 404 Artikel auswählen
 
 yrewrite_warning_noslash = Bitte in der URL kein / am Anfang und am Ende
 yrewrite_warning_nottolong = Die URL darf nicht länger als 250 Zeichen sein
-yrewrite_warning_chars = Die URL ist nicht korrekt. Schreibweise beachten. Nur a-z 0-9 -
+yrewrite_warning_chars = Die URL ist nicht korrekt. Schreibweise beachten. Nur "a-z/0-9 -", kein / am Anfang und am Ende
 yrewrite_warning_urlexists = Diese URL existiert bereits {0}
 yrewrite_warning_otherarticle = Zum anderen Artikel
 yrewrite_urlupdated = Url wurde aktualisiert
