@@ -57,7 +57,10 @@ class rex_yrewrite_scheme
     public function getCustomUrl(OOArticle $art, rex_yrewrite_domain $domain)
     {
         if ($domain->getStartId() == $art->getId()) {
-            return 0 == $art->getClang() ? '/' : $this->getClang($art->getClang(), $domain) . '/';
+            if ($domain->getStartClang() == $art->getClang()) {
+                return '/';
+            }
+            return $this->getClang($art->getClang(), $domain) . '/';
         }
         if ($url = $art->getValue('yrewrite_url')) {
             return $url;

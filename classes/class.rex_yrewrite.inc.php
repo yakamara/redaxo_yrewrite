@@ -204,6 +204,7 @@ class rex_yrewrite
             // if no path -> startarticle
             if ($url == '') {
                 $REX['ARTICLE_ID'] = $domain->getStartId();
+                $REX['CUR_CLANG'] = $domain->getStartClang();
                 return true;
             }
 
@@ -444,6 +445,7 @@ class rex_yrewrite
                         . $domain['start_id'] . ', '
                         . $domain['notfound_id'] . ', '
                         . (strlen(trim($domain['clangs'])) ? 'array(' . $domain['clangs'] . ')' : 'null') . ', '
+                        . $domain['clang_start'] . ', '
                         . '"' . htmlspecialchars($domain['title_scheme']) . '", '
                         . '"' . htmlspecialchars($domain['description']) . '", '
                         . '"' . htmlspecialchars($domain['robots']) . '"'
