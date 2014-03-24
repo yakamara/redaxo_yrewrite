@@ -95,6 +95,8 @@ if ($showlist) {
     $list->setColumnSortable('id');
 
     $list->removeColumn('id');
+    $list->removeColumn('clangs');
+    $list->removeColumn('clang_start');
 
     $list->setColumnLabel('domain', $I18N->msg('yrewrite_domain'));
     $list->setColumnLabel('alias_domain', $I18N->msg('yrewrite_alias_domain'));
