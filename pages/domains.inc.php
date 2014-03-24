@@ -43,13 +43,10 @@ if ($func != '') {
         //  - multiple oder checkbox liste
         //   - wenn mehrere angeklickt -> clang_start auswahl mit genau diesen sprachen
 
-        $xform->setValueField("select_sql", array("clangs", $I18N->msg('yrewrite_clangs_info'), "select id,name from rex_clang", '', 1, 0, '', 1, count($REX['CLANG'])));
+        $xform->setValueField("select_sql", array("clangs", $I18N->msg('yrewrite_clangs'), "select id,name from rex_clang", '', 1, 0, '', 1, count($REX['CLANG'])));
         $xform->setValueField("select_sql", array("clang_start", $I18N->msg('yrewrite_clang_start'), "select id,name from rex_clang order by id"));
         
     }
-
-
-
 
     function rex_yrewrite_domaincheck ($field, $value, $xform) {
         $sql = 'select '.$field.' from '.$xform->objparams["main_table"].' where '.$field.'="'.mysql_real_escape_string($value).'" and alias_domain="" AND !('.$xform->objparams["main_where"].')';
@@ -178,14 +175,25 @@ if ($showlist) {
             global $REX, $I18N;
             $clangs = $params['subject'];
             if ($clangs == "") {
-                return $I18N->msg('yrewrite_alllangs');
+                $return = $I18N->msg('yrewrite_alllangs');
+
             } else {
                 $return = array();
                 foreach(explode(",",$clangs) as $clang) {
                   $return[] = $REX['CLANG'][$clang];
+
                 }
-                return implode(",", $return);
+                if (count($return)>1) {
+                    $return = implode(",", $return) . '<br />'.$I18N->msg('yrewrite_clang_start').': '.$REX['CLANG'][$params["list"]->sql->getValue("clang_start")];
+
+                } else {
+                    $return = implode(",", $return);
+
+                }
+
             }
+            return $return ;
+
         }
         $list->setColumnLabel('clangs', $I18N->msg('yrewrite_clangs'));
         $list->setColumnFormat('clangs', 'custom', 'rex_yrewrite_list_clangs');
