@@ -60,6 +60,8 @@ if ($REX['VERSION'] != '4' || $REX['SUBVERSION'] < '5') {
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
     $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `clangs` varchar(255) NOT NULL;');
+    $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `clang_start` varchar(255) NOT NULL;');
+    $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` DROP `clang`;');
     $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `robots` TEXT NOT NULL ;');
     $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `title_scheme` varchar(255) NOT NULL;');
     $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `description` varchar(255) NOT NULL;');

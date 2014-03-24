@@ -22,21 +22,34 @@ if ($func != '') {
     $xform->setObjectparams('main_table', 'rex_yrewrite_domain');
 
     $xform->setValueField('text', array('domain', $I18N->msg('yrewrite_domain_info')));
-    $xform->setValueField('be_link', array('mount_id', $I18N->msg('yrewrite_mount_id')));
-    $xform->setValueField('be_link', array('start_id', $I18N->msg('yrewrite_start_id')));
-    $xform->setValueField('be_link', array('notfound_id', $I18N->msg('yrewrite_notfound_id')));
-    $xform->setValueField("select_sql",array("clangs",$I18N->msg('yrewrite_clangs'), "select id,name from rex_clang", '', 1, 0, '', 1));
-
-    $xform->setValidateField('unique', array('domain', $I18N->msg('yrewrite_domain_already_defined')));
     $xform->setValidateField('empty', array('domain', $I18N->msg('yrewrite_no_domain_defined')));
-    // $xform->setValidateField('empty', array('mount_id', $I18N->msg('yrewrite_no_mount_id_defined')));
+    $xform->setValidateField('unique', array('domain', $I18N->msg('yrewrite_domain_already_defined')));
+
+    $xform->setValueField('be_link', array('mount_id', $I18N->msg('yrewrite_mount_id')));
+
+    $xform->setValueField('be_link', array('start_id', $I18N->msg('yrewrite_start_id')));
     $xform->setValidateField('empty', array('start_id', $I18N->msg('yrewrite_no_start_id_defined')));
+
+    $xform->setValueField('be_link', array('notfound_id', $I18N->msg('yrewrite_notfound_id')));
     $xform->setValidateField('empty', array('notfound_id', $I18N->msg('yrewrite_no_not_found_id_defined')));
 
-    // unique: mount_id,alias_domain
-    // unique auf 2 Feldern funktioniert erst ab xform version 4.5.1
-    // deswegen noch als customfunction
-    //$xform->setValidateField('customfunction', array('mount_id', 'rex_yrewrite_domaincheck', $xform, $I18N->msg('yrewrite_mount_id_already_defined')));
+    if (count($REX['CLANG']) == 0) {
+        $xform->setValueField("hidden", array("clangs", ""));
+        $xform->setValueField("hidden", array("clang_start", ""));
+    
+    } else {
+        // TODO:
+        // - checkbox (alle sprachen)
+        //  - multiple oder checkbox liste
+        //   - wenn mehrere angeklickt -> clang_start auswahl mit genau diesen sprachen
+
+        $xform->setValueField("select_sql", array("clangs", $I18N->msg('yrewrite_clangs_info'), "select id,name from rex_clang", '', 1, 0, '', 1, count($REX['CLANG'])));
+        $xform->setValueField("select_sql", array("clang_start", $I18N->msg('yrewrite_clang_start'), "select id,name from rex_clang order by id"));
+        
+    }
+
+
+
 
     function rex_yrewrite_domaincheck ($field, $value, $xform) {
         $sql = 'select '.$field.' from '.$xform->objparams["main_table"].' where '.$field.'="'.mysql_real_escape_string($value).'" and alias_domain="" AND !('.$xform->objparams["main_where"].')';
@@ -158,7 +171,46 @@ if ($showlist) {
     $list->setColumnLabel('mount_id', $I18N->msg('yrewrite_mount_id'));
     $list->setColumnLabel('start_id', $I18N->msg('yrewrite_start_id'));
     $list->setColumnLabel('notfound_id', $I18N->msg('yrewrite_notfound_id'));
-    $list->setColumnLabel('clangs', $I18N->msg('yrewrite_clangs'));
+    
+    if (count($REX['CLANG']) > 0) {
+        function rex_yrewrite_list_clangs($params)
+        {
+            global $REX, $I18N;
+            $clangs = $params['subject'];
+            if ($clangs == "") {
+                return $I18N->msg('yrewrite_alllangs');
+            } else {
+                $return = array();
+                foreach(explode(",",$clangs) as $clang) {
+                  $return[] = $REX['CLANG'][$clang];
+                }
+                return implode(",", $return);
+            }
+        }
+        $list->setColumnLabel('clangs', $I18N->msg('yrewrite_clangs'));
+        $list->setColumnFormat('clangs', 'custom', 'rex_yrewrite_list_clangs');
+
+
+        $list->removeColumn('clang_start');
+        /*
+        function rex_yrewrite_list_clang_start($params)
+        {
+            global $REX, $I18N;
+            $clangs = $params['subject'];
+            if ($clangs == "") {
+                return $I18N->msg('yrewrite_alllangs');
+            } else {
+                $return = array();
+                foreach(explode(",",$clangs) as $clang) {
+                  $return[] = $REX['CLANG'][$clang];
+                }
+                return implode(",", $return);
+            }
+        }
+        $list->setColumnLabel('clang_start', $I18N->msg('yrewrite_clang_start'));
+        $list->setColumnFormat('clangs', 'custom', 'rex_yrewrite_list_clang_start');
+        */
+    }
 
     $list->addColumn($I18N->msg('delete'), $I18N->msg('delete'));
     $list->setColumnParams($I18N->msg('delete'), array('data_id' => '###id###', 'func' => 'delete'));

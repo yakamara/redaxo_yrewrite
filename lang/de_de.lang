@@ -136,5 +136,5 @@ yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte
 yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
 yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein
 
-
-
+yrewrite_alllangs = Alle Sprachen
+yrewrite_clang_start = Startsprache
