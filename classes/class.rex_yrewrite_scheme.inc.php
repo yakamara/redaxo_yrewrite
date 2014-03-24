@@ -10,32 +10,54 @@ class rex_yrewrite_scheme
 {
     protected $suffix = '.html';
 
-    public function getClang($clang)
+    /**
+     * @param int                 $clang
+     * @param rex_yrewrite_domain $domain
+     * @return string
+     */
+    public function getClang($clang, rex_yrewrite_domain $domain)
     {
         global $REX;
-        if (count($REX['CLANG']) <= 1) {
+        if (count($domain->getClangs()) <= 1) {
             return '';
         }
         return '/' . $this->normalize($REX['CLANG'][$clang], $clang);
     }
 
-    public function appendCategory($path, OOCategory $cat)
+    /**
+     * @param string              $path
+     * @param OOCategory          $cat
+     * @param rex_yrewrite_domain $domain
+     * @return string
+     */
+    public function appendCategory($path, OOCategory $cat, rex_yrewrite_domain $domain)
     {
         return $path . '/' . $this->normalize($cat->getName(), $cat->getClang());
     }
 
-    public function appendArticle($path, OOArticle $art)
+    /**
+     * @param string              $path
+     * @param OOArticle           $art
+     * @param rex_yrewrite_domain $domain
+     * @return string
+     */
+    public function appendArticle($path, OOArticle $art, rex_yrewrite_domain $domain)
     {
-        if ($art->isStartArticle() && !rex_yrewrite::isDomainMountpoint($art->getId())) {
+        if ($art->isStartArticle() && $domain->getMountId() != $art->getId()) {
             return $path . $this->suffix;
         }
         return $path . '/' . $this->normalize($art->getName(), $art->getClang()) . $this->suffix;
     }
 
-    public function getCustomUrl(OOArticle $art)
+    /**
+     * @param OOArticle           $art
+     * @param rex_yrewrite_domain $domain
+     * @return string|false
+     */
+    public function getCustomUrl(OOArticle $art, rex_yrewrite_domain $domain)
     {
-        if (rex_yrewrite::isDomainStartarticle($art->getId())) {
-            return 0 == $art->getClang() ? '/' : $this->getClang($art->getClang()) . '/';
+        if ($domain->getStartId() == $art->getId()) {
+            return 0 == $art->getClang() ? '/' : $this->getClang($art->getClang(), $domain) . '/';
         }
         if ($url = $art->getValue('yrewrite_url')) {
             return $url;
@@ -43,11 +65,21 @@ class rex_yrewrite_scheme
         return false;
     }
 
-    public function getRedirection(OOArticle $art)
+    /**
+     * @param OOArticle           $art
+     * @param rex_yrewrite_domain $domain
+     * @return OORedaxo|false
+     */
+    public function getRedirection(OOArticle $art, rex_yrewrite_domain $domain)
     {
         return false;
     }
 
+    /**
+     * @param string $string
+     * @param int    $clang
+     * @return string
+     */
     protected function normalize($string, $clang = 0)
     {
         $string = str_replace(

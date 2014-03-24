@@ -17,6 +17,7 @@ $REX['PERM'][] = 'yrewrite[forward]';
 
 $UrlRewriteBasedir = dirname(__FILE__);
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite.inc.php';
+require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_domain.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_scheme.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_forward.inc.php';
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite_seo.inc.php';
@@ -66,7 +67,7 @@ if ($REX['REDAXO']) {
 
 
     if( $REX['USER'] && $REX['USER']->isAdmin()) {
-    
+
         // ----- backend pages for domains und urls
         $domainsPage = new rex_be_page($I18N->msg('yrewrite_domains'), array(
             'page' => 'yrewrite',
@@ -74,49 +75,49 @@ if ($REX['REDAXO']) {
           )
         );
         $domainsPage->setHref('index.php?page=yrewrite&subpage=');
-    
-        $AliasDomainsPage = new rex_be_page($I18N->msg('yrewrite_alias_domains'), array( 
+
+        $AliasDomainsPage = new rex_be_page($I18N->msg('yrewrite_alias_domains'), array(
             'page' => 'yrewrite',
             'subpage' => 'alias_domains'
           )
         );
         $AliasDomainsPage->setHref('index.php?page=yrewrite&subpage=alias_domains');
-      
+
         $forwardPage = new rex_be_page($I18N->msg('yrewrite_forward'), array(
           'page' => 'yrewrite',
           'subpage' => 'forward'
           )
         );
         $forwardPage->setHref('index.php?page=yrewrite&subpage=forward');
-    
+
         $setupPage = new rex_be_page($I18N->msg('yrewrite_setup'), array(
             'page' => 'yrewrite',
             'subpage' => 'setup'
           )
         );
         $setupPage->setHref('index.php?page=yrewrite&subpage=setup');
-    
+
         $REX['ADDON']['pages'][$mypage] = array (
             $domainsPage, $AliasDomainsPage, $forwardPage, $setupPage
         );
-  
+
     } else if( $REX['USER'] && $REX['USER']->hasPerm("yrewrite[forward]")) {
-   
+
        // ----- backend pages for domains und urls
-      
+
         $forwardPage = new rex_be_page($I18N->msg('yrewrite_forward'), array(
           'page' => 'yrewrite',
           'subpage' => 'forward'
           )
         );
         $forwardPage->setHref('index.php?page=yrewrite&subpage=forward');
-    
+
         $REX['ADDON']['pages'][$mypage] = array (
             $forwardPage
         );
 
-   
-   
+
+
    }
 
 }
@@ -143,12 +144,13 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
                 'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',
                 'CLANG_ADDED', 'CLANG_UPDATED', 'CLANG_DELETED',
                 /*'ARTICLE_GENERATED'*/
-                'ALL_GENERATED'
+                //'ALL_GENERATED'
             );
             foreach ($extensionPoints as $extensionPoint) {
                 rex_register_extension($extensionPoint, $extension);
             }
         }
+        rex_register_extension('ALL_GENERATED', 'rex_yrewrite::init');
         rex_register_extension('URL_REWRITE', 'rex_yrewrite::rewrite');
 
         // get ARTICLE_ID from URL

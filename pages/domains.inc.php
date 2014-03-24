@@ -25,7 +25,7 @@ if ($func != '') {
     $xform->setValueField('be_link', array('mount_id', $I18N->msg('yrewrite_mount_id')));
     $xform->setValueField('be_link', array('start_id', $I18N->msg('yrewrite_start_id')));
     $xform->setValueField('be_link', array('notfound_id', $I18N->msg('yrewrite_notfound_id')));
-    // $xform->setValueField("text",array("clang","clang"));
+    $xform->setValueField("select_sql",array("clangs",$I18N->msg('yrewrite_clangs'), "select id,name from rex_clang", '', 1, 0, '', 1));
 
     $xform->setValidateField('unique', array('domain', $I18N->msg('yrewrite_domain_already_defined')));
     $xform->setValidateField('empty', array('domain', $I18N->msg('yrewrite_no_domain_defined')));
@@ -36,7 +36,7 @@ if ($func != '') {
     // unique: mount_id,alias_domain
     // unique auf 2 Feldern funktioniert erst ab xform version 4.5.1
     // deswegen noch als customfunction
-    $xform->setValidateField('customfunction', array('mount_id', 'rex_yrewrite_domaincheck', $xform, $I18N->msg('yrewrite_mount_id_already_defined')));
+    //$xform->setValidateField('customfunction', array('mount_id', 'rex_yrewrite_domaincheck', $xform, $I18N->msg('yrewrite_mount_id_already_defined')));
 
     function rex_yrewrite_domaincheck ($field, $value, $xform) {
         $sql = 'select '.$field.' from '.$xform->objparams["main_table"].' where '.$field.'="'.mysql_real_escape_string($value).'" and alias_domain="" AND !('.$xform->objparams["main_where"].')';
@@ -158,6 +158,7 @@ if ($showlist) {
     $list->setColumnLabel('mount_id', $I18N->msg('yrewrite_mount_id'));
     $list->setColumnLabel('start_id', $I18N->msg('yrewrite_start_id'));
     $list->setColumnLabel('notfound_id', $I18N->msg('yrewrite_notfound_id'));
+    $list->setColumnLabel('clangs', $I18N->msg('yrewrite_clangs'));
 
     $list->addColumn($I18N->msg('delete'), $I18N->msg('delete'));
     $list->setColumnParams($I18N->msg('delete'), array('data_id' => '###id###', 'func' => 'delete'));

@@ -20,17 +20,20 @@ class rex_yrewrite_seo
         $robots_default = "User-agent: *\nDisallow",
         $title_scheme_default = '%T / %SN';
 
-    public function rex_yrewrite_seo($article_id = 0)
+    public function rex_yrewrite_seo($article_id = 0, $clang = null)
     {
         global $REX;
 
         if($article_id == 0) {
           $article_id = $REX["ARTICLE_ID"];
         }
+        if (is_null($clang)) {
+            $clang = $REX['CUR_CLANG'];
+        }
 
-        if( ($article = OOArticle::getArticleById($article_id)) ) {
+        if( ($article = OOArticle::getArticleById($article_id, $clang)) ) {
             $this->article = $article;
-            $this->domain = rex_yrewrite::getDomainByArticleId($article_id);
+            $this->domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
         }
 
     }
@@ -46,7 +49,7 @@ class rex_yrewrite_seo
     public function getTitle()
     {
         global $REX;
-        $title_scheme = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['title_scheme']));
+        $title_scheme = htmlspecialchars_decode(trim($this->domain->getTitle()));
         if($title_scheme == '') {
             $title_scheme = self::$title_scheme_default;
         }
@@ -68,7 +71,7 @@ class rex_yrewrite_seo
 
     public function getDescription()
     {
-        $description = htmlspecialchars_decode(trim(rex_yrewrite::$domainsByName[$this->domain]['description']));
+        $description = htmlspecialchars_decode(trim($this->domain->getDescription()));
         if($this->article && $this->article->getValue('yrewrite_description') != "") {
             $description = $this->article->getValue('yrewrite_description');
         }

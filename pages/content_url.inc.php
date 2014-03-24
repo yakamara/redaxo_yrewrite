@@ -10,8 +10,8 @@ $article_id = $params['article_id'];
 $clang = $params['clang'];
 $ctype = rex_request('ctype');
 $yrewrite_url = stripslashes(rex_request('yrewrite_url'));
-$domain = rex_yrewrite::getDomainByArticleId($article_id);
-$isStartarticle = rex_yrewrite::isDomainStartarticle($article_id);
+$domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
+$isStartarticle = rex_yrewrite::isDomainStartarticle($article_id, $clang);
 
 $sql = rex_sql::factory();
 $data = $sql->getArray('SELECT * FROM ' . $REX['TABLE_PREFIX'] . 'article WHERE id=' . $article_id . ' AND clang=' . $clang);
@@ -75,7 +75,7 @@ if (rex_post('save', 'boolean') == 1 && !$isStartarticle) {
 
 if ($isStartarticle) {
 
-    echo rex_warning($I18N->msg('yrewrite_startarticleisalways', $domain));
+    echo rex_warning($I18N->msg('yrewrite_startarticleisalways', $domain->getName()));
 
 } else {
 
@@ -132,11 +132,11 @@ jQuery(document).ready(function() {
 });
 
 function updateCustomUrlPreview() {
-    var base = 'http[s]://<?php echo $domain; ?>/';
+    var base = 'http[s]://<?php echo $domain->getName(); ?>/';
     var autoUrl = '<?php
         $url = rex_getUrl($REX['ARTICLE_ID'], $REX['CUR_CLANG']);
-        $url = str_replace('http://' . $domain, '', $url);
-        $url = str_replace('https://' . $domain, '', $url);
+        $url = str_replace('http://' . $domain->getName(), '', $url);
+        $url = str_replace('https://' . $domain->getName(), '', $url);
         $url = substr($url, 1);
         echo $url;
         ?>';

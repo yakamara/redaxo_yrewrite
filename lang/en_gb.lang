@@ -25,6 +25,7 @@ yrewrite_domain = Domain
 yrewrite_mount_id = Mountarticle of Domain
 yrewrite_start_id = Startarticle of domain
 yrewrite_notfound_id = 404 Artikel
+yrewrite_clangs = Languages
 yrewrite_alias_domain = Alias Domain
 yrewrite_alias_domains = Alias Domains
 
@@ -125,7 +126,7 @@ yrewrite_forward_added = Redirect added
 yrewrite_forward_updated = Redirect updated
 yrewrite_forward_deleted = Redirect deleted
 
-yrewrite_forward_enter_url = Please enter an URL 
+yrewrite_forward_enter_url = Please enter an URL
 
 yrewrite_forward_domainurl_already_defined = Diese Domain/Url Kombination existiert bereits
 

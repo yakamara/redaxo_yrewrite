@@ -42,7 +42,6 @@ if ($REX['VERSION'] != '4' || $REX['SUBVERSION'] < '5') {
     `start_id` int(11) NOT NULL,
     `notfound_id` int(11) NOT NULL,
     `alias_domain` varchar(255) NOT NULL,
-    `clang` int(11) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
@@ -60,6 +59,7 @@ if ($REX['VERSION'] != '4' || $REX['SUBVERSION'] < '5') {
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
+    $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `clangs` varchar(255) NOT NULL;');
     $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `robots` TEXT NOT NULL ;');
     $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `title_scheme` varchar(255) NOT NULL;');
     $sql->setQuery('ALTER TABLE `rex_yrewrite_domain` ADD `description` varchar(255) NOT NULL;');
