@@ -21,7 +21,6 @@ class rex_yrewrite
     /** @var rex_yrewrite_domain[] */
     static $domainsByName = array();
 
-    /** @var rex_yrewrite_domain[] */
     static $aliasDomains = array();
     static $pathfile = '';
     static $configfile = '';
@@ -62,10 +61,13 @@ class rex_yrewrite
         self::$domainsByName[$domain->getName()] = $domain;
     }
 
-    static function addAliasDomain($from_domain, $to_domain)
+    static function addAliasDomain($from_domain, $to_domain, $clang_start = 0)
     {
         if (isset(self::$domainsByName[$to_domain])) {
-            self::$aliasDomains[$from_domain] = self::$domainsByName[$to_domain];
+            self::$aliasDomains[$from_domain] = array(
+                'domain' => self::$domainsByName[$to_domain],
+                'clang_start' => $clang_start
+            );
         }
     }
 
@@ -179,7 +181,11 @@ class rex_yrewrite
             } else {
                 // check for aliases
                 if (isset(self::$aliasDomains[$host])) {
-                    $domain = self::$aliasDomains[$host];
+                    /** @var rex_yrewrite_domain $domain */
+                    $domain = self::$aliasDomains[$host]['domain'];
+                    if (!$url && isset(self::$paths['paths'][$domain->getName()][$domain->getStartId()][self::$aliasDomains[$host]['clang_start']])) {
+                        $url = self::$paths['paths'][$domain->getName()][$domain->getStartId()][self::$aliasDomains[$host]['clang_start']];
+                    }
                     // forward to original domain permanent move 301
 
                     header('HTTP/1.1 301 Moved Permanently');
@@ -444,7 +450,7 @@ class rex_yrewrite
         foreach ($domains as $domain) {
             if ($domain['domain'] != '') {
                 if ($domain['alias_domain'] != '') {
-                    $filecontent .= "\n" . 'rex_yrewrite::addAliasDomain("' . $domain['domain'] . '", "' . $domain['alias_domain'] . '");';
+                    $filecontent .= "\n" . 'rex_yrewrite::addAliasDomain("' . $domain['domain'] . '", "' . $domain['alias_domain'] . '", ' . $domain['clang_start'] . ');';
                 } elseif ($domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
                     $filecontent .= "\n" . 'rex_yrewrite::addDomain(new rex_yrewrite_domain('
                         . '"' . $domain['domain'] . '", '

@@ -23,6 +23,10 @@ if ($func != '') {
 
     $xform->setValueField('text', array('domain', $I18N->msg('yrewrite_alias_domain_refersto')));
     $xform->setValueField('select_sql', array('alias_domain', $I18N->msg('yrewrite_domain_willbereferdto') . '', 'select domain as id,domain as name from rex_yrewrite_domain where alias_domain = ""'));
+    if (count($REX['CLANG']) > 1) {
+        $xform->setValueField("select_sql", array("clang_start", $I18N->msg('yrewrite_clang_start'), "select id,name from rex_clang order by id"));
+    }
+
 
     $xform->setValidateField('empty', array('domain', $I18N->msg('yrewrite_no_domain_defined')));
     $xform->setValidateField('empty', array('alias_domain', $I18N->msg('yrewrite_no_domain_defined')));
