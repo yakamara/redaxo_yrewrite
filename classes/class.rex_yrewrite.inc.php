@@ -239,6 +239,13 @@ class rex_yrewrite
 
             // no article found -> domain not found article
             $REX['ARTICLE_ID'] = $domain->getNotfoundId();
+            $REX['CUR_CLANG'] = $domain->getStartClang();
+            foreach (self::$paths['paths'][$domain->getName()][$domain->getStartId()] as $clang => $clangUrl) {
+                if ($clang != $domain->getStartClang() && 0 === strpos($url, $clangUrl)) {
+                    $REX['CUR_CLANG'] = $clang;
+                    break;
+                }
+            }
 
             return true;
         }
