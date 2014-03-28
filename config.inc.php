@@ -150,7 +150,7 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
                 rex_register_extension($extensionPoint, $extension);
             }
         }
-        rex_register_extension('ALL_GENERATED', 'rex_yrewrite::init');
+        //rex_register_extension('ALL_GENERATED', 'rex_yrewrite::init');
         rex_register_extension('URL_REWRITE', 'rex_yrewrite::rewrite');
 
         // get ARTICLE_ID from URL
