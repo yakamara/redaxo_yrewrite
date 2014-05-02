@@ -10,7 +10,7 @@ $mypage = 'yrewrite';
 
 $REX['ADDON']['name'][$mypage] = 'YRewrite';
 $REX['ADDON']['perm'][$mypage] = 'yrewrite[forward]';
-$REX['ADDON']['version'][$mypage] = '1.2';
+$REX['ADDON']['version'][$mypage] = '1.2.1';
 $REX['ADDON']['author'][$mypage] = 'Jan Kristinus';
 $REX['ADDON']['supportpage'][$mypage] = 'www.redaxo.org/de/forum';
 $REX['PERM'][] = 'yrewrite[forward]';

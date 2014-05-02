@@ -98,7 +98,7 @@ class rex_yrewrite_seo
 
 
         if (isset(rex_yrewrite::$domainsByName[$domain])) {
-            $robots = rex_yrewrite::$domainsByName[$domain]["robots"];
+            $robots = rex_yrewrite::$domainsByName[$domain]->getRobots();
             if($robots != "") {
                 $content .= $robots;
             } else {
@@ -121,10 +121,7 @@ class rex_yrewrite_seo
         $sitemap = array();
         if ( isset(rex_yrewrite::$paths['paths'][$domain]) ) {
 
-            // var_dump(rex_yrewrite::$domainsByName[$domain]);
-            // var_dump(rex_yrewrite::$paths['paths'][$domain]);
-
-            $domain_article_id = rex_yrewrite::$domainsByName[$domain]['domain_article_id'];
+            $domain_article_id = rex_yrewrite::$domainsByName[$domain]->getStartId();
             $paths = 0;
             if( ($dai = OOArticle::getArticleById($domain_article_id)) ) {
               $paths = count($dai->getParentTree());
