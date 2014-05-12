@@ -119,15 +119,17 @@ class rex_yrewrite_seo
         }
 
         $sitemap = array();
-        if ( isset(rex_yrewrite::$paths['paths'][$domain]) ) {
+        if ( isset(rex_yrewrite::$domainsByName[$domain]) ) {
 
-            $domain_article_id = rex_yrewrite::$domainsByName[$domain]->getStartId();
+            $domain = rex_yrewrite::$domainsByName[$domain];
+
+            $domain_article_id = $domain->getStartId();
             $paths = 0;
             if( ($dai = OOArticle::getArticleById($domain_article_id)) ) {
               $paths = count($dai->getParentTree());
             }
 
-            foreach(rex_yrewrite::$paths['paths'][$domain] as $article_id => $path) {
+            foreach(rex_yrewrite::$paths['paths'][$domain->getName()] as $article_id => $path) {
 
                 if( ($article = OOArticle::getArticleById($article_id)) && $article->isOnline() && self::checkArticlePerm($article)) {
 
@@ -149,7 +151,7 @@ class rex_yrewrite_seo
                         }
                     }
 
-                    foreach ($REX['CLANG'] as $clang_id => $clang) {
+                    foreach ($domain->getClangs() as $clang_id) {
                         $sitemap[] =
                           "\n".'<url>'.
                           "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
