@@ -149,13 +149,16 @@ class rex_yrewrite_seo
                         }
                     }
 
-                    $sitemap[] =
-                        "\n".'<url>'.
-                        "\n".'<loc>'.rex_yrewrite::getFullPath($path[0]).'</loc>'.
-                        "\n".'<lastmod>'.date(DATE_W3C,$article->getValue('updatedate')).'</lastmod>'. // serverzeitzone passt
-                        "\n".'<changefreq>'.$changefreq.'</changefreq>'.
-                        "\n".'<priority>'.$priority.'</priority>'.
-                        "\n".'</url>';
+                    foreach ($REX['CLANG'] as $clang_id => $clang) {
+                        $sitemap[] =
+                          "\n".'<url>'.
+                          "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
+                          "\n".'<lastmod>'.date(DATE_W3C,$article->getValue('updatedate')).'</lastmod>'. // serverzeitzone passt
+                          "\n".'<changefreq>'.$changefreq.'</changefreq>'.
+                          "\n".'<priority>'.$priority.'</priority>'.
+                          "\n".'</url>';
+                    }
+
 
                 }
 
