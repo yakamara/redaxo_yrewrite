@@ -47,7 +47,7 @@ if ($REX['REDAXO']) {
             array_splice($params['subject'], '-1', '-1', $page);
 
             array_pop($params['subject']);
-            $params['subject'][] = '<a href="' . rex_getUrl($params['article_id'], $params['clang']) . '" target="_blank">' . $I18N->msg('show') . '</a>';
+            $params['subject'][] = '<a href="' . rex_getUrl($params['article_id'], $params['clang']) . '" target="_blank">' . $I18N->msg('show_article_in_frontend') . '<i class="rex-i-external"></i></a>';
 
 
             return $params['subject'];
