@@ -37,14 +37,14 @@ if ($REX['REDAXO']) {
                 $class = 'class="rex-active"';
             }
             $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_url&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_url') . '</a>';
-            array_splice($params['subject'], '-2', '-2', $page);
+            array_splice($params['subject'], '-1', '-1', $page);
 
             $class = '';
             if ($params['mode'] == 'yrewrite_seo') {
               $class = 'class="rex-active"';
             }
             $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_seo&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_seo') . '</a>';
-            array_splice($params['subject'], '-2', '-2', $page);
+            array_splice($params['subject'], '-1', '-1', $page);
 
             array_pop($params['subject']);
             $params['subject'][] = '<a href="' . rex_getUrl($params['article_id'], $params['clang']) . '" target="_blank">' . $I18N->msg('show') . '</a>';
