@@ -217,10 +217,10 @@ class rex_yrewrite
             // normal exact check
             foreach (self::$paths['paths'][$domain->getName()] as $i_id => $i_cls) {
 
-                foreach ($REX['CLANG'] as $clang => $clang_name) {
-                    if (isset($i_cls[$clang]) && ($i_cls[$clang] == $url || $i_cls[$clang] . '/' == $url)) {
+                foreach ($REX['CLANG'] as $clang_id => $clang_name) {
+                    if (isset($i_cls[$clang_id]) && ($i_cls[$clang_id] == $url || $i_cls[$clang_id] . '/' == $url)) {
                         $REX['ARTICLE_ID'] = $i_id;
-                        $REX['CUR_CLANG'] = $clang;
+                        $REX['CUR_CLANG'] = $clang_id;
                         return true;
                     }
                 }
