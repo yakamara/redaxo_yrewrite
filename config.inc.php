@@ -142,7 +142,7 @@ if ($REX['MOD_REWRITE'] !== false && !$REX['SETUP']) {
             $extensionPoints = array(
                 'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',
                 'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',
-                'CLANG_ADDED', 'CLANG_UPDATED', 'CLANG_DELETED',
+                /*'CLANG_ADDED',*/ 'CLANG_UPDATED', /*'CLANG_DELETED',*/
                 /*'ARTICLE_GENERATED'*/
                 //'ALL_GENERATED'
             );
