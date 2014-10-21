@@ -1,9 +1,9 @@
 redaxo_yrewrite
 ================
 
-Ein Multidomain-Rewriter Addon für REDAXO CMS 4.6
+Ein Multidomain-Rewriter Addon für REDAXO CMS >= 4.6
 
-MIt diesem AddOn lassen sich verschiedenen Domains innerhalb von REDAXO
+Mit diesem AddOn lassen sich verschiedenen Domains innerhalb von REDAXO
 bestimmten Kategorien, auch sprachabhängig, zuweisen.
 
 Somit kann man mehrere Webseiten in einer Installation verwalten.
