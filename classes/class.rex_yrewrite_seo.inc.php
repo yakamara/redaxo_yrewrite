@@ -17,7 +17,7 @@ class rex_yrewrite_seo
         $priority_default = "0.5",
         $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'),
         $changefreq_default = 'weekly',
-        $robots_default = "User-agent: *\nDisallow",
+        $robots_default = "User-agent: *\nDisallow: /",
         $title_scheme_default = '%T / %SN';
 
     public function rex_yrewrite_seo($article_id = 0, $clang = null)
