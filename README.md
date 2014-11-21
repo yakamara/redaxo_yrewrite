@@ -45,5 +45,6 @@ Last Changes
 
 #### Neu
 - Neue Rechtevergabe für Nicht Admins (für SEO und URL Reiter in Editiermaske)
+
 #### Bugs
 
