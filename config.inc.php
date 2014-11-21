@@ -14,6 +14,8 @@ $REX['ADDON']['version'][$mypage] = '1.2.2';
 $REX['ADDON']['author'][$mypage] = 'Jan Kristinus';
 $REX['ADDON']['supportpage'][$mypage] = 'www.redaxo.org/de/forum';
 $REX['PERM'][] = 'yrewrite[forward]';
+$REX['PERM'][] = 'yrewrite[url]';
+$REX['PERM'][] = 'yrewrite[seo]';
 
 $UrlRewriteBasedir = dirname(__FILE__);
 require_once $UrlRewriteBasedir . '/classes/class.rex_yrewrite.inc.php';
@@ -36,15 +38,19 @@ if ($REX['REDAXO']) {
             if ($params['mode'] == 'yrewrite_url') {
                 $class = 'class="rex-active"';
             }
-            $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_url&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_url') . '</a>';
-            array_splice($params['subject'], '-1', '-1', $page);
+            if ($REX['USER'] && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("yrewrite[url]"))) {
+                $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_url&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_url') . '</a>';
+                array_splice($params['subject'], '-2', '-2', $page);
+            }
 
             $class = '';
             if ($params['mode'] == 'yrewrite_seo') {
               $class = 'class="rex-active"';
             }
-            $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_seo&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_seo') . '</a>';
-            array_splice($params['subject'], '-1', '-1', $page);
+            if ($REX['USER'] && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("yrewrite[seo]"))) {
+                $page = '<a ' . $class . ' href="index.php?page=content&amp;article_id=' . $params['article_id'] . '&amp;mode=yrewrite_seo&amp;clang=' . $params['clang'] . '&amp;ctype=' . rex_request('ctype') . '">' . $I18N->msg('yrewrite_mode_seo') . '</a>';
+                array_splice($params['subject'], '-2', '-2', $page);
+            }
 
             array_pop($params['subject']);
             $params['subject'][] = '<a href="' . rex_getUrl($params['article_id'], $params['clang']) . '" target="_blank">' . $I18N->msg('show_article_in_frontend') . '<i class="rex-i-external"></i></a>';
@@ -56,9 +62,9 @@ if ($REX['REDAXO']) {
         rex_register_extension('PAGE_CONTENT_OUTPUT', function ($params) {
             global $REX, $I18N;
 
-            if ($params['mode'] == 'yrewrite_url') {
+            if ($params['mode'] == 'yrewrite_url' && $REX['USER'] && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("yrewrite[url]"))) {
                 include $REX['INCLUDE_PATH'] . '/addons/yrewrite/pages/content_url.inc.php';
-            } else if ($params['mode'] == 'yrewrite_seo') {
+            } else if ($params['mode'] == 'yrewrite_seo' && $REX['USER'] && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("yrewrite[seo]"))) {
               include $REX['INCLUDE_PATH'] . '/addons/yrewrite/pages/content_seo.inc.php';
             }
         });
