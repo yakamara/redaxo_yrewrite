@@ -44,6 +44,6 @@ Last Changes
 ### Version 1.3 // ##. ## 2014
 
 #### Neu
-
+- Neue Rechtevergabe für Nicht Admins (für SEO und URL Reiter in Editiermaske)
 #### Bugs
 
