@@ -43,8 +43,13 @@ Last Changes
 
 ### Version 1.3 // ##. ## 2014
 
+#### Wichtig
+- Artikel muss nun nicht mehr online sein. Nur das NoIndex Feld sorgt dafür, dass der Artikel nicht in der mehr in der Sitemap erscheint
+
 #### Neu
 - Neue Rechtevergabe für Nicht Admins (für SEO und URL Reiter in Editiermaske)
+- NoIndex Feld im Seo Reiter eingeführt. Robots Meta Tag und XML Sitemap beachten das nun
 
 #### Bugs
-
+- Prioritätsfeld angepasst. Kann nun auch dauerhaft automatisch berechnet werden. (Je nach Kategorietiefe)
+- Mehrsprachige Seiten. Es wurden nur die Seokriterien der Startseite beachtet (prio, interval)
