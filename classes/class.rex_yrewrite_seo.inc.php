@@ -143,8 +143,7 @@ class rex_yrewrite_seo
                 foreach ($domain->getClangs() as $clang_id) {
 
                     if( 
-                        ($article = OOArticle::getArticleById($article_id, $clang_id)) && 
-                        $article->isOnline() && 
+                        ($article = OOArticle::getArticleById($article_id, $clang_id)) &&
                         self::checkArticlePerm($article) && 
                         $article->getValue('yrewrite_noindex') != 1) {
     
