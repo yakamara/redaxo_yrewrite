@@ -62,6 +62,7 @@ yrewrite_changefreq = Aktualisierungshäufigkeit:
 yrewrite_seoupdated = Seo Daten wurden aktualisiert.
 yrewrite_seoupdate_failed = Bei der Akualisierung sind Fehler aufgetreten. Bitte YRewrite reinstallieren.
 
+yrewrite_priority_auto = automatisch
 yrewrite_priority_0_0 = unbedeutend [0.0]
 yrewrite_priority_0_1 = sehr unwichtig [0.1]
 yrewrite_priority_0_3 = unwichtig [0.3]

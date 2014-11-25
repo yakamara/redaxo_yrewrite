@@ -14,7 +14,7 @@ class rex_yrewrite_seo
 
     static
         $priority = array("1.0", "0.7", "0.5", "0.3", "0.1", "0.0"),
-        $priority_default = "0.5",
+        $priority_default = "",
         $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'),
         $changefreq_default = 'weekly',
         $robots_default = "User-agent: *\nDisallow",
@@ -131,27 +131,34 @@ class rex_yrewrite_seo
 
             foreach(rex_yrewrite::$paths['paths'][$domain->getName()] as $article_id => $path) {
 
-                if( ($article = OOArticle::getArticleById($article_id)) && $article->isOnline() && self::checkArticlePerm($article)) {
 
-                    $changefreq = $article->getValue('yrewrite_changefreq');
-                    if(!in_array($changefreq,self::$changefreq)) {
-                        $changefreq = self::$changefreq_default;
-                    }
+                foreach ($domain->getClangs() as $clang_id) {
 
-                    $priority = $article->getValue('yrewrite_priority');
-                    if(!in_array($priority,self::$priority)) {
-                        $article_paths = count($article->getParentTree());
-                        $prio = $article_paths - $paths -1;
-                        if($prio < 0) $prio = 0;
-
-                        if (isset(self::$priority[$prio])) {
-                          $priority = self::$priority[$prio];
-                        } else {
-                          $priority = self::$priority_default;
+                    if( 
+                        ($article = OOArticle::getArticleById($article_id, $clang_id)) && 
+                        $article->isOnline() && 
+                        self::checkArticlePerm($article) && 
+                        $article->getValue('yrewrite_noindex') != 1) {
+    
+                        $changefreq = $article->getValue('yrewrite_changefreq');
+                        if(!in_array($changefreq,self::$changefreq)) {
+                            $changefreq = self::$changefreq_default;
                         }
-                    }
-
-                    foreach ($domain->getClangs() as $clang_id) {
+    
+                        $priority = $article->getValue('yrewrite_priority');
+                        
+                        if(!in_array($priority,self::$priority)) {
+                            $article_paths = count($article->getParentTree());
+                            $prio = $article_paths - $paths - 1;
+                            if($prio < 0) $prio = 0;
+    
+                            if (isset(self::$priority[$prio])) {
+                              $priority = self::$priority[$prio];
+                            } else {
+                              $priority = self::$priority_default;
+                            }
+                        }
+    
                         $sitemap[] =
                           "\n".'<url>'.
                           "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
@@ -159,8 +166,8 @@ class rex_yrewrite_seo
                           "\n".'<changefreq>'.$changefreq.'</changefreq>'.
                           "\n".'<priority>'.$priority.'</priority>'.
                           "\n".'</url>';
+    
                     }
-
 
                 }
 

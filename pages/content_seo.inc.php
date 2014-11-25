@@ -11,6 +11,7 @@ $clang = $params['clang'];
 $ctype = rex_request('ctype');
 
 $select_priority = array();
+$select_priority[] = $I18N->msg("yrewrite_priority_auto").'=';
 foreach(rex_yrewrite_seo::$priority as $priority) {
   $select_priority[] = $I18N->msg("yrewrite_priority_".str_replace(".","_",$priority)).'='.$priority;
 }
