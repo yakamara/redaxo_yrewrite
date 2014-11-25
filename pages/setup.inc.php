@@ -73,6 +73,8 @@ echo '
   $seo = new rex_yrewrite_seo();
   echo $seo->getTitleTag();
   echo $seo->getDescriptionTag();
+  echo $seo->getRobotsTag();
+  
 ?>',true).'
                     </p>
                 </div>

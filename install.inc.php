@@ -32,6 +32,7 @@ if ($REX['VERSION'] != '4' || $REX['SUBVERSION'] < '5') {
     $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_changefreq` VARCHAR( 10 ) NOT NULL ;');
     $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_title` VARCHAR( 255 ) NOT NULL ;');
     $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_description` TEXT NOT NULL ;');
+    $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_noindex` tinyint(1) NOT NULL ;');
 
     $sql->setQuery('UPDATE `rex_article` set `yrewrite_priority` = ``;');
 

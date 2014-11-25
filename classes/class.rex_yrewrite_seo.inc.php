@@ -46,6 +46,14 @@ class rex_yrewrite_seo
         return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
     }
 
+    public function getRobotsTag() {
+        if ($this->article->getValue('yrewrite_noindex') == 1) {
+          return '<meta name="robots" content="noindex, follow">';
+        } else {
+          return '<meta name="robots" content="index, follow">';
+        }
+    }
+
     public function getTitle()
     {
         global $REX;

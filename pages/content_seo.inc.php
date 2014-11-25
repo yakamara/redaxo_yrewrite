@@ -44,6 +44,8 @@ $xform->setValueField('textarea', array('yrewrite_description', $I18N->msg('yrew
 $xform->setValueField('select', array('yrewrite_changefreq', $I18N->msg('yrewrite_changefreq'), implode(",",$select_changefreq), '', rex_yrewrite_seo::$changefreq_default));
 $xform->setValueField('select', array('yrewrite_priority', $I18N->msg('yrewrite_priority'), implode(",",$select_priority), '', rex_yrewrite_seo::$priority_default));
 
+$xform->setValueField('checkbox', array('yrewrite_noindex', $I18N->msg('yrewrite_noindex')));
+
 $xform->setActionField('db', array($REX['TABLE_PREFIX'] . 'article', 'id=' . $article_id.' and clang='.$clang));
 $xform->setObjectparams('submit_btn_label', $I18N->msg('update'));
 $form = $xform->getForm();
