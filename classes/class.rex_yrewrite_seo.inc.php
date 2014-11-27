@@ -193,11 +193,11 @@ class rex_yrewrite_seo
 
     static function checkArticlePerm($article) {
         $perm = true;
-        if ( method_exists("rex_com_auth", "checkPerm") ) {
-          $perm = rex_com_auth::checkPerm($article);
-          if($perm == false) {
-            return false;
-          }
+        if (class_exists('rex_com_auth')) {
+            $perm = rex_com_auth::checkPerm($article);
+            if($perm == false) {
+                return false;
+            }
         }
         $perm = rex_register_extension_point('YREWRITE_ARTICLE_PERM', $perm, array( 'article' => $article));
         return $perm;
