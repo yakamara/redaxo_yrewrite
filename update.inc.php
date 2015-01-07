@@ -10,7 +10,7 @@ if (rex_string::versionCompare(OOAddon::getVersion('yrewrite'), '1.1', '<=')) {
 
 
 if (rex_string::versionCompare(OOAddon::getVersion('yrewrite'), '1.3', '<=')) {
-  $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_noindex` tinyint(1) NOT NULL ;');
+  $sql->setQuery('ALTER TABLE `rex_article` ADD `yrewrite_index` tinyint(1) NOT NULL ;');
 
 }
 

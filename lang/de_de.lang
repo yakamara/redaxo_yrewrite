@@ -78,7 +78,10 @@ yrewrite_changefreq_yearly = jährlich [yearly]
 yrewrite_changefreq_never = nie [never]
 yrewrite_changefreq_always = immer [always]
 
-yrewrite_noindex = NoIndex (Für Suchmaschinen nicht erlauben)
+yrewrite_index = Indizierung und Sitemap
+yrewrite_index_status = In Abhängigkeit von Status Indizierung erlauben und in Sitemap anzeigen
+yrewrite_index_index = Indizierung erlauben / in Sitemap anzeigen (Index)
+yrewrite_index_noindex = Indizierung verbieten / nicht in Sitemap anzeigen (NoIndex)
 
 yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
 yrewrite_htaccess_set = .htaccess Datei setzen

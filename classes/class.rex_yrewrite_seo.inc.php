@@ -15,6 +15,7 @@ class rex_yrewrite_seo
     static
         $priority = array("1.0", "0.7", "0.5", "0.3", "0.1", "0.0"),
         $priority_default = "",
+        $index_setting_default = 0,
         $changefreq = array('always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'),
         $changefreq_default = 'weekly',
         $robots_default = "User-agent: *\nDisallow",
@@ -47,10 +48,10 @@ class rex_yrewrite_seo
     }
 
     public function getRobotsTag() {
-        if ($this->article->getValue('yrewrite_noindex') == 1) {
-          return '<meta name="robots" content="noindex, follow">';
-        } else {
+        if ($this->article->getValue('yrewrite_index') == 1 || ($this->article->getValue('yrewrite_index') == 0 && $this->article->isOnline())) {
           return '<meta name="robots" content="index, follow">';
+        } else {
+          return '<meta name="robots" content="noindex, follow">';
         }
     }
 
@@ -145,7 +146,9 @@ class rex_yrewrite_seo
                     if( 
                         ($article = OOArticle::getArticleById($article_id, $clang_id)) &&
                         self::checkArticlePerm($article) && 
-                        $article->getValue('yrewrite_noindex') != 1) {
+                        ($article->getValue('yrewrite_index') == 1 || ($article->isOnline() && $article->getValue('yrewrite_index') == 0))
+
+                    ) {
     
                         $changefreq = $article->getValue('yrewrite_changefreq');
                         if(!in_array($changefreq,self::$changefreq)) {

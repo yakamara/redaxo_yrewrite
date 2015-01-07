@@ -22,6 +22,12 @@ foreach(rex_yrewrite_seo::$changefreq as $changefreq) {
 
 }
 
+// Index/Sitemap Options
+$index_setting = array();
+$index_setting[] = $I18N->msg("yrewrite_index_status").'=0';
+$index_setting[] = $I18N->msg("yrewrite_index_index").'=1';
+$index_setting[] = $I18N->msg("yrewrite_index_noindex").'=-1';
+
 $xform = new rex_xform;
 // $xform->setDebug(TRUE);
 $xform->setHiddenField('page', 'content');
@@ -44,7 +50,7 @@ $xform->setValueField('textarea', array('yrewrite_description', $I18N->msg('yrew
 $xform->setValueField('select', array('yrewrite_changefreq', $I18N->msg('yrewrite_changefreq'), implode(",",$select_changefreq), '', rex_yrewrite_seo::$changefreq_default));
 $xform->setValueField('select', array('yrewrite_priority', $I18N->msg('yrewrite_priority'), implode(",",$select_priority), '', rex_yrewrite_seo::$priority_default));
 
-$xform->setValueField('checkbox', array('yrewrite_noindex', $I18N->msg('yrewrite_noindex')));
+$xform->setValueField('select', array('yrewrite_index', $I18N->msg('yrewrite_index'), implode(",",$index_setting), '', rex_yrewrite_seo::$index_setting_default));
 
 $xform->setActionField('db', array($REX['TABLE_PREFIX'] . 'article', 'id=' . $article_id.' and clang='.$clang));
 $xform->setObjectparams('submit_btn_label', $I18N->msg('update'));
