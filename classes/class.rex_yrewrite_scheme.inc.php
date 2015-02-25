@@ -86,8 +86,8 @@ class rex_yrewrite_scheme
     protected function normalize($string, $clang = 0)
     {
         $string = str_replace(
-            array('Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß'),
-            array('Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss'),
+            array('Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/'),
+            array('Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', '-'),
             $string
         );
         $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
