@@ -71,9 +71,10 @@ class rex_yrewrite_seo
           $ytitle = $this->article->getValue('name');
         }
 
+        $domain = $this->domain->getName() != 'undefined' ? $this->domain->getName() : $_SERVER['HTTP_HOST'];
         $title = $title_scheme;
         $title = str_replace('%T', $ytitle, $title);
-        $title = str_replace('%SN', $REX['SERVERNAME'], $title);
+        $title = str_replace('%SN', $domain, $title);
 
         return $this->cleanString($title);
     }
