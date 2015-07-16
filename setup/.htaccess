@@ -1,21 +1,104 @@
-RewriteEngine On
-RewriteBase /
+# DEFAULT CHARSET
+AddDefaultCharset utf-8
 
-RewriteRule ^sitemap\.xml$ index.php?rex_yrewrite_func=sitemap [NC,L]
-RewriteRule ^robots\.txt$ index.php?rex_yrewrite_func=robots [NC,L]
+# PREVENT DIRECTORY LISTING
+<IfModule mod_autoindex.c>
+	#Options -Indexes
+</IfModule>
 
-# REWRITE RULE FOR AUTOMATIC JS/CSS VERSIONING
-# RewriteRule ^(.*)\.[\d]+\.(css|js)$ $1.$2 [L]
+# ADD MIME TYPES
+<IfModule mod_mime.c>
+	AddType image/x-icon .ico
+	AddType image/svg+xml svg
+	AddType video/ogg .ogv
+	AddType video/mp4 .mp4
+	AddType video/webm .webm
+	AddType video/x-flv flv
+	AddType audio/mpeg .mp3
+	AddType audio/ogg .ogg
+	AddType application/javascript .js
+	AddType application/json .json
+	AddType application/xml .xml
+	AddType application/x-shockwave-flash .swf
+	AddType application/vnd.ms-fontobject .eot
+	AddType application/x-font-ttf .ttf
+	AddType application/font-woff .woff
+	AddType application/font-woff2 .woff2
+	AddType font/opentype otf
+</IfModule>
 
-# REWRITE RULE FOR SEO FRIENDLY IMAGE MANAGER URLS
-RewriteRule ^files[0-9]*/imagetypes/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2&%{QUERY_STRING} [B]
-RewriteRule ^images/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2&%{QUERY_STRING} [B]
+# COMPRESS FILES
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/xml
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE image/svg+xml
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/json
+	AddOutputFilterByType DEFLATE application/xml
+	AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+	AddOutputFilterByType DEFLATE application/x-font-ttf
+	AddOutputFilterByType DEFLATE font/opentype
+</IfModule>
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-l
+# ADD CACHING HEADERS
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault "access plus 1 week"
+	ExpiresByType text/html "access plus 0 seconds"
+	ExpiresByType text/plain "access plus 0 seconds"
+	ExpiresByType text/xml "access plus 0 seconds"
+	ExpiresByType text/css "access plus 4 weeks"
+	ExpiresByType image/gif "access plus 1 week"
+	ExpiresByType image/png "access plus 1 week"
+	ExpiresByType image/jpg "access plus 1 week"
+	ExpiresByType image/jpeg "access plus 1 week"
+	ExpiresByType image/x-icon "access plus 4 week"
+	ExpiresByType image/svg+xml "access plus 4 weeks"
+	ExpiresByType video/mp4 "access plus 4 weeks"
+	ExpiresByType video/ogg "access plus 4 weeks"
+	ExpiresByType video/webm "access plus 4 weeks"
+	ExpiresByType video/x-flv "access plus 4 weeks"
+	ExpiresByType application/javascript "access plus 4 weeks"
+	ExpiresByType application/json "access plus 0 seconds"
+	ExpiresByType application/xml "access plus 0 seconds"
+	ExpiresByType application/x-shockwave-flash "access plus 4 weeks"
+	ExpiresByType application/vnd.ms-fontobject "access plus 4 weeks"
+	ExpiresByType application/x-font-ttf "access plus 4 weeks"
+	ExpiresByType application/font-woff "access plus 4 weeks"
+	ExpiresByType application/font-woff2 "access plus 4 weeks"
+	ExpiresByType font/opentype "access plus 4 weeks"
+</IfModule>
 
-RewriteCond %{REQUEST_URI} !^redaxo/.*
-RewriteCond %{REQUEST_URI} !^files/.*
+# REMOVE ETAG
+<IfModule mod_headers.c>
+	Header unset ETag
+</IfModule>
 
-RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [L]
+FileETag None
+
+# REWRITING
+<IfModule mod_rewrite.c>
+    # ENABLE REWRITING
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteRule ^sitemap\.xml$ index.php?rex_yrewrite_func=sitemap [NC,L]
+    RewriteRule ^robots\.txt$ index.php?rex_yrewrite_func=robots [NC,L]
+
+    # REWRITE RULE FOR SEO FRIENDLY IMAGE MANAGER URLS
+    RewriteRule ^files[0-9]*/imagetypes/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^images/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^imagetypes/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+
+    RewriteCond %{REQUEST_URI} !^redaxo/.*
+    RewriteCond %{REQUEST_URI} !^files/.*
+
+    RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [L]
+
+</IfModule>
