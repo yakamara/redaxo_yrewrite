@@ -30,6 +30,11 @@ class rex_yrewrite_forward
 
   static function getForward($params) 
   {
+        // Url wurde von einer anderen Extension bereits gesetzt
+        if (isset($params['subject']) && $params['subject'] != '') {
+            return $params['subject'];
+        }
+        
       rex_yrewrite_forward::init();
 
       $domain = $params["domain"];
