@@ -231,7 +231,7 @@ class rex_yrewrite
 
             if (isset($params['article_id']) && $params['article_id'] > 0) {
 
-                if (isset($params['clang']) && $params['clang'] > 0) {
+                if (isset($params['clang']) && $params['clang'] > -1) {
                     $clang = $params['clang'];
                 }
 
