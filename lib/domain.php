@@ -1,10 +1,12 @@
 <?php
 
 /**
- * YREWRITE Addon
+ * YREWRITE Addon.
+ *
  * @author jan.kristinus@yakamara.de
  * @author gregor.harlan@redaxo.org
- * @package redaxo4.5
+ *
+ * @package redaxo\yrewrite
  */
 
 class rex_yrewrite_domain
@@ -19,15 +21,13 @@ class rex_yrewrite_domain
     private $description;
     private $robots;
 
-    function __construct($name, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 0, $title = '', $description = '', $robots = '')
+    public function __construct($name, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '')
     {
-        global $REX;
-
         $this->name = $name;
         $this->mountId = $mountId;
         $this->startId = $startId;
         $this->notfoundId = $notfoundId;
-        $this->clangs = is_null($clangs) ? array_keys($REX['CLANG']): $clangs;
+        $this->clangs = is_null($clangs) ? rex_clang::getAllIds() : $clangs;
         $this->startClang = $startClang;
         $this->title = $title;
         $this->description = $description;

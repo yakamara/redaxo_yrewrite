@@ -1,7 +1,7 @@
 redaxo_yrewrite
 ================
 
-Ein Multidomain-Rewriter Addon für REDAXO CMS >= 4.6
+Ein Multidomain-Rewriter Addon für REDAXO CMS >= 5.0
 
 Mit diesem AddOn lassen sich verschiedenen Domains innerhalb von REDAXO
 bestimmten Kategorien, auch sprachabhängig, zuweisen.
@@ -32,7 +32,7 @@ Installation
 
 * Release herunterladen und entpacken.
 * Umbenennen in yrewrite
-* In den REDAXO 4.6 AddOnordner legen /redaxo/include/addons/
+* In den REDAXO 5 AddOnordner legen /redaxo/src/addons/
 * Über das Backend installieren und aktivieren
 * Im YRewriter die Domain/s eintragen und zuweisen
 
@@ -41,14 +41,6 @@ Installation
 Last Changes
 -------
 
-### Version 1.3 // ##. ## 2014
+### Version 2.0 // ##. ## ####
 
-#### Wichtig
-
-#### Neu
-- Neue Rechtevergabe für Nicht Admins (für SEO und URL Reiter in Editiermaske)
-- Index Feld im Seo Reiter eingeführt. Robots Meta Tag und XML Sitemap werden dadurch gesteuert
-
-#### Bugs
-- Prioritätsfeld angepasst. Kann nun auch dauerhaft automatisch berechnet werden. (Je nach Kategorietiefe)
-- Mehrsprachige Seiten. Es wurden nur die Seokriterien der Startseite beachtet (prio, interval)
+- Portierung zu Redaxo 5

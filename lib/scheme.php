@@ -1,9 +1,11 @@
 <?php
 
 /**
- * YREWRITE Addon
+ * YREWRITE Addon.
+ *
  * @author gregor.harlan@redaxo.org
- * @package redaxo4.5
+ *
+ * @package redaxo\yrewrite
  */
 
 class rex_yrewrite_scheme
@@ -13,35 +15,38 @@ class rex_yrewrite_scheme
     /**
      * @param int                 $clang
      * @param rex_yrewrite_domain $domain
+     *
      * @return string
      */
     public function getClang($clang, rex_yrewrite_domain $domain)
     {
-        global $REX;
         if (count($domain->getClangs()) <= 1) {
             return '';
         }
-        return '/' . $this->normalize($REX['CLANG'][$clang], $clang);
+
+        return '/' . $this->normalize(rex_clang::get($clang)->getName(), $clang);
     }
 
     /**
      * @param string              $path
-     * @param OOCategory          $cat
+     * @param rex_category        $cat
      * @param rex_yrewrite_domain $domain
+     *
      * @return string
      */
-    public function appendCategory($path, OOCategory $cat, rex_yrewrite_domain $domain)
+    public function appendCategory($path, rex_category $cat, rex_yrewrite_domain $domain)
     {
         return $path . '/' . $this->normalize($cat->getName(), $cat->getClang());
     }
 
     /**
      * @param string              $path
-     * @param OOArticle           $art
+     * @param rex_article         $art
      * @param rex_yrewrite_domain $domain
+     *
      * @return string
      */
-    public function appendArticle($path, OOArticle $art, rex_yrewrite_domain $domain)
+    public function appendArticle($path, rex_article $art, rex_yrewrite_domain $domain)
     {
         if ($art->isStartArticle() && $domain->getMountId() != $art->getId()) {
             return $path . $this->suffix;
@@ -50,11 +55,12 @@ class rex_yrewrite_scheme
     }
 
     /**
-     * @param OOArticle           $art
+     * @param rex_article         $art
      * @param rex_yrewrite_domain $domain
+     *
      * @return string|false
      */
-    public function getCustomUrl(OOArticle $art, rex_yrewrite_domain $domain)
+    public function getCustomUrl(rex_article $art, rex_yrewrite_domain $domain)
     {
         if ($domain->getStartId() == $art->getId()) {
             if ($domain->getStartClang() == $art->getClang()) {
@@ -69,11 +75,12 @@ class rex_yrewrite_scheme
     }
 
     /**
-     * @param OOArticle           $art
+     * @param rex_article         $art
      * @param rex_yrewrite_domain $domain
-     * @return OORedaxo|false
+     *
+     * @return rex_structure_element|false
      */
-    public function getRedirection(OOArticle $art, rex_yrewrite_domain $domain)
+    public function getRedirection(rex_article $art, rex_yrewrite_domain $domain)
     {
         return false;
     }
@@ -81,13 +88,14 @@ class rex_yrewrite_scheme
     /**
      * @param string $string
      * @param int    $clang
+     *
      * @return string
      */
     protected function normalize($string, $clang = 0)
     {
         $string = str_replace(
-            array('Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/'),
-            array('Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', '-'),
+            ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/'],
+            ['Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', '-'],
             $string
         );
         $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);

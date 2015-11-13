@@ -96,10 +96,6 @@ yrewrite_info_seo_text = Folgenden Code bitte <b>ins Template</b> in den &lt;hea
 
 yrewrite_info_sitemaprobots = sitemap.xml und robots.txt
 
-yrewrite_install_xform_version_problem = Bitte installieren Sie das XForm Addon in Version {0}
-yrewrite_install_redaxo_version_problem = Die REDAXO Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
-yrewrite_install_php_version_problem = Die PHP Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie haben Version {1}
-
 yrewrite_notactivebecauseofmodrewrite = YRewrite funktioniert nur wenn ModRewrite aktiviert ist.
 
 yrewrite_forward = Weiterleitungen
