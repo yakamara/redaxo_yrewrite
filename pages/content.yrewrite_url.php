@@ -65,34 +65,47 @@ if (rex_post('save', 'boolean') == 1 && !$isStartarticle) {
 if ($isStartarticle) {
     echo rex_view::warning($addon->i18n('startarticleisalways', $domain->getName()));
 } else {
+
+
+    $formElements = [];
+    $n = [];
+    $n['label'] = '<label for="rex-id-yrewrite-custom-url">' . $addon->i18n('customurl') . '</label>';
+    $n['field'] = '<input class="form-control" id="rex-id-yrewrite-custom-url" type="text" name="yrewrite_url" value="' . htmlspecialchars($yrewrite_url) . '" />';
+    $n['after'] = '<div id="rex-js-yrewrite-custom-url-preview"></div>';
+    $formElements[] = $n;
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('flush', true);
+    $fragment->setVar('elements', $formElements, false);
+    $panel = $fragment->parse('core/form/form.php');
+
+
+    $formElements = [];
+    $n = [];
+    $n['field'] = '<button class="btn btn-save rex-form-aligned" type="submit" name="save" value="1"' . rex::getAccesskey($addon->i18n('update'), 'save') . '>' . $addon->i18n('update') . '</button>';
+    $formElements[] = $n;
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('elements', $formElements, false);
+    $buttons = $fragment->parse('core/form/submit.php');
+
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('class', 'edit', false);
+    $fragment->setVar('title', $addon->i18n('rewriter'), false);
+    $fragment->setVar('body', $panel, false);
+    $fragment->setVar('buttons', $buttons, false);
+    $content = $fragment->parse('core/page/section.php');
+
     echo '
-            <form action="'.$context->getUrl().'" method="post" enctype="multipart/form-data" id="yrewrite-form" name="yrewrite-form">
-                <input type="hidden" name="save" value="1" />
-
-                  <div class="rex-form-wrapper">
-
-                        <div class="rex-form-row"><p class="rex-form-text" style="margin-bottom: -3px;">
-                            <label for="custom-url">' . $addon->i18n('customurl') . '</label>
-                            <input type="text" value="' . htmlspecialchars($yrewrite_url) . '" name="yrewrite_url" id="custom-url" class="rex-form-text">
-                            </p>
-
-                            <div style="display: inline-block;margin-left: 158px; margin-top: 12px; line-height: 25px;    margin-top: 10px;" id="custom-url-preview"></div>
-                        </div>
-
-                        <div class="rex-form-row">
-                            <p class="rex-form-col-a rex-form-submit">
-                                <input type="submit" value="' . $addon->i18n('update') . '" name="save" class="rex-form-submit">
-                                <br/><br/>
-                            </p>
-                        </div>
-                        <div class="rex-clearer"></div>
-              </div>
-            </form>';
+        <form action="' . $context->getUrl() . '" method="post">
+            ' . $content . '
+        </form>';
     ?>
 <script type="text/javascript">
 jQuery(document).ready(function() {
 
-    jQuery('#custom-url').keyup(function() {
+    jQuery('#rex-id-yrewrite-custom-url').keyup(function() {
         updateCustomUrlPreview();
     });
 
@@ -112,7 +125,7 @@ function updateCustomUrlPreview() {
     ?>';
 
 
-    var customUrl = jQuery('#custom-url').val();
+    var customUrl = jQuery('#rex-id-yrewrite-custom-url').val();
     var curUrl = '';
 
     if (customUrl !== '') {
@@ -121,7 +134,7 @@ function updateCustomUrlPreview() {
         curUrl = base + autoUrl;
     }
 
-    jQuery('#custom-url-preview').html(curUrl);
+    jQuery('#rex-js-yrewrite-custom-url-preview').html(curUrl);
 }
 
 </script> <?php
@@ -130,10 +143,5 @@ function updateCustomUrlPreview() {
 
 $content = ob_get_contents();
 ob_end_clean();
-
-$fragment = new rex_fragment();
-$fragment->setVar('title', $addon->i18n('rewriter'));
-$fragment->setVar('body', $content, false);
-$content = $fragment->parse('core/page/section.php');
 
 return $content;

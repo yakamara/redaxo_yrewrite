@@ -153,7 +153,7 @@ if ($showlist) {
 
     // $list->setColumnLabel('status', rex_i18n::msg('b_function'));
     $list->setColumnParams('status', ['func' => 'status', 'oid' => '###id###']);
-    $list->setColumnLayout('status', ['<th>###VALUE###</th>', '<td style="text-align:left;">###VALUE###</td>']);
+    $list->setColumnLayout('status', ['<th>###VALUE###</th>', '<td>###VALUE###</td>']);
     $list->setColumnFormat('status', 'custom',
         create_function(
             '$params',
@@ -167,12 +167,21 @@ return $str;'
         )
     );
 
-    $list->addColumn(rex_i18n::msg('delete'), rex_i18n::msg('delete'));
+    $list->addColumn(rex_i18n::msg('function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));
+    $list->setColumnLayout(rex_i18n::msg('function'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnParams(rex_i18n::msg('function'), ['data_id' => '###id###', 'func' => 'edit', 'start' => rex_request('start', 'string')]);
+
+    $list->addColumn(rex_i18n::msg('delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('delete'));
+    $list->setColumnLayout(rex_i18n::msg('delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams(rex_i18n::msg('delete'), ['data_id' => '###id###', 'func' => 'delete']);
     $list->addLinkAttribute(rex_i18n::msg('delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('delete') . ' ?\')');
 
-    $list->addColumn(rex_i18n::msg('edit'), rex_i18n::msg('edit'));
-    $list->setColumnParams(rex_i18n::msg('edit'), ['data_id' => '###id###', 'func' => 'edit', 'start' => rex_request('start', 'string')]);
 
-    echo $list->get();
+    $content = $list->get();
+
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('title', $this->i18n('forward'));
+    $fragment->setVar('content', $content, false);
+    echo $fragment->parse('core/page/section.php');
 }

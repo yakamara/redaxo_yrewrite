@@ -58,7 +58,7 @@ foreach (rex_yrewrite::$domainsByName as $name => $val) {
 }
 
 
-$tables = '<table>
+$tables = '<table class="table table-hover">
             <tr>
                 <th>Domain</th><th>Sitemap</th><th>robots.txt</th></tr>
             '.implode('', $domains).'
@@ -66,5 +66,5 @@ $tables = '<table>
 
 $fragment = new rex_fragment();
 $fragment->setVar('title', $this->i18n('info_sitemaprobots'));
-$fragment->setVar('body', $tables, false);
+$fragment->setVar('content', $tables, false);
 echo $fragment->parse('core/page/section.php');
