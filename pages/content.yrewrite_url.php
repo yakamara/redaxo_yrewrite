@@ -66,14 +66,8 @@ if ($isStartarticle) {
     echo rex_view::warning($addon->i18n('startarticleisalways', $domain->getName()));
 } else {
     echo '
-<div class="rex-content-body" id="yrewrite-contentpage">
-    <div class="rex-content-body-2">
-        <div class="rex-form" id="rex-form-content-metamode">
             <form action="'.$context->getUrl().'" method="post" enctype="multipart/form-data" id="yrewrite-form" name="yrewrite-form">
                 <input type="hidden" name="save" value="1" />
-
-                <fieldset class="rex-form-col-1">
-                  <legend>' . $addon->i18n('rewriter') . '</legend>
 
                   <div class="rex-form-wrapper">
 
@@ -93,13 +87,7 @@ if ($isStartarticle) {
                         </div>
                         <div class="rex-clearer"></div>
               </div>
-
-          </fieldset>
-
-            </form>
-        </div>
-    </div>
-</div>';
+            </form>';
     ?>
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -140,4 +128,12 @@ function updateCustomUrlPreview() {
 
 }
 
-return ob_get_clean();
+$content = ob_get_contents();
+ob_end_clean();
+
+$fragment = new rex_fragment();
+$fragment->setVar('title', $addon->i18n('rewriter'));
+$fragment->setVar('body', $content, false);
+$content = $fragment->parse('core/page/section.php');
+
+return $content;

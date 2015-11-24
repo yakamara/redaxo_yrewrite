@@ -25,14 +25,12 @@ foreach (rex_yrewrite_seo::$changefreq as $changefreq) {
     $select_changefreq[] = $addon->i18n('changefreq_'.$changefreq).'='.$changefreq;
 }
 
-// Index/Sitemap Options
 $index_setting = [];
 $index_setting[] = $addon->i18n('index_status').'=0';
 $index_setting[] = $addon->i18n('index_index').'=1';
 $index_setting[] = $addon->i18n('index_noindex').'=-1';
 
 $yform = new rex_yform();
-// $yform->setDebug(TRUE);
 $yform->setObjectparams('form_action', $context->getUrl());
 $yform->setHiddenField('save', '1');
 
@@ -56,18 +54,15 @@ $yform->setObjectparams('submit_btn_label', rex_i18n::msg('update'));
 $form = $yform->getForm();
 
 if ($yform->objparams['actions_executed']) {
-    $content .= rex_view::info($addon->i18n('seoupdated'));
+    $form = rex_view::success($addon->i18n('seoupdated')) . $form;
     rex_article_cache::delete($article_id, $clang);
 } else {
 }
 
-$content .= '<div class="clearer"></div>
-<div class="rex-addon-output" >
-<h3 class="rex-hl2">' . $addon->i18n('rewriter_seo') . '</h3>
-<div class="rex-addon-content" >';
+$fragment = new rex_fragment();
+$fragment->setVar('class', 'edit', false);
+$fragment->setVar('title', $addon->i18n('rewriter_seo'));
+$fragment->setVar('body', $form, false);
+return $fragment->parse('core/page/section.php');
 
-$content .= $form;
 
-$content .= '</div></div>';
-
-return $content;
