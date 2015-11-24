@@ -15,42 +15,42 @@ $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');
 
 if ($func != '') {
-    $xform = new rex_yform();
-    // $xform->setDebug(TRUE);
-    $xform->setHiddenField('page', 'yrewrite/domains');
-    $xform->setHiddenField('func', $func);
-    $xform->setHiddenField('save', '1');
+    $yform = new rex_yform();
+    // $yform->setDebug(TRUE);
+    $yform->setHiddenField('page', 'yrewrite/domains');
+    $yform->setHiddenField('func', $func);
+    $yform->setHiddenField('save', '1');
 
-    $xform->setObjectparams('main_table', 'rex_yrewrite_domain');
+    $yform->setObjectparams('main_table', 'rex_yrewrite_domain');
 
-    $xform->setValueField('text', ['domain', $this->i18n('domain_info')]);
-    $xform->setValidateField('empty', ['domain', $this->i18n('no_domain_defined')]);
-    $xform->setValidateField('unique', ['domain', $this->i18n('domain_already_defined')]);
+    $yform->setValueField('text', ['domain', $this->i18n('domain_info')]);
+    $yform->setValidateField('empty', ['domain', $this->i18n('no_domain_defined')]);
+    $yform->setValidateField('unique', ['domain', $this->i18n('domain_already_defined')]);
 
-    $xform->setValueField('be_link', ['mount_id', $this->i18n('mount_id')]);
+    $yform->setValueField('be_link', ['mount_id', $this->i18n('mount_id')]);
 
-    $xform->setValueField('be_link', ['start_id', $this->i18n('start_id')]);
-    $xform->setValidateField('empty', ['start_id', $this->i18n('no_start_id_defined')]);
+    $yform->setValueField('be_link', ['start_id', $this->i18n('start_id')]);
+    $yform->setValidateField('empty', ['start_id', $this->i18n('no_start_id_defined')]);
 
-    $xform->setValueField('be_link', ['notfound_id', $this->i18n('notfound_id')]);
-    $xform->setValidateField('empty', ['notfound_id', $this->i18n('no_not_found_id_defined')]);
+    $yform->setValueField('be_link', ['notfound_id', $this->i18n('notfound_id')]);
+    $yform->setValidateField('empty', ['notfound_id', $this->i18n('no_not_found_id_defined')]);
 
     if (rex_clang::count() == 0) {
-        $xform->setValueField('hidden', ['clangs', '']);
-        $xform->setValueField('hidden', ['clang_start', '']);
+        $yform->setValueField('hidden', ['clangs', '']);
+        $yform->setValueField('hidden', ['clang_start', '']);
     } else {
         // TODO:
         // - checkbox (alle sprachen)
         //  - multiple oder checkbox liste
         //   - wenn mehrere angeklickt -> clang_start auswahl mit genau diesen sprachen
 
-        $xform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from rex_clang', '', 1, 0, '', 1, rex_clang::count()]);
-        $xform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from rex_clang order by id']);
+        $yform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from rex_clang', '', 1, 0, '', 1, rex_clang::count()]);
+        $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from rex_clang order by id']);
     }
 
-    function rex_yrewrite_domaincheck($field, $value, $xform)
+    function rex_yrewrite_domaincheck($field, $value, $yform)
     {
-        $sql = 'select '.$field.' from '.$xform->objparams['main_table'].' where '.$field.'="'.mysql_real_escape_string($value).'" and alias_domain="" AND !('.$xform->objparams['main_where'].')';
+        $sql = 'select '.$field.' from '.$yform->objparams['main_table'].' where '.$field.'="'.mysql_real_escape_string($value).'" and alias_domain="" AND !('.$yform->objparams['main_where'].')';
         $a = rex_sql::factory();
         $result = $a->getArray($sql);
         if (count($result) > 0) {
@@ -59,21 +59,21 @@ if ($func != '') {
         return false;
     }
 
-    $xform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
+    $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
 
-    $xform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default]);
-    $xform->setValueField('textarea', ['description', $this->i18n('domain_description'),'','','short']);
-    $xform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),rex_yrewrite_seo::$robots_default,'','short']);
+    $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default]);
+    $yform->setValueField('textarea', ['description', $this->i18n('domain_description'),'','','short']);
+    $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),rex_yrewrite_seo::$robots_default,'','short']);
 
     ?>
 <script>
   jQuery(document).ready(function () {
-      jQuery("#xform-formular-title_scheme").append('<span style="display:block; margin-left:230px; font-size:10px"><?php echo $this->i18n('domain_title_scheme_info');
+      jQuery("#yform-formular-title_scheme").append('<span style="display:block; margin-left:230px; font-size:10px"><?php echo $this->i18n('domain_title_scheme_info');
     ?></span>');
-      jQuery("#xform-formular-description").append('<span style="display:block; margin-left:230px; font-size:10px;"></span>');
-      jQuery("#xform-formular-description textarea").bind ("change input keyup keydown keypress mouseup mousedown cut copy paste",function (e) {
+      jQuery("#yform-formular-description").append('<span style="display:block; margin-left:230px; font-size:10px;"></span>');
+      jQuery("#yform-formular-description textarea").bind ("change input keyup keydown keypress mouseup mousedown cut copy paste",function (e) {
           var v = jQuery(this).val().replace(/(\r\n|\n|\r)/gm, "").length;
-          jQuery("#xform-formular-description").find('span').html( v + ' <?php echo $this->i18n('domain_description_info');
+          jQuery("#yform-formular-description").find('span').html( v + ' <?php echo $this->i18n('domain_description_info');
     ?>');
       return true;
       }).trigger("keydown");
@@ -83,56 +83,68 @@ if ($func != '') {
     if ($func == 'delete') {
         $d = rex_sql::factory();
         $d->setQuery('delete from rex_yrewrite_domain where id=' . $data_id);
-        echo rex_view::info($this->i18n('domain_deleted'));
+        echo rex_view::success($this->i18n('domain_deleted'));
         rex_yrewrite::deleteCache();
-    } elseif ($func == 'edit') {
-        $xform->setHiddenField('data_id', $data_id);
-        $xform->setActionField('db', ['rex_yrewrite_domain', 'id=' . $data_id]);
-        $xform->setObjectparams('main_id', $data_id);
-        $xform->setObjectparams('main_where', "id=$data_id");
-        $xform->setObjectparams('getdata', true);
-        $xform->setObjectparams('submit_btn_label', rex_i18n::msg('save'));
-        $form = $xform->getForm();
 
-        if ($xform->objparams['actions_executed']) {
-            echo rex_view::info($this->i18n('domain_updated'));
+    } else if ($func == 'edit') {
+
+        $yform->setHiddenField('data_id', $data_id);
+        $yform->setActionField('db', ['rex_yrewrite_domain', 'id=' . $data_id]);
+        $yform->setObjectparams('main_id', $data_id);
+        $yform->setObjectparams('main_where', "id=$data_id");
+        $yform->setObjectparams('getdata', true);
+        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('save'));
+        $form = $yform->getForm();
+
+        if ($yform->objparams['actions_executed']) {
+            echo rex_view::success($this->i18n('domain_updated'));
             rex_yrewrite::deleteCache();
+
         } else {
             $showlist = false;
-            echo '<div class="rex-area">
-                            <h3 class="rex-hl2">' . $this->i18n('edit_domain') . '</h3>
-                            <div class="rex-area-content">';
-            echo $form;
-            echo '</div></div>';
+            $fragment = new rex_fragment();
+            $fragment->setVar('class', 'edit', false);
+            $fragment->setVar('title', $this->i18n('edit_domain'));
+            $fragment->setVar('body', $form, false);
+            echo $fragment->parse('core/page/section.php');
+
         }
-    } elseif ($func == 'add') {
-        $xform->setActionField('db', ['rex_yrewrite_domain']);
-        $xform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
-        $form = $xform->getForm();
 
-        if ($xform->objparams['actions_executed']) {
-            echo rex_view::info($this->i18n('domain_added'));
+    } elseif ($func == 'add') {
+
+        $yform->setActionField('db', ['rex_yrewrite_domain']);
+        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
+        $form = $yform->getForm();
+
+        if ($yform->objparams['actions_executed']) {
+            echo rex_view::success($this->i18n('domain_added'));
             rex_yrewrite::deleteCache();
+
         } else {
             $showlist = false;
-            echo '<div class="rex-area">
-                            <h3 class="rex-hl2">' . $this->i18n('add_domain') . '</h3>
-                            <div class="rex-area-content">';
-            echo $form;
-            echo '</div></div>';
+
+            $fragment = new rex_fragment();
+            $fragment->setVar('class', 'edit', false);
+            $fragment->setVar('title', $this->i18n('add_domain'));
+            $fragment->setVar('body', $form, false);
+            echo $fragment->parse('core/page/section.php');
+
         }
     }
 }
 
 if ($showlist) {
+
     $sql = 'SELECT * FROM rex_yrewrite_domain where alias_domain = ""';
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');
     $list->addParam('page', 'yrewrite/domains');
 
-    $header = '<a class="rex-i-element rex-i-generic-add" href="' . $list->getUrl(['func' => 'add']) . '"><span class="rex-i-element-text">' . $this->i18n('add_domain') . '</span></a>';
-    $list->addColumn($header, '###id###', 0, ['<th class="rex-icon">###VALUE###</th>', '<td class="rex-small">###VALUE###</td>']);
+    $tdIcon = '<i class="fa fa-sitemap"></i>';
+    $thIcon = '<a href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey($this->i18n('add_domain'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
+    $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
+    $list->setColumnParams($thIcon, ['func' => 'edit', 'data_id' => '###id###']);
 
     $list->setColumnParams('id', ['data_id' => '###id###', 'func' => 'edit']);
     $list->setColumnSortable('id');
@@ -156,7 +168,7 @@ if ($showlist) {
                     $return[] = rex_clang::get($clang)->getName();
                 }
                 if (count($return) > 1) {
-                    $return = implode(',', $return) . '<br />'.$this->i18n('clang_start').': '.rex_clang::get($params['list']->sql->getValue('clang_start'))->getName();
+                    $return = implode(',', $return) . '<br />'.$this->i18n('clang_start').': '.rex_clang::get($params['list']->getValue('clang_start'))->getName();
                 } else {
                     $return = implode(',', $return);
                 }
@@ -198,9 +210,9 @@ if ($showlist) {
         } else {
             if (($article = rex_article::get($id))) {
                 if ($article->isStartArticle()) {
-                    $link = 'index.php?page=structure&category_id='.$id.'&clang=0';
+                    $link = 'index.php?page=structure&category_id='.$id.'&clang=1';
                 } else {
-                    $link = 'index.php?page=content&article_id='.$id.'&mode=edit&clang=0';
+                    $link = 'index.php?page=content&article_id='.$id.'&mode=edit&clang=1';
                 }
                 return $article->getName().' [<a href="'.$link.'">'.$id.'</a>]';
             }

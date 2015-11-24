@@ -10,6 +10,8 @@
  * @var rex_addon $this
  */
 
+rex_url::init(new rex_path_default_provider("/", "redaxo", false));
+
 rex_yrewrite::setScheme(new rex_yrewrite_scheme());
 
 rex_extension::register('PACKAGES_INCLUDED', function ($params) {
