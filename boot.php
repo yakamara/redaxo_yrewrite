@@ -10,7 +10,9 @@
  * @var rex_addon $this
  */
 
-rex_url::init(new rex_path_default_provider("/", "redaxo", false));
+if(!rex::isBackend()) {
+    rex_url::init(new rex_path_default_provider("/", "redaxo", false));
+}
 
 rex_yrewrite::setScheme(new rex_yrewrite_scheme());
 
