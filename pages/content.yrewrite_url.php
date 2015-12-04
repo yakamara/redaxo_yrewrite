@@ -30,64 +30,6 @@ $autoUrl = str_replace('http://' . $domain->getName(), '', $autoUrl);
 $autoUrl = str_replace('https://' . $domain->getName(), '', $autoUrl);
 $autoUrl = substr($autoUrl, 1);
 
-
-function yrewrite_yform_validate_url_check($params) {
-    var_dump($params);
-    return true;
-}
-
-
-/*
-if (rex_post('yrewrite_func', 'string') == "custom_url" && !$isStartarticle) {
-
-
-    $url_status = true;
-
-    if ($yrewrite_url == '') {
-    } elseif (substr($yrewrite_url, 0, 1) == '/' or substr($yrewrite_url, -1) == '/') {
-        echo rex_view::warning($addon->i18n('warning_noslash'));
-        $url_status = false;
-
-    } elseif (strlen($yrewrite_url) > 250) {
-        echo rex_view::warning($addon->i18n('warning_nottolong'));
-        $url_status = false;
-
-    } elseif (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url)) {
-        echo rex_view::warning($addon->i18n('warning_chars'));
-        $url_status = false;
-
-    } elseif (($a = rex_yrewrite::getArticleIdByUrl($domain, $yrewrite_url)) && (key($a) != $article_id || current($a) != $clang)) {
-        $art = '<a href="index.php?page=content&article_id='.key($a).'&mode=edit&clang='.current($a).'&ctype=1">'.$addon->i18n('warning_otherarticle').'</a>';
-
-        echo rex_view::warning($addon->i18n('warning_urlexists', $art));
-        $url_status = false;
-
-    }
-
-    if ($url_status) {
-        $sql = rex_sql::factory();
-        $sql->setTable(rex::getTable('article'));
-        // $sql->debugsql = 1;
-        $sql->setWhere('id=' . $article_id . ' AND clang_id=' . $clang);
-        $sql->setValue('yrewrite_url', $yrewrite_url);
-        if ($sql->update()) {
-            rex_yrewrite::generatePathFile([
-                'id' => $article_id,
-                'clang' => $clang,
-                'extension_point' => 'ART_UPDATED',
-            ]);
-
-            echo rex_view::info($addon->i18n('urlupdated'));
-        }
-    }
-
-
-} else {
-    $yrewrite_url = $data['yrewrite_url'];
-}
-*/
-
-
 if ($isStartarticle) {
 
     echo rex_view::warning($addon->i18n('startarticleisalways', $domain->getName()));
@@ -123,8 +65,12 @@ if ($isStartarticle) {
         return (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url));
     }, 'params'=>[], 'message' => rex_i18n::msg('yrewrite_warning_chars')]);
 
-    $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url, $params ) {
-        return (($a = rex_yrewrite::getArticleIdByUrl($params["domain"], $yrewrite_url)) && (key($a) != $params["article_id"] || current($a) != $params["clang"]));
+    $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url, $params, $field ) {
+        $return = (($a = rex_yrewrite::getArticleIdByUrl($params["domain"], $yrewrite_url)) && (key($a) != $params["article_id"] || current($a) != $params["clang"]));
+        if ($return) {
+            $field->setElement("message", rex_i18n::msg('yrewrite_warning_urlexists', key($a) ));
+        }
+        return $return;
     }, 'params'=>['article_id' => $article_id, "domain" => $domain, "clang" => $clang], 'message' => rex_i18n::msg('yrewrite_warning_urlexists')]);
 
     $yform->setActionField('db', [rex::getTable('article'), 'id=' . $article_id.' and clang_id='.$clang]);

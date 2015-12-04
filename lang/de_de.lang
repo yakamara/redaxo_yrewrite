@@ -51,7 +51,7 @@ yrewrite_no_not_found_id_defined = Bitte einen 404 Artikel auswählen
 yrewrite_warning_noslash = Bitte in der URL kein / am Anfang und am Ende
 yrewrite_warning_nottolong = Die URL darf nicht länger als 250 Zeichen sein
 yrewrite_warning_chars = Die URL ist nicht korrekt. Schreibweise beachten. Nur "a-z/0-9 -", kein / am Anfang und am Ende
-yrewrite_warning_urlexists = Diese URL existiert bereits {0}
+yrewrite_warning_urlexists = Diese URL existiert bereits bei Artikel mit der id={0}
 yrewrite_warning_otherarticle = Zum anderen Artikel
 yrewrite_urlupdated = Url wurde aktualisiert
 
