@@ -61,14 +61,13 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
             $params = $ep->getParams();
             $subject = $ep->getSubject();
 
-            $panel = include(rex_path::addon('yrewrite','pages/content.yrewrite_seo.php'));
+            $panel = include(rex_path::addon('yrewrite','pages/content.yrewrite_url.php'));
 
             $fragment = new rex_fragment();
-            $fragment->setVar('title', '<i class="rex-icon rex-icon-info"></i> SEO:' . rex_i18n::msg('metadata'), false);
+            $fragment->setVar('title', '<i class="rex-icon rex-icon-info"></i> ' . rex_i18n::msg('yrewrite_rewriter'), false);
             $fragment->setVar('body', $panel, false);
             $fragment->setVar('article_id', $params["article_id"], false);
-            $fragment->setVar('clang', $params["clang"], false);
-            $fragment->setVar('ctype', $params["ctype"], false);
+
             $fragment->setVar('collapse', true);
             $fragment->setVar('collapsed', false);
             $content = $fragment->parse('core/page/section.php');
@@ -81,13 +80,14 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
             $params = $ep->getParams();
             $subject = $ep->getSubject();
 
-            $panel = include(rex_path::addon('yrewrite','pages/content.yrewrite_url.php'));
+            $panel = include(rex_path::addon('yrewrite','pages/content.yrewrite_seo.php'));
 
             $fragment = new rex_fragment();
-            $fragment->setVar('title', '<i class="rex-icon rex-icon-info"></i> URL:' . rex_i18n::msg('metadata'), false);
+            $fragment->setVar('title', '<i class="rex-icon rex-icon-info"></i> ' . rex_i18n::msg('yrewrite_rewriter_seo'), false);
             $fragment->setVar('body', $panel, false);
             $fragment->setVar('article_id', $params["article_id"], false);
-
+            $fragment->setVar('clang', $params["clang"], false);
+            $fragment->setVar('ctype', $params["ctype"], false);
             $fragment->setVar('collapse', true);
             $fragment->setVar('collapsed', false);
             $content = $fragment->parse('core/page/section.php');
@@ -96,13 +96,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 
         });
 
-        // content/yrewrite_url: { title: 'translate:mode_url', perm: 'yrewrite[url]' }
-        // content/yrewrite_seo: { title: 'translate:mode_seo', perm: 'yrewrite[seo]' }
-
-
-
     }
-
 
 
 }, rex_extension::EARLY);

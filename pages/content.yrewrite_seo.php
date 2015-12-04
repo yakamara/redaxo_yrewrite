@@ -10,6 +10,8 @@
  * @var rex_addon $this
  */
 
+// TODO: content/yrewrite_seo: { title: 'translate:mode_seo', perm: 'yrewrite[seo]' }
+
 $content = '';
 $addon = rex_addon::get('yrewrite');
 
@@ -38,7 +40,7 @@ $yform = new rex_yform();
 $yform->setObjectparams('form_action', rex_url::backendController(['page' => 'content/edit', 'article_id' => $article_id, 'clang' => $clang, 'ctype' => $ctype], false));
 $yform->setObjectparams('form_id', 'yrewrite-seo');
 $yform->setObjectparams('form_name', 'yrewrite-seo');
-$yform->setHiddenField('save', '1');
+$yform->setHiddenField('yrewrite_func', 'seo');
 
 $yform->setObjectparams('form_showformafterupdate', 1);
 
@@ -56,24 +58,18 @@ $yform->setValueField('select', ['yrewrite_priority', rex_i18n::msg('yrewrite_pr
 $yform->setValueField('select', ['yrewrite_index', rex_i18n::msg('yrewrite_index'), implode(',', $index_setting), '', rex_yrewrite_seo::$index_setting_default]);
 
 $yform->setActionField('db', [rex::getTable('article'), 'id=' . $article_id.' and clang_id='.$clang]);
-$yform->setObjectparams('submit_btn_label', rex_i18n::msg('yrewrite_update'));
+$yform->setObjectparams('submit_btn_label', $addon->i18n('update_seo'));
 $form = $yform->getForm();
 
 if ($yform->objparams['actions_executed']) {
+
     $form = rex_view::success(rex_i18n::msg('yrewrite_seoupdated')) . $form;
     rex_article_cache::delete($article_id, $clang);
+
 } else {
+
 }
 
-$form = '<section id="rex-js-page-main-meta-yerwrite" data-pjax-container="#rex-js-page-main-meta-yerwrite" data-pjax-no-history="1">'.$form.'</section>';
+$form = '<section id="rex-page-sidebar-yrewrite-seo" data-pjax-container="#rex-page-sidebar-yrewrite-seo" data-pjax-no-history="1">'.$form.'</section>';
 
 return $form;
-
-
-$fragment = new rex_fragment();
-$fragment->setVar('class', 'edit', false);
-$fragment->setVar('title', rex_i18n::msg('yrewrite_rewriter_seo'));
-$fragment->setVar('body', $form, false);
-return $fragment->parse('core/page/section.php');
-
-
