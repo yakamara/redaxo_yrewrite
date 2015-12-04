@@ -1,12 +1,13 @@
 yrewrite = YRewrite
 
 # content page
-yrewrite_rewriter = URL Umschreibung
-yrewrite_rewriter_seo = SEO Daten
+yrewrite_rewriter = Benutzerdefinierte URL
+yrewrite_rewriter_seo = SEO-Daten
 yrewrite_mode_url = URL
 yrewrite_mode_seo = SEO
 yrewrite_customurl = Benutzerdefinierte URL
-yrewrite_update = URL aktualisieren
+yrewrite_update_url = URL aktualisieren
+yrewrite_update_seo = SEO-Daten aktualisieren
 
 yrewrite_domains = Domains
 yrewrite_domain_info = Domain [www.domain.de]
