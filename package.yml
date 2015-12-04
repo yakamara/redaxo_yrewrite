@@ -13,10 +13,6 @@ page:
         forward: { title: 'translate:forward', perm: 'yrewrite[forward]' }
         setup: { title: 'translate:setup', perm: admin }
 
-pages:
-    content/yrewrite_url: { title: 'translate:mode_url', perm: 'yrewrite[url]' }
-    content/yrewrite_seo: { title: 'translate:mode_seo', perm: 'yrewrite[seo]' }
-
 requires:
     packages:
         yform/manager: '^1.0-dev'

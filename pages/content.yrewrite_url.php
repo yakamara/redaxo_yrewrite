@@ -13,6 +13,8 @@
 ob_start();
 
 $addon = rex_addon::get('yrewrite');
+$article_id = $params['article_id'];
+$clang = $params['clang'];
 
 $yrewrite_url = stripslashes(rex_request('yrewrite_url'));
 $domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
@@ -29,17 +31,21 @@ if (rex_post('save', 'boolean') == 1 && !$isStartarticle) {
     } elseif (substr($yrewrite_url, 0, 1) == '/' or substr($yrewrite_url, -1) == '/') {
         echo rex_view::warning($addon->i18n('warning_noslash'));
         $url_status = false;
+
     } elseif (strlen($yrewrite_url) > 250) {
         echo rex_view::warning($addon->i18n('warning_nottolong'));
         $url_status = false;
+
     } elseif (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url)) {
         echo rex_view::warning($addon->i18n('warning_chars'));
         $url_status = false;
+
     } elseif (($a = rex_yrewrite::getArticleIdByUrl($domain, $yrewrite_url)) && (key($a) != $article_id || current($a) != $clang)) {
         $art = '<a href="index.php?page=content&article_id='.key($a).'&mode=edit&clang='.current($a).'&ctype=1">'.$addon->i18n('warning_otherarticle').'</a>';
 
         echo rex_view::warning($addon->i18n('warning_urlexists', $art));
         $url_status = false;
+
     }
 
     if ($url_status) {
@@ -58,14 +64,15 @@ if (rex_post('save', 'boolean') == 1 && !$isStartarticle) {
             echo rex_view::info($addon->i18n('urlupdated'));
         }
     }
+
 } else {
     $yrewrite_url = $data['yrewrite_url'];
 }
 
 if ($isStartarticle) {
     echo rex_view::warning($addon->i18n('startarticleisalways', $domain->getName()));
-} else {
 
+} else {
 
     $formElements = [];
     $n = [];
@@ -95,10 +102,11 @@ if ($isStartarticle) {
     $fragment->setVar('title', $addon->i18n('rewriter'), false);
     $fragment->setVar('body', $panel, false);
     $fragment->setVar('buttons', $buttons, false);
-    $content = $fragment->parse('core/page/section.php');
+    // $content = $fragment->parse('core/page/section.php');
+    $content = $panel;
 
     echo '
-        <form action="' . $context->getUrl() . '" method="post">
+        <form action="' . '' . '" method="post">
             ' . $content . '
         </form>';
     ?>
