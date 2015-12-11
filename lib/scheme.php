@@ -24,7 +24,7 @@ class rex_yrewrite_scheme
             return '';
         }
 
-        return '/' . $this->normalize(rex_clang::get($clang)->getName(), $clang);
+        return '/' . $this->normalize(rex_clang::get($clang)->getCode(), $clang);
     }
 
     /**
