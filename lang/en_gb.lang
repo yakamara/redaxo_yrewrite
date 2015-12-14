@@ -83,7 +83,7 @@ yrewrite_index_status = Status controls Index and Sitemap
 yrewrite_index_index = allow Search Engine to index page / display in Sitemap (Index)
 yrewrite_index_noindex = do not allow Search Engine to index page / do not display in Sitemap (NoIndex)
 
-yrewrite_htacces_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
+yrewrite_htaccess_hasbeenset = [missing_text] de:.htaccess Datei wurde gesetzt/ersetzt
 yrewrite_htaccess_set = .htaccess Datei setzen
 
 yrewrite_htaccess_info = Um YRewrite lauffähig zu bekommen, muss eine .htaccess Datei im Root Ordner gesetzt werden. Sollte eine andere .htaccess bereits vorhanden sein, wird diese ersetzt und ist nicht wiederherstellbar.

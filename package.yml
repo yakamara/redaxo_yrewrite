@@ -1,5 +1,5 @@
 package: yrewrite
-version: '2.0-dev'
+version: '1.0-beta1'
 author: Jan Kristinus, Gregor Harlan
 supportpage: www.redaxo.org/de/forum/
 
@@ -15,4 +15,5 @@ page:
 
 requires:
     packages:
-        yform/manager: '^1.0-dev'
+        yform/manager: '^1.0-beta1'
+    redaxo: '>=5.0.0-beta2'
