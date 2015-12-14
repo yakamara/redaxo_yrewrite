@@ -88,9 +88,9 @@ FileETag None
     RewriteRule ^robots\.txt$ index.php?rex_yrewrite_func=robots [NC,L]
 
     # REWRITE RULE FOR SEO FRIENDLY IMAGE MANAGER URLS
-    RewriteRule ^files[0-9]*/imagetypes/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2&%{QUERY_STRING} [B]
-    RewriteRule ^images/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2&%{QUERY_STRING} [B]
-    RewriteRule ^imagetypes/([^/]*)/([^/]*) /index.php?rex_img_type=$1&rex_img_file=$2
+    RewriteRule ^files[0-9]*/imagetypes/([^/]*)/([^/]*) /index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^images/([^/]*)/([^/]*) /index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^imagetypes/([^/]*)/([^/]*) /index.php?rex_media_type=$1&rex_media_file=$2
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
