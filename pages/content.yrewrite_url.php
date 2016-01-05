@@ -73,6 +73,12 @@ if ($isStartarticle) {
         return $return;
     }, 'params'=>['article_id' => $article_id, "domain" => $domain, "clang" => $clang], 'message' => rex_i18n::msg('yrewrite_warning_urlexists')]);
 
+    /* Ursprüngliches Formular: hier muss noch eine Checkbox für die Kategorie eingefügt werden, damit die Kategorie ignoriert werden kann. */
+    // $n = [];
+    // $n['label'] = '';
+    // $n['field'] = '<div class="checkbox"><label class="control-label" for="rex-id-yrewrite-ignore-category"><input type="checkbox" id="rex-id-yrewrite-ignore-category" name="yrewrite_ignore_category" value="1"' . ($yrewrite_ignore_category == 1?' checked="checked"':'') . '" /> ' . $addon->i18n('ignore_category') . '</label></div>';
+    // $formElements[] = $n;
+    
     $yform->setActionField('db', [rex::getTable('article'), 'id=' . $article_id.' and clang_id='.$clang]);
     $yform->setObjectparams('submit_btn_label', $addon->i18n('update_url'));
     $form = $yform->getForm();
