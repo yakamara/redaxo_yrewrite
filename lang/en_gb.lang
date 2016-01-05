@@ -6,6 +6,7 @@ yrewrite_rewriter_seo = SEO Data
 yrewrite_mode_url = URL
 yrewrite_mode_seo = SEO
 yrewrite_customurl = Custom URL
+yrewrite_ignore_category = Do not use this category in the url
 yrewrite_update = update URL
 
 yrewrite_domains = Domains
