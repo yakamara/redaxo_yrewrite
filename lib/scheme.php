@@ -36,7 +36,9 @@ class rex_yrewrite_scheme
      */
     public function appendCategory($path, rex_category $cat, rex_yrewrite_domain $domain)
     {
-        return $path . '/' . $this->normalize($cat->getName(), $cat->getClang());
+        $Sibling = $cat->getStartArticle()->getValue('yrewrite_ignore_category');
+        if($Sibling === '1') return $path;
+        return $path . '/' . $this->normalize(($Sibling?$Sibling:$cat->getName()), $cat->getClang());
     }
 
     /**
