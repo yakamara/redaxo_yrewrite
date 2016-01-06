@@ -30,7 +30,7 @@ class rex_yrewrite
     /**
      * @var rex_yrewrite_scheme
      */
-    public static $scheme;
+    private static $scheme;
 
     public static function setScheme(rex_yrewrite_scheme $scheme)
     {
@@ -39,6 +39,10 @@ class rex_yrewrite
 
     public static function init()
     {
+        if (null === self::$scheme) {
+            self::setScheme(new rex_yrewrite_scheme());
+        }
+
         self::$domainsByMountId = [];
         self::$domainsByName = [];
         self::$aliasDomains = [];
@@ -268,7 +272,7 @@ class rex_yrewrite
         // same domain id check
         if (!$fullpath && isset(self::$paths['paths'][$domain][$id][$clang])) {
             $path = '/' . self::$paths['paths'][$domain][$id][$clang];
-            // if(rex::isBackend()) { $path = rex_yrewrite::$paths['paths'][$domain][$id][$clang]; }
+            // if(rex::isBackend()) { $path = self::$paths['paths'][$domain][$id][$clang]; }
         }
 
         if ($path == '') {
@@ -306,32 +310,32 @@ class rex_yrewrite
         $setDomain = function (rex_yrewrite_domain &$domain, &$path, rex_structure_element $element) {
             $id = $element->getId();
             $clang = $element->getClang();
-            if (isset(rex_yrewrite::$domainsByMountId[$id][$clang])) {
-                $domain = rex_yrewrite::$domainsByMountId[$id][$clang];
-                $path = rex_yrewrite::$scheme->getClang($clang, $domain);
+            if (isset(self::$domainsByMountId[$id][$clang])) {
+                $domain = self::$domainsByMountId[$id][$clang];
+                $path = self::$scheme->getClang($clang, $domain);
             }
         };
 
         $setPath = function (rex_yrewrite_domain $domain, $path, rex_article $art) use ($setDomain) {
             $setDomain($domain, $path, $art);
-            if (($redirection = rex_yrewrite::$scheme->getRedirection($art, $domain)) instanceof rex_structure_element) {
-                rex_yrewrite::$paths['redirections'][$art->getId()][$art->getClang()] = [
+            if (($redirection = self::$scheme->getRedirection($art, $domain)) instanceof rex_structure_element) {
+                self::$paths['redirections'][$art->getId()][$art->getClang()] = [
                     'id' => $redirection->getId(),
                     'clang' => $redirection->getClang(),
                 ];
-                unset(rex_yrewrite::$paths['paths'][$domain->getName()][$art->getId()][$art->getClang()]);
+                unset(self::$paths['paths'][$domain->getName()][$art->getId()][$art->getClang()]);
                 return;
             }
-            unset(rex_yrewrite::$paths['redirections'][$art->getId()][$art->getClang()]);
-            $url = rex_yrewrite::$scheme->getCustomUrl($art, $domain);
+            unset(self::$paths['redirections'][$art->getId()][$art->getClang()]);
+            $url = self::$scheme->getCustomUrl($art, $domain);
             if (!is_string($url)) {
-                $url = rex_yrewrite::$scheme->appendArticle($path, $art, $domain);
+                $url = self::$scheme->appendArticle($path, $art, $domain);
             }
-            rex_yrewrite::$paths['paths'][$domain->getName()][$art->getId()][$art->getClang()] = ltrim($url, '/');
+            self::$paths['paths'][$domain->getName()][$art->getId()][$art->getClang()] = ltrim($url, '/');
         };
 
         $generatePaths = function (rex_yrewrite_domain $domain, $path, rex_category $cat) use (&$generatePaths, $setDomain, $setPath) {
-            $path = rex_yrewrite::$scheme->appendCategory($path, $cat, $domain);
+            $path = self::$scheme->appendCategory($path, $cat, $domain);
             $setDomain($domain, $path, $cat);
             foreach ($cat->getChildren() as $child) {
                 $generatePaths($domain, $path, $child);
