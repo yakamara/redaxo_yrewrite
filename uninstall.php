@@ -10,7 +10,7 @@
  * @var rex_addon $this
  */
 
-rex_sql_table::get('rex_article')
+rex_sql_table::get(rex::getTable('article'))
     ->removeColumn('yrewrite_url')
     ->removeColumn('yrewrite_priority')
     ->removeColumn('yrewrite_changefreq')
@@ -22,8 +22,8 @@ rex_sql_table::get('rex_article')
 
 $sql = rex_sql::factory();
 
-$sql->setQuery('DROP TABLE IF EXISTS `rex_yrewrite_domain`;');
+$sql->setQuery(sprintf('DROP TABLE IF EXISTS `%s`;', rex::getTable('yrewrite_domain')));
 
-$sql->setQuery('DROP TABLE IF EXISTS `rex_yrewrite_forward`;');
+$sql->setQuery(sprintf('DROP TABLE IF EXISTS `%s`;', rex::getTable('yrewrite_forward')));
 
 rex_delete_cache();

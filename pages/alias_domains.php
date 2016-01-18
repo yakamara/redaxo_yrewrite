@@ -21,12 +21,12 @@ if ($func != '') {
     $yform->setHiddenField('func', $func);
     $yform->setHiddenField('save', '1');
 
-    $yform->setObjectparams('main_table', 'rex_yrewrite_domain');
+    $yform->setObjectparams('main_table', rex::getTable('yrewrite_domain'));
 
     $yform->setValueField('text', ['domain', $this->i18n('alias_domain_refersto')]);
-    $yform->setValueField('select_sql', ['alias_domain', $this->i18n('domain_willbereferdto') . '', 'select domain as id,domain as name from rex_yrewrite_domain where alias_domain = ""']);
+    $yform->setValueField('select_sql', ['alias_domain', $this->i18n('domain_willbereferdto') . '', 'select domain as id,domain as name from '.rex::getTable('yrewrite_domain').' where alias_domain = ""']);
     if (rex_clang::count() > 1) {
-        $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from rex_clang order by id']);
+        $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id']);
     }
 
     $yform->setValidateField('empty', ['domain', $this->i18n('no_domain_defined')]);
@@ -35,13 +35,13 @@ if ($func != '') {
 
     if ($func == 'delete') {
         $d = rex_sql::factory();
-        $d->setQuery('delete from rex_yrewrite_domain where id=' . $data_id);
+        $d->setQuery('delete from '.rex::getTable('yrewrite_domain').' where id=' . $data_id);
         echo rex_view::success($this->i18n('domain_deleted'));
         rex_yrewrite::deleteCache();
 
     } elseif ($func == 'edit') {
         $yform->setHiddenField('data_id', $data_id);
-        $yform->setActionField('db', ['rex_yrewrite_domain', 'id=' . $data_id]);
+        $yform->setActionField('db', [rex::getTable('yrewrite_domain'), 'id=' . $data_id]);
         $yform->setObjectparams('main_id', $data_id);
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('getdata', true);
@@ -65,7 +65,7 @@ if ($func != '') {
 
     } else if ($func == 'add') {
 
-        $yform->setActionField('db', ['rex_yrewrite_domain']);
+        $yform->setActionField('db', [rex::getTable('yrewrite_domain')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
 
@@ -87,7 +87,7 @@ if ($func != '') {
 
 if ($showlist) {
 
-    $sql = 'SELECT * FROM rex_yrewrite_domain where alias_domain <> ""';
+    $sql = 'SELECT * FROM '.rex::getTable('yrewrite_domain').' where alias_domain <> ""';
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');

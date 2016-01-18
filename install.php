@@ -10,7 +10,7 @@
  * @var rex_addon $this
  */
 
-rex_sql_table::get('rex_article')
+rex_sql_table::get(rex::getTable('article'))
     ->ensureColumn(new rex_sql_column('yrewrite_url', 'varchar(255)'))
     ->ensureColumn(new rex_sql_column('yrewrite_priority', 'varchar(5)'))
     ->ensureColumn(new rex_sql_column('yrewrite_changefreq', 'varchar(10)'))
@@ -22,7 +22,7 @@ rex_sql_table::get('rex_article')
 
 $sql = rex_sql::factory();
 
-$sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_domain` (
+$sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_domain').'` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `domain` varchar(255) NOT NULL,
     `mount_id` int(11) NOT NULL,
@@ -37,7 +37,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_domain` (
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
-$sql->setQuery('CREATE TABLE IF NOT EXISTS `rex_yrewrite_forward` (
+$sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_forward').'` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `domain` varchar(255) NOT NULL,
     `status` int(11) NOT NULL,

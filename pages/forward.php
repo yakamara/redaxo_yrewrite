@@ -23,11 +23,11 @@ if ($func != '') {
     $yform->setHiddenField('func', $func);
     $yform->setHiddenField('save', '1');
 
-    $yform->setObjectparams('main_table', 'rex_yrewrite_forward');
-    $yform->setObjectparams('main_table', 'rex_yrewrite_forward');
+    $yform->setObjectparams('main_table', rex::getTable('yrewrite_forward'));
+    $yform->setObjectparams('main_table', rex::getTable('yrewrite_forward'));
 
     $yform->setValueField('select', ['status', $this->i18n('forward_status'),''.$this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
-    $yform->setValueField('select_sql', ['domain', $this->i18n('domain') . '', 'select domain as id,domain as name from rex_yrewrite_domain where alias_domain = ""']);
+    $yform->setValueField('select_sql', ['domain', $this->i18n('domain') . '', 'select domain as id,domain as name from '.rex::getTable('yrewrite_domain').' where alias_domain = ""']);
     $yform->setValueField('text', ['url', $this->i18n('forward_url')]);
     //$yform->setValidateField('preg_match', array('url', '@^(?<!\/)[%_\./+\-a-zA-Z0-9]+(?!\/)$@', $this->i18n('warning_chars')));
     $yform->setValidateField('preg_match', ['url', '@^([%_\.+\-a-zA-Z0-9]){1}[/%_\.+\-a-zA-Z0-9]+([%_\.+\-a-zA-Z0-9]){1}$@', $this->i18n('warning_chars')]);
@@ -40,7 +40,7 @@ if ($func != '') {
 
     $yform->setValueField('html', ['','<div id="rex-yrewrite-forward-article">']);
     $yform->setValueField('be_link', ['article_id', $this->i18n('forward_article_id')]);
-    $yform->setValueField('select_sql', ['clang', $this->i18n('forward_clang') . '', 'select id, name from rex_clang']);
+    $yform->setValueField('select_sql', ['clang', $this->i18n('forward_clang') . '', 'select id, name from '.rex::getTable('clang')]);
     $yform->setValueField('html', ['', '</div>']);
 
     $yform->setValueField('html', ['','<div id="rex-yrewrite-forward-extern">']);
@@ -74,13 +74,13 @@ jQuery(document).ready(function() {
 
     if ($func == 'delete') {
         $d = rex_sql::factory();
-        $d->setQuery('delete from rex_yrewrite_forward where id=' . $data_id);
+        $d->setQuery('delete from ' . rex::getTable('yrewrite_forward') . ' where id=' . $data_id);
         echo rex_view::success($this->i18n('forward_deleted'));
         rex_yrewrite_forward::generatePathFile();
 
     } else if ($func == 'edit') {
         $yform->setHiddenField('data_id', $data_id);
-        $yform->setActionField('db', ['rex_yrewrite_forward', 'id=' . $data_id]);
+        $yform->setActionField('db', [rex::getTable('yrewrite_forward'), 'id=' . $data_id]);
         $yform->setObjectparams('main_id', $data_id);
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('getdata', true);
@@ -103,7 +103,7 @@ jQuery(document).ready(function() {
         }
 
     } else if ($func == 'add') {
-        $yform->setActionField('db', ['rex_yrewrite_forward']);
+        $yform->setActionField('db', [rex::getTable('yrewrite_forward')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
 
@@ -125,7 +125,7 @@ jQuery(document).ready(function() {
 }
 
 if ($showlist) {
-    $sql = 'SELECT * FROM rex_yrewrite_forward';
+    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward');
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');

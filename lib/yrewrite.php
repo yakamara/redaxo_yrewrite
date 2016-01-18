@@ -424,7 +424,7 @@ class rex_yrewrite
     {
         $filecontent = '<?php ' . "\n";
         $gc = rex_sql::factory();
-        $domains = $gc->getArray('select * from rex_yrewrite_domain order by alias_domain, mount_id, clangs');
+        $domains = $gc->getArray('select * from '.rex::getTable('yrewrite_domain').' order by alias_domain, mount_id, clangs');
         foreach ($domains as $domain) {
             if ($domain['domain'] != '') {
                 if ($domain['alias_domain'] != '') {
