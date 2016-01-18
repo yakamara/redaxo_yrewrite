@@ -219,7 +219,7 @@ class rex_yrewrite
         $params = rex_extension::registerPoint(new rex_extension_point('YREWRITE_PREPARE', '', ['url' => $url, 'domain' => $domain, 'http' => $http]));
 
         if (isset($params['article_id']) && $params['article_id'] > 0) {
-            if (isset($params['clang']) && $params['clang'] > -1) {
+            if (isset($params['clang']) && $params['clang'] > 0) {
                 $clang = $params['clang'];
             }
 
