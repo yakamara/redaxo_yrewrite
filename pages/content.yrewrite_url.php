@@ -24,10 +24,12 @@ $ctype = $params['ctype'];
 $domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
 $isStartarticle = rex_yrewrite::isDomainStartArticle($article_id, $clang);
 
-$autoUrl = '';
 $autoUrl = rex_getUrl();
-$autoUrl = str_replace($domain->getUrl(), '', $autoUrl);
-$autoUrl = substr($autoUrl, 1);
+if (0 === strpos($autoUrl, $domain->getUrl())) {
+    $autoUrl = substr($autoUrl, strlen($domain->getUrl()));
+} else {
+    $autoUrl = substr($autoUrl, strlen($domain->getPath()));
+}
 
 if ($isStartarticle) {
 
@@ -109,7 +111,7 @@ jQuery(document).ready(function() {
 });
 
 function updateCustomUrlPreview() {
-    var base = "'.$domain->getUrl().'/";
+    var base = "'.$domain->getUrl().'";
     var autoUrl = "'.$autoUrl.'";
     var customUrl = jQuery("'.$selector_url.'").val();
     var curUrl = "";

@@ -22,11 +22,12 @@ class rex_yrewrite_domain
     private $description;
     private $robots;
 
-    public function __construct($name, $scheme, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '')
+    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '')
     {
         $this->name = $name;
+        $this->path = $path;
         $scheme = $scheme ?: (rex_yrewrite::isHttps() ? 'https' : 'http');
-        $this->url = $scheme . '://' . $name;
+        $this->url = $scheme . '://' . $name . $path;
         $this->mountId = $mountId;
         $this->startId = $startId;
         $this->notfoundId = $notfoundId;
@@ -43,6 +44,14 @@ class rex_yrewrite_domain
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 
     /**

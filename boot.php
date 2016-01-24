@@ -11,7 +11,8 @@
  */
 
 if(!rex::isBackend()) {
-    rex_url::init(new rex_path_default_provider("/", "redaxo", false));
+    $path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+    rex_url::init(new rex_path_default_provider($path, "redaxo", false));
 }
 
 rex_extension::register('PACKAGES_INCLUDED', function ($params) {

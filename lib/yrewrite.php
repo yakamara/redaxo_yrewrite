@@ -36,7 +36,14 @@ class rex_yrewrite
         self::$domainsByName = [];
         self::$aliasDomains = [];
         self::$paths = [];
-        self::addDomain(new rex_yrewrite_domain('undefined', null, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId()));
+
+        $path = dirname($_SERVER['SCRIPT_NAME']);
+        if (rex::isBackend()) {
+            $path = dirname($path);
+        }
+        $path = rtrim($path, '/') . '/';
+        self::addDomain(new rex_yrewrite_domain('undefined', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId()));
+
         self::$pathfile = rex_path::addonCache('yrewrite', 'pathlist.php');
         self::$configfile = rex_path::addonCache('yrewrite', 'config.php');
         self::readConfig();
@@ -165,8 +172,8 @@ class rex_yrewrite
         }
 
         // because of server differences
-        if (substr($url, 0, 1) == '/') {
-            $url = substr($url, 1);
+        if (substr($url, 0, 1) != '/') {
+            $url = '/' . $url;
         }
 
         // delete params
@@ -194,7 +201,7 @@ class rex_yrewrite
                 // forward to original domain permanent move 301
 
                 header('HTTP/1.1 301 Moved Permanently');
-                header('Location: ' . $domain->getUrl() . '/' . $url);
+                header('Location: ' . $domain->getUrl() . $url);
                 exit;
 
             // no domain, no alias, domain with root mountpoint ?
@@ -207,6 +214,12 @@ class rex_yrewrite
             }
         }
 
+        if (0 === strpos($url, $domain->getPath())) {
+            $url = substr($url, strlen($domain->getPath()));
+        }
+
+        $url = ltrim($url, '/');
+
         //rex::setProperty('domain_article_id', $domain->getMountId());
         rex::setProperty('server', $domain->getUrl());
 
@@ -215,7 +228,7 @@ class rex_yrewrite
         $structureAddon->setProperty('notfound_article_id', $domain->getNotfoundId());
 
         // if no path -> startarticle
-        if ($url == '') {
+        if ($url == '/') {
             $structureAddon->setProperty('article_id', $domain->getStartId());
             rex_clang::setCurrentId($domain->getStartClang());
             return true;
@@ -282,18 +295,19 @@ class rex_yrewrite
 
         // same domain id check
         if (!$fullpath && isset(self::$paths['paths'][$domainName][$id][$clang])) {
-            $path = '/' . self::$paths['paths'][$domainName][$id][$clang];
+            $domain = self::getDomainByName($domainName);
+            $path = $domain->getPath() . self::$paths['paths'][$domainName][$id][$clang];
             // if(rex::isBackend()) { $path = self::$paths['paths'][$domain][$id][$clang]; }
         }
 
         if ($path == '') {
             foreach (self::$paths['paths'] as $i_domain => $i_id) {
                 if (isset(self::$paths['paths'][$i_domain][$id][$clang])) {
+                    $domain = self::getDomainByName($i_domain);
                     if ($i_domain == 'undefined') {
-                        $path = '/' . self::$paths['paths'][$i_domain][$id][$clang];
+                        $path = $domain->getPath() . self::$paths['paths'][$i_domain][$id][$clang];
                     } else {
-                        $domain = self::getDomainByName($i_domain);
-                        $path = $domain->getUrl() . '/' . self::$paths['paths'][$i_domain][$id][$clang];
+                        $path = $domain->getUrl() . self::$paths['paths'][$i_domain][$id][$clang];
                     }
                     break;
                 }
@@ -442,10 +456,18 @@ class rex_yrewrite
                 continue;
             }
 
-            $parts = parse_url($domain['domain']);
+            $name = $domain['domain'];
+            if (false === strpos($name, '//')) {
+                $name = '//'.$name;
+            }
+            $parts = parse_url($name);
             $name = $parts['host'];
             if (isset($parts['port'])) {
                 $name .= ':'.$parts['port'];
+            }
+            $path = '/';
+            if (isset($parts['path'])) {
+                $path = rtrim($parts['path'], '/') . '/';
             }
 
             if ($domain['alias_domain'] != '') {
@@ -454,6 +476,7 @@ class rex_yrewrite
                 $content .= "\n" . 'rex_yrewrite::addDomain(new rex_yrewrite_domain('
                     . '"' . $name . '", '
                     . (isset($parts['scheme']) ? '"'.$parts['scheme'].'"' : 'null') . ', '
+                    . '"' . $path . '", '
                     . $domain['mount_id'] . ', '
                     . $domain['start_id'] . ', '
                     . $domain['notfound_id'] . ', '
