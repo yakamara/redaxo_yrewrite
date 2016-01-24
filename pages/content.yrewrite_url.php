@@ -22,7 +22,7 @@ $ctype = $params['ctype'];
 
 // $yrewrite_url = stripslashes(rex_request('yrewrite_url'));
 $domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
-$isStartarticle = rex_yrewrite::isDomainStartarticle($article_id, $clang);
+$isStartarticle = rex_yrewrite::isDomainStartArticle($article_id, $clang);
 
 $autoUrl = '';
 $autoUrl = rex_getUrl();

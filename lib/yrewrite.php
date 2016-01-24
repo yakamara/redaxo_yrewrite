@@ -11,31 +11,20 @@
 
 class rex_yrewrite
 {
-    /*
-    * TODOS:
-    * - call_by_article_id: forward, not_allowed
-    */
-
     /** @var rex_yrewrite_domain[][] */
-    public static $domainsByMountId = [];
+    private static $domainsByMountId = [];
 
     /** @var rex_yrewrite_domain[] */
-    public static $domainsByName = [];
+    private static $domainsByName = [];
 
-    public static $aliasDomains = [];
-    public static $pathfile = '';
-    public static $configfile = '';
-    public static $call_by_article_id = 'allowed'; // forward, allowed, not_allowed
+    private static $aliasDomains = [];
+    private static $pathfile = '';
+    private static $configfile = '';
+    private static $call_by_article_id = 'allowed'; // forward, allowed, not_allowed
     public static $paths = [];
-    /**
-     * @var rex_yrewrite_scheme
-     */
-    private static $scheme;
 
-    public static function setScheme(rex_yrewrite_scheme $scheme)
-    {
-        self::$scheme = $scheme;
-    }
+    /** @var rex_yrewrite_scheme */
+    private static $scheme;
 
     public static function init()
     {
@@ -52,6 +41,11 @@ class rex_yrewrite
         self::$configfile = rex_path::addonCache('yrewrite', 'config.php');
         self::readConfig();
         self::readPathFile();
+    }
+
+    public static function setScheme(rex_yrewrite_scheme $scheme)
+    {
+        self::$scheme = $scheme;
     }
 
     // ----- domain
@@ -74,9 +68,29 @@ class rex_yrewrite
         }
     }
 
+    /**
+     * @return rex_yrewrite_domain[]
+     */
+    public static function getDomains()
+    {
+        return self::$domainsByName;
+    }
+
+    /**
+     * @param string $name
+     * @return null|rex_yrewrite_domain
+     */
+    public static function getDomainByName($name)
+    {
+        if (isset(self::$domainsByName[$name])) {
+            return self::$domainsByName[$name];
+        }
+        return null;
+    }
+
     // ----- article
 
-    public static function getFullURLbyArticleId($id, $clang = 0)
+    public static function getFullUrlByArticleId($id, $clang = 0)
     {
         $params = [];
         $params['id'] = $id;
@@ -110,7 +124,7 @@ class rex_yrewrite
         return false;
     }
 
-    public static function isDomainStartarticle($aid, $clang = 0)
+    public static function isDomainStartArticle($aid, $clang = 0)
     {
         foreach (self::$domainsByMountId as $d) {
             if (isset($d[$clang]) && $d[$clang]->getStartId() == $aid) {
@@ -127,6 +141,11 @@ class rex_yrewrite
     }
 
     // ----- url
+
+    public static function getPathsByDomain($domain)
+    {
+        return self::$paths['paths'][$domain];
+    }
 
     public static function prepare()
     {
@@ -470,10 +489,7 @@ class rex_yrewrite
 
     public static function isHttps()
     {
-        if ($_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off')) {
-            return true;
-        }
-        return false;
+        return $_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off');
     }
 
     public static function deleteCache()

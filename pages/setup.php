@@ -51,7 +51,7 @@ echo $fragment->parse('core/page/section.php');
 
 $domains = [];
 
-foreach (rex_yrewrite::$domainsByName as $name => $val) {
+foreach (rex_yrewrite::getDomains() as $name => $val) {
     if ($name != 'undefined') {
         $domains[] = '<tr><td><a href="http://'.$name.'">'.htmlspecialchars($name).'</a></td><td><a href="http://'.$name.'/sitemap.xml">sitemap.xml</a></td><td><a href="http://'.$name.'/robots.txt">robots.txt</a></td></tr>';
     }

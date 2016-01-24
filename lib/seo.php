@@ -103,8 +103,8 @@ class rex_yrewrite_seo
         // header content length ?
         $content = 'Sitemap: '.rex_yrewrite::getFullPath('sitemap.xml')."\n\n";
 
-        if (isset(rex_yrewrite::$domainsByName[$domain])) {
-            $robots = rex_yrewrite::$domainsByName[$domain]->getRobots();
+        if (rex_yrewrite::getDomainByName($domain)) {
+            $robots = rex_yrewrite::getDomainByName($domain)->getRobots();
             if ($robots != '') {
                 $content .= $robots;
             } else {
@@ -123,8 +123,8 @@ class rex_yrewrite_seo
         }
 
         $sitemap = [];
-        if (isset(rex_yrewrite::$domainsByName[$domain])) {
-            $domain = rex_yrewrite::$domainsByName[$domain];
+        if (rex_yrewrite::getDomainByName($domain)) {
+            $domain = rex_yrewrite::getDomainByName($domain);
 
             $domain_article_id = $domain->getStartId();
             $paths = 0;
@@ -132,7 +132,7 @@ class rex_yrewrite_seo
                 $paths = count($dai->getParentTree());
             }
 
-            foreach (rex_yrewrite::$paths['paths'][$domain->getName()] as $article_id => $path) {
+            foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
                     if (
                         ($article = rex_article::get($article_id, $clang_id)) &&
