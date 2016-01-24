@@ -212,14 +212,16 @@ class rex_yrewrite
             }
         }
 
-        rex::setProperty('domain_article_id', $domain->getMountId());
-        rex::setProperty('start_article_id', $domain->getStartId());
-        rex::setProperty('notfound_article_id', $domain->getNotfoundId());
+        //rex::setProperty('domain_article_id', $domain->getMountId());
         rex::setProperty('server', $http.$domain->getName());
+
+        $structureAddon = rex_addon::get('structure');
+        $structureAddon->setProperty('start_article_id', $domain->getStartId());
+        $structureAddon->setProperty('notfound_article_id', $domain->getNotfoundId());
 
         // if no path -> startarticle
         if ($url == '') {
-            rex_addon::get('structure')->setProperty('article_id', $domain->getStartId());
+            $structureAddon->setProperty('article_id', $domain->getStartId());
             rex_clang::setCurrentId($domain->getStartClang());
             return true;
         }
@@ -228,7 +230,7 @@ class rex_yrewrite
         foreach (self::$paths['paths'][$domain->getName()] as $i_id => $i_cls) {
             foreach (rex_clang::getAllIds() as $clang_id) {
                 if (isset($i_cls[$clang_id]) && ($i_cls[$clang_id] == $url || $i_cls[$clang_id] . '/' == $url)) {
-                    rex_addon::get('structure')->setProperty('article_id', $i_id);
+                    $structureAddon->setProperty('article_id', $i_id);
                     rex_clang::setCurrentId($clang_id);
                     return true;
                 }
@@ -243,14 +245,14 @@ class rex_yrewrite
             }
 
             if (($article = rex_article::get($params['article_id'], $clang))) {
-                rex_addon::get('structure')->setProperty('article_id', $params['article_id']);
+                $structureAddon->setProperty('article_id', $params['article_id']);
                 rex_clang::setCurrentId($clang);
                 return true;
             }
         }
 
         // no article found -> domain not found article
-        rex_addon::get('structure')->setProperty('article_id', $domain->getNotfoundId());
+        $structureAddon->setProperty('article_id', $domain->getNotfoundId());
         rex_clang::setCurrentId($domain->getStartClang());
         foreach (self::$paths['paths'][$domain->getName()][$domain->getStartId()] as $clang => $clangUrl) {
             if ($clang != $domain->getStartClang() && 0 === strpos($url, $clangUrl)) {
