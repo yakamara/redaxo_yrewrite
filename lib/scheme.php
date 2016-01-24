@@ -13,6 +13,14 @@ class rex_yrewrite_scheme
     protected $suffix = '.html';
 
     /**
+     * @param string $suffix
+     */
+    public function setSuffix($suffix)
+    {
+        $this->suffix = $suffix;
+    }
+
+    /**
      * @param int                 $clang
      * @param rex_yrewrite_domain $domain
      *
