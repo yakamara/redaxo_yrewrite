@@ -36,6 +36,7 @@ $content = '
   echo $seo->getTitleTag();
   echo $seo->getDescriptionTag();
   echo $seo->getRobotsTag();
+  echo $seo->getHreflangTags();
 
 ?>', true).'
             </p>

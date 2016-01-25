@@ -86,6 +86,31 @@ class rex_yrewrite_seo
         return $this->cleanString($description);
     }
 
+    public function getHreflangTags()
+    {
+        $return = '';
+        $current_mount_id = $this->domain->getMountId();
+
+        $lang_domains = [];
+        foreach(rex_yrewrite::getDomains() as $domain) {
+            if($current_mount_id == $domain->getMountId()) {
+                foreach($domain->getClangs() as $clang) {
+                    if ( ($lang = rex_clang::get($clang)) ) {
+                        $lang_domains[$lang->getCode()] = rex_yrewrite::getFullUrlByArticleId($domain->getStartId(),$lang->getId());
+                    }
+                }
+            }
+        }
+
+        foreach($lang_domains as $code => $url){
+            $return .= '<link rel="alternate" hreflang="'.$code.'" href="'.$url.'" />';
+        }
+
+        return $return;
+    }
+
+
+
     public function cleanString($str)
     {
         return str_replace(["\n","\r"], [' ',''], $str);
