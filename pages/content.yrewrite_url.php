@@ -111,7 +111,7 @@ jQuery(document).ready(function() {
 });
 
 function updateCustomUrlPreview() {
-    var base = "'.$domain->getUrl().'";
+    var base = "'.('default' == $domain->getName() ? '&lt;default&gt;/' : $domain->getUrl()).'";
     var autoUrl = "'.$autoUrl.'";
     var customUrl = jQuery("'.$selector_url.'").val();
     var curUrl = "";

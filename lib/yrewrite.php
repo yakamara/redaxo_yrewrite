@@ -42,7 +42,7 @@ class rex_yrewrite
             $path = dirname($path);
         }
         $path = rtrim($path, '/') . '/';
-        self::addDomain(new rex_yrewrite_domain('undefined', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId()));
+        self::addDomain(new rex_yrewrite_domain('default', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId()));
 
         self::$pathfile = rex_path::addonCache('yrewrite', 'pathlist.php');
         self::$configfile = rex_path::addonCache('yrewrite', 'config.php');
@@ -113,7 +113,7 @@ class rex_yrewrite
                 return $domain;
             }
         }
-        return self::$domainsByName['undefined'];
+        return self::$domainsByName['default'];
     }
 
     public static function getArticleIdByUrl($domain, $url)
@@ -208,9 +208,9 @@ class rex_yrewrite
             } elseif (isset(self::$domainsByMountId[0][$clang])) {
                 $domain = self::$domainsByMountId[0][$clang];
 
-            // no root domain -> undefined
+            // no root domain -> default
             } else {
-                $domain = self::$domainsByName['undefined'];
+                $domain = self::$domainsByName['default'];
             }
         }
 
@@ -304,7 +304,7 @@ class rex_yrewrite
             foreach (self::$paths['paths'] as $i_domain => $i_id) {
                 if (isset(self::$paths['paths'][$i_domain][$id][$clang])) {
                     $domain = self::getDomainByName($i_domain);
-                    if ($i_domain == 'undefined') {
+                    if ($i_domain == 'default') {
                         $path = $domain->getPath() . self::$paths['paths'][$i_domain][$id][$clang];
                     } else {
                         $path = $domain->getUrl() . self::$paths['paths'][$i_domain][$id][$clang];

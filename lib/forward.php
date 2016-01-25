@@ -37,7 +37,7 @@ class rex_yrewrite_forward
         self::init();
 
         $domain = $params['domain'];
-        if ($domain == 'undefined') {
+        if ($domain == 'default') {
             $domain = '';
         }
         $url = $params['url'];
