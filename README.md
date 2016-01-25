@@ -44,3 +44,8 @@ Last Changes
 ### Version 2.0 // ##. ## ####
 
 - Portierung zu Redaxo 5
+- Unterordner sind nun möglich
+- http oder https, wird direkt in der Domainbezeichnung festgelegt
+- Meta langhref ergänzt
+- Fürs Verständnis aus "undefined" -> "default" gemacht.
+- Standard-URL-Schema geändert .. aus .html -> /
