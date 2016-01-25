@@ -10,7 +10,7 @@
 
 class rex_yrewrite_scheme
 {
-    protected $suffix = '.html';
+    protected $suffix = '/';
 
     /**
      * @param string $suffix
