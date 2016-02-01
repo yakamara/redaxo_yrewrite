@@ -79,8 +79,7 @@ class rex_yrewrite_seo
 
     public function getDescription()
     {
-        $description = htmlspecialchars_decode(trim($this->domain->getDescription()));
-        return $this->cleanString($description);
+        return $this->cleanString($this->article->getValue('yrewrite_description'));
     }
 
     public function getHreflangTags()
