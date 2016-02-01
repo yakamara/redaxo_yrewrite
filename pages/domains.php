@@ -38,12 +38,8 @@ if ($func != '') {
     if (rex_clang::count() == 0) {
         $yform->setValueField('hidden', ['clangs', '']);
         $yform->setValueField('hidden', ['clang_start', '']);
-    } else {
-        // TODO:
-        // - checkbox (alle sprachen)
-        //  - multiple oder checkbox liste
-        //   - wenn mehrere angeklickt -> clang_start auswahl mit genau diesen sprachen
 
+    } else {
         $yform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from '.rex::getTable('clang'), '', 1, 0, '', 1, rex_clang::count()]);
         $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id']);
     }
@@ -62,21 +58,14 @@ if ($func != '') {
     $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
 
     $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default]);
-    $yform->setValueField('textarea', ['description', $this->i18n('domain_description'),'','','short']);
+    // $yform->setValueField('textarea', ['description', $this->i18n('domain_description'),'','','short']);
     $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),rex_yrewrite_seo::$robots_default,'','short']);
 
     ?>
 <script>
   jQuery(document).ready(function () {
-      jQuery("#yform-formular-title_scheme").append('<span style="display:block; margin-left:230px; font-size:10px"><?php echo $this->i18n('domain_title_scheme_info');
-    ?></span>');
-      jQuery("#yform-formular-description").append('<span style="display:block; margin-left:230px; font-size:10px;"></span>');
-      jQuery("#yform-formular-description textarea").bind ("change input keyup keydown keypress mouseup mousedown cut copy paste",function (e) {
-          var v = jQuery(this).val().replace(/(\r\n|\n|\r)/gm, "").length;
-          jQuery("#yform-formular-description").find('span').html( v + ' <?php echo $this->i18n('domain_description_info');
-    ?>');
-      return true;
-      }).trigger("keydown");
+      jQuery("#yform-formular-title_scheme").append('<p class="help-block"><small><?php echo $this->i18n('domain_title_scheme_info');
+    ?></small></p>');
   });
 </script><?php
 
@@ -177,25 +166,8 @@ if ($showlist) {
         });
 
         $list->removeColumn('clang_start');
-        /*
-        function rex_yrewrite_list_clang_start($params)
-        {
-            $clangs = $params['subject'];
-            if ($clangs == "") {
-                return $this->i18n('alllangs');
-            } else {
-                $return = array();
-                foreach(explode(",",$clangs) as $clang) {
-                  $return[] = rex_clang::get($clang)->getName();
-                }
-                return implode(",", $return);
-            }
-        }
-        $list->setColumnLabel('clang_start', $this->i18n('clang_start'));
-        $list->setColumnFormat('clangs', 'custom', 'rex_yrewrite_list_clang_start');
-        */
-    }
 
+    }
 
     $list->addColumn(rex_i18n::msg('function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));
     $list->setColumnLayout(rex_i18n::msg('function'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
@@ -234,7 +206,6 @@ if ($showlist) {
     $list->removeColumn('description');
 
     $content = $list->get();
-
 
     $fragment = new rex_fragment();
     $fragment->setVar('title', $this->i18n('domains'));

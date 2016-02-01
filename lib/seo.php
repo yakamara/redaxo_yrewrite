@@ -80,9 +80,6 @@ class rex_yrewrite_seo
     public function getDescription()
     {
         $description = htmlspecialchars_decode(trim($this->domain->getDescription()));
-        if ($this->article && $this->article->getValue('yrewrite_description') != '') {
-            $description = $this->article->getValue('yrewrite_description');
-        }
         return $this->cleanString($description);
     }
 
