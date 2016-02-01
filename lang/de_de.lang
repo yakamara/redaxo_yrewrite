@@ -97,6 +97,9 @@ yrewrite_info_seo_text = Folgenden Code bitte <mark>ins Template</mark> in den <
 
 yrewrite_info_sitemaprobots = sitemap.xml und robots.txt
 
+yrewrite_canonical_url = Canonical URL
+
+
 yrewrite_notactivebecauseofmodrewrite = YRewrite funktioniert nur wenn ModRewrite aktiviert ist.
 
 yrewrite_forward = Weiterleitungen

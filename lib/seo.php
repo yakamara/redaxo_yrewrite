@@ -46,6 +46,11 @@ class rex_yrewrite_seo
         return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
     }
 
+    public function getCanonicalUrlTag()
+    {
+        return '<link rel="canonical" href="'.htmlspecialchars($this->getCanonicalUrl()).'" />';
+    }
+
     public function getRobotsTag()
     {
         if ($this->article->getValue('yrewrite_index') == 1 || ($this->article->getValue('yrewrite_index') == 0 && $this->article->isOnline())) {
@@ -82,6 +87,15 @@ class rex_yrewrite_seo
         return $this->cleanString($this->article->getValue('yrewrite_description'));
     }
 
+    public function getCanonicalUrl()
+    {
+        $canonical_url = trim($this->article->getValue('yrewrite_canonical_url'));
+        if ($canonical_url == "") {
+            $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
+        }
+        return $canonical_url;
+    }
+
     public function getHreflangTags()
     {
         $return = '';
@@ -104,6 +118,9 @@ class rex_yrewrite_seo
 
         return $return;
     }
+
+
+
 
 
 

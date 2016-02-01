@@ -50,12 +50,14 @@ $yform->setObjectparams('main_where', 'id='.$article_id.' and clang_id='.$clang)
 $yform->setObjectparams('getdata', true);
 
 $yform->setValueField('text', ['yrewrite_title', rex_i18n::msg('yrewrite_seotitle')]);
-$yform->setValueField('textarea', ['yrewrite_description', rex_i18n::msg('yrewrite_seodescription'),'','','short']);
+$yform->setValueField('textarea', ['yrewrite_description', rex_i18n::msg('yrewrite_seodescription'),'','','']);
 
 $yform->setValueField('select', ['yrewrite_changefreq', rex_i18n::msg('yrewrite_changefreq'), implode(',', $select_changefreq), '', rex_yrewrite_seo::$changefreq_default]);
 $yform->setValueField('select', ['yrewrite_priority', rex_i18n::msg('yrewrite_priority'), implode(',', $select_priority), '', rex_yrewrite_seo::$priority_default]);
 
 $yform->setValueField('select', ['yrewrite_index', rex_i18n::msg('yrewrite_index'), implode(',', $index_setting), '', rex_yrewrite_seo::$index_setting_default]);
+
+$yform->setValueField('text', ['yrewrite_canonical_url', rex_i18n::msg('yrewrite_canonical_url')]);
 
 $yform->setActionField('db', [rex::getTable('article'), 'id=' . $article_id.' and clang_id='.$clang]);
 $yform->setObjectparams('submit_btn_label', $addon->i18n('update_seo'));
@@ -70,6 +72,19 @@ if ($yform->objparams['actions_executed']) {
 
 }
 
+$form .= '
+    <script>
+        jQuery(document).ready(function () {
+            jQuery("#yrewrite-seo #yform-yrewrite-seo-yrewrite_description").append(\'<p class="help-block"><small></small></p>\');
+            jQuery("#yrewrite-seo #yform-yrewrite-seo-yrewrite_description textarea").bind ("change input keyup keydown keypress mouseup mousedown cut copy paste", function (e) {
+                var v = jQuery(this).val().replace(/(\r\n|\n|\r)/gm, "").length;
+                jQuery("#yrewrite-seo #yform-yrewrite-seo-yrewrite_description").find("p small").html( v + \' '.$this->i18n('domain_description_info').' \');
+                return true;
+            }).trigger("keydown");
+        });
+    </script>';
+
 $form = '<section id="rex-page-sidebar-yrewrite-seo" data-pjax-container="#rex-page-sidebar-yrewrite-seo" data-pjax-no-history="1">'.$form.'</section>';
+
 
 return $form;
