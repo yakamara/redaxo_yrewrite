@@ -63,13 +63,16 @@ if ($isStartarticle) {
 
 
     $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url ) {
+        if ($yrewrite_url == "") return false;
         return (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url));
     }, 'params'=>[], 'message' => rex_i18n::msg('yrewrite_warning_chars')]);
 
     $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url, $params, $field ) {
         $return = (($a = rex_yrewrite::getArticleIdByUrl($params["domain"], $yrewrite_url)) && (key($a) != $params["article_id"] || current($a) != $params["clang"]));
-        if ($return) {
+        if ($return && $yrewrite_url != "") {
             $field->setElement("message", rex_i18n::msg('yrewrite_warning_urlexists', key($a) ));
+        } else {
+            $return = false;
         }
         return $return;
     }, 'params'=>['article_id' => $article_id, "domain" => $domain, "clang" => $clang], 'message' => rex_i18n::msg('yrewrite_warning_urlexists')]);
