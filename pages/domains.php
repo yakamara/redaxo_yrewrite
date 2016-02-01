@@ -57,17 +57,8 @@ if ($func != '') {
 
     $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
 
-    $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default]);
-    // $yform->setValueField('textarea', ['description', $this->i18n('domain_description'),'','','short']);
+    $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
     $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),rex_yrewrite_seo::$robots_default,'','short']);
-
-    ?>
-<script>
-  jQuery(document).ready(function () {
-      jQuery("#yform-formular-title_scheme").append('<p class="help-block"><small><?php echo $this->i18n('domain_title_scheme_info');
-    ?></small></p>');
-  });
-</script><?php
 
     if ($func == 'delete') {
         $d = rex_sql::factory();
