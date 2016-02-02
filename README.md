@@ -44,7 +44,7 @@ oder
 Last Changes
 -------
 
-### Version 2.0 // ##. ## ####
+### Version 2.0 // 02.02.2016
 
 - Portierung zu Redaxo 5
 - Unterordner sind nun möglich
