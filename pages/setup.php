@@ -37,6 +37,7 @@ $content = '
   echo $seo->getDescriptionTag();
   echo $seo->getRobotsTag();
   echo $seo->getHreflangTags();
+  echo $seo->getCanonicalUrlTag();
 
 ?>', true).'
             </p>
