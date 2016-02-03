@@ -28,16 +28,21 @@ $content = '
             <h3>' . $this->i18n('info_headline') . '</h3>
             <p>' . rex_i18n::rawMsg('yrewrite_info_text') . '</p>
 
+
+            <h3>' . $this->i18n('info_tipps') . '</h3>
+            <p>' . rex_i18n::rawMsg('yrewrite_info_tipps_text') . '    
+            
+            
             <h3>' . $this->i18n('info_seo') . '</h3>
             <p>' . rex_i18n::rawMsg('yrewrite_info_seo_text') . '
-
+            
             <br /><br />'.highlight_string('<?php
-  $seo = new rex_yrewrite_seo();
-  echo $seo->getTitleTag();
-  echo $seo->getDescriptionTag();
-  echo $seo->getRobotsTag();
-  echo $seo->getHreflangTags();
-
+	  $seo = new rex_yrewrite_seo();
+	  echo $seo->getTitleTag().PHP_EOL;
+	  echo $seo->getDescriptionTag().PHP_EOL;
+	  echo $seo->getRobotsTag().PHP_EOL;
+	  echo $seo->getHreflangTags().PHP_EOL;
+	  echo $seo->getCanonicalUrlTag().PHP_EOL;
 ?>', true).'
             </p>
             ';
