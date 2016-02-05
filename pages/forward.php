@@ -84,7 +84,7 @@ jQuery(document).ready(function() {
         $yform->setObjectparams('main_id', $data_id);
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('getdata', true);
-        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('save'));
+        $yform->setObjectparams('submit_btn_label', $this->i18n('save'));
         $form = $yform->getForm();
 
         if ($yform->objparams['actions_executed']) {
@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
             $showlist = false;
             $fragment = new rex_fragment();
             $fragment->setVar('class', 'edit', false);
-            $fragment->setVar('title', rex_i18n::msg('forward_edit'));
+            $fragment->setVar('title', $this->i18n('forward_edit'));
             $fragment->setVar('body', $form, false);
             echo $fragment->parse('core/page/section.php');
 
