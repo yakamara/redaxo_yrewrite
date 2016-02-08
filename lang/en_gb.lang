@@ -13,27 +13,27 @@ yrewrite_domain_info = Domain [www.domain.de]
 yrewrite_article_urls = Article URLs
 yrewrite_setup = Setup
 
-yrewrite_startarticleisalways = This is the startarticle of domain "{0}" and cannot be changed. This URL is allways "/"
+yrewrite_startarticleisalways = This is the start article of domain "{0}" and cannot be changed. This URL is always "/"
 
 yrewrite_add_domain = Add Domain
-yrewrite_domain_added = Domain added hinzugefügt
+yrewrite_domain_added = Domain added
 yrewrite_edit_domain = Edit Domain
 yrewrite_domain_deleted = Domain deleted. Cache deleted.
 yrewrite_domain_updated = Domain updated. Cache deleted.
 
 yrewrite_domain = Domain
-yrewrite_mount_id = Mountarticle of Domain
-yrewrite_start_id = Startarticle of domain
-yrewrite_notfound_id = 404 Artikel
+yrewrite_mount_id = Mount article of Domain
+yrewrite_start_id = Start article of domain
+yrewrite_notfound_id = 404 Article
 yrewrite_clangs = Languages
-yrewrite_alias_domain = Alias Domain
-yrewrite_alias_domains = Alias Domains
+yrewrite_alias_domain = Alias domain
+yrewrite_alias_domains = Alias domains
 
-yrewrite_domain_title_scheme = Pagetitle scheme
-yrewrite_domain_title_scheme_info = %T=SEO-Title or articlname, %SN=Servername
-yrewrite_domain_description = Pagedescription (if articledescription is empty)
-yrewrite_domain_description_info = Chars / Recommendation: 160 Chars
-yrewrite_domain_robots = Robotsfile
+yrewrite_domain_title_scheme = Page title scheme
+yrewrite_domain_title_scheme_info = %T=SEO title or article name, %SN=Server name
+yrewrite_domain_description = Page description (if article description is empty)
+yrewrite_domain_description_info = Chars / recommendation: 160 Chars
+yrewrite_domain_robots = Robots file
 
 yrewrite_root = --- Root --- [0]
 
@@ -44,97 +44,97 @@ yrewrite_domain_already_defined = Domain already defined
 yrewrite_mount_id_already_defined = Mount id already defined
 yrewrite_no_domain_defined = Please set a domain
 yrewrite_no_mount_id_defined = Please choose a mount id
-yrewrite_no_start_id_defined = Please select a startarticle
+yrewrite_no_start_id_defined = Please select a start article
 yrewrite_no_not_found_id_defined = Please select a 404 article
 
-yrewrite_warning_noslash = Bitte in der URL kein / am Anfang und am Ende
-yrewrite_warning_nottolong = Die URL darf nicht länger als 250 Zeichen sein
-yrewrite_warning_chars = Die URL ist nicht korrekt. Schreibweise beachten. Nur a-z 0-9 -
-yrewrite_warning_urlexists = Diese URL existiert bereits {0}
-yrewrite_warning_otherarticle = Zum anderen Artikel
-yrewrite_urlupdated = Url wurde aktualisiert
+yrewrite_warning_noslash = Do not use / on beginning or end
+yrewrite_warning_nottolong = The URL is not allowed to be longer then 250 characters
+yrewrite_warning_chars = The URL is invalid. Consider your characters. Only a-z 0-9 -
+yrewrite_warning_urlexists = URL exists already {0}
+yrewrite_warning_otherarticle = To different article
+yrewrite_urlupdated = URL has been updated
 
 yrewrite_seotitle = Titel
 yrewrite_seodescription = Description
-yrewrite_priority = Wichtigkeit:
-yrewrite_changefreq = Aktualisierungshäufigkeit:
+yrewrite_priority = Priority:
+yrewrite_changefreq = Update interval:
 
-yrewrite_seoupdated = Seo data updated.
-yrewrite_seoupdate_failed = An error Bei der Akualisierung sind Fehler aufgetreten. Bitte YRewrite reinstallieren.
+yrewrite_seoupdated = SEO data updated.
+yrewrite_seoupdate_failed = Update failed. Please reinstall YRewrite.
 
 yrewrite_priority_auto = auto
-yrewrite_priority_0_0 = unbedeutend [0.0]
-yrewrite_priority_0_1 = sehr unwichtig [0.1]
-yrewrite_priority_0_3 = unwichtig [0.3]
-yrewrite_priority_0_5 = normal [0.5]
-yrewrite_priority_0_7 = wichtig [0.7]
-yrewrite_priority_1_0 = sehr wichtig [1.0]
+yrewrite_priority_0_0 = no priority [0.0]
+yrewrite_priority_0_1 = very low priority [0.1]
+yrewrite_priority_0_3 = low priority [0.3]
+yrewrite_priority_0_5 = medium priority [0.5]
+yrewrite_priority_0_7 = high priority [0.7]
+yrewrite_priority_1_0 = very high priority [1.0]
 
-yrewrite_changefreq_daily = täglich [daily]
-yrewrite_changefreq_hourly = stündlich [hourly]
-yrewrite_changefreq_weekly = wöchentlich [weekly]
-yrewrite_changefreq_monthly = monatlich [monthly]
-yrewrite_changefreq_yearly = jährlich [yearly]
-yrewrite_changefreq_never = nie [never]
-yrewrite_changefreq_always = immer [always]
+yrewrite_changefreq_daily = daily
+yrewrite_changefreq_hourly = hourly
+yrewrite_changefreq_weekly = weekly
+yrewrite_changefreq_monthly = monthly
+yrewrite_changefreq_yearly = yearly
+yrewrite_changefreq_never = never
+yrewrite_changefreq_always = always
 
 yrewrite_index = Search Engine Index and Sitemap
 yrewrite_index_status = Status controls Index and Sitemap
 yrewrite_index_index = allow Search Engine to index page / display in Sitemap (Index)
 yrewrite_index_noindex = do not allow Search Engine to index page / do not display in Sitemap (NoIndex)
 
-yrewrite_htaccess_hasbeenset = [missing_text] de:.htaccess Datei wurde gesetzt/ersetzt
-yrewrite_htaccess_set = .htaccess Datei setzen
+yrewrite_htaccess_hasbeenset = .htaccess file has been created or overwritten
+yrewrite_htaccess_set = Set .htaccess file
 
-yrewrite_htaccess_info = Um YRewrite lauffähig zu bekommen, muss eine .htaccess Datei im Root Ordner gesetzt werden. Sollte eine andere .htaccess bereits vorhanden sein, wird diese ersetzt und ist nicht wiederherstellbar.
+yrewrite_htaccess_info = A .htaccess file is required in the root directory to run YRewrite. I there is a .htaccess file already, it will be overwritten (can not be undone).
 
-yrewrite_info_headline = Verwendung von YRewrite
-yrewrite_info_text = Da YRewrite für <b>Multidomainlösungen</b> gedacht ist, gibt es bestimmte Vorraussetzungen. Dazu gehört, dass YRewrite <b>nicht in Unterordnern</b> der Domains läuft. Weiterhin werden alle URL Ersetzungen über YRewrite geregelt. D.h. es kann vorkommen, dass eine URL situationsbedingt auch den Domainnamen enthält. In den Templates bitte auch deswegen <b>keinen base Tag verwenden</b>. Sollte etwas durcheinanderkommen, durch Eigenentwicklungen oder ähnlichem, bitte den allgemeinen Cache löschen, das ermöglicht YRewrite die Config- und Url-Dateien neu zu erstellen.
+yrewrite_info_headline = Usage of YRewrite
+yrewrite_info_text = Since YRewrite is intended for <b>multi-domain</b>, there are a view requirements. YRewrite does <b>not run in subfolders</b> of domains. All rewriting is managed by YRewrite. So it is possible that a URL situational also contains the domain name. For that reason do <b>not use any base tag</b> in your templates. If there are any issues with the rewriting, clear the system cache of Redaxo. This will trigger YRewrite to create all config- and rewriting files. Please make sure to have <b>Mod-Rewrite active in your Redaxo system settings</b>.
 
-yrewrite_info_seo = Verwendung der SEO Optionen
-yrewrite_info_seo_text = Folgenden Code bitte <b>ins Template</b> in den &lt;head&gt; Bereich setzen. Keinen eigenen title und meta-description-tag verwenden.
+yrewrite_info_seo = Usage of SEO options
+yrewrite_info_seo_text = Paste the following code <b>in your template's &lt;head&gt;</b> section. Do not use your own title or meta settings.
 
-yrewrite_info_sitemaprobots = sitemap.xml und robots.txt
+yrewrite_info_sitemaprobots = sitemap.xml and robots.txt
 
-yrewrite_notactivebecauseofmodrewrite = YRewrite funktioniert nur wenn ModRewrite aktiviert ist.
+yrewrite_notactivebecauseofmodrewrite = YRewrite only works if ModRewrite is active.
 
-yrewrite_forward = Weiterleitungen
-yrewrite_forward_no_domain_selected = Bitte eine Domain auswählen
+yrewrite_forward = Redirects
+yrewrite_forward_no_domain_selected = Please select a domain
 yrewrite_forward_status = Status
 yrewrite_forward_active = active
 yrewrite_forward_inactive = inactive
-yrewrite_forward_url = aufgerufene Url
+yrewrite_forward_url = requested Url
 yrewrite_forward_type = Redirect to
 
 yrewrite_forward_type_article = Article
-yrewrite_forward_type_extern = eigener Link
+yrewrite_forward_type_extern = own link
 yrewrite_forward_type_media = Media
 
 yrewrite_forward_article_id = Article
 yrewrite_forward_clang = Language
-yrewrite_forward_extern = Extern link
+yrewrite_forward_extern = External link
 yrewrite_forward_media = Media
 
 yrewrite_forward_add = Add redirect
-yrewrite_forward_edit = Edit redirec
+yrewrite_forward_edit = Edit redirects
 
-yrewrite_forward_method = Was soll passieren
+yrewrite_forward_method = Redirection rule
 yrewrite_forward_to = Redirect to URL
-yrewrite_forward_direct = Direkter Aufruf
+yrewrite_forward_direct = Direct access
 
 yrewrite_forward_added = Redirect added
 yrewrite_forward_updated = Redirect updated
 yrewrite_forward_deleted = Redirect deleted
 
-yrewrite_forward_enter_url = Please enter an URL
+yrewrite_forward_enter_url = Please enter a URL
 
-yrewrite_forward_domainurl_already_defined = Diese Domain/Url Kombination existiert bereits
+yrewrite_forward_domainurl_already_defined = This domain/Url combination exists already
 
 yrewrite_forward_move_method = Type of redirect
 
-yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte Url existiert nicht mehr
-yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
-yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein
+yrewrite_forward_301 = 301 - Moved Permanently - old URL no longer exists
+yrewrite_forward_303 = 303 - See Other / default redirect
+yrewrite_forward_307 = 307 - Temporary Redirect
 
 yrewrite_alllangs = All languages
-yrewrite_clang_start = Startlanguage
+yrewrite_clang_start = Start language
