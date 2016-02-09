@@ -13,6 +13,14 @@ class rex_yrewrite_scheme
     protected $suffix = '/';
 
     /**
+     * @return string
+     */
+    public function getSuffix()
+    {
+        return $this->suffix;
+    }
+
+    /**
      * @param string $suffix
      */
     public function setSuffix($suffix)
@@ -99,7 +107,7 @@ class rex_yrewrite_scheme
      *
      * @return string
      */
-    protected function normalize($string, $clang = 0)
+    public function normalize($string, $clang = 0)
     {
         $string = str_replace(
             ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/'],
