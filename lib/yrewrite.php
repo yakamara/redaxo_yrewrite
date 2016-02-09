@@ -50,6 +50,11 @@ class rex_yrewrite
         self::readPathFile();
     }
 
+    public static function getScheme()
+    {
+        return self::$scheme;
+    }
+
     public static function setScheme(rex_yrewrite_scheme $scheme)
     {
         self::$scheme = $scheme;
