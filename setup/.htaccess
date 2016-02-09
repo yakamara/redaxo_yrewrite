@@ -82,15 +82,19 @@ FileETag None
 <IfModule mod_rewrite.c>
     # ENABLE REWRITING
     RewriteEngine On
-    #RewriteBase /
 
-    RewriteRule ^sitemap\.xml$ index.php?rex_yrewrite_func=sitemap [NC,L]
-    RewriteRule ^robots\.txt$ index.php?rex_yrewrite_func=robots [NC,L]
+    # Workaround for RewriteBase
+    # Copied from https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
+
+    RewriteRule ^sitemap\.xml$ %{ENV:BASE}/index.php?rex_yrewrite_func=sitemap [NC,L]
+    RewriteRule ^robots\.txt$ %{ENV:BASE}/index.php?rex_yrewrite_func=robots [NC,L]
 
     # REWRITE RULE FOR SEO FRIENDLY IMAGE MANAGER URLS
-    RewriteRule ^files[0-9]*/imagetypes/([^/]*)/([^/]*) /index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
-    RewriteRule ^images/([^/]*)/([^/]*) /index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
-    RewriteRule ^imagetypes/([^/]*)/([^/]*) /index.php?rex_media_type=$1&rex_media_file=$2
+    RewriteRule ^files[0-9]*/imagetypes/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^images/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^imagetypes/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -99,6 +103,6 @@ FileETag None
     RewriteCond %{REQUEST_URI} !^redaxo/.*
     RewriteCond %{REQUEST_URI} !^files/.*
 
-    RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [L]
+    RewriteRule ^(.*)$ %{ENV:BASE}/index.php?%{QUERY_STRING} [L]
 
 </IfModule>
