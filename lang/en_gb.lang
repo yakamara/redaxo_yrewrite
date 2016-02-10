@@ -6,12 +6,15 @@ yrewrite_rewriter_seo = SEO Data
 yrewrite_mode_url = URL
 yrewrite_mode_seo = SEO
 yrewrite_customurl = Custom URL
-yrewrite_update = update URL
+yrewrite_update_url = Update URL
+yrewrite_update_seo = Update SEO-Data
 
 yrewrite_domains = Domains
 yrewrite_domain_info = Domain [www.domain.de]
 yrewrite_article_urls = Article URLs
 yrewrite_setup = Setup
+
+yrewrite_error_domain_missing = Please add a domain first.
 
 yrewrite_startarticleisalways = This is the start article of domain "{0}" and cannot be changed. This URL is always "/"
 

@@ -14,7 +14,16 @@ $showlist = true;
 $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');
 
+$domains = rex_yrewrite::getDomains();
+
 rex_yrewrite_forward::init();
+
+if (count($domains) == 1) {
+    echo rex_view::error($this->i18n('error_domain_missing'));
+    $func = "";
+    $showlist = false;
+}
+
 
 if ($func != '') {
     $yform = new rex_yform();
