@@ -44,6 +44,19 @@ oder
 Last Changes
 -------
 
+### Version 2.0.1 // 11.02.2016
+
+- Texte ergänzt / deutsch und englisch
+- rex_yrewrite_scheme ergänzt um getSuffix() und aufruf von normalize() erlaubt und getScheme() ergänzt
+- Fehlerinfo wenn noch keine Domain vorhanden ist.
+
+#### Bugs
+
+- Caching in der htaccess angepasst. Ist zu unkontrolliert und allgemein. Deswegen erstmal draußen
+- Workaround für RewriteBase, allgemeingültig gemacht
+
+
+
 ### Version 2.0 // 02.02.2016
 
 - Portierung zu Redaxo 5
