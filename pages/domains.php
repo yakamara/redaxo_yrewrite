@@ -23,16 +23,16 @@ if ($func != '') {
 
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_domain'));
 
-    $yform->setValueField('text', ['domain', $this->i18n('domain_info')]);
+    $yform->setValueField('text', ['domain', $this->i18n('domain'), 'notice' => '<small>'.$this->i18n('domain_info').'</small>']);
     $yform->setValidateField('empty', ['domain', $this->i18n('no_domain_defined')]);
     $yform->setValidateField('unique', ['domain', $this->i18n('domain_already_defined')]);
 
-    $yform->setValueField('be_link', ['mount_id', $this->i18n('mount_id')]);
+    $yform->setValueField('be_link', ['mount_id', $this->i18n('mount_id'), 'notice' => '<small>'.$this->i18n('mount_info').'</small>']);
 
-    $yform->setValueField('be_link', ['start_id', $this->i18n('start_id')]);
+    $yform->setValueField('be_link', ['start_id', $this->i18n('start_id'), 'notice' => '<small>'.$this->i18n('start_info').'</small>']);
     $yform->setValidateField('empty', ['start_id', $this->i18n('no_start_id_defined')]);
 
-    $yform->setValueField('be_link', ['notfound_id', $this->i18n('notfound_id')]);
+    $yform->setValueField('be_link', ['notfound_id', $this->i18n('notfound_id'), 'notice' => '<small>'.$this->i18n('notfound_info').'</small>']);
     $yform->setValidateField('empty', ['notfound_id', $this->i18n('no_not_found_id_defined')]);
 
     if (rex_clang::count() == 0) {
@@ -40,8 +40,8 @@ if ($func != '') {
         $yform->setValueField('hidden', ['clang_start', '']);
 
     } else {
-        $yform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from '.rex::getTable('clang'), '', 1, 0, '', 1, rex_clang::count()]);
-        $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id']);
+        $yform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from '.rex::getTable('clang'), '', 1, 0, '', 1, rex_clang::count(), 'notice' => '<small>'.$this->i18n('clangs_info').'</small>']);
+        $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id', 'notice' => '<small>'.$this->i18n('clang_start_info').'</small>']);
     }
 
     function rex_yrewrite_domaincheck($field, $value, $yform)

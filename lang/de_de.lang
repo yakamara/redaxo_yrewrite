@@ -10,7 +10,6 @@ yrewrite_update_url = URL aktualisieren
 yrewrite_update_seo = SEO-Daten aktualisieren
 
 yrewrite_domains = Domains
-yrewrite_domain_info = Domain [www.domain.de]
 yrewrite_article_urls = Artikel URLs
 yrewrite_setup = Setup
 
@@ -25,10 +24,21 @@ yrewrite_domain_deleted = Domain wurde gelöscht. Cache wurde gelöscht.
 yrewrite_domain_updated = Domain wurde aktualisiert. Cache wurde gelöscht.
 
 yrewrite_domain = Domain
+yrewrite_domain_info = http/https ist optional. Wenn man es angibt, leiten alle Links immer auf das angegebene Protokoll. Lässt man es weg, wird das jeweils aktuelle verwendet. Slash am Ende oder nicht ist egal, das wird vom AddOn normalisiert. www muss angegeben werden, wenn denn die Domain mit "www" genutzt wird. Für YRewrite ist es eine normale Subdomain. Läuft REDAXO in einem Unterordner, muss dieser mit notiert werden. Beispiel: http://domain.de/unterordner/
+
 yrewrite_mount_id = Mountpoint der Domain
+yrewrite_mount_info = Startpunkt der Domain. Der Startpunkt kann in jeder Tiefe der Struktur vergeben werden. Die oben angegebene Domain gilt ab dort für alle weiteren Kategorien/Artikel. Zum Beispiel kann eine zweite Domain innerhalb der Struktur einer anderen Domain einen Startpunkt bekommen. Freilassen, wenn Root-Kategorien als Url benötigt werden.
+
 yrewrite_start_id = Startartikel der Domain
+yrewrite_start_info = Artikel angeben der als Startartikel der Domain aufgerufen wird. Kann via rex_article::getSiteStartArticle() geholt werden.
+
 yrewrite_notfound_id = 404 Artikel
+yrewrite_notfound_info = Artikel angeben der als 404 der Domain aufgerufen wird. Kann via rex_article:: getNotfoundArticleId() geholt werden.
+
 yrewrite_clangs = Sprachen
+yrewrite_clangs_info = Sprachen auswählen, die unter der Domain zu erreichen sind.
+clang_start_info = Welche Sprache soll beim ersten Aufruf der Domain verwendet werden.
+
 yrewrite_alias_domain = Alias Domain
 yrewrite_alias_domains = Alias Domains
 
