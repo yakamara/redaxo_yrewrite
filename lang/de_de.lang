@@ -25,7 +25,7 @@ yrewrite_domain_deleted = Domain wurde gelöscht. Cache wurde gelöscht.
 yrewrite_domain_updated = Domain wurde aktualisiert. Cache wurde gelöscht.
 
 yrewrite_domain = Domain
-yrewrite_mount_id = Startpunkt der Domain
+yrewrite_mount_id = Mountpoint der Domain
 yrewrite_start_id = Startartikel der Domain
 yrewrite_notfound_id = 404 Artikel
 yrewrite_clangs = Sprachen
