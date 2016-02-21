@@ -100,6 +100,12 @@ class rex_yrewrite
         return null;
     }
 
+
+    public static function getDefaultDomain()
+    {
+        return self::$domainsByName['default'];
+    }
+
     // ----- article
 
     public static function getFullUrlByArticleId($id, $clang = 0)

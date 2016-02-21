@@ -156,13 +156,24 @@ class rex_yrewrite_seo
 
     public function sendSitemap($domain = '')
     {
+
+        $domains = rex_yrewrite::getDomains();
+
         if ($domain == '') {
             $domain = rex_yrewrite::getHost();
         }
 
         $sitemap = [];
-        if (rex_yrewrite::getDomainByName($domain)) {
-            $domain = rex_yrewrite::getDomainByName($domain);
+
+        if (rex_yrewrite::getDomainByName($domain) || count($domains) == 1 ) {
+
+            if (count($domains) == 1) {
+                $domain = rex_yrewrite::getDefaultDomain();
+
+            } else {
+                $domain = rex_yrewrite::getDomainByName($domain);
+
+            }
 
             $domain_article_id = $domain->getStartId();
             $paths = 0;
