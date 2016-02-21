@@ -250,6 +250,21 @@ class rex_yrewrite
             }
         }
 
+        $candidates = self::$scheme->getAlternativeCandidates($url, $domain);
+        if ($candidates) {
+            foreach ((array) $candidates as $candidate) {
+                foreach (self::$paths['paths'][$domain->getName()] as $i_id => $i_cls) {
+                    foreach (rex_clang::getAllIds() as $clang_id) {
+                        if (isset($i_cls[$clang_id]) && $i_cls[$clang_id] == $candidate) {
+                            header('HTTP/1.1 301 Moved Permanently');
+                            header('Location: ' . $domain->getPath() . $candidate);
+                            exit;
+                        }
+                    }
+                }
+            }
+        }
+
         $params = rex_extension::registerPoint(new rex_extension_point('YREWRITE_PREPARE', '', ['url' => $url, 'domain' => $domain]));
 
         if (isset($params['article_id']) && $params['article_id'] > 0) {

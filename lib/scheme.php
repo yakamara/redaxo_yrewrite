@@ -102,6 +102,21 @@ class rex_yrewrite_scheme
     }
 
     /**
+     * @param string              $path
+     * @param rex_yrewrite_domain $domain
+     *
+     * @return null|string|string[]
+     */
+    public function getAlternativeCandidates($path, rex_yrewrite_domain $domain)
+    {
+        if (!$this->suffix || substr($path, -strlen($this->suffix)) === $this->suffix) {
+            return null;
+        }
+
+        return $path . $this->suffix;
+    }
+
+    /**
      * @param string $string
      * @param int    $clang
      *
