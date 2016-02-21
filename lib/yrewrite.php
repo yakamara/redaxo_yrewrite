@@ -242,7 +242,7 @@ class rex_yrewrite
         // normal exact check
         foreach (self::$paths['paths'][$domain->getName()] as $i_id => $i_cls) {
             foreach (rex_clang::getAllIds() as $clang_id) {
-                if (isset($i_cls[$clang_id]) && ($i_cls[$clang_id] == $url || $i_cls[$clang_id] . '/' == $url)) {
+                if (isset($i_cls[$clang_id]) && $i_cls[$clang_id] == $url) {
                     $structureAddon->setProperty('article_id', $i_id);
                     rex_clang::setCurrentId($clang_id);
                     return true;
