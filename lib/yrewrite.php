@@ -44,7 +44,7 @@ class rex_yrewrite
         $path = rtrim($path, '/') . '/';
         self::addDomain(new rex_yrewrite_domain('default', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId()));
 
-        self::$pathfile = rex_path::addonCache('yrewrite', 'pathlist.php');
+        self::$pathfile = rex_path::addonCache('yrewrite', 'pathlist.json');
         self::$configfile = rex_path::addonCache('yrewrite', 'config.php');
         self::readConfig();
         self::readPathFile();
