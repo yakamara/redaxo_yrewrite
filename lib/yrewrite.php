@@ -233,7 +233,7 @@ class rex_yrewrite
         $structureAddon->setProperty('notfound_article_id', $domain->getNotfoundId());
 
         // if no path -> startarticle
-        if ($url == '/') {
+        if ($url === '') {
             $structureAddon->setProperty('article_id', $domain->getStartId());
             rex_clang::setCurrentId($domain->getStartClang());
             return true;
