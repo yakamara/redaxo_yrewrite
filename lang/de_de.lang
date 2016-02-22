@@ -23,6 +23,8 @@ yrewrite_edit_domain = Domain editieren
 yrewrite_domain_deleted = Domain wurde gelöscht. Cache wurde gelöscht.
 yrewrite_domain_updated = Domain wurde aktualisiert. Cache wurde gelöscht.
 
+yrewrite_save = speichern
+
 yrewrite_domain = Domain
 yrewrite_domain_info = http/https ist optional. Wenn man es angibt, leiten alle Links immer auf das angegebene Protokoll. Lässt man es weg, wird das jeweils aktuelle verwendet. Slash am Ende oder nicht ist egal, das wird vom AddOn normalisiert. www muss angegeben werden, wenn denn die Domain mit "www" genutzt wird. Für YRewrite ist es eine normale Subdomain. Läuft REDAXO in einem Unterordner, muss dieser mit notiert werden. Beispiel: http://domain.de/unterordner/
 

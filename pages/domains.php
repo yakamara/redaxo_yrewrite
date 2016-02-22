@@ -73,7 +73,7 @@ if ($func != '') {
         $yform->setObjectparams('main_id', $data_id);
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('getdata', true);
-        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('save'));
+        $yform->setObjectparams('submit_btn_label', $this->i18n('save'));
         $form = $yform->getForm();
 
         if ($yform->objparams['actions_executed']) {

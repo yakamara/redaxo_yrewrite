@@ -10,7 +10,6 @@ yrewrite_update_url = Update URL
 yrewrite_update_seo = Update SEO-Data
 
 yrewrite_domains = Domains
-yrewrite_domain_info = Domain [www.domain.de]
 yrewrite_article_urls = Article URLs
 yrewrite_setup = Setup
 
@@ -23,6 +22,8 @@ yrewrite_domain_added = Domain added
 yrewrite_edit_domain = Edit Domain
 yrewrite_domain_deleted = Domain deleted. Cache deleted.
 yrewrite_domain_updated = Domain updated. Cache deleted.
+
+yrewrite_save = save
 
 yrewrite_domain = Domain
 yrewrite_mount_id = Mount article of Domain
