@@ -108,6 +108,19 @@ class rex_yrewrite
 
     // ----- article
 
+    public static function getCurrentDomain()
+    {
+        $article_id = rex_article::getCurrent()->getId();
+        $clang_id = rex_clang::getCurrent()->getId();
+
+        foreach (self::$domainsByName as $name => $domain) {
+            if (isset(self::$paths['paths'][$name][$article_id][$clang_id])) {
+                return $domain;
+            }
+        }
+        return null;
+    }
+
     public static function getFullUrlByArticleId($id, $clang = 0)
     {
         $params = [];
