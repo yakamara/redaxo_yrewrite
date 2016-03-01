@@ -125,8 +125,8 @@ class rex_yrewrite_scheme
     public function normalize($string, $clang = 0)
     {
         $string = str_replace(
-            ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/'],
-            ['Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', '-'],
+            ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/', '®', '©', '™'],
+            ['Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', '-', '', '', ''],
             $string
         );
         $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
