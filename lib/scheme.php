@@ -122,7 +122,7 @@ class rex_yrewrite_scheme
      *
      * @return string
      */
-    public function normalize($string, $clang = 0)
+    public function normalize($string, $clang = 1)
     {
         $string = str_replace(
             ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/', '®', '©', '™'],
