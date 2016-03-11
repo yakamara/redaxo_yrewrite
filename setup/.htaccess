@@ -72,11 +72,11 @@ AddDefaultCharset utf-8
 #</IfModule>
 
 # REMOVE ETAG
-<IfModule mod_headers.c>
-	Header unset ETag
-</IfModule>
-
-FileETag None
+#<IfModule mod_headers.c>
+#	Header unset ETag
+#</IfModule>
+#
+#FileETag None
 
 # REWRITING
 <IfModule mod_rewrite.c>
