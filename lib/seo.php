@@ -98,24 +98,29 @@ class rex_yrewrite_seo
 
     public function getHreflangTags()
     {
-        $return = '';
+        $return           = '';
         $current_mount_id = $this->domain->getMountId();
 
         $lang_domains = [];
-        foreach(rex_yrewrite::getDomains() as $domain) {
-            if($current_mount_id == $domain->getMountId()) {
-                foreach($domain->getClangs() as $clang) {
-                    if ( ($lang = rex_clang::get($clang)) ) {
-                        $lang_domains[$lang->getCode()] = rex_yrewrite::getFullUrlByArticleId($domain->getStartId(),$lang->getId());
+        foreach (rex_yrewrite::getDomains() as $domain) {
+            if ($current_mount_id == $domain->getMountId()) {
+                foreach ($domain->getClangs() as $clang) {
+                    if ($lang = rex_clang::get($clang)) {
+                        $article = rex_article::getCurrent($clang);
+                        if ($article->isOnline()) {
+                            $lang_domains[$lang->getCode()] = rex_yrewrite::getFullUrlByArticleId($article->getId(), $lang->getId());
+                        }
                     }
                 }
+                break;
             }
         }
 
-        foreach($lang_domains as $code => $url){
-            $return .= '<link rel="alternate" hreflang="'.$code.'" href="'.$url.'" />';
-        }
+        $lang_domains = rex_extension::registerPoint(new rex_extension_point('YREWRITE_HREFLANG_TAGS', $lang_domains));
 
+        foreach ($lang_domains as $code => $url){
+            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+        }
         return $return;
     }
 
