@@ -219,10 +219,17 @@ class rex_yrewrite
             if (isset(self::$aliasDomains[$host])) {
                 /** @var rex_yrewrite_domain $domain */
                 $domain = self::$aliasDomains[$host]['domain'];
+
                 if (!$url && isset(self::$paths['paths'][$domain->getName()][$domain->getStartId()][self::$aliasDomains[$host]['clang_start']])) {
                     $url = self::$paths['paths'][$domain->getName()][$domain->getStartId()][self::$aliasDomains[$host]['clang_start']];
                 }
                 // forward to original domain permanent move 301
+
+                if (0 === strpos($url, $domain->getPath())) {
+                    $url = substr($url, strlen($domain->getPath()));
+                }
+
+                $url = ltrim($url, '/');
 
                 header('HTTP/1.1 301 Moved Permanently');
                 header('Location: ' . $domain->getUrl() . $url);
