@@ -188,12 +188,17 @@ class rex_yrewrite_seo
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
+
+                    $article = rex_article::get($article_id, $clang_id);
+
                     if (
-                        ($article = rex_article::get($article_id, $clang_id)) &&
+                        ($article) &&
                         self::checkArticlePerm($article) &&
-                        ($article->getValue('yrewrite_index') == 1 || ($article->isOnline() && $article->getValue('yrewrite_index') == 0))
+                        ($article->getValue('yrewrite_index') == 1 || ($article->isOnline() && $article->getValue('yrewrite_index') == 0)) &&
+                        ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())
 
                     ) {
+
                         $changefreq = $article->getValue('yrewrite_changefreq');
                         if (!in_array($changefreq, self::$changefreq)) {
                             $changefreq = self::$changefreq_default;
