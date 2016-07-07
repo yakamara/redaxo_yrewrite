@@ -58,7 +58,6 @@ if ($func != '') {
     $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
 
     $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
-    $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),rex_yrewrite_seo::$robots_default,'','short']);
 
     if ($func == 'delete') {
         $d = rex_sql::factory();
@@ -68,6 +67,7 @@ if ($func != '') {
 
     } else if ($func == 'edit') {
 
+        $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),'','','short']);
         $yform->setHiddenField('data_id', $data_id);
         $yform->setActionField('db', [rex::getTable('yrewrite_domain'), 'id=' . $data_id]);
         $yform->setObjectparams('main_id', $data_id);
@@ -92,6 +92,7 @@ if ($func != '') {
 
     } elseif ($func == 'add') {
 
+        $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),rex_yrewrite_seo::$robots_default,'','short']);
         $yform->setActionField('db', [rex::getTable('yrewrite_domain')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
