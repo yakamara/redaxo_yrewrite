@@ -48,7 +48,14 @@ class rex_yrewrite_seo
 
     public function getCanonicalUrlTag()
     {
-        return '<link rel="canonical" href="'.htmlspecialchars($this->getCanonicalUrl()).'" />';
+        $return     = '';
+        $canonicals = $this->getCanonicalUrls();
+
+        foreach ($canonicals as $canonical)
+        {
+            $return .= '<link rel="canonical" href="'. htmlspecialchars($canonical) .'" />';
+        }
+        return $return;
     }
 
     public function getRobotsTag()
@@ -78,22 +85,27 @@ class rex_yrewrite_seo
         $title = $title_scheme;
         $title = str_replace('%T', $ytitle, $title);
         $title = str_replace('%SN', rex::getServerName(), $title);
+        $title = rex_extension::registerPoint(new rex_extension_point('YREWRITE_TITLE', $title, ['scheme' => $title_scheme, 'sitename' => rex::getServerName(), 'title' => $ytitle]));
 
         return $this->cleanString($title);
     }
 
     public function getDescription()
     {
-        return $this->cleanString($this->article->getValue('yrewrite_description'));
+        $description = $this->article->getValue('yrewrite_description');
+        $description = rex_extension::registerPoint(new rex_extension_point('YREWRITE_DESCRIPTION', $description));
+        return $this->cleanString($description);
     }
 
-    public function getCanonicalUrl()
+    public function getCanonicalUrls()
     {
+        $return = [];
         $canonical_url = trim($this->article->getValue('yrewrite_canonical_url'));
         if ($canonical_url == "") {
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
         }
-        return $canonical_url;
+        $return[] = $canonical_url;
+        return rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_TAG', $return));
     }
 
     public function getHreflangTags()
