@@ -105,7 +105,7 @@ class rex_yrewrite_seo
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
         }
         $return[] = $canonical_url;
-        return rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_TAG', $return));
+        return rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICALS', $return));
     }
 
     public function getHreflangTags()
