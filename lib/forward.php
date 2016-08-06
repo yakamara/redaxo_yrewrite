@@ -36,14 +36,14 @@ class rex_yrewrite_forward
 
         self::init();
 
-        $domain = $params['domain'];
+        $domain = rtrim($params['domain']->getUrl(), '/');
         if ($domain == 'default') {
             $domain = '';
         }
         $url = $params['url'];
 
         foreach (self::$paths as $p) {
-            if ($p['domain'] == $domain && ($p['url'] == $url || $p['url'] . '/' == $url)) {
+            if (rtrim($p['domain'], '/') == $domain && ($p['url'] == $url || $p['url'] . '/' == $url)) {
                 $forward_url = '';
                 if ($p['type'] == 'article' && ($art = rex_article::get($p['article_id'], $p['clang']))) {
                     $forward_url = rex_getUrl($p['article_id'], $p['clang']);
