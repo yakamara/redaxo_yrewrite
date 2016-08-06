@@ -38,7 +38,7 @@ yrewrite_notfound_id = 404 Artikel
 yrewrite_notfound_info = Artikel angeben der als 404 der Domain aufgerufen wird. Kann via rex_article:: getNotfoundArticleId() geholt werden.
 
 yrewrite_clangs = Sprachen
-yrewrite_clangs_info = Sprachen auswählen, die unter der Domain zu erreichen sind.
+yrewrite_clangs_info = Sprachen auswählen, die unter der Domain zu erreichen sind. Keine auswählen, wenn alle Sprachen (auch zukünftige) über diese Domain erreichbar sein sollen.
 clang_start_info = Welche Sprache soll beim ersten Aufruf der Domain verwendet werden.
 
 yrewrite_alias_domain = Alias Domain
