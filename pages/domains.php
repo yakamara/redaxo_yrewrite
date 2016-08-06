@@ -35,25 +35,9 @@ if ($func != '') {
     $yform->setValueField('be_link', ['notfound_id', $this->i18n('notfound_id'), 'notice' => '<small>'.$this->i18n('notfound_info').'</small>']);
     $yform->setValidateField('empty', ['notfound_id', $this->i18n('no_not_found_id_defined')]);
 
-    if (rex_clang::count() == 0) {
-        $yform->setValueField('hidden', ['clangs', '']);
-        $yform->setValueField('hidden', ['clang_start', '']);
-
-    } else {
-        $yform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from '.rex::getTable('clang'), '', 1, 0, '', 1, rex_clang::count(), 'notice' => '<small>'.$this->i18n('clangs_info').'</small>']);
-        $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id', 'notice' => '<small>'.$this->i18n('clang_start_info').'</small>']);
-    }
-
-    function rex_yrewrite_domaincheck($field, $value, $yform)
-    {
-        $sql = 'select '.$field.' from '.$yform->objparams['main_table'].' where '.$field.'="'.mysql_real_escape_string($value).'" and alias_domain="" AND !('.$yform->objparams['main_where'].')';
-        $a = rex_sql::factory();
-        $result = $a->getArray($sql);
-        if (count($result) > 0) {
-            return true;
-        }
-        return false;
-    }
+    $yform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from '.rex::getTable('clang'), '', 1, 0, '', 1, rex_clang::count(), 'notice' => '<small>'.$this->i18n('clangs_info').'</small>']);
+    $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id', 'notice' => '<small>'.$this->i18n('clang_start_info').'</small>']);
+    $yform->setValueField('checkbox', ['clang_start_hidden', $this->i18n('clang_start_hidden')]);
 
     $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
 
@@ -137,29 +121,27 @@ if ($showlist) {
     $list->setColumnLabel('start_id', $this->i18n('start_id'));
     $list->setColumnLabel('notfound_id', $this->i18n('notfound_id'));
 
-    if (rex_clang::count() > 0) {
-        $list->setColumnLabel('clangs', $this->i18n('clangs'));
-        $list->setColumnFormat('clangs', 'custom', function ($params) {
-            $clangs = $params['subject'];
-            if ($clangs == '') {
-                $return = $this->i18n('alllangs');
-            } else {
-                $return = [];
-                foreach (explode(',', $clangs) as $clang) {
-                    $return[] = rex_clang::get($clang)->getName();
-                }
-                if (count($return) > 1) {
-                    $return = implode(',', $return) . '<br />'.$this->i18n('clang_start').': '.rex_clang::get($params['list']->getValue('clang_start'))->getName();
-                } else {
-                    $return = implode(',', $return);
-                }
+    $list->setColumnLabel('clangs', $this->i18n('clangs'));
+    $list->setColumnFormat('clangs', 'custom', function ($params) {
+        $clangs = $params['subject'];
+        if ($clangs == '') {
+            $return = $this->i18n('alllangs');
+        } else {
+            $return = [];
+            foreach (explode(',', $clangs) as $clang) {
+                $return[] = rex_clang::get($clang)->getName();
             }
-            return $return;
-        });
+            if (count($return) > 1) {
+                $return = implode(',', $return) . '<br />'.$this->i18n('clang_start').': '.rex_clang::get($params['list']->getValue('clang_start'))->getName();
+            } else {
+                $return = implode(',', $return);
+            }
+        }
+        return $return;
+    });
 
-        $list->removeColumn('clang_start');
-
-    }
+    $list->removeColumn('clang_start');
+    $list->removeColumn('clang_start_hidden');
 
     $list->addColumn(rex_i18n::msg('function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));
     $list->setColumnLayout(rex_i18n::msg('function'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);

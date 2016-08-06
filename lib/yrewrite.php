@@ -530,7 +530,8 @@ class rex_yrewrite
                     . $domain['clang_start'] . ', '
                     . '"' . htmlspecialchars($domain['title_scheme']) . '", '
                     . '"' . htmlspecialchars($domain['description']) . '", '
-                    . '"' . htmlspecialchars($domain['robots']) . '"'
+                    . '"' . htmlspecialchars($domain['robots']) . '", '
+                    . ($domain['clang_start_hidden'] ? 'true' : 'false')
                     . '));';
             }
         }

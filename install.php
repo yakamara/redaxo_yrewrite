@@ -32,6 +32,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_domain').'
     `alias_domain` varchar(255) NOT NULL,
     `clangs` varchar(255) NOT NULL,
     `clang_start` int(11) NOT NULL,
+    `clang_start_hidden` tinyint(1) NOT NULL,
     `robots` TEXT NOT NULL,
     `title_scheme` varchar(255) NOT NULL,
     `description` varchar(255) NOT NULL,
@@ -51,5 +52,10 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_forward').
     `movetype` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+
+rex_sql_table::get(rex::getTable('yrewrite_domain'))
+    ->ensureColumn(new rex_sql_column('clang_start_hidden', 'tinyint(1)'))
+    ->alter()
+;
 
 rex_delete_cache();

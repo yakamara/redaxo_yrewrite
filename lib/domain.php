@@ -18,11 +18,12 @@ class rex_yrewrite_domain
     private $notfoundId;
     private $clangs;
     private $startClang;
+    private $startClangHidden;
     private $title;
     private $description;
     private $robots;
 
-    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '')
+    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '', $startClangHidden = false)
     {
         $this->name = $name;
         $this->path = $path;
@@ -33,6 +34,7 @@ class rex_yrewrite_domain
         $this->notfoundId = $notfoundId;
         $this->clangs = is_null($clangs) ? rex_clang::getAllIds() : $clangs;
         $this->startClang = $startClang;
+        $this->startClangHidden = $startClangHidden;
         $this->title = $title;
         $this->description = $description;
         $this->robots = $robots;
@@ -100,6 +102,14 @@ class rex_yrewrite_domain
     public function getStartClang()
     {
         return $this->startClang;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStartClangHidden()
+    {
+        return $this->startClangHidden;
     }
 
     /**
