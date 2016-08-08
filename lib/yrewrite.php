@@ -202,6 +202,7 @@ class rex_yrewrite
 
         // delete params
         if (($pos = strpos($url, '?')) !== false) {
+            $params = substr($url, $pos);
             $url = substr($url, 0, $pos);
         }
 
@@ -232,17 +233,39 @@ class rex_yrewrite
                 $url = ltrim($url, '/');
 
                 header('HTTP/1.1 301 Moved Permanently');
-                header('Location: ' . $domain->getUrl() . $url);
+                header('Location: ' . $domain->getUrl() . $url . $params);
                 exit;
+            }
+
+            if ('www.' === substr($host, 0, 4)) {
+                $alternativeHost = substr($host, 4);
+            } else {
+                $alternativeHost = 'www.' . $host;
+            }
+            if (isset(self::$domainsByName[$alternativeHost])) {
+                $domain = self::$domainsByName[$alternativeHost];
+
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: ' . $domain->getUrl() . ltrim($url, '/') . $params);
+                exit;
+            }
 
             // no domain, no alias, domain with root mountpoint ?
-            } elseif (isset(self::$domainsByMountId[0][$clang])) {
+            if (isset(self::$domainsByMountId[0][$clang])) {
                 $domain = self::$domainsByMountId[0][$clang];
 
             // no root domain -> default
             } else {
                 $domain = self::$domainsByName['default'];
             }
+        }
+
+        $currentScheme = self::isHttps() ? 'https' : 'http';
+        $domainScheme = $domain->getScheme();
+        if ($domainScheme && $domainScheme !== $currentScheme) {
+            header('HTTP/1.1 301 Moved Permanently');
+            header('Location: ' . $domainScheme . '://' . $host . $url . $params);
+            exit;
         }
 
         if (0 === strpos($url, $domain->getPath())) {
