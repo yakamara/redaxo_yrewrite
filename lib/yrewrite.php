@@ -251,9 +251,6 @@ class rex_yrewrite
 
         $url = ltrim($url, '/');
 
-        //rex::setProperty('domain_article_id', $domain->getMountId());
-        rex::setProperty('server', $domain->getUrl());
-
         $structureAddon = rex_addon::get('structure');
         $structureAddon->setProperty('start_article_id', $domain->getStartId());
         $structureAddon->setProperty('notfound_article_id', $domain->getNotfoundId());
