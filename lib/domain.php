@@ -31,7 +31,8 @@ class rex_yrewrite_domain
         $this->scheme = $scheme;
         $this->path = $path;
         $scheme = $scheme ?: (rex_yrewrite::isHttps() ? 'https' : 'http');
-        $this->url = $scheme . '://' . $name . $path;
+        $host = 'default' === $name ? rex_yrewrite::getHost() : $host;
+        $this->url = $scheme . '://' . $host . $path;
         $this->mountId = $mountId;
         $this->startId = $startId;
         $this->notfoundId = $notfoundId;

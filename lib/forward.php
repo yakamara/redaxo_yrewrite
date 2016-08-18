@@ -37,9 +37,6 @@ class rex_yrewrite_forward
         self::init();
 
         $domain = rtrim($params['domain']->getUrl(), '/');
-        if ($domain == 'default') {
-            $domain = '';
-        }
         $url = $params['url'];
 
         foreach (self::$paths as $p) {
