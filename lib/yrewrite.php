@@ -121,17 +121,19 @@ class rex_yrewrite
         return null;
     }
 
-    public static function getFullUrlByArticleId($id, $clang = 1)
+    public static function getFullUrlByArticleId($id, $clang = null)
     {
         $params = [];
         $params['id'] = $id;
-        $params['clang'] = $clang;
+        $params['clang'] = $clang ?: rex_clang::getCurrentId();
 
         return self::rewrite($params, [], true);
     }
 
-    public static function getDomainByArticleId($aid, $clang = 1)
+    public static function getDomainByArticleId($aid, $clang = null)
     {
+        $clang = $clang ?: rex_clang::getCurrentId();
+
         foreach (self::$domainsByName as $name => $domain) {
             if (isset(self::$paths['paths'][$name][$aid][$clang])) {
                 return $domain;
@@ -155,8 +157,10 @@ class rex_yrewrite
         return false;
     }
 
-    public static function isDomainStartArticle($aid, $clang = 1)
+    public static function isDomainStartArticle($aid, $clang = null)
     {
+        $clang = $clang ?: rex_clang::getCurrentId();
+
         foreach (self::$domainsByMountId as $d) {
             if (isset($d[$clang]) && $d[$clang]->getStartId() == $aid) {
                 return true;
@@ -166,8 +170,10 @@ class rex_yrewrite
         return false;
     }
 
-    public static function isDomainMountpoint($aid, $clang = 1)
+    public static function isDomainMountpoint($aid, $clang = null)
     {
+        $clang = $clang ?: rex_clang::getCurrentId();
+
         return isset(self::$domainsByMountId[$aid][$clang]);
     }
 
