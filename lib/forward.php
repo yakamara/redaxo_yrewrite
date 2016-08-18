@@ -48,7 +48,7 @@ class rex_yrewrite_forward
                 if ($p['type'] == 'article' && ($art = rex_article::get($p['article_id'], $p['clang']))) {
                     $forward_url = rex_getUrl($p['article_id'], $p['clang']);
                 } elseif ($p['type'] == 'media' && ($media = rex_media::get($p['media']))) {
-                    $forward_url = '/files/'.$p['media'];
+                    $forward_url = rex_url::media($p['media']);
                 } elseif ($p['type'] == 'extern' && $p['extern'] != '') {
                     $forward_url = $p['extern'];
                 }
