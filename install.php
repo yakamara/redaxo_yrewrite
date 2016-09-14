@@ -41,7 +41,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_domain').'
 
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_forward').'` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `domain` varchar(255) NOT NULL,
+    `domain_id` int(11) NOT NULL,
     `status` int(11) NOT NULL,
     `url` varchar(255) NOT NULL,
     `type` varchar(255) NOT NULL,
@@ -55,6 +55,11 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_forward').
 
 rex_sql_table::get(rex::getTable('yrewrite_domain'))
     ->ensureColumn(new rex_sql_column('clang_start_hidden', 'tinyint(1)'))
+    ->alter()
+;
+
+rex_sql_table::get(rex::getTable('yrewrite_forward'))
+    ->ensureColumn(new rex_sql_column('domain_id', 'int(11)'))
     ->alter()
 ;
 

@@ -17,6 +17,9 @@ class rex_yrewrite
     /** @var rex_yrewrite_domain[] */
     private static $domainsByName = [];
 
+    /** @var rex_yrewrite_domain[] */
+    private static $domainsById = [];
+
     private static $aliasDomains = [];
     private static $pathfile = '';
     private static $configfile = '';
@@ -68,6 +71,10 @@ class rex_yrewrite
             self::$domainsByMountId[$domain->getMountId()][$clang] = $domain;
         }
         self::$domainsByName[$domain->getName()] = $domain;
+
+        if ($domain->getId()) {
+            self::$domainsById[$domain->getId()] = $domain;
+        }
     }
 
     public static function addAliasDomain($from_domain, $to_domain, $clang_start = 0)
@@ -96,6 +103,18 @@ class rex_yrewrite
     {
         if (isset(self::$domainsByName[$name])) {
             return self::$domainsByName[$name];
+        }
+        return null;
+    }
+
+    /**
+     * @param int $id
+     * @return null|rex_yrewrite_domain
+     */
+    public static function getDomainById($id)
+    {
+        if (isset(self::$domainsById[$id])) {
+            return self::$domainsById[$id];
         }
         return null;
     }
@@ -555,7 +574,8 @@ class rex_yrewrite
                     . '"' . htmlspecialchars($domain['title_scheme']) . '", '
                     . '"' . htmlspecialchars($domain['description']) . '", '
                     . '"' . htmlspecialchars($domain['robots']) . '", '
-                    . ($domain['clang_start_hidden'] ? 'true' : 'false')
+                    . ($domain['clang_start_hidden'] ? 'true' : 'false') . ','
+                    . $domain['id']
                     . '));';
             }
         }

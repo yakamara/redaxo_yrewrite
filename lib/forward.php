@@ -21,7 +21,7 @@ class rex_yrewrite_forward
 
     public static function init()
     {
-        self::$pathfile = rex_path::addonCache('yrewrite', 'forward_pathlist.php');
+        self::$pathfile = rex_path::addonCache('yrewrite', 'forward_pathlist.json');
         self::readPathFile();
     }
 
@@ -36,11 +36,18 @@ class rex_yrewrite_forward
 
         self::init();
 
-        $domain = rtrim($params['domain']->getUrl(), '/');
+        /** @var rex_yrewrite_domain $domain */
+        $domain = $params['domain'];
         $url = $params['url'];
 
         foreach (self::$paths as $p) {
-            if (rtrim($p['domain'], '/') == $domain && ($p['url'] == $url || $p['url'] . '/' == $url)) {
+            $forwardDomain = rex_yrewrite::getDomainById($p['domain_id']);
+
+            if (!$forwardDomain || $forwardDomain !== $domain) {
+                continue;
+            }
+
+            if ($p['url'] == $url || $p['url'] . '/' == $url) {
                 $forward_url = '';
                 if ($p['type'] == 'article' && ($art = rex_article::get($p['article_id'], $p['clang']))) {
                     $forward_url = rex_getUrl($p['article_id'], $p['clang']);
@@ -67,8 +74,7 @@ class rex_yrewrite_forward
         if (!file_exists(self::$pathfile)) {
             self::generatePathFile();
         } else {
-            $content = file_get_contents(self::$pathfile);
-            self::$paths = json_decode($content, true);
+            self::$paths = rex_file::getCache(self::$pathfile);
         }
     }
 

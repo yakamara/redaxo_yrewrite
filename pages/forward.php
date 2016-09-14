@@ -36,14 +36,14 @@ if ($func != '') {
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_forward'));
 
     $yform->setValueField('select', ['status', $this->i18n('forward_status'),''.$this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
-    $yform->setValueField('select_sql', ['domain', $this->i18n('domain') . '', 'select domain as id,domain as name from '.rex::getTable('yrewrite_domain').' where alias_domain = ""']);
-    $yform->setValueField('text', ['url', $this->i18n('forward_url')]);
+    $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain').' where alias_domain = ""']);
+    $yform->setValueField('text', ['url', $this->i18n('forward_url'), 'notice' => '<small>'.$this->i18n('forward_url_info').'</small>']);
     //$yform->setValidateField('preg_match', array('url', '@^(?<!\/)[%_\./+\-a-zA-Z0-9]+(?!\/)$@', $this->i18n('warning_chars')));
     $yform->setValidateField('preg_match', ['url', '@^([%_\.+\-a-zA-Z0-9]){1}[/%_\.+\-a-zA-Z0-9]+([%_\.+\-a-zA-Z0-9]){1}$@', $this->i18n('warning_chars')]);
     // $this->i18n('warning_noslash')
     $yform->setValidateField('size_range', ['url', 1, 255, $this->i18n('warning_nottolong')]);
     $yform->setValidateField('empty', ['url', $this->i18n('forward_enter_url')]);
-    $yform->setValidateField('unique', ['domain,url', $this->i18n('forward_domainurl_already_defined')]);
+    $yform->setValidateField('unique', ['domain_id,url', $this->i18n('forward_domainurl_already_defined')]);
     $yform->setValueField('select', ['movetype', $this->i18n('forward_move_method'), $this->i18n('forward_301').'=301,'.$this->i18n('forward_303').'=303,'.$this->i18n('forward_307').'=307','','303']);
     $yform->setValueField('select', ['type', $this->i18n('forward_type'),''.$this->i18n('forward_type_article').'=article,'.$this->i18n('forward_type_extern').'=extern,'.$this->i18n('forward_type_media').'=media']);
 
@@ -148,7 +148,13 @@ if ($showlist) {
     $list->setColumnParams('id', ['data_id' => '###id###', 'func' => 'edit']);
     $list->setColumnSortable('id');
 
-    $list->setColumnLabel('domain', $this->i18n('domain'));
+    $list->setColumnLabel('domain_id', $this->i18n('domain'));
+    $list->setColumnFormat('domain_id', 'custom', function ($params) {
+        $domain = rex_yrewrite::getDomainById($params['subject']);
+
+        return $domain ? $domain->getUrl() : '';
+    });
+
     $list->setColumnLabel('status', $this->i18n('forward_status'));
     $list->setColumnLabel('url', $this->i18n('forward_url'));
     $list->setColumnLabel('type', $this->i18n('forward_type'));

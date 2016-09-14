@@ -128,6 +128,7 @@ yrewrite_forward_status = Status
 yrewrite_forward_active = aktiv
 yrewrite_forward_inactive = inaktiv
 yrewrite_forward_url = aufgerufene Url
+yrewrite_forward_url_info = Die URL muss ohne Slash am Anfang und Ende eingetragen werden, zum Beispiel "foo/bar". Die Variante mit Slash wird automatisch auch weitergeleitet.
 yrewrite_forward_type = Weiterleitung an
 
 yrewrite_forward_type_article = Artikel

@@ -11,7 +11,9 @@
 
 class rex_yrewrite_domain
 {
+    private $id;
     private $name;
+    private $host;
     private $scheme;
     private $path;
     private $url;
@@ -25,14 +27,15 @@ class rex_yrewrite_domain
     private $description;
     private $robots;
 
-    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '', $startClangHidden = false)
+    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '', $startClangHidden = false, $id = null)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->scheme = $scheme;
         $this->path = $path;
+        $this->host = 'default' === $name ? rex_yrewrite::getHost() : $name;
         $scheme = $scheme ?: (rex_yrewrite::isHttps() ? 'https' : 'http');
-        $host = 'default' === $name ? rex_yrewrite::getHost() : $name;
-        $this->url = $scheme . '://' . $host . $path;
+        $this->url = $scheme . '://' . $this->host . $path;
         $this->mountId = $mountId;
         $this->startId = $startId;
         $this->notfoundId = $notfoundId;
@@ -45,11 +48,27 @@ class rex_yrewrite_domain
     }
 
     /**
+     * @return int|null
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
     }
 
     /**
