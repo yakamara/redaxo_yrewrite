@@ -112,6 +112,7 @@ if ($showlist) {
     $list->removeColumn('id');
     $list->removeColumn('clangs');
     $list->removeColumn('clang_start');
+    $list->removeColumn('clang_start_hidden');
 
     $list->setColumnLabel('domain', $this->i18n('domain'));
     $list->setColumnLabel('alias_domain', $this->i18n('alias_domain'));
