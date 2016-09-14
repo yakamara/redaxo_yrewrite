@@ -36,7 +36,7 @@ if ($func != '') {
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_forward'));
 
     $yform->setValueField('select', ['status', $this->i18n('forward_status'),''.$this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
-    $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain').' where alias_domain = ""']);
+    $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain')]);
     $yform->setValueField('text', ['url', $this->i18n('forward_url'), 'notice' => '<small>'.$this->i18n('forward_url_info').'</small>']);
     //$yform->setValidateField('preg_match', array('url', '@^(?<!\/)[%_\./+\-a-zA-Z0-9]+(?!\/)$@', $this->i18n('warning_chars')));
     $yform->setValidateField('preg_match', ['url', '@^([%_\.+\-a-zA-Z0-9]){1}[/%_\.+\-a-zA-Z0-9]+([%_\.+\-a-zA-Z0-9]){1}$@', $this->i18n('warning_chars')]);
@@ -134,7 +134,7 @@ jQuery(document).ready(function() {
 }
 
 if ($showlist) {
-    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward');
+    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward').' ORDER BY domain_id, url';
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');

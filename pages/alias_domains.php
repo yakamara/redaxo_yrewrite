@@ -29,31 +29,31 @@ if ($func != '') {
     $yform->setHiddenField('func', $func);
     $yform->setHiddenField('save', '1');
 
-    $yform->setObjectparams('main_table', rex::getTable('yrewrite_domain'));
+    $yform->setObjectparams('main_table', rex::getTable('yrewrite_alias'));
 
-    $yform->setValueField('text', ['domain', $this->i18n('alias_domain_refersto')]);
-    $yform->setValueField('select_sql', ['alias_domain', $this->i18n('domain_willbereferdto') . '', 'select domain as id,domain as name from '.rex::getTable('yrewrite_domain').' where alias_domain = ""']);
+    $yform->setValueField('text', ['alias_domain', $this->i18n('alias_domain_refersto')]);
+    $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain_willbereferdto') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain')]);
     if (rex_clang::count() > 1) {
         $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id']);
     }
 
-    $yform->setValidateField('empty', ['domain', $this->i18n('no_domain_defined')]);
     $yform->setValidateField('empty', ['alias_domain', $this->i18n('no_domain_defined')]);
-    $yform->setValidateField('unique', ['domain', $this->i18n('domain_already_defined')]);
+    $yform->setValidateField('empty', ['domain_id', $this->i18n('no_domain_defined')]);
+    $yform->setValidateField('unique', ['alias_domain', $this->i18n('domain_already_defined')]);
 
     if ($func == 'delete') {
         $d = rex_sql::factory();
-        $d->setQuery('delete from '.rex::getTable('yrewrite_domain').' where id=' . $data_id);
+        $d->setQuery('delete from '.rex::getTable('yrewrite_alias').' where id=' . $data_id);
         echo rex_view::success($this->i18n('domain_deleted'));
         rex_yrewrite::deleteCache();
 
     } elseif ($func == 'edit') {
         $yform->setHiddenField('data_id', $data_id);
-        $yform->setActionField('db', [rex::getTable('yrewrite_domain'), 'id=' . $data_id]);
+        $yform->setActionField('db', [rex::getTable('yrewrite_alias'), 'id=' . $data_id]);
         $yform->setObjectparams('main_id', $data_id);
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('getdata', true);
-        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('save'));
+        $yform->setObjectparams('submit_btn_label', $this->i18n('save'));
         $form = $yform->getForm();
 
         if ($yform->objparams['actions_executed']) {
@@ -73,7 +73,7 @@ if ($func != '') {
 
     } else if ($func == 'add') {
 
-        $yform->setActionField('db', [rex::getTable('yrewrite_domain')]);
+        $yform->setActionField('db', [rex::getTable('yrewrite_alias')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
 
@@ -95,7 +95,7 @@ if ($func != '') {
 
 if ($showlist) {
 
-    $sql = 'SELECT * FROM '.rex::getTable('yrewrite_domain').' where alias_domain <> ""';
+    $sql = 'SELECT * FROM '.rex::getTable('yrewrite_alias').' ORDER BY alias_domain';
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');
@@ -110,15 +110,16 @@ if ($showlist) {
     $list->setColumnSortable('id');
 
     $list->removeColumn('id');
-    $list->removeColumn('clangs');
     $list->removeColumn('clang_start');
-    $list->removeColumn('clang_start_hidden');
 
-    $list->setColumnLabel('domain', $this->i18n('domain'));
     $list->setColumnLabel('alias_domain', $this->i18n('alias_domain'));
-    // $list->setColumnLabel("alias_domain",$this->i18n("alias_domain"));
-    // $list->removeColumn("alias_domain","alias_domain");
 
+    $list->setColumnLabel('domain_id', $this->i18n('domain'));
+    $list->setColumnFormat('domain_id', 'custom', function ($params) {
+        $domain = rex_yrewrite::getDomainById($params['subject']);
+
+        return $domain ? $domain->getUrl() : '';
+    });
 
     $list->addColumn(rex_i18n::msg('function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));
     $list->setColumnLayout(rex_i18n::msg('function'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
@@ -128,15 +129,6 @@ if ($showlist) {
     $list->setColumnLayout(rex_i18n::msg('delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams(rex_i18n::msg('delete'), ['data_id' => '###id###', 'func' => 'delete']);
     $list->addLinkAttribute(rex_i18n::msg('delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('delete') . ' ?\')');
-
-
-    $list->removeColumn('clang');
-    $list->removeColumn('mount_id');
-    $list->removeColumn('start_id');
-    $list->removeColumn('notfound_id');
-    $list->removeColumn('robots', 'robots');
-    $list->removeColumn('title_scheme', 'title_scheme');
-    $list->removeColumn('description', 'description');
 
     $content = $list->get();
 

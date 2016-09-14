@@ -77,11 +77,11 @@ class rex_yrewrite
         }
     }
 
-    public static function addAliasDomain($from_domain, $to_domain, $clang_start = 0)
+    public static function addAliasDomain($from_domain, $to_domain_id, $clang_start = 0)
     {
-        if (isset(self::$domainsByName[$to_domain])) {
+        if (isset(self::$domainsById[$to_domain_id])) {
             self::$aliasDomains[$from_domain] = [
-                'domain' => self::$domainsByName[$to_domain],
+                'domain' => self::$domainsById[$to_domain_id],
                 'clang_start' => $clang_start,
             ];
         }
@@ -538,8 +538,10 @@ class rex_yrewrite
     public static function generateConfig()
     {
         $content = '<?php ' . "\n";
+
         $gc = rex_sql::factory();
-        $domains = $gc->getArray('select * from '.rex::getTable('yrewrite_domain').' order by alias_domain, mount_id, clangs');
+
+        $domains = $gc->getArray('select * from '.rex::getTable('yrewrite_domain').' order by mount_id, clangs');
         foreach ($domains as $domain) {
             if (!$domain['domain']) {
                 continue;
@@ -559,9 +561,7 @@ class rex_yrewrite
                 $path = rtrim($parts['path'], '/') . '/';
             }
 
-            if ($domain['alias_domain'] != '') {
-                $content .= "\n" . 'rex_yrewrite::addAliasDomain("' . $name . '", "' . $domain['alias_domain'] . '", ' . $domain['clang_start'] . ');';
-            } elseif ($domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
+            if ($domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
                 $content .= "\n" . 'rex_yrewrite::addDomain(new rex_yrewrite_domain('
                     . '"' . $name . '", '
                     . (isset($parts['scheme']) ? '"'.$parts['scheme'].'"' : 'null') . ', '
@@ -579,6 +579,16 @@ class rex_yrewrite
                     . '));';
             }
         }
+
+        $domains = $gc->getArray('select * from '.rex::getTable('yrewrite_alias').' order by domain_id');
+        foreach ($domains as $domain) {
+            if (!$domain['alias_domain'] || !$domain['domain_id']) {
+                continue;
+            }
+
+            $content .= "\n" . 'rex_yrewrite::addAliasDomain("' . $domain['alias_domain'] . '", ' . ((int) $domain['domain_id']) . ', ' . $domain['clang_start'] . ');';
+        }
+
         rex_file::put(self::$configfile, $content);
     }
 

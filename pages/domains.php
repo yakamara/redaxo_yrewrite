@@ -100,7 +100,7 @@ if ($func != '') {
 
 if ($showlist) {
 
-    $sql = 'SELECT * FROM '.rex::getTable('yrewrite_domain').' where alias_domain = ""';
+    $sql = 'SELECT * FROM '.rex::getTable('yrewrite_domain');
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');
@@ -174,7 +174,6 @@ if ($showlist) {
     $list->setColumnFormat('notfound_id', 'custom', $showArticle, []);
 
     $list->removeColumn('clang');
-    $list->removeColumn('alias_domain');
     $list->removeColumn('robots');
     $list->removeColumn('title_scheme');
     $list->removeColumn('description');

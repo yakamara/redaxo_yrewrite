@@ -29,13 +29,20 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_domain').'
     `mount_id` int(11) NOT NULL,
     `start_id` int(11) NOT NULL,
     `notfound_id` int(11) NOT NULL,
-    `alias_domain` varchar(255) NOT NULL,
     `clangs` varchar(255) NOT NULL,
     `clang_start` int(11) NOT NULL,
     `clang_start_hidden` tinyint(1) NOT NULL,
     `robots` TEXT NOT NULL,
     `title_scheme` varchar(255) NOT NULL,
     `description` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+
+$sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_alias').'` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `alias_domain` varchar(255) NOT NULL,
+    `domain_id` int(11) NOT NULL,
+    `clang_start` int(11) NOT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 

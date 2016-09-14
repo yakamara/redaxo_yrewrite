@@ -24,6 +24,8 @@ $sql = rex_sql::factory();
 
 $sql->setQuery(sprintf('DROP TABLE IF EXISTS `%s`;', rex::getTable('yrewrite_domain')));
 
+$sql->setQuery(sprintf('DROP TABLE IF EXISTS `%s`;', rex::getTable('yrewrite_alias')));
+
 $sql->setQuery(sprintf('DROP TABLE IF EXISTS `%s`;', rex::getTable('yrewrite_forward')));
 
 rex_delete_cache();
