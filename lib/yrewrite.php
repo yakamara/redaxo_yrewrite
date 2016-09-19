@@ -507,16 +507,14 @@ class rex_yrewrite
             //case 'ALL_GENERATED':
             default:
                 self::$paths = ['paths' => [], 'redirections' => []];
-                foreach (self::getDomains() as $domain)
-                {
-                    foreach (rex_clang::getAllIds() as $clangId) {
-                        $path = self::$scheme->getClang($clangId, $domain);
-                        foreach (rex_category::getRootCategories(false, $clangId) as $cat) {
-                            $generatePaths($domain, $path, $cat);
-                        }
-                        foreach (rex_article::getRootArticles(false, $clangId) as $art) {
-                            $setPath($domain, $path, $art);
-                        }
+                foreach (rex_clang::getAllIds() as $clangId) {
+                    $domain = self::$domainsByMountId[0][$clangId];
+                    $path = self::$scheme->getClang($clangId, $domain);
+                    foreach (rex_category::getRootCategories(false, $clangId) as $cat) {
+                        $generatePaths($domain, $path, $cat);
+                    }
+                    foreach (rex_article::getRootArticles(false, $clangId) as $art) {
+                        $setPath($domain, $path, $art);
                     }
                 }
                 break;
