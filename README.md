@@ -44,6 +44,13 @@ oder
 Last Changes
 -------
 
+### Version 2.2 // 19.09.2016
+
+#### Bugs
+- Weiterleitungen funktionierten unter bestimmten Situationen nicht
+- Änderungen an Domainnamen werden nun konsequent referenziert.
+
+
 ### Version 2.1 // 25.08.2016
 
 #### Neu
