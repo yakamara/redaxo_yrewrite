@@ -17,6 +17,9 @@ class rex_yrewrite
     /** @var rex_yrewrite_domain[] */
     private static $domainsByName = [];
 
+    /** @var rex_yrewrite_domain[] */
+    private static $domainsById = [];
+
     private static $aliasDomains = [];
     private static $pathfile = '';
     private static $configfile = '';
@@ -68,13 +71,17 @@ class rex_yrewrite
             self::$domainsByMountId[$domain->getMountId()][$clang] = $domain;
         }
         self::$domainsByName[$domain->getName()] = $domain;
+
+        if ($domain->getId()) {
+            self::$domainsById[$domain->getId()] = $domain;
+        }
     }
 
-    public static function addAliasDomain($from_domain, $to_domain, $clang_start = 0)
+    public static function addAliasDomain($from_domain, $to_domain_id, $clang_start = 0)
     {
-        if (isset(self::$domainsByName[$to_domain])) {
+        if (isset(self::$domainsById[$to_domain_id])) {
             self::$aliasDomains[$from_domain] = [
-                'domain' => self::$domainsByName[$to_domain],
+                'domain' => self::$domainsById[$to_domain_id],
                 'clang_start' => $clang_start,
             ];
         }
@@ -100,6 +107,18 @@ class rex_yrewrite
         return null;
     }
 
+    /**
+     * @param int $id
+     * @return null|rex_yrewrite_domain
+     */
+    public static function getDomainById($id)
+    {
+        if (isset(self::$domainsById[$id])) {
+            return self::$domainsById[$id];
+        }
+        return null;
+    }
+
 
     public static function getDefaultDomain()
     {
@@ -121,17 +140,21 @@ class rex_yrewrite
         return null;
     }
 
-    public static function getFullUrlByArticleId($id, $clang = 1)
+    public static function getFullUrlByArticleId($id, $clang = null, array $parameters = [], $separator = '&amp;')
     {
         $params = [];
         $params['id'] = $id;
-        $params['clang'] = $clang;
+        $params['clang'] = $clang ?: rex_clang::getCurrentId();
+        $params['params'] = $parameters;
+        $params['separator'] = $separator;
 
         return self::rewrite($params, [], true);
     }
 
-    public static function getDomainByArticleId($aid, $clang = 1)
+    public static function getDomainByArticleId($aid, $clang = null)
     {
+        $clang = $clang ?: rex_clang::getCurrentId();
+
         foreach (self::$domainsByName as $name => $domain) {
             if (isset(self::$paths['paths'][$name][$aid][$clang])) {
                 return $domain;
@@ -155,8 +178,10 @@ class rex_yrewrite
         return false;
     }
 
-    public static function isDomainStartArticle($aid, $clang = 1)
+    public static function isDomainStartArticle($aid, $clang = null)
     {
+        $clang = $clang ?: rex_clang::getCurrentId();
+
         foreach (self::$domainsByMountId as $d) {
             if (isset($d[$clang]) && $d[$clang]->getStartId() == $aid) {
                 return true;
@@ -166,8 +191,10 @@ class rex_yrewrite
         return false;
     }
 
-    public static function isDomainMountpoint($aid, $clang = 1)
+    public static function isDomainMountpoint($aid, $clang = null)
     {
+        $clang = $clang ?: rex_clang::getCurrentId();
+
         return isset(self::$domainsByMountId[$aid][$clang]);
     }
 
@@ -202,6 +229,7 @@ class rex_yrewrite
 
         // delete params
         if (($pos = strpos($url, '?')) !== false) {
+            $params = substr($url, $pos);
             $url = substr($url, 0, $pos);
         }
 
@@ -232,11 +260,25 @@ class rex_yrewrite
                 $url = ltrim($url, '/');
 
                 header('HTTP/1.1 301 Moved Permanently');
-                header('Location: ' . $domain->getUrl() . $url);
+                header('Location: ' . $domain->getUrl() . $url . $params);
                 exit;
+            }
+
+            if ('www.' === substr($host, 0, 4)) {
+                $alternativeHost = substr($host, 4);
+            } else {
+                $alternativeHost = 'www.' . $host;
+            }
+            if (isset(self::$domainsByName[$alternativeHost])) {
+                $domain = self::$domainsByName[$alternativeHost];
+
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: ' . $domain->getUrl() . ltrim($url, '/') . $params);
+                exit;
+            }
 
             // no domain, no alias, domain with root mountpoint ?
-            } elseif (isset(self::$domainsByMountId[0][$clang])) {
+            if (isset(self::$domainsByMountId[0][$clang])) {
                 $domain = self::$domainsByMountId[0][$clang];
 
             // no root domain -> default
@@ -245,14 +287,19 @@ class rex_yrewrite
             }
         }
 
+        $currentScheme = self::isHttps() ? 'https' : 'http';
+        $domainScheme = $domain->getScheme();
+        if ($domainScheme && $domainScheme !== $currentScheme) {
+            header('HTTP/1.1 301 Moved Permanently');
+            header('Location: ' . $domainScheme . '://' . $host . $url . $params);
+            exit;
+        }
+
         if (0 === strpos($url, $domain->getPath())) {
             $url = substr($url, strlen($domain->getPath()));
         }
 
         $url = ltrim($url, '/');
-
-        //rex::setProperty('domain_article_id', $domain->getMountId());
-        rex::setProperty('server', $domain->getUrl());
 
         $structureAddon = rex_addon::get('structure');
         $structureAddon->setProperty('start_article_id', $domain->getStartId());
@@ -350,11 +397,7 @@ class rex_yrewrite
             foreach (self::$paths['paths'] as $i_domain => $i_id) {
                 if (isset(self::$paths['paths'][$i_domain][$id][$clang])) {
                     $domain = self::getDomainByName($i_domain);
-                    if ($i_domain == 'default') {
-                        $path = $domain->getPath() . self::$paths['paths'][$i_domain][$id][$clang];
-                    } else {
-                        $path = $domain->getUrl() . self::$paths['paths'][$i_domain][$id][$clang];
-                    }
+                    $path = $domain->getUrl() . self::$paths['paths'][$i_domain][$id][$clang];
                     break;
                 }
             }
@@ -495,8 +538,10 @@ class rex_yrewrite
     public static function generateConfig()
     {
         $content = '<?php ' . "\n";
+
         $gc = rex_sql::factory();
-        $domains = $gc->getArray('select * from '.rex::getTable('yrewrite_domain').' order by alias_domain, mount_id, clangs');
+
+        $domains = $gc->getArray('select * from '.rex::getTable('yrewrite_domain').' order by mount_id, clangs');
         foreach ($domains as $domain) {
             if (!$domain['domain']) {
                 continue;
@@ -516,9 +561,7 @@ class rex_yrewrite
                 $path = rtrim($parts['path'], '/') . '/';
             }
 
-            if ($domain['alias_domain'] != '') {
-                $content .= "\n" . 'rex_yrewrite::addAliasDomain("' . $name . '", "' . $domain['alias_domain'] . '", ' . $domain['clang_start'] . ');';
-            } elseif ($domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
+            if ($domain['start_id'] > 0 && $domain['notfound_id'] > 0) {
                 $content .= "\n" . 'rex_yrewrite::addDomain(new rex_yrewrite_domain('
                     . '"' . $name . '", '
                     . (isset($parts['scheme']) ? '"'.$parts['scheme'].'"' : 'null') . ', '
@@ -530,10 +573,22 @@ class rex_yrewrite
                     . $domain['clang_start'] . ', '
                     . '"' . htmlspecialchars($domain['title_scheme']) . '", '
                     . '"' . htmlspecialchars($domain['description']) . '", '
-                    . '"' . htmlspecialchars($domain['robots']) . '"'
+                    . '"' . htmlspecialchars($domain['robots']) . '", '
+                    . ($domain['clang_start_hidden'] ? 'true' : 'false') . ','
+                    . $domain['id']
                     . '));';
             }
         }
+
+        $domains = $gc->getArray('select * from '.rex::getTable('yrewrite_alias').' order by domain_id');
+        foreach ($domains as $domain) {
+            if (!$domain['alias_domain'] || !$domain['domain_id']) {
+                continue;
+            }
+
+            $content .= "\n" . 'rex_yrewrite::addAliasDomain("' . $domain['alias_domain'] . '", ' . ((int) $domain['domain_id']) . ', ' . $domain['clang_start'] . ');';
+        }
+
         rex_file::put(self::$configfile, $content);
     }
 

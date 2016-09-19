@@ -52,10 +52,6 @@ if ($isStartarticle) {
 
     $yform->setValueField('text', ['yrewrite_url', $addon->i18n('customurl'), 'notice' => $autoUrl]);
 
-    $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url ) {
-        return (substr($yrewrite_url, 0, 1) == '/' || substr($yrewrite_url, -1) == '/');
-    }, 'params'=>[], 'message' => rex_i18n::msg('yrewrite_warning_noslash')]);
-
 
     $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url ) {
         return (strlen($yrewrite_url) > 250);

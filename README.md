@@ -44,6 +44,42 @@ oder
 Last Changes
 -------
 
+### Version 2.1 // 25.08.2016
+
+#### Neu
+- Diverse Beschreibung/Erklärungen ergänzt
+- Methode getCurrentDomain ergänzt
+- Diverse Sonderzeichen bei Ersetzungen ergänzt
+- Schwedische Sprache ergänzt
+- HreflangTag geändert
+- extension point "YREWRITE_HREFLANG_TAGS" hinzugefügt
+- robots.txt darf nun auch leer sein
+- Custom-Urls nun auch mit "/" am Ende erlaubt
+- Optional kann nun bei der Startsprache der language slug ausgeschaltet werden
+- rex::getServer() wird nicht mehr überschrieben
+- www. und http/s werden je nach konfigurierter Domain automatisch umgeleitet
+- getFullUrlByArticleId um params und separator wie bei rex_getUrl ergänzt
+
+#### Bugs
+- Startseitenerkennung korrigiert.
+- Automatische Weiterleitung bei fehlendem Suffix
+- Sitemap wird nun auch bei der default Domain ausgegeben
+- Default clang immer auf aktuelle gesetzt
+- ETag deaktiviert
+- htaccess. files Ordner auf media geändert
+- "Doppelter Slash"-Problem korrigiert
+- Sitemap enthält keine 404 Seiten mehr
+- Pfadaufruf für Windows angepasst
+- Bestimmte Weiterleitung hatten nicht funktioniert.
+- Weiterleitung auf Dateien ist korrigiert
+- Umgang mit der default-Domain verbessert
+
+#### Info
+- Textänderung: Startpunkt -> Mountpoint
+- Diverse fehlende Texte ergänzt
+
+
+
 ### Version 2.0.1 // 11.02.2016
 
 - Texte ergänzt / deutsch und englisch

@@ -11,31 +11,48 @@
 
 class rex_yrewrite_domain
 {
+    private $id;
     private $name;
+    private $host;
+    private $scheme;
+    private $path;
     private $url;
     private $mountId;
     private $startId;
     private $notfoundId;
     private $clangs;
     private $startClang;
+    private $startClangHidden;
     private $title;
     private $description;
     private $robots;
 
-    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '')
+    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '', $startClangHidden = false, $id = null)
     {
+        $this->id = $id;
         $this->name = $name;
+        $this->scheme = $scheme;
         $this->path = $path;
+        $this->host = 'default' === $name ? rex_yrewrite::getHost() : $name;
         $scheme = $scheme ?: (rex_yrewrite::isHttps() ? 'https' : 'http');
-        $this->url = $scheme . '://' . $name . $path;
+        $this->url = $scheme . '://' . $this->host . $path;
         $this->mountId = $mountId;
         $this->startId = $startId;
         $this->notfoundId = $notfoundId;
         $this->clangs = is_null($clangs) ? rex_clang::getAllIds() : $clangs;
         $this->startClang = $startClang;
+        $this->startClangHidden = $startClangHidden;
         $this->title = $title;
         $this->description = $description;
         $this->robots = $robots;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -44,6 +61,22 @@ class rex_yrewrite_domain
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getScheme()
+    {
+        return $this->scheme;
     }
 
     /**
@@ -100,6 +133,14 @@ class rex_yrewrite_domain
     public function getStartClang()
     {
         return $this->startClang;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStartClangHidden()
+    {
+        return $this->startClangHidden;
     }
 
     /**

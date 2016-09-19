@@ -21,7 +21,7 @@ class rex_yrewrite_forward
 
     public static function init()
     {
-        self::$pathfile = rex_path::addonCache('yrewrite', 'forward_pathlist.php');
+        self::$pathfile = rex_path::addonCache('yrewrite', 'forward_pathlist.json');
         self::readPathFile();
     }
 
@@ -36,19 +36,23 @@ class rex_yrewrite_forward
 
         self::init();
 
+        /** @var rex_yrewrite_domain $domain */
         $domain = $params['domain'];
-        if ($domain == 'default') {
-            $domain = '';
-        }
         $url = $params['url'];
 
         foreach (self::$paths as $p) {
-            if ($p['domain'] == $domain && ($p['url'] == $url || $p['url'] . '/' == $url)) {
+            $forwardDomain = rex_yrewrite::getDomainById($p['domain_id']);
+
+            if (!$forwardDomain || $forwardDomain !== $domain) {
+                continue;
+            }
+
+            if ($p['url'] == $url || $p['url'] . '/' == $url) {
                 $forward_url = '';
                 if ($p['type'] == 'article' && ($art = rex_article::get($p['article_id'], $p['clang']))) {
                     $forward_url = rex_getUrl($p['article_id'], $p['clang']);
                 } elseif ($p['type'] == 'media' && ($media = rex_media::get($p['media']))) {
-                    $forward_url = '/files/'.$p['media'];
+                    $forward_url = rex_url::media($p['media']);
                 } elseif ($p['type'] == 'extern' && $p['extern'] != '') {
                     $forward_url = $p['extern'];
                 }
@@ -70,8 +74,7 @@ class rex_yrewrite_forward
         if (!file_exists(self::$pathfile)) {
             self::generatePathFile();
         } else {
-            $content = file_get_contents(self::$pathfile);
-            self::$paths = json_decode($content, true);
+            self::$paths = rex_file::getCache(self::$pathfile);
         }
     }
 

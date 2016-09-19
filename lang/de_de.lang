@@ -38,8 +38,11 @@ yrewrite_notfound_id = 404 Artikel
 yrewrite_notfound_info = Artikel angeben der als 404 der Domain aufgerufen wird. Kann via rex_article:: getNotfoundArticleId() geholt werden.
 
 yrewrite_clangs = Sprachen
-yrewrite_clangs_info = Sprachen auswählen, die unter der Domain zu erreichen sind.
-clang_start_info = Welche Sprache soll beim ersten Aufruf der Domain verwendet werden.
+yrewrite_clangs_info = Sprachen auswählen, die unter der Domain zu erreichen sind. Keine auswählen, wenn alle Sprachen (auch zukünftige) über diese Domain erreichbar sein sollen.
+yrewrite_alllangs = Alle Sprachen
+yrewrite_clang_start = Startsprache
+yrewrite_clang_start_info = Welche Sprache soll beim ersten Aufruf der Domain verwendet werden.
+yrewrite_clang_start_hidden = Startsprache nicht in URL
 
 yrewrite_alias_domain = Alias Domain
 yrewrite_alias_domains = Alias Domains
@@ -125,6 +128,7 @@ yrewrite_forward_status = Status
 yrewrite_forward_active = aktiv
 yrewrite_forward_inactive = inaktiv
 yrewrite_forward_url = aufgerufene Url
+yrewrite_forward_url_info = Die URL muss ohne Slash am Anfang und Ende eingetragen werden, zum Beispiel "foo/bar". Die Variante mit Slash wird automatisch auch weitergeleitet.
 yrewrite_forward_type = Weiterleitung an
 
 yrewrite_forward_type_article = Artikel
@@ -156,6 +160,3 @@ yrewrite_forward_move_method = Art der Weiterleitung
 yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte Url existiert nicht mehr
 yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
 yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein
-
-yrewrite_alllangs = Alle Sprachen
-yrewrite_clang_start = Startsprache

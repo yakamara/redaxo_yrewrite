@@ -29,18 +29,26 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_domain').'
     `mount_id` int(11) NOT NULL,
     `start_id` int(11) NOT NULL,
     `notfound_id` int(11) NOT NULL,
-    `alias_domain` varchar(255) NOT NULL,
     `clangs` varchar(255) NOT NULL,
     `clang_start` int(11) NOT NULL,
+    `clang_start_hidden` tinyint(1) NOT NULL,
     `robots` TEXT NOT NULL,
     `title_scheme` varchar(255) NOT NULL,
     `description` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
+$sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_alias').'` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `alias_domain` varchar(255) NOT NULL,
+    `domain_id` int(11) NOT NULL,
+    `clang_start` int(11) NOT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_forward').'` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `domain` varchar(255) NOT NULL,
+    `domain_id` int(11) NOT NULL,
     `status` int(11) NOT NULL,
     `url` varchar(255) NOT NULL,
     `type` varchar(255) NOT NULL,
@@ -51,5 +59,15 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_forward').
     `movetype` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+
+rex_sql_table::get(rex::getTable('yrewrite_domain'))
+    ->ensureColumn(new rex_sql_column('clang_start_hidden', 'tinyint(1)'))
+    ->alter()
+;
+
+rex_sql_table::get(rex::getTable('yrewrite_forward'))
+    ->ensureColumn(new rex_sql_column('domain_id', 'int(11)'))
+    ->alter()
+;
 
 rex_delete_cache();
