@@ -127,11 +127,11 @@ class rex_yrewrite_seo
                 break;
             }
         }
-
+        $x_default    = rex_config::get('project', 'default-lang-code', rex_clang::get(rex_clang::getStartId())->getCode());
         $lang_domains = rex_extension::registerPoint(new rex_extension_point('YREWRITE_HREFLANG_TAGS', $lang_domains));
 
         foreach ($lang_domains as $code => $url){
-            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+            $return .= '<link rel="alternate" hreflang="' . ($code == $x_default ? 'x-default' : $code) . '" href="' . $url . '" />';
         }
         return $return;
     }
