@@ -163,3 +163,5 @@ yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung 
 
 yrewrite_perm_url_edit = Yrewrite: URL editieren
 yrewrite_perm_seo_edit = Yrewrite: SEO-Daten editieren
+yrewrite_hide_url_block = URL-Block anzeigen
+yrewrite_hide_seo_block = SEO-Block anzeigen

@@ -60,7 +60,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 
     if (rex::isBackend()) {
 
-        if (rex::getUser() instanceof rex_user && rex::getUser()->hasPerm('yrewrite[url]')) {
+        if (!$this->getConfig('yrewrite_hide_url_block') && rex::getUser() instanceof rex_user && rex::getUser()->hasPerm('yrewrite[url]')) {
             rex_extension::register('STRUCTURE_CONTENT_SIDEBAR', function (rex_extension_point $ep) {
                 $params = $ep->getParams();
                 $subject = $ep->getSubject();
@@ -81,7 +81,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
             });
         }
 
-        if (rex::getUser() instanceof rex_user && rex::getUser()->hasPerm('yrewrite[seo]')) {
+        if (!$this->getConfig('yrewrite_hide_seo_block') && rex::getUser() instanceof rex_user && rex::getUser()->hasPerm('yrewrite[seo]')) {
             rex_extension::register('STRUCTURE_CONTENT_SIDEBAR', function (rex_extension_point $ep) {
                 $params = $ep->getParams();
                 $subject = $ep->getSubject();

@@ -145,3 +145,5 @@ yrewrite_clang_start = Start language
 
 yrewrite_perm_url_edit = Yrewrite: edit URL
 yrewrite_perm_seo_edit = Yrewrite: edit SEO-Data
+yrewrite_hide_url_block = Show URL-Block
+yrewrite_hide_seo_block = Show SEO-Block
