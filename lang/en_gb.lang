@@ -143,7 +143,9 @@ yrewrite_forward_307 = 307 - Temporary Redirect
 yrewrite_alllangs = All languages
 yrewrite_clang_start = Start language
 
-yrewrite_perm_url_edit = Yrewrite: edit URL
-yrewrite_perm_seo_edit = Yrewrite: edit SEO-Data
-yrewrite_hide_url_block = Show URL-Block
-yrewrite_hide_seo_block = Show SEO-Block
+yrewrite_perm_url_edit = Yrewrite: URL editing
+yrewrite_perm_seo_edit = Yrewrite: SEO-Data editing
+yrewrite_seo_settings = Settings
+yrewrite_seo_saved = Settings updated
+yrewrite_hide_url_block = Hide URL-Block
+yrewrite_hide_seo_block = Hide SEO-Block

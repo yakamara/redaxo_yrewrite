@@ -11,7 +11,7 @@ class yrewrite_seo_visibility
     /**
      * @return rex_addon
      */
-    public static function getAddon()
+    protected static function getAddon()
     {
         return rex_addon::get('yrewrite');
     }
@@ -30,7 +30,7 @@ class yrewrite_seo_visibility
             $addon->setConfig('yrewrite_hide_url_block', rex_post('yrewrite_hide_url_block', 'bool'));
             $addon->setConfig('yrewrite_hide_seo_block', rex_post('yrewrite_hide_seo_block', 'bool'));
 
-            $message = rex_view::success($addon->i18n('saved'));
+            $message = rex_view::success($addon->i18n('yrewrite_seo_saved'));
         }
 
         return $message;
@@ -72,7 +72,7 @@ class yrewrite_seo_visibility
         // Form
         $fragment = new rex_fragment();
         $fragment->setVar('class', 'edit');
-        $fragment->setVar('title', $addon->i18n('settings'));
+        $fragment->setVar('title', $addon->i18n('yrewrite_seo_settings'));
         $fragment->setVar('body', $checkboxes, false);
         $fragment->setVar('buttons', $submit, false);
 
