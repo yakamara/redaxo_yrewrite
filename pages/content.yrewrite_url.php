@@ -90,7 +90,7 @@ if ($isStartarticle) {
 
     }
 
-    echo  '<section id="rex-page-sidebar-yrewrite-url" data-pjax-container="#rex-page-sidebar-yrewrite-url" data-pjax-no-history="1">'.$form.'</section>';
+    echo $form;
 
     $selector_preview = '#yform-yrewrite-url-yrewrite_url p.help-block';
     $selector_url = '#yform-yrewrite-url-yrewrite_url input';
