@@ -148,15 +148,18 @@ if ($showlist) {
     $list->setColumnParams('id', ['data_id' => '###id###', 'func' => 'edit']);
     $list->setColumnSortable('id');
 
-    $list->setColumnLabel('domain_id', $this->i18n('domain'));
+    $list->setColumnLabel('domain_id', $this->i18n('forward_url'));
     $list->setColumnFormat('domain_id', 'custom', function ($params) {
         $domain = rex_yrewrite::getDomainById($params['subject']);
-
-        return $domain ? $domain->getUrl() : '';
+        $url = $domain ? $domain->getUrl() : '';
+        $url .= $params["list"]->getValue("url");
+        $url = '<a href="'.$url.'" onclick="window.open(this.href); return false;"><i class="rex-icon rex-icon-package-addon fa-external-link"></i> '.$url.'</a>';
+        return $url;
     });
 
     $list->setColumnLabel('status', $this->i18n('forward_status'));
-    $list->setColumnLabel('url', $this->i18n('forward_url'));
+    // $list->setColumnLabel('url', $this->i18n('forward_url'));
+    $list->removeColumn('url');
     $list->setColumnLabel('type', $this->i18n('forward_type'));
 
     $list->removeColumn('id');
@@ -165,6 +168,7 @@ if ($showlist) {
     $list->removeColumn('extern');
     $list->removeColumn('media');
     $list->removeColumn('movetype');
+    $list->removeColumn('domain');
 
     // $list->setColumnLabel('status', rex_i18n::msg('b_function'));
     $list->setColumnParams('status', ['func' => 'status', 'oid' => '###id###']);
