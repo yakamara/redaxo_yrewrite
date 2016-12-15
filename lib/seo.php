@@ -88,7 +88,7 @@ class rex_yrewrite_seo
         return $this->cleanString($title);
     }
 
-    public function getDescription()
+    public function getDescription($content_length = 60)
     {
         $description = $this->article->getValue('yrewrite_description');
         $description = rex_extension::registerPoint(new rex_extension_point('YREWRITE_DESCRIPTION', $description));
@@ -96,7 +96,7 @@ class rex_yrewrite_seo
         if (trim($description) <> '')
         {
             $description = strip_tags($description);
-            $description = wordwrap($description, 160, '' . "|||||||");
+            $description = wordwrap($description, $content_length, '' . "|||||||");
             $description = explode("|||||||", $description);
             $description = array_shift($description);
         }
