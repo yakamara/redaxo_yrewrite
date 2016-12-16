@@ -149,7 +149,7 @@ class rex_yrewrite_seo
     public function getSocialsTags()
     {
         return '
-            <meta property="og:url" content="' . rex_getFullUrl() . '"/>
+            <meta property="og:url" content="' . strtr(rex_yrewrite::getFullPath(rex_getUrl()), ['//' => '/'])  . '"/>
             <meta property="og:title" content="' . $this->getTitle() . '"/>
             <meta property="og:description" content="' . $this->getDescription(200) . '"/>
             <meta property="og:type" content="Article"/>
@@ -171,7 +171,7 @@ class rex_yrewrite_seo
         {
             $name = $media->getValue('name');
             $data = rex_extension::registerPoint(new rex_extension_point('YREWRITE_IMAGE_DATA', [
-                'src'    => \rex_url::media($name),
+                'src'    => strtr(rex_yrewrite::getFullPath(\rex_url::media($name)), ['//' => '/']),
                 'width'  => $media->getValue('width'),
                 'height' => $media->getValue('height'),
             ], [
