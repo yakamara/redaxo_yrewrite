@@ -97,7 +97,7 @@ class rex_yrewrite_seo
         return $this->cleanString($title);
     }
 
-    public function getDescription($content_length = 60)
+    public function getDescription($content_length = 160)
     {
         $description = $this->article->getValue('yrewrite_description');
         $description = rex_extension::registerPoint(new rex_extension_point('YREWRITE_DESCRIPTION', $description));
