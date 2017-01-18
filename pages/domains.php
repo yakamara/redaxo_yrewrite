@@ -100,7 +100,7 @@ if ($func != '') {
 
 if ($showlist) {
 
-    $sql = 'SELECT * FROM '.rex::getTable('yrewrite_domain');
+    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_domain') . ' ORDER BY domain';
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');
