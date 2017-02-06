@@ -97,11 +97,8 @@ AddDefaultCharset utf-8
     RewriteRule ^imagetypes/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2
 
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-l
-
-    RewriteCond %{REQUEST_URI} !^redaxo/.*
-    RewriteCond %{REQUEST_URI} !^media/.*
+    RewriteCond %{REQUEST_URI} !^/?redaxo/?$
 
     RewriteRule ^(.*)$ %{ENV:BASE}/index.php?%{QUERY_STRING} [L]
 
