@@ -259,6 +259,9 @@ class rex_yrewrite_seo
             {
                 foreach ($domain->getClangs() as $clang_id)
                 {
+                    if (!rex_clang::get($clang_id)->isOnline()) {
+                        continue;
+                    }
 
                     $article = rex_article::get($article_id, $clang_id);
 
