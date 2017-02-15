@@ -21,6 +21,31 @@ class rex_yrewrite_seo
         $robots_default = "User-agent: *\nDisallow:",
         $title_scheme_default = '%T / %SN';
 
+    /**
+     * @var string
+     */
+    public static $meta_title_field = 'yrewrite_title';
+    /**
+     * @var string
+     */
+    public static $meta_description_field = 'yrewrite_description';
+    /**
+     * @var string
+     */
+    public static $meta_changefreq_field = 'yrewrite_changefreq';
+    /**
+     * @var string
+     */
+    public static $meta_priority_field = 'yrewrite_priority';
+    /**
+     * @var string
+     */
+    public static $meta_index_field = 'yrewrite_index';
+    /**
+     * @var string
+     */
+    public static $meta_canonical_url_field = 'yrewrite_canonical_url';
+
     public function __construct($article_id = 0, $clang = null)
     {
         if ($article_id == 0) {
@@ -53,7 +78,7 @@ class rex_yrewrite_seo
 
     public function getRobotsTag()
     {
-        if ($this->article->getValue('yrewrite_index') == 1 || ($this->article->getValue('yrewrite_index') == 0 && $this->article->isOnline())) {
+        if ($this->article->getValue(self::$meta_index_field) == 1 || ($this->article->getValue(self::$meta_index_field) == 0 && $this->article->isOnline())) {
             return '<meta name="robots" content="index, follow">';
         } else {
             return '<meta name="robots" content="noindex, follow">';
@@ -68,8 +93,8 @@ class rex_yrewrite_seo
         }
 
         $ytitle = '';
-        if ($this->article && $this->article->getValue('yrewrite_title') != '') {
-            $ytitle = $this->article->getValue('yrewrite_title');
+        if ($this->article && $this->article->getValue(self::$meta_title_field) != '') {
+            $ytitle = $this->article->getValue(self::$meta_title_field);
         }
         if ($ytitle == '') {
             $ytitle = $this->article->getValue('name');
@@ -84,12 +109,12 @@ class rex_yrewrite_seo
 
     public function getDescription()
     {
-        return $this->cleanString($this->article->getValue('yrewrite_description'));
+        return $this->cleanString($this->article->getValue(self::$meta_description_field));
     }
 
     public function getCanonicalUrl()
     {
-        $canonical_url = trim($this->article->getValue('yrewrite_canonical_url'));
+        $canonical_url = trim($this->article->getValue(self::$meta_canonical_url_field));
         if ($canonical_url == "") {
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
         }
@@ -194,17 +219,17 @@ class rex_yrewrite_seo
                     if (
                         ($article) &&
                         self::checkArticlePerm($article) &&
-                        ($article->getValue('yrewrite_index') == 1 || ($article->isOnline() && $article->getValue('yrewrite_index') == 0)) &&
+                        ($article->getValue(self::$meta_index_field) == 1 || ($article->isOnline() && $article->getValue(self::$meta_index_field) == 0)) &&
                         ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())
 
                     ) {
 
-                        $changefreq = $article->getValue('yrewrite_changefreq');
+                        $changefreq = $article->getValue(self::$meta_changefreq_field);
                         if (!in_array($changefreq, self::$changefreq)) {
                             $changefreq = self::$changefreq_default;
                         }
 
-                        $priority = $article->getValue('yrewrite_priority');
+                        $priority = $article->getValue(self::$meta_priority_field);
 
                         if (!in_array($priority, self::$priority)) {
                             $article_paths = count($article->getParentTree());
