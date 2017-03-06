@@ -188,6 +188,10 @@ class rex_yrewrite_seo
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
+                    
+                    if (!rex_clang::get($clang_id)->isOnline()) {
+                        continue;
+                    }
 
                     $article = rex_article::get($article_id, $clang_id);
 
