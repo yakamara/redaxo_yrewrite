@@ -127,7 +127,7 @@ class rex_yrewrite_seo
                     if ($lang = rex_clang::get($clang))
                     {
                         $article = rex_article::getCurrent($clang);
-                        if ($article->isOnline())
+                        if ($article->isOnline() && $lang->isOnline())
                         {
                             $lang_domains[$lang->getCode()] = rex_yrewrite::getFullUrlByArticleId($article->getId(), $lang->getId());
                         }
@@ -146,10 +146,16 @@ class rex_yrewrite_seo
         return $return;
     }
 
+    public function getFullUrl() {
+        $fullURL = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
+        $fullURL = rex_extension::registerPoint(new rex_extension_point('YREWRITE_FULL_URL', $fullURL));
+        return $fullURL;
+    }
+
     public function getSocialsTags()
     {
         return '
-            <meta property="og:url" content="' . strtr(rex_yrewrite::getFullPath(rex_getUrl()), ['//' => '/'])  . '"/>
+            <meta property="og:url" content="' . $this->getFullUrl()  . '"/>
             <meta property="og:title" content="' . $this->getTitle() . '"/>
             <meta property="og:description" content="' . $this->getDescription(200) . '"/>
             <meta property="og:type" content="Article"/>
