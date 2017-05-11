@@ -144,6 +144,7 @@ class rex_yrewrite_seo
             <meta property="og:title" content="' . $this->getTitle() . '"/>
             <meta property="og:description" content="' . $this->getDescription(200) . '"/>
             <meta property="og:type" content="Article"/>
+            <meta name="twitter:card" content="summary_large_image"/>
         ';
     }
 
@@ -172,6 +173,7 @@ class rex_yrewrite_seo
                 <meta property="og:image" content="' . $data['src'] . '" />
                 <meta property="og:image:width" content="' . $data['width'] . '" />
                 <meta property="og:image:height" content="' . $data['height'] . '" />
+                <meta property="twitter:image" content="' . $data['src'] . '" />
                 <meta name="image" content="' . $data['src'] . '" />
             ';
         }
