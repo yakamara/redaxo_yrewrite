@@ -26,10 +26,24 @@ yrewrite_domain_updated = Domain updated. Cache deleted.
 yrewrite_save = save
 
 yrewrite_domain = Domain
+yrewrite_domain_info = http/https is optional. If entered, all links will be redirected to the specified protocol. If left blank, the current protocol will continue to be used. Slash at the end will be caught by the AddOn. www has to be specified if the domain should be used with "www". YRewrite treats www as a normal subdomain. If REDAXO runs in a subfolder, it needs to be specified here. Example: http://domain.com/subfolder/
+
 yrewrite_mount_id = Mount article of Domain
+yrewrite_mount_info = Starting point of the domain. The starting point can be set to any article inside the REDAXO structure. The specified domain is the starting point for all furher child articles and child categories. For example, a second domain can be set as the starting point for a different article, so multiple domains use the same structure basically. Leave blank, if root categories are required as URLs.
+
 yrewrite_start_id = Start article of domain
+yrewrite_start_info = Specify article which will be used as the domain start article. Can be retrieved by using rex_article::getSiteStartArticle()
+
 yrewrite_notfound_id = 404 Article
+yrewrite_notfound_info = Specify article to use as 404 document. Can be retrieved by using rex_article:: getNotfoundArticleId()
+
 yrewrite_clangs = Languages
+yrewrite_clangs_info = Choose languages which can be accessed on this domain. If all languages can be accessed, leave blank.
+yrewrite_alllangs = All languages
+yrewrite_clang_start = Start language
+yrewrite_clang_start_info = Which language should be used when first accessing the domain
+yrewrite_clang_start_hidden = Start language not in URL
+
 yrewrite_alias_domain = Alias domain
 yrewrite_alias_domains = Alias domains
 
@@ -58,7 +72,7 @@ yrewrite_warning_urlexists = URL exists already {0}
 yrewrite_warning_otherarticle = To different article
 yrewrite_urlupdated = URL has been updated
 
-yrewrite_seotitle = Titel
+yrewrite_seotitle = Title
 yrewrite_seodescription = Description
 yrewrite_priority = Priority:
 yrewrite_changefreq = Update interval:
@@ -95,10 +109,16 @@ yrewrite_htaccess_info = A .htaccess file is required in the root directory to r
 yrewrite_info_headline = Usage of YRewrite
 yrewrite_info_text = Since YRewrite is intended for <b>multi-domain</b>, there are a view requirements. YRewrite does <b>not run in subfolders</b> of domains. All rewriting is managed by YRewrite. So it is possible that a URL situational also contains the domain name. For that reason do <b>not use any base tag</b> in your templates. If there are any issues with the rewriting, clear the system cache of Redaxo. This will trigger YRewrite to create all config- and rewriting files. Please make sure to have <b>Mod-Rewrite active in your Redaxo system settings</b>.
 
+yrewrite_info_tipps = Tips
+yrewrite_info_tipps_text  = <ul><li>All <mark>system settings</mark> (website URL, start article and error article) <mark>will</mark> be <mark>ignored</mark> when using YRewrite.</li><li>If <mark>only one domain</mark> is used please leave the field for <i>mount id</i> blank!</i></ul>
+
 yrewrite_info_seo = Usage of SEO options
 yrewrite_info_seo_text = Paste the following code <b>in your template's &lt;head&gt;</b> section. Do not use your own title or meta settings.
 
 yrewrite_info_sitemaprobots = sitemap.xml and robots.txt
+
+yrewrite_canonical_url = Canonical URL
+
 
 yrewrite_notactivebecauseofmodrewrite = YRewrite only works if ModRewrite is active.
 
@@ -108,6 +128,7 @@ yrewrite_forward_status = Status
 yrewrite_forward_active = active
 yrewrite_forward_inactive = inactive
 yrewrite_forward_url = requested Url
+yrewrite_forward_url_info = The URL has to be entered without beginning and trailing slashes, for example "foo/bar". The variant with a slash will be automatically redirected.
 yrewrite_forward_type = Redirect to
 
 yrewrite_forward_type_article = Article
@@ -139,6 +160,3 @@ yrewrite_forward_move_method = Type of redirect
 yrewrite_forward_301 = 301 - Moved Permanently - old URL no longer exists
 yrewrite_forward_303 = 303 - See Other / default redirect
 yrewrite_forward_307 = 307 - Temporary Redirect
-
-yrewrite_alllangs = All languages
-yrewrite_clang_start = Start language
