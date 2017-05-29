@@ -230,20 +230,29 @@ class rex_yrewrite_seo
                 $domain = rex_yrewrite::getDomainByName($domain);
             }
 
-            $domain_article_id = $domain->getStartId();
             $paths = 0;
+            $excld_cats = [];
+            $domain_article_id = $domain->getStartId();
+
             if (($dai = rex_article::get($domain_article_id))) {
                 $paths = count($dai->getParentTree());
             }
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
-                    
+
                     if (!rex_clang::get($clang_id)->isOnline()) {
                         continue;
                     }
 
                     $article = rex_article::get($article_id, $clang_id);
+                    $category = $article->getParent() ?: $article->getCategory();
+
+                    if ($category && (in_array($category->getId(), $excld_cats) || !$category->isOnline())) {
+                        $excld_cats[] = $category->getId();
+                        $excld_cats[] = $article_id;
+                        continue;
+                    }
 
                     if (
                         ($article) &&
