@@ -615,7 +615,7 @@ class rex_yrewrite
 
     public static function isHttps()
     {
-        return $_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off');
+        return @$_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off');
     }
 
     public static function deleteCache()
@@ -635,6 +635,6 @@ class rex_yrewrite
 
     public static function getHost()
     {
-        return $_SERVER['HTTP_HOST'];
+        return @$_SERVER['HTTP_HOST'];
     }
 }
