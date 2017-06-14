@@ -287,7 +287,7 @@ class rex_yrewrite_seo
 
                         $_url =
                             "\n".'<url>'.
-                            "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
+                            "\n".'<loc>'.rex_yrewrite::getFullPath(ltrim($domain->getPath() . $path[$clang_id], '/')).'</loc>'.
                             "\n".'<lastmod>'.date(DATE_W3C, $article->getValue('updatedate')).'</lastmod>'. // serverzeitzone passt
                             "\n".'<changefreq>'.$changefreq.'</changefreq>'.
                             "\n".'<priority>'.$priority.'</priority>';
