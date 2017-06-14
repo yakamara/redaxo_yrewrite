@@ -284,7 +284,7 @@ class rex_yrewrite_seo
                                 $img_url  = rex_yrewrite::getFullPath(ltrim(\rex_url::media($media_name), '/'));
                                 $images[] = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP_IMAGE',
                                     "\n<image:loc>" . $img_url . '</image:loc>'.
-                                    "\n<image:title>" . $media->getValue('title') . '</image:title>', ['media' => $media, 'img_url' => $img_url, 'lang_id' => $clang_id]));
+                                    "\n<image:title>" . strtr($media->getValue('title'), ['&' => '&amp;']) . '</image:title>', ['media' => $media, 'img_url' => $img_url, 'lang_id' => $clang_id]));
                             }
                         }
 
