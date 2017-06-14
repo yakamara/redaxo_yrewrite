@@ -231,6 +231,7 @@ class rex_yrewrite_seo
             }
 
             $paths = 0;
+            $sql = rex_sql::factory();
             $excld_cats = [];
             $domain_article_id = $domain->getStartId();
 
@@ -283,13 +284,77 @@ class rex_yrewrite_seo
                             }
                         }
 
-                        $sitemap[] =
+                        // images
+                        $medias    = [];
+                        $media_sel = [];
+                        $value_sel = [];
+                        $where     = [0];
+
+                        for ($i = 1; $i <= 10; ++$i) {
+                            $media_sel[] = "media{$i}";
+                            $media_sel[] = "medialist{$i}";
+                            $where[]     = "media{$i} != ''";
+                            $where[]     = "medialist{$i} != ''";
+                        }
+
+                        for ($i = 1; $i <= 20; ++$i) {
+                            $value_sel[] = "IF(LOCATE('REX_INPUT_MEDIA', value{$i}) > 0, value{$i}, '') AS value{$i}";
+                            $where[]     = "value{$i} REGEXP " . $sql->escape('(^|[^[:alnum:]+_-])REX_INPUT_MEDIA');
+                        }
+
+                        $query = '
+                            SELECT 
+                                CONCAT_WS(",", ' . implode(',', $media_sel) . ') AS medialist,
+                                ' . implode(',', $value_sel) . '
+                             FROM ' . rex::getTablePrefix() . 'article_slice 
+                             WHERE article_id = ' . $article_id . ' 
+                                AND clang_id = ' . $clang_id . ' 
+                                AND (' . implode(' OR ', $where) . ')';
+                        $res = $sql->getArray($query);
+
+                        foreach ($res as $row) {
+                            if (strlen($row['medialist'])) {
+                                $medias = array_merge($medias, explode(',', $row['medialist']));
+                            }
+                            unset($row['medialist']);
+
+                            foreach ($row as $value) {
+                                $decoded_json = (array) json_decode($value, true);
+
+                                if (json_last_error() == JSON_ERROR_NONE) {
+                                    foreach ($decoded_json as $json_vals) {
+                                        foreach ($json_vals as $key => $jval) {
+                                            if (substr($key, 0, 15) == 'REX_INPUT_MEDIA') {
+                                                $medias = array_merge($medias, explode(',', $jval));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        $images = [];
+                        $medias = array_unique($medias);
+
+                        foreach ($medias as $media_name) {
+                            $media    = rex_media::get($media_name);
+                            $img_url  = rex_yrewrite::getFullPath(ltrim(\rex_url::media($media_name), '/'));
+                            $images[] = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP_IMAGE',
+                                "\n<image:loc>" . $img_url . '</image:loc>'.
+                                "\n<image:title>" . $media->getValue('title') . '</image:title>', ['media' => $media, 'img_url' => $img_url, 'lang_id' => $clang_id]));
+                        }
+
+                        $_url =
                             "\n".'<url>'.
                             "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
                             "\n".'<lastmod>'.date(DATE_W3C, $article->getValue('updatedate')).'</lastmod>'. // serverzeitzone passt
                             "\n".'<changefreq>'.$changefreq.'</changefreq>'.
-                            "\n".'<priority>'.$priority.'</priority>'.
-                            "\n".'</url>';
+                            "\n".'<priority>'.$priority.'</priority>';
+
+                        if (count($images)) {
+                            $_url .= "\n<image:image>" . implode("\n</image:image>\n<image:image>", $images) ."\n". '</image:image>';
+                        }
+                        $sitemap[] = $_url . "\n" . '</url>';
                     }
                 }
             }
@@ -299,9 +364,10 @@ class rex_yrewrite_seo
 
         header('Content-Type: application/xml');
         $content = '<?xml version="1.0" encoding="UTF-8"?>';
-        $content .= "\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-        $content .= implode("\n", $sitemap);
-        $content .= "\n".'</urlset>';
+        $content .= '<?xml-stylesheet type="text/xsl" href="assets/addons/yrewrite/xsl-stylesheets/xml-sitemap.xsl"?>';
+        $content .= "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">';
+        $content .= implode("", $sitemap);
+        $content .= "\n" . '</urlset>';
         echo $content;
         exit;
     }
