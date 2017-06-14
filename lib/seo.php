@@ -334,14 +334,17 @@ class rex_yrewrite_seo
                         }
 
                         $images = [];
-                        $medias = array_unique($medias);
+                        $medias = array_filter(array_unique($medias));
 
                         foreach ($medias as $media_name) {
                             $media    = rex_media::get($media_name);
-                            $img_url  = rex_yrewrite::getFullPath(ltrim(\rex_url::media($media_name), '/'));
-                            $images[] = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP_IMAGE',
-                                "\n<image:loc>" . $img_url . '</image:loc>'.
-                                "\n<image:title>" . $media->getValue('title') . '</image:title>', ['media' => $media, 'img_url' => $img_url, 'lang_id' => $clang_id]));
+
+                            if ($media) {
+                                $img_url  = rex_yrewrite::getFullPath(ltrim(\rex_url::media($media_name), '/'));
+                                $images[] = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP_IMAGE',
+                                    "\n<image:loc>" . $img_url . '</image:loc>'.
+                                    "\n<image:title>" . $media->getValue('title') . '</image:title>', ['media' => $media, 'img_url' => $img_url, 'lang_id' => $clang_id]));
+                            }
                         }
 
                         $_url =
