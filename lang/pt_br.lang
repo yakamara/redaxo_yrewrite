@@ -1,0 +1,162 @@
+yrewrite = YRewrite
+
+# content page
+yrewrite_rewriter = Reescrever URLs
+yrewrite_rewriter_seo = Dados Seo
+yrewrite_mode_url = URL
+yrewrite_mode_seo = SEO
+yrewrite_customurl = Customizar URL
+yrewrite_update_url = Atualizar URL
+yrewrite_update_seo = Atualizar dados SEO
+
+yrewrite_domains = Domínios
+yrewrite_article_urls = Urls do Produto
+yrewrite_setup = Setup
+
+yrewrite_error_domain_missing = Por favor, adicione o domínio primeiro.
+
+yrewrite_startarticleisalways = Este é o produto inicial do domínio "{0}" e não pode ser modificado. A URL é sempre "/"
+
+yrewrite_add_domain = Adicionar domínio
+yrewrite_domain_added = Domínio adicionado
+yrewrite_edit_domain = Editar domínio
+yrewrite_domain_deleted = Domínio deletado. Cachê deletado.
+yrewrite_domain_updated = Domínio atualizado. Cachê deletado.
+
+yrewrite_save = Salvar
+
+yrewrite_domain = Domínio
+yrewrite_domain_info = http/https é opcional. Se inserido, todos os links serão redirecionados a ele. Se deixado em branco, o protocolo atual continuará a ser utilizado. Uma barra "/" ao final do link ou não não fará diferença, já que o AddOn corrigirá os erros. Se o domínio possui "www", este terá de ser inserido. Para o YRewrite este é um subdomínio normal. Se o REDAXO estiver em utilização por uma subpasta, esta deve ser especificada. Ex:http://domain.com/subfolder/
+
+yrewrite_mount_id = Ponto de montagem do domínio
+yrewrite_mount_info = Ponto inicial do domínio. O ponto inicial pode ser definido como qualquer produto da estrutura do Redaxo. O domínio acima inserido é válido para todas as outras categorias/artigos. Por exemplo: um segundo domínio dentro da estrutura do redaxo pode ser definido como ponto de partida para um artigo distinto. Deixar em branco caso sejam requeridas categorias Root como URLs.
+
+yrewrite_start_id = Artigo inicial do domínio
+yrewrite_start_info = Especificar artigo que será utilizado como artigo inicial do domínio. Pode ser recuperado através de rex_article::getSiteStartArticle()
+
+yrewrite_notfound_id = Documento 404
+yrewrite_notfound_info = Especificar artigo a ser usado como documento 404. Pode ser recuperado através de rex_article:: getNotfoundArticleId()
+
+yrewrite_clangs = Idiomas
+yrewrite_clangs_info = Escolher idiomas que podem ser acessados a partir deste domínio. Se todos os iciomas puderem ser acessados, deixar em branco
+yrewrite_alllangs = Todos os idiomas
+yrewrite_clang_start = Idioma inicial
+yrewrite_clang_start_info = Qual idioma deve ser usado no primeiro acesso ao domínio?
+yrewrite_clang_start_hidden = Não utilizar o idioma inicial na URL
+
+yrewrite_alias_domain = Domínio Alias
+yrewrite_alias_domains = Domínios Alias
+
+yrewrite_domain_title_scheme = Esquema de título da página
+yrewrite_domain_title_scheme_info = %T=SEO título ou nome do produto, %SN=Nome do servidor
+yrewrite_domain_description = Descrição da página (se a descrição estiver em branco)
+yrewrite_domain_description_info = Caracteres / recomendação: 160 caracteres
+yrewrite_domain_robots = Arquivo Robots
+
+yrewrite_root = --- Root --- [0]
+
+yrewrite_alias_domain_refersto = Este domínio será redirecionado
+yrewrite_domain_willbereferdto = Para este domínio
+
+yrewrite_domain_already_defined = Domínio já definido
+yrewrite_mount_id_already_defined = Ponto de partida do domínio já está tomado
+yrewrite_no_domain_defined = Nenhum domínio foi definido
+yrewrite_no_mount_id_defined = Por favor, escolha um Id de montagem
+yrewrite_no_start_id_defined = Por favor, escolha um artigo inicial
+yrewrite_no_not_found_id_defined = Por favor, selecione um artigo 404
+
+yrewrite_warning_noslash = Não utilize uma  "/" no começo ou no final
+yrewrite_warning_nottolong = A URL não pode conter mais de 250 caracteres
+yrewrite_warning_chars = URL inválida. Somente são permitidos caracteres os  a-z 0-9 -
+yrewrite_warning_urlexists = Url já existe {0}
+yrewrite_warning_otherarticle = Para outro produto
+yrewrite_urlupdated = URL foi atualizada
+
+yrewrite_seotitle = Título
+yrewrite_seodescription = Descrição
+yrewrite_priority = Prioridade:
+yrewrite_changefreq = Frequência de atualização:
+
+yrewrite_seoupdated = Dados SEO atualizados.
+yrewrite_seoupdate_failed = Atualização falhou. Por favor, reinstale o YRewrite.
+
+yrewrite_priority_auto = Automático
+yrewrite_priority_0_0 = sem prioridade  [0.0]
+yrewrite_priority_0_1 = prioridade muito baixa [0.1]
+yrewrite_priority_0_3 = prioridade baixa [0.3]
+yrewrite_priority_0_5 = prioridade média  [0.5]
+yrewrite_priority_0_7 = prioridade alta  [0.7]
+yrewrite_priority_1_0 = prioridade muito alta  [1.0]
+
+yrewrite_changefreq_daily = diariamente
+yrewrite_changefreq_hourly = a cada hora
+yrewrite_changefreq_weekly = semanalmente
+yrewrite_changefreq_monthly = mensalmente
+yrewrite_changefreq_yearly = diariamente
+yrewrite_changefreq_never = nunca
+yrewrite_changefreq_always = sempre
+
+yrewrite_index = Indexação e sitemap
+yrewrite_index_status = Autorizar dependendo da indexação status e exibi-los no Sitemap
+yrewrite_index_index = Permitir indexação / Mapa do site (Índice)
+yrewrite_index_noindex = Proibir indexação / exibir no Sitemap (noindex)
+
+yrewrite_htaccess_hasbeenset = Arquivo .htaccess foi criado/substituído
+yrewrite_htaccess_set = Definir arquivo .htaccess
+
+yrewrite_htaccess_info = Um arquivo.htaccess é requerido no diretório para rodar o YRewrite. Se já existir um arquivo .htaccess, este será sobregravado (não pode ser desfeito)
+
+yrewrite_info_headline = Uso do YRewrite
+yrewrite_info_text = Como o YRewrite é destinado a <b>multidomínio</b>, existem requisitos de exibição. YRewrite <b>não é executado em subpastas</b> de domínios. Toda reescrita é gerenciada pelo YRewrite. Portanto, é possível que um URL situacional também contenha o nome do domínio. Por essa razão, <b>não use qualquer tag base</b> em seus modelos. Se houver algum problema com a reescrita, limpe o cache do sistema do Redaxo.Isso irá ativar o YRewrite para criar todos os arquivos de configuração e reescrita. Certifique-se de que <b>Mod-Rewrite esteja ativo nas configurações do sistema Redaxo</b>.
+
+yrewrite_info_tipps = Dicas
+yrewrite_info_tipps_text  = ul><li>Todas as <mark> configurações de sistema</mark> (URL do site, produtos iniciais e com erro) <mark>serão</mark> <mark>ignorados</mark> com o uso do YRewrite.</li><li>Se<mark> somente um domínio</mark> for usado, por fvaor, deixe o campo para <i>id de montagem</i> em branco!</i></ul>
+
+yrewrite_info_seo = Uso das opções SEO
+yrewrite_info_seo_text = Use o seguinte código <b>em seus templates &lt;head&gt;</b>. Não use seus títulos próprios ou dados de configuração.
+
+yrewrite_info_sitemaprobots = sitemap.xml e robots.txt
+
+yrewrite_canonical_url = Canonical URL
+
+
+yrewrite_notactivebecauseofmodrewrite = YRewrite funciona somente se o ModRewrite  estiver ativo
+
+yrewrite_forward = Redirecionamentos
+yrewrite_forward_no_domain_selected = Por favor, selecione um domínio
+yrewrite_forward_status = Status
+yrewrite_forward_active = ativo
+yrewrite_forward_inactive = inativo
+yrewrite_forward_url = Url requisitada
+yrewrite_forward_url_info = A URL deve ser inserida sem "/" ao início ou ao final. Por exemplo: "foo/bar". A variante com "barra" será automaticamente redirecionada.
+yrewrite_forward_type = Redirecionar para
+
+yrewrite_forward_type_article = Produto
+yrewrite_forward_type_extern = Link próprio
+yrewrite_forward_type_media = Mídia
+
+yrewrite_forward_article_id = Produto
+yrewrite_forward_clang = Iidioma
+yrewrite_forward_extern = Link externo
+yrewrite_forward_media = Mídia
+
+yrewrite_forward_add = Adicionar redirecionamento
+yrewrite_forward_edit = Editar redirecionamento
+
+yrewrite_forward_method = O que deve acontecer
+yrewrite_forward_to = Redirecionar para URL
+yrewrite_forward_direct = Acesso direto
+
+yrewrite_forward_added = Redirecionamento adicionado
+yrewrite_forward_updated = Redirecionamento atualizado
+yrewrite_forward_deleted = Redirecionamento deletado
+
+yrewrite_forward_enter_url = Por favor, insira a URL
+
+yrewrite_forward_domainurl_already_defined = Essa combinação de domínio/Url já existe
+
+yrewrite_forward_move_method = Tipo de redirecionamento
+
+yrewrite_forward_301 = 301 - movido permanentemente - antiga URL já não existe mais
+yrewrite_forward_303 = 303 - Ver outros/ redirecionamento normal
+yrewrite_forward_307 = 307 - Redirecionamento temporário
