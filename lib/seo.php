@@ -249,9 +249,9 @@ class rex_yrewrite_seo
                     $article = rex_article::get($article_id, $clang_id);
                     $category = $article->getParent() ?: $article->getCategory();
 
-                    if ($category && (in_array($category->getId(), $excld_cats) || !$category->isOnline())) {
-                        $excld_cats[] = $category->getId();
-                        $excld_cats[] = $article_id;
+                    if ($category && (in_array($category->getId() .'.'. $clang_id, $excld_cats) || !$category->isOnline())) {
+                        $excld_cats[] = $category->getId() .'.'. $clang_id;
+                        $excld_cats[] = $article_id .'.'. $clang_id;
                         continue;
                     }
 
