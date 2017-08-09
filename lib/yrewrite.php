@@ -397,8 +397,10 @@ class rex_yrewrite
             foreach (self::$paths['paths'] as $i_domain => $i_id) {
                 if (isset(self::$paths['paths'][$i_domain][$id][$clang])) {
                     $domain = self::getDomainByName($i_domain);
-                    $path = $domain->getUrl() . self::$paths['paths'][$i_domain][$id][$clang];
-                    break;
+                    if ($domain) {
+                        $path = $domain->getUrl() . self::$paths['paths'][$i_domain][$id][$clang];
+                        break;
+                    }
                 }
             }
         }
