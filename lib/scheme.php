@@ -129,7 +129,7 @@ class rex_yrewrite_scheme
             ['Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', '-', '', '', ''],
             $string
         );
-        $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+        $string = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
         $string = preg_replace('/[^\w -]+/', '', $string);
         $string = strtolower(trim($string));
         $string = urlencode($string);
