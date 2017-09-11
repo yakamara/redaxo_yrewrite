@@ -507,7 +507,7 @@ class rex_yrewrite
             //case 'ALL_GENERATED':
             default:
                 self::$paths = ['paths' => [], 'redirections' => []];
-                foreach (rex_clang::getAllIds(true) as $clangId) {
+                foreach (rex_clang::getAllIds() as $clangId) {
                     $domain = self::$domainsByMountId[0][$clangId];
                     $path = self::$scheme->getClang($clangId, $domain);
                     foreach (rex_category::getRootCategories(false, $clangId) as $cat) {
