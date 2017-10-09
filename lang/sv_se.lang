@@ -1,0 +1,162 @@
+yrewrite = YRewrite
+
+# content page
+yrewrite_rewriter = Rewrite URLs
+yrewrite_rewriter_seo = SEO data
+yrewrite_mode_url = URL
+yrewrite_mode_seo = URL
+yrewrite_customurl = Custom URL
+yrewrite_update_url = Aktualisera URL
+yrewrite_update_seo = Aktualisera SEO-data
+
+yrewrite_domains = Domäner
+yrewrite_article_urls = Artikel URLs
+yrewrite_setup = Setup
+
+yrewrite_error_domain_missing = Var god skapa först en domän.
+
+yrewrite_startarticleisalways = Detta är startartikeln av domänen "{0}" och kan inte ändras. Denna URL är alltid "/"
+
+yrewrite_add_domain = Tillfoga domän
+yrewrite_domain_added = Domänen tillfogades
+yrewrite_edit_domain = Redigera domänen
+yrewrite_domain_deleted = Domänen raderades. Cachen raderades.
+yrewrite_domain_updated = Domänen aktualiserades.  Cachen raderades.
+
+yrewrite_save = Spara
+
+yrewrite_domain = Domän
+yrewrite_domain_info = Http / https är valfritt. Om de är inmatade, omdirigeras alla länkar till det angivna protokollet. Om det är tomt kvarstår det nuvarande protokollet. Snedsträcket i slutet kommer att hanteras av AddOn:et. Www måste anges om domänen ska användas med "www". YRewrite behandlar www som en vanlig subdomän. Om REDAXO körs i en undermapp, måste det anges här. Exempel: http://domain.com/subfolder/
+
+yrewrite_mount_id = Mount article of Domain
+yrewrite_mount_info = Starting point of the domain. The starting point can be set to any article inside the REDAXO structure. The specified domain is the starting point for all furher child articles and child categories. For example, a second domain can be set as the starting point for a different article, so multiple domains use the same structure basically. Leave blank, if root categories are required as URLs.
+
+yrewrite_start_id = Domänens startartikel
+yrewrite_start_info = Ange artikel som ska användas som domänens startartikel. Kan hämtas genom att använda rex_article :: getSiteStartArticle ()
+
+yrewrite_notfound_id = 404 artikel
+yrewrite_notfound_info = Ange artikel som ska användas som 404-dokument. Kan hämtas genom att använda rex_article :: getNotfoundArticleId ()
+
+yrewrite_clangs = Språk
+yrewrite_clangs_info = Välj språk som kan nås på den här domänen. Om alla språk är tillgängliga, lämna tomt.
+yrewrite_alllangs = Alla språk
+yrewrite_clang_start = Startspråk
+yrewrite_clang_start_info = Vilket språk ska användas vid första öppnandet av domänen
+yrewrite_clang_start_hidden = Startspråk inte i URL
+
+yrewrite_alias_domain = Alias domän
+yrewrite_alias_domains = Alias domäner
+
+yrewrite_domain_title_scheme = Sidtitel schema
+yrewrite_domain_title_scheme_info = %T=SEO title or article name, %SN=Server name
+yrewrite_domain_description = Sidbeskrivning (om 'article description' är tomt)
+yrewrite_domain_description_info = Tecken / rekommendation: 160 tecken
+yrewrite_domain_robots = Robots fil
+
+yrewrite_root = --- Root --- [0]
+
+yrewrite_alias_domain_refersto = Denna domän vidarebefordras
+yrewrite_domain_willbereferdto = till denna domän
+
+yrewrite_domain_already_defined = Domänen har redan definierats
+yrewrite_mount_id_already_defined = Domänens startpunkt  har redan definierats
+yrewrite_no_domain_defined = Var god definiera en domän
+yrewrite_no_mount_id_defined = Var god ange ett mount id
+yrewrite_no_start_id_defined = Var god ange en startartikel
+yrewrite_no_not_found_id_defined = Var god välj en 404 artikel
+
+yrewrite_warning_noslash = Ingen / i början eller slutet av  URL:en
+yrewrite_warning_nottolong = URL:en får inte ha fler än 250 tecken
+yrewrite_warning_chars = Webbadressen är felaktig. Beakta stavning. Använda endast "a-z/0-9 -", inga / vid början eller slutet
+yrewrite_warning_urlexists = URL finns redan {0}
+yrewrite_warning_otherarticle = Till annan artikel
+yrewrite_urlupdated = URL aktualiserades
+
+yrewrite_seotitle = Titel
+yrewrite_seodescription = Beskrivning
+yrewrite_priority = Prioritet:
+yrewrite_changefreq = Aktualiseringsintervall:
+
+yrewrite_seoupdated = SEO data aktualiserades.
+yrewrite_seoupdate_failed = Aktualisering misslyckades. Vänligen ominstallera YRewrite.
+
+yrewrite_priority_auto = automatisk
+yrewrite_priority_0_0 = ingen prioritet [0.0]
+yrewrite_priority_0_1 = mycket låg prioritet [0.1]
+yrewrite_priority_0_3 = låg prioritet [0.3]
+yrewrite_priority_0_5 = normal prioritet [0.5]
+yrewrite_priority_0_7 = hög prioritet [0.7]
+yrewrite_priority_1_0 = mycket hög prioritet [0.7]
+
+yrewrite_changefreq_daily = dagligen [daily]
+yrewrite_changefreq_hourly = varje timme [hourly]
+yrewrite_changefreq_weekly = veckovis [weekly]
+yrewrite_changefreq_monthly = månadsvis  [monthly]
+yrewrite_changefreq_yearly = årsvis  [yearly]
+yrewrite_changefreq_never = aldrig  [never]
+yrewrite_changefreq_always = alltid  [always]
+
+yrewrite_index = Sökmotorindex och webbplatskarta (sitemap)
+yrewrite_index_status = Status controls Index and Sitemap
+yrewrite_index_index = Tillåter indexering / visa i sitemap (index)
+yrewrite_index_noindex = Tillåta inte indexering sida / visa inte i sitemap (NoIndex)
+
+yrewrite_htaccess_hasbeenset = .htaccess-filen har skapats eller skrivits över
+yrewrite_htaccess_set = skapa .htaccess fil
+
+yrewrite_htaccess_info = En .htaccess-fil krävs i rootmappen för att kunna köra YRewrite. Om det redan finns en .htaccess-fil kommer den att skrivas över (kan inte ångras).
+
+yrewrite_info_headline = Användandet av YRewrite
+yrewrite_info_text = Eftersom YRewrite är avsedd för <b> multidomän-lösningar </ b> finns det vissa krav. YRewrite <b> kan inte köras i undermappar </ b> av domäner. Alla URL-ersättningar hanteras av YRewrite. Så det är möjligt att en URL också innehåller domännamnet i vissa situationer. Använd därför <b> inga bastaggar </ b> i dina mallar. Om det finns några problem med omskrivningen, radera systemets cache för Redaxo. Detta kommer att orsaka YRewrite att skapa alla konfigurations- och omskrivningsfiler på nytt. Se till att du har <b> Mod-Rewrite aktiv i dina Redaxo-systeminställningar </ b>.
+
+yrewrite_info_tipps = Tips
+yrewrite_info_tipps_text  = <ul><li> Alla <mark> systeminställningar </mark> (webbadress, startartikel och felartikel) <mark> kommer att ignoreras </mark> när du använder YRewrite. </li > <li> Om <mark> endast en domän </mark> används ska du lämna fältet för <i> mount id </i> blank! </i> </ul>
+
+yrewrite_info_seo = Användning av SEO optioner
+yrewrite_info_seo_text = Klistra in följande kod <b> i avsnittet & lt; head & gt; </b> i din mall. Använd inte egna title eller meta-description taggar.
+
+yrewrite_info_sitemaprobots = sitemap.xml och robots.txt
+
+yrewrite_canonical_url = Canonical URL
+
+
+yrewrite_notactivebecauseofmodrewrite = YRewrite fungerar bara om Mod_Rewrite är aktivt.
+
+yrewrite_forward = Omdirigeringar
+yrewrite_forward_no_domain_selected = Var god välj en domän
+yrewrite_forward_status = Status
+yrewrite_forward_active = aktiv
+yrewrite_forward_inactive = inaktiv
+yrewrite_forward_url = requested Url
+yrewrite_forward_url_info = Webbadressen måste anges utan snedsträck vid början och slutet, till exempel "foo / bar". Varianten med ett snedstreck omdirigeras automatiskt.
+yrewrite_forward_type = Omdirigera till
+
+yrewrite_forward_type_article = Artikel
+yrewrite_forward_type_extern = Egen länk
+yrewrite_forward_type_media = Media
+
+yrewrite_forward_article_id = Artikel
+yrewrite_forward_clang = Språk
+yrewrite_forward_extern = extern, egen länk
+yrewrite_forward_media = Media
+
+yrewrite_forward_add = Skapa omdirigering
+yrewrite_forward_edit = Redigera omdirigering
+
+yrewrite_forward_method = Vad ska ske
+yrewrite_forward_to = Omdirigering till URL
+yrewrite_forward_direct = Direct access
+
+yrewrite_forward_added = Omdirigering skapades
+yrewrite_forward_updated = Omdirigering aktualiserades
+yrewrite_forward_deleted = Omdirigering raderades
+
+yrewrite_forward_enter_url = Ange en URL
+
+yrewrite_forward_domainurl_already_defined = Denna domän/URL kombination finns redan
+
+yrewrite_forward_move_method = Typ av omdirigering
+
+yrewrite_forward_301 = 301 - Moved Permanently - permanent omdirigering / den gamla URL finns inte längre
+yrewrite_forward_303 = 303 - See Other / normal omdirigering
+yrewrite_forward_307 = 307 - Temporary Redirect / temporär omdirigering.
