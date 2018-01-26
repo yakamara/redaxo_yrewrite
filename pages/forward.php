@@ -34,6 +34,7 @@ if ($func != '') {
 
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_forward'));
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_forward'));
+    $yform->setObjectparams('form_name', 'form');
 
     $yform->setValueField('select', ['status', $this->i18n('forward_status'),''.$this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
     $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain') . ' ORDER BY name']);
@@ -67,10 +68,10 @@ jQuery(document).ready(function() {
     jQuery("#rex-yrewrite-forward-article").hide();
     jQuery("#rex-yrewrite-forward-extern").hide();
     jQuery("#rex-yrewrite-forward-media").hide();
-    jQuery("#rex-yrewrite-forward-"+jQuery("#yform-formular-type select").val()).show();
+    jQuery("#rex-yrewrite-forward-"+jQuery("#yform-form-type select").val()).show();
   }
 
-  jQuery("#yform-formular-type select").on("change loaded", function(){
+  jQuery("#yform-form-type select").on("change loaded", function(){
     rex_yrewrite_update_form();
   })
 
