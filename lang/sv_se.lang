@@ -12,6 +12,7 @@ yrewrite_update_seo = Aktualisera SEO-data
 yrewrite_domains = Domäner
 yrewrite_article_urls = Artikel URLs
 yrewrite_setup = Setup
+yrewrite_docs = Dokumentation
 
 yrewrite_error_domain_missing = Var god skapa först en domän.
 
