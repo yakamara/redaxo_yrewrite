@@ -56,7 +56,7 @@ $yform->setValueField('select', ['yrewrite_index', rex_i18n::msg('yrewrite_index
 $yform->setValueField('text', ['yrewrite_canonical_url', rex_i18n::msg('yrewrite_canonical_url')]);
 
 $yform->setActionField('db', [rex::getTable('article'), 'id=' . $article_id.' and clang_id='.$clang]);
-$yform->setObjectparams('submit_btn_label', $addon->i18n('update_seo'));
+$yform->setObjectparams('submit_btn_label', $addon->i18n('update'));
 $form = $yform->getForm();
 
 if ($yform->objparams['actions_executed']) {
