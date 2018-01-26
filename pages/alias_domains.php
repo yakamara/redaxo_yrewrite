@@ -13,12 +13,13 @@
 $showlist = true;
 $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');
+$csrf = rex_csrf_token::factory('yrewrite_alias_domains');
 
 $domains = rex_yrewrite::getDomains();
 
 if (count($domains) == 1) {
     echo rex_view::error($this->i18n('error_domain_missing'));
-    $func = "";
+    $func = '';
     $showlist = false;
 }
 
@@ -30,6 +31,7 @@ if ($func != '') {
     $yform->setHiddenField('save', '1');
 
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_alias'));
+    $yform->setObjectparams('form_name', 'yrewrite_alias_domains_form');
 
     $yform->setValueField('text', ['alias_domain', $this->i18n('alias_domain_refersto')]);
     $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain_willbereferdto') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain')]);
@@ -42,11 +44,14 @@ if ($func != '') {
     $yform->setValidateField('unique', ['alias_domain', $this->i18n('domain_already_defined')]);
 
     if ($func == 'delete') {
-        $d = rex_sql::factory();
-        $d->setQuery('delete from '.rex::getTable('yrewrite_alias').' where id=' . $data_id);
-        echo rex_view::success($this->i18n('domain_deleted'));
-        rex_yrewrite::deleteCache();
-
+        if (!$csrf->isValid()) {
+            echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
+        } else {
+            $d = rex_sql::factory();
+            $d->setQuery('delete from ' . rex::getTable('yrewrite_alias') . ' where id=' . $data_id);
+            echo rex_view::success($this->i18n('domain_deleted'));
+            rex_yrewrite::deleteCache();
+        }
     } elseif ($func == 'edit') {
         $yform->setHiddenField('data_id', $data_id);
         $yform->setActionField('db', [rex::getTable('yrewrite_alias'), 'id=' . $data_id]);
@@ -59,20 +64,15 @@ if ($func != '') {
         if ($yform->objparams['actions_executed']) {
             echo rex_view::success($this->i18n('domain_updated'));
             rex_yrewrite::deleteCache();
-
         } else {
-
             $showlist = false;
             $fragment = new rex_fragment();
             $fragment->setVar('class', 'edit', false);
             $fragment->setVar('title', $this->i18n('edit_domain'));
             $fragment->setVar('body', $form, false);
             echo $fragment->parse('core/page/section.php');
-
         }
-
-    } else if ($func == 'add') {
-
+    } elseif ($func == 'add') {
         $yform->setActionField('db', [rex::getTable('yrewrite_alias')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
@@ -80,7 +80,6 @@ if ($func != '') {
         if ($yform->objparams['actions_executed']) {
             echo rex_view::success($this->i18n('domain_added'));
             rex_yrewrite::deleteCache();
-
         } else {
             $showlist = false;
             $fragment = new rex_fragment();
@@ -88,13 +87,11 @@ if ($func != '') {
             $fragment->setVar('title', $this->i18n('add_domain'));
             $fragment->setVar('body', $form, false);
             echo $fragment->parse('core/page/section.php');
-
         }
     }
 }
 
 if ($showlist) {
-
     $sql = 'SELECT * FROM '.rex::getTable('yrewrite_alias').' ORDER BY alias_domain';
 
     $list = rex_list::factory($sql, 100);
@@ -127,11 +124,10 @@ if ($showlist) {
 
     $list->addColumn(rex_i18n::msg('delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('delete'));
     $list->setColumnLayout(rex_i18n::msg('delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('delete'), ['data_id' => '###id###', 'func' => 'delete']);
+    $list->setColumnParams(rex_i18n::msg('delete'), ['data_id' => '###id###', 'func' => 'delete'] + $csrf->getUrlParams());
     $list->addLinkAttribute(rex_i18n::msg('delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('delete') . ' ?\')');
 
     $content = $list->get();
-
 
     $fragment = new rex_fragment();
     $fragment->setVar('title', $this->i18n('domains'));

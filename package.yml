@@ -1,5 +1,5 @@
 package: yrewrite
-version: '2.2.1'
+version: '2.3-dev'
 author: Jan Kristinus, Gregor Harlan
 supportpage: www.redaxo.org/de/forum/
 
@@ -14,7 +14,7 @@ page:
         setup: { title: 'translate:setup', perm: admin }
 
 requires:
-    redaxo: '^5.2'
+    redaxo: '^5.5'
     packages:
         structure: '^2.0'
         yform/manager: '^2.0'

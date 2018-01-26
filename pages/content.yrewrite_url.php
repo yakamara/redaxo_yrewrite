@@ -10,8 +10,6 @@
  * @var rex_addon $this
  */
 
-// TODO: content/yrewrite_url: { title: 'translate:mode_url', perm: 'yrewrite[url]' }
-
 ob_start();
 
 $addon = rex_addon::get('yrewrite');
@@ -32,14 +30,10 @@ if (0 === strpos($autoUrl, $domain->getUrl())) {
 }
 
 if ($isStartarticle) {
-
     echo rex_view::warning($addon->i18n('startarticleisalways', $domain->getName()));
-
 } else {
-
     $yform = new rex_yform();
     $yform->setObjectparams('form_action', rex_url::backendController(['page' => 'content/edit', 'article_id' => $article_id, 'clang' => $clang, 'ctype' => $ctype], false));
-    $yform->setObjectparams('form_id', 'yrewrite-url');
     $yform->setObjectparams('form_name', 'yrewrite-url');
     $yform->setHiddenField('yrewrite_func', 'url');
 
@@ -52,26 +46,26 @@ if ($isStartarticle) {
 
     $yform->setValueField('text', ['yrewrite_url', $addon->i18n('customurl'), 'notice' => $autoUrl]);
 
+    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => function ($func, $yrewrite_url) {
+        return strlen($yrewrite_url) > 250;
+    }, 'params' => [], 'message' => rex_i18n::msg('yrewrite_warning_nottolong')]);
 
-    $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url ) {
-        return (strlen($yrewrite_url) > 250);
-    }, 'params'=>[], 'message' => rex_i18n::msg('yrewrite_warning_nottolong')]);
+    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => function ($func, $yrewrite_url) {
+        if ($yrewrite_url == '') {
+            return false;
+        }
+        return !preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url);
+    }, 'params' => [], 'message' => rex_i18n::msg('yrewrite_warning_chars')]);
 
-
-    $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url ) {
-        if ($yrewrite_url == "") return false;
-        return (!preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url));
-    }, 'params'=>[], 'message' => rex_i18n::msg('yrewrite_warning_chars')]);
-
-    $yform->setValidateField('customfunction', ['name'=>'yrewrite_url', 'function' => function($func, $yrewrite_url, $params, $field ) {
-        $return = (($a = rex_yrewrite::getArticleIdByUrl($params["domain"], $yrewrite_url)) && (key($a) != $params["article_id"] || current($a) != $params["clang"]));
-        if ($return && $yrewrite_url != "") {
-            $field->setElement("message", rex_i18n::msg('yrewrite_warning_urlexists', key($a) ));
+    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => function ($func, $yrewrite_url, $params, $field) {
+        $return = (($a = rex_yrewrite::getArticleIdByUrl($params['domain'], $yrewrite_url)) && (key($a) != $params['article_id'] || current($a) != $params['clang']));
+        if ($return && $yrewrite_url != '') {
+            $field->setElement('message', rex_i18n::msg('yrewrite_warning_urlexists', key($a)));
         } else {
             $return = false;
         }
         return $return;
-    }, 'params'=>['article_id' => $article_id, "domain" => $domain, "clang" => $clang], 'message' => rex_i18n::msg('yrewrite_warning_urlexists')]);
+    }, 'params' => ['article_id' => $article_id, 'domain' => $domain, 'clang' => $clang], 'message' => rex_i18n::msg('yrewrite_warning_urlexists')]);
 
     $yform->setActionField('db', [rex::getTable('article'), 'id=' . $article_id.' and clang_id='.$clang]);
     $yform->setObjectparams('submit_btn_label', $addon->i18n('update_url'));
@@ -85,9 +79,6 @@ if ($isStartarticle) {
             'extension_point' => 'ART_UPDATED',
         ]);
         rex_article_cache::delete($article_id, $clang);
-
-    } else {
-
     }
 
     echo $form;
@@ -127,7 +118,6 @@ function updateCustomUrlPreview() {
 }
 
 </script>';
-
 }
 
 $form = ob_get_contents();

@@ -10,15 +10,12 @@
  * @var rex_addon $this
  */
 
-// TODO: content/yrewrite_seo: { title: 'translate:mode_seo', perm: 'yrewrite[seo]' }
-
 $content = '';
 $addon = rex_addon::get('yrewrite');
 
 $article_id = $params['article_id'];
 $clang = $params['clang'];
 $ctype = $params['ctype'];
-
 
 $select_priority = [];
 $select_priority[] = rex_i18n::msg('yrewrite_priority_auto').'=';
@@ -38,7 +35,6 @@ $index_setting[] = rex_i18n::msg('yrewrite_index_noindex').'=-1';
 
 $yform = new rex_yform();
 $yform->setObjectparams('form_action', rex_url::backendController(['page' => 'content/edit', 'article_id' => $article_id, 'clang' => $clang, 'ctype' => $ctype], false));
-$yform->setObjectparams('form_id', 'yrewrite-seo');
 $yform->setObjectparams('form_name', 'yrewrite-seo');
 $yform->setHiddenField('yrewrite_func', 'seo');
 
@@ -64,12 +60,8 @@ $yform->setObjectparams('submit_btn_label', $addon->i18n('update_seo'));
 $form = $yform->getForm();
 
 if ($yform->objparams['actions_executed']) {
-
     $form = rex_view::success(rex_i18n::msg('yrewrite_seoupdated')) . $form;
     rex_article_cache::delete($article_id, $clang);
-
-} else {
-
 }
 
 $form .= '
@@ -85,6 +77,5 @@ $form .= '
     </script>';
 
 $form = '<section id="rex-page-sidebar-yrewrite-seo" data-pjax-container="#rex-page-sidebar-yrewrite-seo" data-pjax-no-history="1">'.$form.'</section>';
-
 
 return $form;
