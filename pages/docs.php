@@ -10,9 +10,10 @@
  * @var rex_addon $this
  */
 
-
 $content = '
 ## Anwendungsfall
+
+### Erklärung
 
 Dieses Addon bietet eine Möglichkeit, Redaxo mit mehreren Domains zu betreiben. Mehrere Domains können dann sinnvoll sein, wenn
 
@@ -361,17 +362,64 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 - xcore: https://github.com/RexDude/xcore
 
 
-## Weitere Informationen, Hilfe und Bugmeldungen
+## Links und Hilfe
+
+### Bugmeldungen Hilfe und Links
 
 * Auf Github: https://github.com/yakamara/redaxo_yrewrite/issues/
 * im Forum: https://www.redaxo.org/forum/
 * im Slack-Channel: https://friendsofredaxo.slack.com/';
 
+$content_blocks = [];
+
+$h2_blocks = explode("\n## ", $content);
+
+foreach ($h2_blocks as $h2_i => $h2_block) {
+    preg_match('/(.*)\n^(?:.|\n(?!#))*/m', $h2_block, $headline);
+
+    if (isset($headline[1])) {
+        $navi_list[] = '* '.$headline[1];
+        $content_h2_block = '# '.$headline[0];
+
+        preg_match_all('/(?!### )*^### (.*)\n((?:.|\n(?!### ))*)/m', $h2_block, $matches);
+
+        if (count($matches[0]) > 0) {
+            $navi_elememts = $matches[1];
+            $blocks = $matches[2];
+            foreach ($navi_elememts as $h3_i => $navi_elememt) {
+                $navi_list[] = '	* <a href="index.php?page=yrewrite/docs&amp;n='.$h2_i.'-'.$h3_i.'">'.$navi_elememt.'</a>';
+                $content_blocks[$h2_i.'-'.$h3_i] = $content_h2_block."\n## ".$navi_elememt.$blocks[$h3_i];
+            }
+        }
+    }
+}
+
+reset($content_blocks);
+$n = rex_request('n', 'string', key($content_blocks));
+if (!isset($content_blocks[$n])) {
+    $n = key($content_blocks);
+}
+
+$navi_view = implode("\n", $navi_list);
+$blocks_view = $content_blocks[$n];
 
 $miu = rex_markdown::factory();
-$content = $miu->parse($content);
+$blocks_view = $miu->parse($blocks_view);
+$navi_view = $miu->parse($navi_view);
 
 $fragment = new rex_fragment();
-$fragment->setVar('title', $this->i18n('docs'));
-$fragment->setVar('body', $content, false);
-echo $fragment->parse('core/page/section.php');
+$fragment->setVar('title', rex_i18n::msg('yrewrite_docs_navigation').'', false);
+$fragment->setVar('body', $navi_view, false);
+$navi = $fragment->parse('core/page/section.php');
+
+$fragment = new rex_fragment();
+$fragment->setVar('title', $this->i18n('docs').' [ <a href="https://github.com/yakamara/redaxo_yrewrite/blob/master/pages/docs.php">docs.php</a> ]', false);
+$fragment->setVar('body', $blocks_view, false);
+$content = $fragment->parse('core/page/section.php');
+
+echo '<section class="rex-yform-docs">
+    <div class="row">
+    <div class="col-md-4 yform-docs-navi">'.$navi.'</div>
+    <div class="col-md-8 yform-docs-content">'.$content.'</div>
+    </div>
+</section>';
