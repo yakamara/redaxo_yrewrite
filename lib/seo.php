@@ -38,17 +38,17 @@ class rex_yrewrite_seo
 
     public function getTitleTag()
     {
-        return '<title>'.htmlspecialchars($this->getTitle()).'</title>'; //  lang="de"
+        return '<title>'.rex_escape(strip_tags($this->getTitle())).'</title>'; //  lang="de"
     }
 
     public function getDescriptionTag()
     {
-        return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
+        return '<meta name="description" content="'.rex_escape(strip_tags($this->getDescription())).'">'; //  lang="de"
     }
 
     public function getCanonicalUrlTag()
     {
-        return '<link rel="canonical" href="'.htmlspecialchars($this->getCanonicalUrl()).'" />';
+        return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'" />';
     }
 
     public function getRobotsTag()
