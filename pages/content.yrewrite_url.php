@@ -95,6 +95,8 @@ jQuery(document).ready(function() {
     jQuery("'.$selector_url.'").keyup(function() {
         updateCustomUrlPreview();
     });
+    
+    jQuery("'.$selector_preview.'").addClass("dont-break-out");
 
     updateCustomUrlPreview();
 

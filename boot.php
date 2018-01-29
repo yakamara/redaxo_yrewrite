@@ -13,6 +13,8 @@
 if(!rex::isBackend()) {
     $path = rtrim(dirname($_SERVER['SCRIPT_NAME']), DIRECTORY_SEPARATOR) . '/';
     rex_url::init(new rex_path_default_provider($path, "redaxo", false));
+} else if (rex::getUser()) {
+    rex_view::addCssFile($this->getAssetsUrl('yrewrite.css'));
 }
 
 rex_extension::register('PACKAGES_INCLUDED', function ($params) {
