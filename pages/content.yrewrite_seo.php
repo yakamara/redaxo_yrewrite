@@ -45,7 +45,10 @@ $yform->setObjectparams('main_id', $article_id);
 $yform->setObjectparams('main_where', 'id='.$article_id.' and clang_id='.$clang);
 $yform->setObjectparams('getdata', true);
 
-$yform->setValueField('text', ['yrewrite_title', rex_i18n::msg('yrewrite_seotitle')]);
+$seo = new rex_yrewrite_seo($article_id, $clang);
+$seo->article->yrewrite_title = '';
+
+$yform->setValueField('text', ['name' => 'yrewrite_title', 'label' => rex_i18n::msg('yrewrite_seotitle'),'placeholder' => $seo->getTitle()]);
 $yform->setValueField('textarea', ['yrewrite_description', rex_i18n::msg('yrewrite_seodescription'), 'rows' => 3]);
 
 $yform->setValueField('select', ['yrewrite_changefreq', rex_i18n::msg('yrewrite_changefreq'), implode(',', $select_changefreq), '', rex_yrewrite_seo::$changefreq_default]);
