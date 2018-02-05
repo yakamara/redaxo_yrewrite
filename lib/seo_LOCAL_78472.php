@@ -38,12 +38,12 @@ class rex_yrewrite_seo
 
     public function getTitleTag()
     {
-        return '<title>'.rex_escape(strip_tags($this->getTitle())).'</title>'; //  lang="de"
+        return '<title>'.htmlspecialchars($this->getTitle()).'</title>'; //  lang="de"
     }
 
     public function getDescriptionTag()
     {
-        return '<meta name="description" content="'.rex_escape(strip_tags($this->getDescription())).'">'; //  lang="de"
+        return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
     }
 
     public function getCanonicalUrlTag()
@@ -53,7 +53,7 @@ class rex_yrewrite_seo
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
         }
         $canonical_url = rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_URL', $canonical_url));
-        return $canonical_url ? '<link rel="canonical" href="' . rex_escape($canonical_url) . '" />' : '';
+        return $canonical_url ? '<link rel="canonical" href="' . htmlspecialchars($canonical_url) . '" />' : '';
     }
 
     public function getRobotsTag()
@@ -365,7 +365,6 @@ class rex_yrewrite_seo
         }
         $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP', $sitemap));
 
-        rex_response::cleanOutputBuffers();
         header('Content-Type: application/xml');
         $content = '<?xml version="1.0" encoding="UTF-8"?>';
         $content .= '<?xml-stylesheet type="text/xsl" href="assets/addons/yrewrite/xsl-stylesheets/xml-sitemap.xsl"?>';

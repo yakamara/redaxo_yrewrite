@@ -48,12 +48,16 @@ class rex_yrewrite_seo
 
     public function getCanonicalUrlTag()
     {
+<<<<<<< HEAD
         $canonical_url = trim($this->article->getValue('yrewrite_canonical_url'));
         if ($canonical_url == "") {
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
         }
         $canonical_url = rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_URL', $canonical_url));
-        return $canonical_url ? '<link rel="canonical" href="' . rex_escape($canonical_url) . '" />' : '';
+        return $canonical_url ? '<link rel="canonical" href="' . htmlspecialchars($canonical_url) . '" />' : '';
+=======
+        return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'" />';
+>>>>>>> upstream/master
     }
 
     public function getRobotsTag()

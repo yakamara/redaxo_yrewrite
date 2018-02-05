@@ -1,7 +1,7 @@
 redaxo_yrewrite
 ================
 
-Ein Multidomain-Rewriter Addon für REDAXO CMS >= 5.0
+Ein Multidomain-Rewriter Addon für REDAXO CMS >= 5.5
 
 Mit diesem AddOn lassen sich verschiedenen Domains innerhalb von REDAXO
 bestimmten Kategorien, auch sprachabhängig, zuweisen.
@@ -43,6 +43,38 @@ oder
 
 Last Changes
 -------
+
+### Version 2.3 // 30.01.2017
+
+#### Info
+
+- REDAXO 5.5 ist Vorraussetzung
+
+#### New
+- Testlink in Übersicht gebaut
+- Domain werden nun sortiert aufgelistet
+- Fremdpages werden nun richtig in die Subnavi eingebunden
+- Sprachen ergänzt und angepasst Danke ynamite, Ferando Averanga, Tina Soares, Jürgen Weiss
+- Alte ComAuth Abfrage entfernt
+- unbekannte Zeichen werden über iconv entfernt, bekannte Zeichen erweitert Danke Tobias Kreis
+- Formularname festgelegt
+- CSRF Protection eingebaut
+- Dokumentation ergänzt. Danke Alex Walther und Thomas Skerbis
+- Texte an diversen Stellen gekürzt und angepasst
+- Sitemapausgabe hat nun einen cleanOutputBuffer
+- URL Umbruch verbesser in der Artikel-URL-Ansicht
+- Bei Metadescription werden nun die Inhalte ge-strip_taged
+- Aufruf von media mit mediatypes in .htaccess 
+- Artikel-SEO: Placeholder wird bei Title angezeigt
+
+
+#### Bugs
+- Installationsbug behoben
+- Offlinesprache wird nun aus der Sitemap entfernt Danke Alex Platter
+- Bei URL Generierung werden nun nur aktive Sprache unterstützt
+- Warnings bei Konsolenaufrufen entfernt
+- Forwarded Protokoll wird nun beachtet (Load Balancer Problem)
+- Diverse Warnings entfernt
 
 ### Version 2.2 // 19.09.2016
 

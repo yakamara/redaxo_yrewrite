@@ -12,6 +12,8 @@ yrewrite_update_seo = SEO-Daten aktualisieren
 yrewrite_domains = Domains
 yrewrite_article_urls = Artikel URLs
 yrewrite_setup = Setup
+yrewrite_docs = Dokumentation
+yrewrite_docs_navigation = Navigation
 
 yrewrite_error_domain_missing = Bitte zunächst eine Domain anlegen.
 
