@@ -9,11 +9,11 @@ AddDefaultCharset utf-8
 # ADD MIME TYPES
 <IfModule mod_mime.c>
 	AddType image/x-icon .ico
-	AddType image/svg+xml svg
+	AddType image/svg+xml .svg
 	AddType video/ogg .ogv
 	AddType video/mp4 .mp4
 	AddType video/webm .webm
-	AddType video/x-flv flv
+	AddType video/x-flv .flv
 	AddType audio/mpeg .mp3
 	AddType audio/ogg .ogg
 	AddType application/javascript .js
@@ -24,7 +24,7 @@ AddDefaultCharset utf-8
 	AddType application/x-font-ttf .ttf
 	AddType application/font-woff .woff
 	AddType application/font-woff2 .woff2
-	AddType font/opentype otf
+	AddType font/opentype .otf
 </IfModule>
 
 # COMPRESS FILES
