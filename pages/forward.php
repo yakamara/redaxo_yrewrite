@@ -38,8 +38,7 @@ if ($func != '') {
     $yform->setValueField('select', ['status', $this->i18n('forward_status'), ''.$this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
     $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain') . ' ORDER BY name']);
     $yform->setValueField('text', ['url', $this->i18n('forward_url'), 'notice' => '<small>'.$this->i18n('forward_url_info').'</small>']);
-    //$yform->setValidateField('preg_match', array('url', '@^(?<!\/)[%_\./+\-a-zA-Z0-9]+(?!\/)$@', $this->i18n('warning_chars')));
-    $yform->setValidateField('preg_match', ['url', '@^([%_\.+\-a-zA-Z0-9]){1}[/%_\.+\-a-zA-Z0-9]+([%_\.+\-a-zA-Z0-9]){1}$@', $this->i18n('warning_chars')]);
+    $yform->setValidateField('preg_match', ['url', '@^[a-zA-Z0-9]+[/%_\.+\-a-zA-Z0-9]*(?<!\/)$@', $this->i18n('warning_chars')]);
     // $this->i18n('warning_noslash')
     $yform->setValidateField('size_range', ['url', 1, 255, $this->i18n('warning_nottolong')]);
     $yform->setValidateField('empty', ['url', $this->i18n('forward_enter_url')]);
