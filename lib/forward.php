@@ -15,6 +15,7 @@ class rex_yrewrite_forward
 
     public static $movetypes = [
         '301' => '301 - Moved Permanently',
+        '302' => '302 - Found',
         '303' => '303 - See Other',
         '307' => '307 - Temporary Redirect',
     ];
