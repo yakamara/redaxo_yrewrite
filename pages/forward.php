@@ -167,7 +167,7 @@ if ($showlist) {
     $list->removeColumn('url');
     $list->setColumnLabel('type', $this->i18n('forward_type'));
 
-    $list->setColumnLabel('movetype', $this->i18n('forward_type'));
+    $list->setColumnLabel('movetype', $this->i18n('yrewrite_forward_movetype'));
 
 //    $list->removeColumn('id');
     $list->removeColumn('article_id');
