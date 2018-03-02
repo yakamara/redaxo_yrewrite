@@ -129,10 +129,16 @@ jQuery(document).ready(function() {
 }
 
 if ($showlist) {
-    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward').' ORDER BY domain_id, url';
+    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward');
+    if (rex_get('sort','string') == 'domain_id') {
+        $sql .= ' ORDER BY url';
+        if (rex_get('sorttype','string') == 'desc') {
+            $sql .= ' DESC';
+        }
+    }
 
     $list = rex_list::factory($sql, 100);
-    $list->setColumnFormat('id', 'Id');
+//    $list->setColumnFormat('id', 'Id');
     $list->addParam('page', 'yrewrite/forward');
 
     $tdIcon = '<i class="fa fa-sitemap"></i>';
@@ -142,6 +148,9 @@ if ($showlist) {
 
     $list->setColumnParams('id', ['data_id' => '###id###', 'func' => 'edit']);
     $list->setColumnSortable('id');
+    $list->setColumnSortable('movetype');
+    $list->setColumnSortable('domain_id');
+    $list->setColumnSortable('status');
 
     $list->setColumnLabel('domain_id', $this->i18n('forward_url'));
     $list->setColumnFormat('domain_id', 'custom', function ($params) {
@@ -157,12 +166,14 @@ if ($showlist) {
     $list->removeColumn('url');
     $list->setColumnLabel('type', $this->i18n('forward_type'));
 
-    $list->removeColumn('id');
+    $list->setColumnLabel('movetype', $this->i18n('yrewrite_forward_movetype'));
+
+//    $list->removeColumn('id');
     $list->removeColumn('article_id');
     $list->removeColumn('clang');
     $list->removeColumn('extern');
     $list->removeColumn('media');
-    $list->removeColumn('movetype');
+//    $list->removeColumn('movetype');
     $list->removeColumn('domain');
 
     // $list->setColumnLabel('status', rex_i18n::msg('b_function'));

@@ -158,6 +158,8 @@ yrewrite_forward_domainurl_already_defined = This domain/Url combination exists 
 
 yrewrite_forward_move_method = Type of redirect
 
+yrewrite_forward_movetype = status code
+
 yrewrite_forward_301 = 301 - Moved Permanently - old URL no longer exists
 yrewrite_forward_302 = 302 - Found / Gefunden
 yrewrite_forward_303 = 303 - See Other / default redirect
