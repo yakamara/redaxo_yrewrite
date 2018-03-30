@@ -159,6 +159,9 @@ yrewrite_forward_domainurl_already_defined = Diese Domain/Url Kombination existi
 
 yrewrite_forward_move_method = Art der Weiterleitung
 
+yrewrite_forward_movetype = Statuscode
+
 yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte Url existiert nicht mehr
+yrewrite_forward_302 = 302 - Found / Gefunden
 yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
 yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein

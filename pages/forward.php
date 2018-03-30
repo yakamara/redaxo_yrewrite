@@ -38,13 +38,12 @@ if ($func != '') {
     $yform->setValueField('select', ['status', $this->i18n('forward_status'), ''.$this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
     $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain') . ' ORDER BY name']);
     $yform->setValueField('text', ['url', $this->i18n('forward_url'), 'notice' => '<small>'.$this->i18n('forward_url_info').'</small>']);
-    //$yform->setValidateField('preg_match', array('url', '@^(?<!\/)[%_\./+\-a-zA-Z0-9]+(?!\/)$@', $this->i18n('warning_chars')));
-    $yform->setValidateField('preg_match', ['url', '@^([%_\.+\-a-zA-Z0-9]){1}[/%_\.+\-a-zA-Z0-9]+([%_\.+\-a-zA-Z0-9]){1}$@', $this->i18n('warning_chars')]);
+    $yform->setValidateField('preg_match', ['url', '@^[%_\.+\-a-zA-Z0-9]+[/%_\.+\-a-zA-Z0-9]*(?<!\/)$@', $this->i18n('warning_chars')]);
     // $this->i18n('warning_noslash')
     $yform->setValidateField('size_range', ['url', 1, 255, $this->i18n('warning_nottolong')]);
     $yform->setValidateField('empty', ['url', $this->i18n('forward_enter_url')]);
     $yform->setValidateField('unique', ['domain_id,url', $this->i18n('forward_domainurl_already_defined')]);
-    $yform->setValueField('select', ['movetype', $this->i18n('forward_move_method'), $this->i18n('forward_301').'=301,'.$this->i18n('forward_303').'=303,'.$this->i18n('forward_307').'=307', '', '303']);
+    $yform->setValueField('select', ['movetype', $this->i18n('forward_move_method'), $this->i18n('forward_301').'=301,'.$this->i18n('forward_302').'=302,'.$this->i18n('forward_303').'=303,'.$this->i18n('forward_307').'=307', '', '303']);
     $yform->setValueField('select', ['type', $this->i18n('forward_type'), ''.$this->i18n('forward_type_article').'=article,'.$this->i18n('forward_type_extern').'=extern,'.$this->i18n('forward_type_media').'=media']);
 
     $yform->setValueField('html', ['', '<div id="rex-yrewrite-forward-article">']);
@@ -130,10 +129,16 @@ jQuery(document).ready(function() {
 }
 
 if ($showlist) {
-    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward').' ORDER BY domain_id, url';
+    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward');
+    if (rex_get('sort','string') == 'domain_id') {
+        $sql .= ' ORDER BY url';
+        if (rex_get('sorttype','string') == 'desc') {
+            $sql .= ' DESC';
+        }
+    }
 
     $list = rex_list::factory($sql, 100);
-    $list->setColumnFormat('id', 'Id');
+//    $list->setColumnFormat('id', 'Id');
     $list->addParam('page', 'yrewrite/forward');
 
     $tdIcon = '<i class="fa fa-sitemap"></i>';
@@ -143,6 +148,9 @@ if ($showlist) {
 
     $list->setColumnParams('id', ['data_id' => '###id###', 'func' => 'edit']);
     $list->setColumnSortable('id');
+    $list->setColumnSortable('movetype');
+    $list->setColumnSortable('domain_id');
+    $list->setColumnSortable('status');
 
     $list->setColumnLabel('domain_id', $this->i18n('forward_url'));
     $list->setColumnFormat('domain_id', 'custom', function ($params) {
@@ -158,12 +166,14 @@ if ($showlist) {
     $list->removeColumn('url');
     $list->setColumnLabel('type', $this->i18n('forward_type'));
 
-    $list->removeColumn('id');
+    $list->setColumnLabel('movetype', $this->i18n('yrewrite_forward_movetype'));
+
+//    $list->removeColumn('id');
     $list->removeColumn('article_id');
     $list->removeColumn('clang');
     $list->removeColumn('extern');
     $list->removeColumn('media');
-    $list->removeColumn('movetype');
+//    $list->removeColumn('movetype');
     $list->removeColumn('domain');
 
     // $list->setColumnLabel('status', rex_i18n::msg('b_function'));
