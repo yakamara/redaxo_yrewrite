@@ -82,7 +82,7 @@ class rex_yrewrite_scheme
             if ($domain->getStartClang() == $art->getClang()) {
                 return '/';
             }
-            return $this->getClang($art->getClang(), $domain) . '/';
+            return $this->getClang($art->getClang(), $domain) . $this->suffix;
         }
         if ($url = $art->getValue('yrewrite_url')) {
             return $url;

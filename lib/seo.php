@@ -236,7 +236,8 @@ class rex_yrewrite_seo
 
             $paths = 0;
             $sql = rex_sql::factory();
-            $excld_cats = [];
+            $excld_cats = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP_EXCLUDE_CATEGORY_IDS', array()));;
+            $excld_arts = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP_EXCLUDE_ARTICLE_IDS', array()));;
             $domain_article_id = $domain->getStartId();
 
             if (($dai = rex_article::get($domain_article_id))) {
@@ -247,6 +248,10 @@ class rex_yrewrite_seo
                 foreach ($domain->getClangs() as $clang_id) {
 
                     if (!rex_clang::get($clang_id)->isOnline()) {
+                        continue;
+                    }
+
+                    if (isset($excld_arts[$article_id]) && in_array($clang_id,$excld_arts[$article_id])) {
                         continue;
                     }
 
