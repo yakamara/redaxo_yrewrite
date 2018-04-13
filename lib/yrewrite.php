@@ -478,6 +478,8 @@ class rex_yrewrite
             case 'CAT_UPDATED':
             case 'CAT_STATUS':
             case 'ART_ADDED':
+            case 'ART_COPIED':
+            case 'ART_MOVED':
             case 'ART_UPDATED':
             case 'ART_STATUS':
                 rex_article_cache::delete($params['id']);
