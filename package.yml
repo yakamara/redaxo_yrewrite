@@ -12,7 +12,7 @@ page:
         alias_domains: { title: 'translate:alias_domains', perm: admin }
         forward: { title: 'translate:forward', perm: 'yrewrite[forward]' }
         setup: { title: 'translate:setup', perm: admin }
-        docs: { title: 'translate:docs' }
+        docs: { title: 'translate:docs', itemclass: 'pull-right' }
 
 requires:
     redaxo: '^5.5'
