@@ -44,6 +44,12 @@ oder
 Last Changes
 -------
 
+### Version 2.4 // 30.01.2017
+
+#### New
+- 302 Redirects sind nun möglich
+- automatische 301 Redirects eingebaut
+
 ### Version 2.3 // 30.01.2017
 
 #### Info
