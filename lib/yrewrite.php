@@ -570,6 +570,8 @@ class rex_yrewrite
             }
         }
         
+        rex_yrewrite_forward::init();
+        rex_yrewrite_forward::generatePathFile();
         rex_file::putCache(self::$pathfile, self::$paths);
     }
 

@@ -171,3 +171,4 @@ yrewrite_auto_redirect_days = Anzahl Tage, bis automatische Redirects inaktiv ge
 yrewrite_auto_redirect_days_info = 0 eintragen, um die automatische Deaktivierung auszuschalten.
 
 rewriter_auto_redirects = Automatische Weiterleitungen
+expiry_date = Deaktivierungsdatum
