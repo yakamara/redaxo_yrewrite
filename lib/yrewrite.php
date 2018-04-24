@@ -536,7 +536,7 @@ class rex_yrewrite
         
         $expiry_date = '0000-00-00';
         if ($domain->getAutoRedirectDays()) {
-            $expriy_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);
+            $expiry_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);            
         }
         
         // vergleicht alle Einträge aus old_paths mit der aktuellen path Liste.
