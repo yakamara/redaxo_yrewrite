@@ -422,6 +422,7 @@ class rex_yrewrite
 
     public static function generatePathFile($params)
     {
+        $old_paths = self::$paths;
         $setDomain = function (rex_yrewrite_domain &$domain, &$path, rex_structure_element $element) {
             $id = $element->getId();
             $clang = $element->getClang();
@@ -478,7 +479,10 @@ class rex_yrewrite
             case 'CAT_UPDATED':
             case 'CAT_STATUS':
             case 'ART_ADDED':
+            case 'ART_COPIED':
+            case 'ART_MOVED':
             case 'ART_UPDATED':
+            case 'ART_META_UPDATED':
             case 'ART_STATUS':
                 rex_article_cache::delete($params['id']);
                 $domain = self::$domainsByMountId[0][$params['clang']];
@@ -520,6 +524,52 @@ class rex_yrewrite
                 break;
         }
 
+        $sql = rex_sql::factory()
+//                ->setDebug()
+                ->setTable(rex::getTable('yrewrite_forward'));
+        
+        // Alte Einträge ausschalten
+        
+        $sql->setWhere('expiry_date > "0000-00-00" AND expiry_date < :date',['date'=>date('Y-m-d')]);
+        $sql->setValue('status',0);
+        $sql->update();
+        
+        $expiry_date = '0000-00-00';
+        if ($domain->getAutoRedirectDays()) {
+            $expriy_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);
+        }
+        
+        // vergleicht alle Einträge aus old_paths mit der aktuellen path Liste.
+        // nur ausführen, wenn es old_paths überhaupt gibt
+        if ($old_paths) {
+            foreach ($old_paths['paths'] as $domain_name => $old_article_paths) {
+                $domain = rex_yrewrite::getDomainByName($domain_name);
+                $domain_id = $domain->getId();
+                // Autoredirect nicht setzen, wenn autoredirect für diese Domain nicht eingeschaltet ist
+                if (!$domain->getAutoRedirect()) continue;
+                foreach ($old_article_paths as $art_id => $old_paths ) {
+                    foreach (rex_clang::getAllIds() as $clang_id) {
+                        // Wenn es eine Abweichung im Pfad gibt, wird ein neuer Eintrag eingefügt
+                        if (self::$paths['paths'][$domain_name][$art_id][$clang_id] != $old_paths[$clang_id]) {
+                            $params = [
+                                'article_id'=>$art_id,
+                                'clang'=>$clang_id,
+                                'type'=>'article',
+                                'domain_id'=>$domain_id,
+                                'url'=>trim($old_paths[$clang_id],'/'),
+                                'movetype'=>'301',
+                                'status'=>1,
+                                'expiry_date' => $expiry_date
+                                ];
+                            $sql->setTable(rex::getTable('yrewrite_forward'));
+                            $sql->setValues($params);
+                            $sql->insert();
+                        }
+                    }
+                }            
+            }
+        }
+        
         rex_file::putCache(self::$pathfile, self::$paths);
     }
 
@@ -575,7 +625,9 @@ class rex_yrewrite
                     . '"' . htmlspecialchars($domain['description']) . '", '
                     . '"' . htmlspecialchars($domain['robots']) . '", '
                     . ($domain['clang_start_hidden'] ? 'true' : 'false') . ','
-                    . $domain['id']
+                    . $domain['id'] . ','
+                    . $domain['auto_redirect'] . ','
+                    . $domain['auto_redirect_days']
                     . '));';
             }
         }

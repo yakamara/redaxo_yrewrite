@@ -30,7 +30,9 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
     if (rex::isBackend()) {
         $extensionPoints = [
             'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',
-            'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',
+            'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',  'ART_MOVED', 'ART_COPIED',
+            'ART_META_UPDATED',
+            'METADATA_SAVED',
             /*'CLANG_ADDED',*/ 'CLANG_UPDATED', /*'CLANG_DELETED',*/
             /*'ARTICLE_GENERATED'*/
             //'ALL_GENERATED'
