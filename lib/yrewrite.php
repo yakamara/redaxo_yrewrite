@@ -356,7 +356,7 @@ class rex_yrewrite
         $structureAddon->setProperty('article_id', $domain->getNotfoundId());
         rex_clang::setCurrentId($domain->getStartClang());
         foreach (self::$paths['paths'][$domain->getName()][$domain->getStartId()] as $clang => $clangUrl) {
-            if ($clang != $domain->getStartClang()  && $clangUrl > 0 && 0 === strpos($url, $clangUrl)) {
+            if ($clang != $domain->getStartClang() && $clangUrl != '' && 0 === strpos($url, $clangUrl)) {
                 rex_clang::setCurrentId($clang);
                 break;
             }
