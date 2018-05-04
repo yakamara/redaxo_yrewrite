@@ -382,7 +382,7 @@ class rex_yrewrite
         }
 
         //$url = urldecode($_SERVER['REQUEST_URI']);
-        $domainName = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        $domainName = self::getHost();
 
         $path = '';
 
