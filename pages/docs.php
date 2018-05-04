@@ -29,9 +29,9 @@ Dieses Addon bietet eine Möglichkeit, Redaxo mit mehreren Domains zu betreiben.
 
 Voraussetzung für die aktuelle Version von YRewrite: REDAXO 5.5
 
-Beim installieren und aktivieren des Addons wird die `.htaccess`-Datei von Redaxo aktualisiert. Auch eine virtuelle `robots.txt` und `sitemap.xml` werden erstellt.
+Nach dem Installieren und Aktivieren des Addons unter `YRewrite > Setup` die `.htaccess`-Datei von REDAXO erstellen lassen. 
 
-Anschließend können ein oder mehrere Domains zu YRewrite hinzugefügt werden.
+Anschließend können ein oder mehrere Domains zu YRewrite hinzugefügt werden, dabei werden jeweils auch eine virtuelle `robots.txt` und `sitemap.xml` erstellt.
 
 ### Domain hinzufügen
 
