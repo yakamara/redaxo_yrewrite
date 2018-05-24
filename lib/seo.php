@@ -53,12 +53,16 @@ class rex_yrewrite_seo
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
         }
         $canonical_url = rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_URL', $canonical_url));
+
         return $canonical_url ? '<link rel="canonical" href="' . rex_escape($canonical_url) . '" />' : '';
     }
 
     public function getRobotsTag()
     {
-        if ($this->article->getValue('yrewrite_index') == 1 || ($this->article->getValue('yrewrite_index') == 0 && $this->article->isOnline())) {
+        $doIndex = $this->article->getValue('yrewrite_index') == 1 || ($this->article->getValue('yrewrite_index') == 0 && $this->article->isOnline());
+        $doIndex = rex_extension::registerPoint(new rex_extension_point('YREWRITE_ROBOTS_TAG', $doIndex));
+
+        if ($doIndex) {
             return '<meta name="robots" content="index, follow">';
         } else {
             return '<meta name="robots" content="noindex, follow">';
