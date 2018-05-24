@@ -80,10 +80,9 @@ class rex_yrewrite_seo
             $ytitle = $this->article->getValue('name');
         }
 
-        $title = $title_scheme;
+        $title = rex_extension::registerPoint(new rex_extension_point('YREWRITE_TITLE', $title_scheme, ['title' => $ytitle]));
         $title = str_replace('%T', $ytitle, $title);
         $title = str_replace('%SN', rex::getServerName(), $title);
-        $title = rex_extension::registerPoint(new rex_extension_point('YREWRITE_TITLE', $title, ['scheme' => $title_scheme, 'sitename' => rex::getServerName(), 'title' => $ytitle]));
 
         return $this->cleanString($title);
     }
