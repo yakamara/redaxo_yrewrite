@@ -356,7 +356,7 @@ class rex_yrewrite
         $structureAddon->setProperty('article_id', $domain->getNotfoundId());
         rex_clang::setCurrentId($domain->getStartClang());
         foreach (self::$paths['paths'][$domain->getName()][$domain->getStartId()] as $clang => $clangUrl) {
-            if ($clang != $domain->getStartClang()  && $clangUrl > 0 && 0 === strpos($url, $clangUrl)) {
+            if ($clang != $domain->getStartClang() && $clangUrl != '' && 0 === strpos($url, $clangUrl)) {
                 rex_clang::setCurrentId($clang);
                 break;
             }
@@ -382,7 +382,7 @@ class rex_yrewrite
         }
 
         //$url = urldecode($_SERVER['REQUEST_URI']);
-        $domainName = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        $domainName = self::getHost();
 
         $path = '';
 
@@ -480,6 +480,8 @@ class rex_yrewrite
             case 'CAT_UPDATED':
             case 'CAT_STATUS':
             case 'ART_ADDED':
+            case 'ART_COPIED':
+            case 'ART_MOVED':
             case 'ART_UPDATED':
             case 'ART_STATUS':
                 rex_article_cache::delete($params['id']);
@@ -638,6 +640,9 @@ class rex_yrewrite
 
     public static function getHost()
     {
+        if (isset($_SERVER['HTTP_X_FORWARDED_SERVER'])) {
+            return $_SERVER['HTTP_X_FORWARDED_SERVER'];
+        }
         return @$_SERVER['HTTP_HOST'];
     }
 }
