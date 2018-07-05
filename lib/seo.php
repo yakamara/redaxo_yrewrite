@@ -347,7 +347,7 @@ class rex_yrewrite_seo
                         foreach ($medias as $media_name) {
                             $media    = rex_media::get($media_name);
 
-                            if ($media && in_array($media->getExtension(), ['png', 'jpg', 'jpeg', 'gif'])) {
+                            if ($media && in_array($media->getExtension(), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) {
                                 $img_url  = rex_yrewrite::getFullPath(ltrim(\rex_url::media($media_name), '/'));
                                 $images[] = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP_IMAGE',
                                     "\n<image:loc>" . $img_url . '</image:loc>'.
