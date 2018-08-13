@@ -13,6 +13,7 @@ yrewrite_domains = Domäner
 yrewrite_article_urls = Artikel URLs
 yrewrite_setup = Setup
 yrewrite_docs = Dokumentation
+yrewrite_docs_navigation = Navigation
 
 yrewrite_error_domain_missing = Var god skapa först en domän.
 
@@ -158,6 +159,9 @@ yrewrite_forward_domainurl_already_defined = Denna domän/URL kombination finns 
 
 yrewrite_forward_move_method = Typ av omdirigering
 
+yrewrite_forward_movetype = Status code
+
 yrewrite_forward_301 = 301 - Moved Permanently - permanent omdirigering / den gamla URL finns inte längre
+yrewrite_forward_302 = 302 - Found / Hittat
 yrewrite_forward_303 = 303 - See Other / normal omdirigering
 yrewrite_forward_307 = 307 - Temporary Redirect / temporär omdirigering.

@@ -28,7 +28,7 @@ yrewrite_domain_updated = Domain wurde aktualisiert. Cache wurde gelöscht.
 yrewrite_save = speichern
 
 yrewrite_domain = Domain
-yrewrite_domain_info = http/https ist optional. Wenn man es angibt, leiten alle Links immer auf das angegebene Protokoll. Lässt man es weg, wird das jeweils aktuelle verwendet. Slash am Ende oder nicht ist egal, das wird vom AddOn normalisiert. www muss angegeben werden, wenn denn die Domain mit "www" genutzt wird. Für YRewrite ist es eine normale Subdomain. Läuft REDAXO in einem Unterordner, muss dieser mit notiert werden. Beispiel: http://domain.de/unterordner/
+yrewrite_domain_info = http/https ist optional. Wenn man es angibt, leiten alle Links immer auf das angegebene Protokoll. Lässt man es weg, wird das jeweils aktuelle verwendet. Slash am Ende oder nicht ist egal, das wird vom AddOn normalisiert. "www" muss angegeben werden, wenn denn die Domain mit "www" genutzt wird. Für YRewrite ist es eine normale Subdomain. Läuft REDAXO in einem Unterordner, muss dieser mit notiert werden. Beispiel: http://domain.de/unterordner/
 
 yrewrite_mount_id = Mountpoint der Domain
 yrewrite_mount_info = Startpunkt der Domain. Der Startpunkt kann in jeder Tiefe der Struktur vergeben werden. Die oben angegebene Domain gilt ab dort für alle weiteren Kategorien/Artikel. Zum Beispiel kann eine zweite Domain innerhalb der Struktur einer anderen Domain einen Startpunkt bekommen. Freilassen, wenn Root-Kategorien als Url benötigt werden.
@@ -159,6 +159,9 @@ yrewrite_forward_domainurl_already_defined = Diese Domain/Url Kombination existi
 
 yrewrite_forward_move_method = Art der Weiterleitung
 
+yrewrite_forward_movetype = Statuscode
+
 yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte Url existiert nicht mehr
+yrewrite_forward_302 = 302 - Found / Gefunden
 yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
 yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein
