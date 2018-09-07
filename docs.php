@@ -56,7 +56,7 @@ $navi_view = implode("\n", $navi_list);
 
 $blocks_view = $miu->parse($blocks_view);
 $fragment = new rex_fragment();
-$fragment->setVar('title', $this->i18n('docs').' [ <a target="_blank" href="'.$this->getSupportPage().'blob/master/README.md">bearbeiten</a> ]', false);
+$fragment->setVar('title', $this->i18n('docs').' [ <a target="_blank" href="'.$this->getProperty('docspage').'">bearbeiten</a> ]', false);
 $fragment->setVar('body', $blocks_view, false);
 $content = $fragment->parse('core/page/section.php');
 

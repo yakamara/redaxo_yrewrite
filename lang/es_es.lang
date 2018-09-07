@@ -9,10 +9,11 @@ yrewrite_customurl = URL personalizada
 yrewrite_update_url = Actualizar URL
 yrewrite_update_seo = Actualizar datos de SEO
 
-yrewrite_domains = dominios
+yrewrite_domains = Dominios
 yrewrite_article_urls = URL de artículos
-yrewrite_setup = disposición
-yrewrite_docs = documentación
+yrewrite_setup = Disposición
+yrewrite_docs = Documentación
+yrewrite_docs_navigation = Navegación
 
 yrewrite_error_domain_missing = Por favor crea un dominio primero.
 
@@ -26,7 +27,7 @@ yrewrite_domain_updated = El dominio ha sido actualizado. La caché fue eliminad
 
 yrewrite_save = guardar
 
-yrewrite_domain = dominio
+yrewrite_domain = Dominio
 yrewrite_domain_info = http / https es opcional. Si lo especifica, todos los enlaces siempre se dirigirán al protocolo especificado. Si lo dejas, se usa el actual. Barra al final o no importa, eso está normalizado por AddOn. www debe especificarse si el dominio se usa con "www". Para YRewrite es un subdominio normal. Si REDAXO se ejecuta en una subcarpeta, debe anotarse hacia abajo. Ejemplo: http://dominio.de/unterordner/
 
 yrewrite_mount_id = Punto de montaje del dominio
@@ -158,6 +159,9 @@ yrewrite_forward_domainurl_already_defined = Esta combinación dominio / url ya 
 
 yrewrite_forward_move_method = Tipo de reenvío
 
+yrewrite_forward_movetype = código de estado
+
 yrewrite_forward_301 = 301 - Movido de forma permanente: el reenvío persistente / la antigua url ya no existe
+yrewrite_forward_302 = 302 - Found / Encontrado
 yrewrite_forward_303 = 303 - Ver Otro / reenvío normal
 yrewrite_forward_307 = 307 - Redirección temporal / Redirección temporal En el futuro, el contenido se puede encontrar de nuevo bajo la URL
