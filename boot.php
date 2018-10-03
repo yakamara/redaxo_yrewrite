@@ -13,6 +13,8 @@
 if(!rex::isBackend()) {
     $path = rtrim(dirname($_SERVER['SCRIPT_NAME']), DIRECTORY_SEPARATOR) . '/';
     rex_url::init(new rex_path_default_provider($path, "redaxo", false));
+} else if (rex::getUser()) {
+    rex_view::addCssFile($this->getAssetsUrl('yrewrite.css'));
 }
 
 // Additional permissions for url & seo editing
@@ -32,7 +34,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
     if (rex::isBackend()) {
         $extensionPoints = [
             'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',
-            'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',
+            'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',  'ART_MOVED', 'ART_COPIED',
             /*'CLANG_ADDED',*/ 'CLANG_UPDATED', /*'CLANG_DELETED',*/
             /*'ARTICLE_GENERATED'*/
             //'ALL_GENERATED'

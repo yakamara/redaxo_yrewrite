@@ -63,17 +63,17 @@ class rex_yrewrite_seo
 
     public function getTitleTag()
     {
-        return '<title>'.htmlspecialchars($this->getTitle()).'</title>'; //  lang="de"
+        return '<title>'.rex_escape(strip_tags($this->getTitle())).'</title>'; //  lang="de"
     }
 
     public function getDescriptionTag()
     {
-        return '<meta name="description" content="'.htmlspecialchars($this->getDescription()).'">'; //  lang="de"
+        return '<meta name="description" content="'.rex_escape(strip_tags($this->getDescription())).'">'; //  lang="de"
     }
 
     public function getCanonicalUrlTag()
     {
-        return '<link rel="canonical" href="'.htmlspecialchars($this->getCanonicalUrl()).'" />';
+        return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'" />';
     }
 
     public function getRobotsTag()
@@ -213,6 +213,10 @@ class rex_yrewrite_seo
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
+                    
+                    if (!rex_clang::get($clang_id)->isOnline()) {
+                        continue;
+                    }
 
                     $article = rex_article::get($article_id, $clang_id);
 
@@ -259,6 +263,7 @@ class rex_yrewrite_seo
         }
         $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP', $sitemap));
 
+        rex_response::cleanOutputBuffers();
         header('Content-Type: application/xml');
         $content = '<?xml version="1.0" encoding="UTF-8"?>';
         $content .= "\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
@@ -271,12 +276,6 @@ class rex_yrewrite_seo
     public static function checkArticlePerm($article)
     {
         $perm = true;
-        if (class_exists('rex_com_auth')) {
-            $perm = rex_com_auth::checkPerm($article);
-            if ($perm == false) {
-                return false;
-            }
-        }
         $perm = rex_extension::registerPoint(new rex_extension_point('YREWRITE_ARTICLE_PERM', $perm, ['article' => $article]));
         return $perm;
     }

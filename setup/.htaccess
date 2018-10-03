@@ -9,11 +9,11 @@ AddDefaultCharset utf-8
 # ADD MIME TYPES
 <IfModule mod_mime.c>
 	AddType image/x-icon .ico
-	AddType image/svg+xml svg
+	AddType image/svg+xml .svg
 	AddType video/ogg .ogv
 	AddType video/mp4 .mp4
 	AddType video/webm .webm
-	AddType video/x-flv flv
+	AddType video/x-flv .flv
 	AddType audio/mpeg .mp3
 	AddType audio/ogg .ogg
 	AddType application/javascript .js
@@ -24,7 +24,7 @@ AddDefaultCharset utf-8
 	AddType application/x-font-ttf .ttf
 	AddType application/font-woff .woff
 	AddType application/font-woff2 .woff2
-	AddType font/opentype otf
+	AddType font/opentype .otf
 </IfModule>
 
 # COMPRESS FILES
@@ -92,7 +92,11 @@ AddDefaultCharset utf-8
     RewriteRule ^robots\.txt$ %{ENV:BASE}/index.php?rex_yrewrite_func=robots [NC,L]
 
     # REWRITE RULE FOR SEO FRIENDLY IMAGE MANAGER URLS
-    RewriteRule ^media[0-9]*/imagetypes/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^mediatypes/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2
+    RewriteRule ^media/([^/]+)/(.*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
+    RewriteRule ^media/(.*) %{ENV:BASE}/index.php?rex_media_type=default&rex_media_file=$1&%{QUERY_STRING} [B]
+
+    # deprecated
     RewriteRule ^images/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
     RewriteRule ^imagetypes/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2
 
@@ -101,7 +105,7 @@ AddDefaultCharset utf-8
     RewriteCond %{REQUEST_FILENAME} !-l
 
     RewriteCond %{REQUEST_URI} !^redaxo/.*
-    RewriteCond %{REQUEST_URI} !^media/.*
+    # RewriteCond %{REQUEST_URI} !^media/.*
 
     RewriteRule ^(.*)$ %{ENV:BASE}/index.php?%{QUERY_STRING} [L]
 

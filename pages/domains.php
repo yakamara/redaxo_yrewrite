@@ -13,6 +13,7 @@
 $showlist = true;
 $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');
+$csrf = rex_csrf_token::factory('yrewrite_domains');
 
 if ($func != '') {
     $yform = new rex_yform();
@@ -22,6 +23,7 @@ if ($func != '') {
     $yform->setHiddenField('save', '1');
 
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_domain'));
+    $yform->setObjectparams('form_name', 'yrewrite_domains_form');
 
     $yform->setValueField('text', ['domain', $this->i18n('domain'), 'notice' => '<small>'.$this->i18n('domain_info').'</small>']);
     $yform->setValidateField('empty', ['domain', $this->i18n('no_domain_defined')]);
@@ -44,10 +46,15 @@ if ($func != '') {
     $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
 
     if ($func == 'delete') {
-        $d = rex_sql::factory();
-        $d->setQuery('delete from '.rex::getTable('yrewrite_domain').' where id=' . $data_id);
-        echo rex_view::success($this->i18n('domain_deleted'));
-        rex_yrewrite::deleteCache();
+
+        if (!$csrf->isValid()) {
+            echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
+        } else {
+            $d = rex_sql::factory();
+            $d->setQuery('delete from '.rex::getTable('yrewrite_domain').' where id=' . $data_id);
+            echo rex_view::success($this->i18n('domain_deleted'));
+            rex_yrewrite::deleteCache();
+        }
 
     } else if ($func == 'edit') {
 
@@ -100,7 +107,7 @@ if ($func != '') {
 
 if ($showlist) {
 
-    $sql = 'SELECT * FROM '.rex::getTable('yrewrite_domain');
+    $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_domain') . ' ORDER BY domain';
 
     $list = rex_list::factory($sql, 100);
     $list->setColumnFormat('id', 'Id');
@@ -149,7 +156,7 @@ if ($showlist) {
 
     $list->addColumn(rex_i18n::msg('delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('delete'));
     $list->setColumnLayout(rex_i18n::msg('delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('delete'), ['data_id' => '###id###', 'func' => 'delete']);
+    $list->setColumnParams(rex_i18n::msg('delete'), ['data_id' => '###id###', 'func' => 'delete'] + $csrf->getUrlParams());
     $list->addLinkAttribute(rex_i18n::msg('delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('delete') . ' ?\')');
 
     $showArticle = function ($params) {

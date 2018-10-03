@@ -82,7 +82,7 @@ class rex_yrewrite_scheme
             if ($domain->getStartClang() == $art->getClang()) {
                 return '/';
             }
-            return $this->getClang($art->getClang(), $domain) . '/';
+            return $this->getClang($art->getClang(), $domain) . $this->suffix;
         }
         if ($url = $art->getValue('yrewrite_url')) {
             return $url;
@@ -125,11 +125,11 @@ class rex_yrewrite_scheme
     public function normalize($string, $clang = 1)
     {
         $string = str_replace(
-            ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'ß', '/', '®', '©', '™'],
-            ['Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', '-', '', '', ''],
+            ['Ä',  'Ö',  'Ü',  'ä',  'ö',  'ü',  'ß',  'À', 'à', 'Á', 'á', 'ç', 'È', 'è', 'É', 'é', 'ë', 'Ì', 'ì', 'Í', 'í', 'Ï', 'ï', 'Ò', 'ò', 'Ó', 'ó', 'ô', 'Ù', 'ù', 'Ú', 'ú', 'Č', 'č', 'Ł', 'ł', 'ž', '/', '®', '©', '™'],
+            ['Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'ss', 'A', 'a', 'A', 'a', 'c', 'E', 'e', 'E', 'e', 'e', 'I', 'i', 'I', 'i', 'I', 'i', 'O', 'o', 'O', 'o', 'o', 'U', 'u', 'U', 'u', 'C', 'c', 'L', 'l', 'z', '-', '',  '',  ''],
             $string
         );
-        $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+        $string = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
         $string = preg_replace('/[^\w -]+/', '', $string);
         $string = strtolower(trim($string));
         $string = urlencode($string);
