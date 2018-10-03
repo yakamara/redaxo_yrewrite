@@ -72,4 +72,4 @@ rex_sql_table::get(rex::getTable('yrewrite_forward'))
 
 rex_delete_cache();
 
-yrewrite_seo_visibility::install();
+rex_yrewrite_seo_visibility::install();

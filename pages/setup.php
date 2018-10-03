@@ -55,8 +55,8 @@ echo $fragment->parse('core/page/section.php');
 /**
  * Process and display visibility settings form
  */
-echo yrewrite_seo_visibility::processFormPost();
-echo yrewrite_seo_visibility::getForm();
+echo rex_yrewrite_seo_visibility::processFormPost();
+echo rex_yrewrite_seo_visibility::getForm();
 
 $domains = [];
 

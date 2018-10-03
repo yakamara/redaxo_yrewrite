@@ -6,7 +6,7 @@
  * @package redaxo\yrewrite
  */
 
-class yrewrite_seo_visibility
+class rex_yrewrite_seo_visibility
 {
     /**
      * @return rex_addon
