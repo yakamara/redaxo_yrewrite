@@ -228,6 +228,7 @@ class rex_yrewrite
         }
 
         // delete params
+        $params = '';
         if (($pos = strpos($url, '?')) !== false) {
             $params = substr($url, $pos);
             $url = substr($url, 0, $pos);
