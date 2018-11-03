@@ -482,6 +482,7 @@ class rex_yrewrite
                 $params['id'] = $params['re_id'];
             // no break
             case 'CAT_ADDED':
+            case 'CAT_MOVED':
             case 'CAT_UPDATED':
             case 'CAT_STATUS':
             case 'ART_ADDED':
