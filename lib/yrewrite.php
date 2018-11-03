@@ -198,6 +198,12 @@ class rex_yrewrite
         return isset(self::$domainsByMountId[$aid][$clang]);
     }
 
+    public static function isInCurrentDomain($aid)
+    {
+        return (self::getDomainByArticleId($aid)->getName() == self::getCurrentDomain()->getName()) ? true : false;
+
+    }
+
     // ----- url
 
     public static function getPathsByDomain($domain)
