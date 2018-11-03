@@ -29,7 +29,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
     // if anything changes -> refresh PathFile
     if (rex::isBackend()) {
         $extensionPoints = [
-            'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',
+            'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',  'CAT_MOVED',
             'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',  'ART_MOVED', 'ART_COPIED',
             /*'CLANG_ADDED',*/ 'CLANG_UPDATED', /*'CLANG_DELETED',*/
             /*'ARTICLE_GENERATED'*/
