@@ -490,6 +490,7 @@ class rex_yrewrite
             case 'ART_MOVED':
             case 'ART_UPDATED':
             case 'ART_STATUS':
+            case 'ART_META_UPDATED':
                 rex_article_cache::delete($params['id']);
                 $domain = self::$domainsByMountId[0][$params['clang']];
                 $path = self::$scheme->getClang($params['clang'], $domain);
