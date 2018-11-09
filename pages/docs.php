@@ -17,7 +17,8 @@ $docs_chapter_active = rex_request('docs_chapter_active', 'string', false);
 
 foreach ($h2_chapter as $h2_index => $h2_content) {
     preg_match('/(.*)\n^(?:.|\n(?!#))*/m', $h2_content, $headline);
-    $h2_index = rex_string::normalize($headline[0]);
+
+    $h2_index = (isset($headline[0])) ? rex_string::normalize($headline[0]) : '';
     preg_match_all('/(?!## )*^## (.*)\n((?:.|\n(?!## ))*)/m', $h2_content, $matches);
     if (isset($headline[1]) && count(array_filter($matches))) {
         

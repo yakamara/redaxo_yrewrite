@@ -198,6 +198,12 @@ class rex_yrewrite
         return isset(self::$domainsByMountId[$aid][$clang]);
     }
 
+    public static function isInCurrentDomain($aid)
+    {
+        return (self::getDomainByArticleId($aid)->getName() == self::getCurrentDomain()->getName()) ? true : false;
+
+    }
+
     // ----- url
 
     public static function getPathsByDomain($domain)
@@ -228,6 +234,7 @@ class rex_yrewrite
         }
 
         // delete params
+        $params = '';
         if (($pos = strpos($url, '?')) !== false) {
             $params = substr($url, $pos);
             $url = substr($url, 0, $pos);
@@ -476,6 +483,7 @@ class rex_yrewrite
                 $params['id'] = $params['re_id'];
             // no break
             case 'CAT_ADDED':
+            case 'CAT_MOVED':
             case 'CAT_UPDATED':
             case 'CAT_STATUS':
             case 'ART_ADDED':
@@ -484,6 +492,7 @@ class rex_yrewrite
             case 'ART_UPDATED':
             case 'ART_META_UPDATED':
             case 'ART_STATUS':
+            case 'ART_META_UPDATED':
                 rex_article_cache::delete($params['id']);
                 $domain = self::$domainsByMountId[0][$params['clang']];
                 $path = self::$scheme->getClang($params['clang'], $domain);

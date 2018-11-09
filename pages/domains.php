@@ -143,7 +143,9 @@ if ($showlist) {
         } else {
             $return = [];
             foreach (explode(',', $clangs) as $clang) {
-                $return[] = rex_clang::get($clang)->getName();
+            	if(rex_clang::get($clang)) {
+                	$return[] = rex_clang::get($clang)->getName();
+                }
             }
             if (count($return) > 1) {
                 $return = implode(',', $return) . '<br />'.$this->i18n('clang_start').': '.rex_clang::get($params['list']->getValue('clang_start'))->getName();
