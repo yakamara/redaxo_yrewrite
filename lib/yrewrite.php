@@ -590,6 +590,15 @@ class rex_yrewrite
 			                    $sql->setTable(rex::getTable('yrewrite_forward'));
 			                    $sql->setValues($params);
 			                    $sql->insert();
+
+								// alte Redirects löschen wenn die URL der neuen URL des Artikels entspricht
+			                    $params = [
+			                        'url'=>trim(substr(rex_getUrl($art_id, $clang_id), strpos(rex_getUrl($art_id, $clang_id), $domain_name) + strlen($domain_name)), '/')
+			                    ];
+			                    $sql->setTable(rex::getTable('yrewrite_forward'));
+			                    $sql->setValues([]);
+			                    $sql->setWhere($params);
+			                    $sql->delete();
 			                }
                         }
                     }
