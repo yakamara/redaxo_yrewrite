@@ -559,20 +559,38 @@ class rex_yrewrite
                 foreach ($old_article_paths as $art_id => $old_paths ) {
                     foreach (rex_clang::getAllIds() as $clang_id) {
                         // Wenn es eine Abweichung im Pfad gibt, wird ein neuer Eintrag eingefügt
-                        if (self::$paths['paths'][$domain_name][$art_id][$clang_id] != $old_paths[$clang_id]) {
-                            $params = [
-                                'article_id'=>$art_id,
-                                'clang'=>$clang_id,
-                                'type'=>'article',
-                                'domain_id'=>$domain_id,
-                                'url'=>trim($old_paths[$clang_id],'/'),
-                                'movetype'=>'301',
-                                'status'=>1,
-                                'expiry_date' => $expiry_date
-                                ];
-                            $sql->setTable(rex::getTable('yrewrite_forward'));
-                            $sql->setValues($params);
-                            $sql->insert();
+		                if (self::$paths['paths'][$domain_name][$art_id][$clang_id] != $old_paths[$clang_id]) {
+		                	if($ep == 'CAT_DELETED' || $ep == 'ART_DELETED') {
+			                    $params = [
+			                        'article_id'=>$art_id
+			                    ];
+			                    $sql->setTable(rex::getTable('yrewrite_forward'));
+			                    $sql->setWhere($params);
+			                    $sql->delete();
+			                }
+			                else if($ep == 'CLANG_DELETED') {
+			                    $params = [
+			                        'clang'=>$clang_id
+			                    ];
+			                    $sql->setTable(rex::getTable('yrewrite_forward'));
+			                    $sql->setWhere($params);
+			                    $sql->delete();
+							}
+							else if($ep == 'CAT_MOVED' || $ep == 'CAT_UPDATED' || $ep == 'ART_MOVED' || $ep == 'ART_UPDATED' || $ep == 'ART_META_UPDATED') {
+			                    $params = [
+			                        'article_id'=>$art_id,
+			                        'clang'=>$clang_id,
+			                        'type'=>'article',
+			                        'domain_id'=>$domain_id,
+			                        'url'=>trim($old_paths[$clang_id],'/'),
+			                        'movetype'=>'301',
+			                        'status'=>1,
+			                        'expiry_date' => $expiry_date
+			                    ];
+			                    $sql->setTable(rex::getTable('yrewrite_forward'));
+			                    $sql->setValues($params);
+			                    $sql->insert();
+			                }
                         }
                     }
                 }            
