@@ -543,17 +543,17 @@ class rex_yrewrite
         $sql->setValue('status',0);
         $sql->update();
         
-        $expiry_date = '0000-00-00';
-        if ($domain->getAutoRedirectDays()) {
-            $expiry_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);            
-        }
-        
         // vergleicht alle Einträge aus old_paths mit der aktuellen path Liste.
         // nur ausführen, wenn es old_paths überhaupt gibt
         if ($old_paths) {
             foreach ($old_paths['paths'] as $domain_name => $old_article_paths) {
                 $domain = rex_yrewrite::getDomainByName($domain_name);
                 $domain_id = $domain->getId();
+                $expiry_date = '0000-00-00';
+                if ($domain->getAutoRedirectDays()) {
+                    $expiry_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);            
+                }
+
                 // Autoredirect nicht setzen, wenn autoredirect für diese Domain nicht eingeschaltet ist
                 if (!$domain->getAutoRedirect()) continue;
                 foreach ($old_article_paths as $art_id => $old_paths ) {
