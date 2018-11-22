@@ -336,8 +336,12 @@ class rex_yrewrite
                 foreach (self::$paths['paths'][$domain->getName()] as $i_id => $i_cls) {
                     foreach (rex_clang::getAllIds() as $clang_id) {
                         if (isset($i_cls[$clang_id]) && $i_cls[$clang_id] == $candidate) {
+                            $url = $domain->getPath() . $candidate;
+                            if (isset($_SERVER['QUERY_STRING'])) {
+                                $url .= '?' . $_SERVER['QUERY_STRING'];
+                            }
                             header('HTTP/1.1 301 Moved Permanently');
-                            header('Location: ' . $domain->getPath() . $candidate);
+                            header('Location: ' . $url);
                             exit;
                         }
                     }
