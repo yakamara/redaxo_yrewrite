@@ -34,6 +34,13 @@ Voraussetzung für die aktuelle Version von YRewrite: REDAXO >= 5.5
 
 Nach der Installation und dem Abschluss des Setups wird die `.htaccess`-Datei von REDAXO aktualisiert. Auch eine virtuelle `robots.txt` und `sitemap.xml` werden erstellt.
 
+### Version 2.4 // 30.01.2017
+
+#### New
+- 302 Redirects sind nun möglich
+- automatische 301 Redirects eingebaut
+
+### Version 2.3 // 30.01.2017
 Anschließend können ein oder mehrere Domains zu YRewrite hinzugefügt werden.
 
 ## Domain hinzufügen
