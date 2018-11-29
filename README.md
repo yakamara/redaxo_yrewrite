@@ -179,7 +179,7 @@ Beispiel-Rückgabewert: `5`
 ## Startartikel-ID der Domain
 
 ```
-rex_yrewrite::getCurrentDomain()->getStartArticleId();
+rex_yrewrite::getCurrentDomain()->getStartId();
 ```
 
 Beispiel-Rückgabewert: `42`
