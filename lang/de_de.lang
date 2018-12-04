@@ -98,10 +98,10 @@ yrewrite_changefreq_yearly = jährlich [yearly]
 yrewrite_changefreq_never = nie [never]
 yrewrite_changefreq_always = immer [always]
 
-yrewrite_index = Indizierung und Sitemap
-yrewrite_index_status = In Abhängigkeit von Status Indizierung erlauben und in Sitemap anzeigen
-yrewrite_index_index = Indizierung erlauben / in Sitemap anzeigen (Index)
-yrewrite_index_noindex = Indizierung verbieten / nicht in Sitemap anzeigen (NoIndex)
+yrewrite_index = Indexierung und Sitemap
+yrewrite_index_status = In Abhängigkeit von Status Indexierung erlauben und in Sitemap anzeigen
+yrewrite_index_index = Indexierung erlauben / in Sitemap anzeigen (Index)
+yrewrite_index_noindex = Indexierung verbieten / nicht in Sitemap anzeigen (NoIndex)
 
 yrewrite_htaccess_hasbeenset = .htaccess Datei wurde gesetzt/ersetzt
 yrewrite_htaccess_set = .htaccess Datei setzen
@@ -165,3 +165,10 @@ yrewrite_forward_301 = 301 - Moved Permanently - dauerhafte Weiterleitung / alte
 yrewrite_forward_302 = 302 - Found / Gefunden
 yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
 yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung in Zukunft kann der Inhalt unter der aufgerufenen Url wieder zu finden sein
+
+yrewrite_auto_redirect = Automatische 301 Redirects setzen wenn Artikel umbenannt oder verschoben werden. (Sollte bei der Entwicklung ausgeschaltet sein und erst im Livebetrieb eingeschaltet werden.)
+yrewrite_auto_redirect_days = Anzahl Tage, bis automatische Redirects inaktiv gesetzt werden.
+yrewrite_auto_redirect_days_info = 0 eintragen, um die automatische Deaktivierung auszuschalten.
+
+rewriter_auto_redirects = Automatische Weiterleitungen
+expiry_date = Deaktivierungsdatum

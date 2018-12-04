@@ -26,8 +26,10 @@ class rex_yrewrite_domain
     private $title;
     private $description;
     private $robots;
+    private $autoRedirect;
+    private $autoRedirectDays;
 
-    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '', $startClangHidden = false, $id = null)
+    public function __construct($name, $scheme, $path, $mountId, $startId, $notfoundId, array $clangs = null, $startClang = 1, $title = '', $description = '', $robots = '', $startClangHidden = false, $id = null, $autoRedirect = false, $autoRedirectDays = 0)
     {
         $this->id = $id;
         $this->name = $name;
@@ -45,6 +47,8 @@ class rex_yrewrite_domain
         $this->title = $title;
         $this->description = $description;
         $this->robots = $robots;
+        $this->autoRedirect = $autoRedirect;
+        $this->autoRedirectDays = $autoRedirectDays;
     }
 
     /**
@@ -165,6 +169,22 @@ class rex_yrewrite_domain
     public function getRobots()
     {
         return $this->robots;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAutoRedirect()
+    {
+        return $this->autoRedirect;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAutoRedirectDays()
+    {
+        return $this->autoRedirectDays;
     }
 
     /**

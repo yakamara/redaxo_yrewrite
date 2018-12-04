@@ -44,7 +44,13 @@ if ($func != '') {
     $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
 
     $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
-
+    
+//    $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_auto_redirects')]);
+    
+    $yform->setValueField('checkbox', ['auto_redirect', $this->i18n('yrewrite_auto_redirect')]);
+    $yform->setValueField('text', ['auto_redirect_days', $this->i18n('yrewrite_auto_redirect_days'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect_days_info').'</small>']);
+    
+    
     if ($func == 'delete') {
 
         if (!$csrf->isValid()) {
@@ -65,6 +71,7 @@ if ($func != '') {
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('getdata', true);
         $yform->setObjectparams('submit_btn_label', $this->i18n('save'));
+        
         $form = $yform->getForm();
 
         if ($yform->objparams['actions_executed']) {
