@@ -140,10 +140,10 @@ class rex_yrewrite
         return null;
     }
 
-    public static function getFullUrlByArticleId($id, $clang = null, array $parameters = [], $separator = '&amp;')
+    public static function getFullUrlByArticleId($article_id = null, $clang = null, array $parameters = [], $separator = '&amp;')
     {
         $params = [];
-        $params['id'] = $id;
+        $params['id'] = $article_id ?: rex_article::getCurrentId();
         $params['clang'] = $clang ?: rex_clang::getCurrentId();
         $params['params'] = $parameters;
         $params['separator'] = $separator;
