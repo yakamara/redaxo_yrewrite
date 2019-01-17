@@ -165,3 +165,10 @@ yrewrite_forward_301 = 301 - Moved Permanently - permanent omdirigering / den ga
 yrewrite_forward_302 = 302 - Found / Hittat
 yrewrite_forward_303 = 303 - See Other / normal omdirigering
 yrewrite_forward_307 = 307 - Temporary Redirect / temporär omdirigering.
+
+yrewrite_auto_redirect = Ställ in automatiska 301 Redirects när artiklar döpts om eller flyttas. (Bör stängas av under utveckling och aktiveras först i liveversion)
+yrewrite_auto_redirect_days = Antal dagar tills automatiska omdirigeringar (redirects) är ställs in på inaktiv.
+yrewrite_auto_redirect_days_info = Ange 0 för att stänga av automatisk avaktivering.
+
+rewriter_auto_redirects = Automatiska vidarebefordringar
+expiry_date = Avaktiveringsdatum
