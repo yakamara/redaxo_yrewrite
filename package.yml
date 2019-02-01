@@ -19,4 +19,4 @@ requires:
     redaxo: '^5.5'
     packages:
         structure: '^2.0'
-        yform/manager: '^2.0'
+        yform/manager: '>2,<4'
