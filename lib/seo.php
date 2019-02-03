@@ -56,7 +56,7 @@ class rex_yrewrite_seo
         if ($this->article->getValue('yrewrite_index') == 1 || ($this->article->getValue('yrewrite_index') == 0 && $this->article->isOnline())) {
             return '<meta name="robots" content="index, follow">';
         } else {
-            return '<meta name="robots" content="noindex, follow">';
+            return '<meta name="robots" content="noindex, nofollow">';
         }
     }
 
