@@ -1,6 +1,22 @@
 Changelog
 =========
 
+
+Version 2.5.0 – 04.02.2019
+--------------------------
+
+### Neu
+
+- MIT Lizenz ergänzt
+- AutoRedirects ergänzt. (Danke Wolfgang Bund)
+- Alternativ URLs werden nun mit Query_String weitergeleitet
+- getFullUrlByArticleId nun auch ohne article id möglich
+- Update/Install. SQL Umbau auf ensure Basis (rex_sql_table, rex_sql_column)
+- Version nun auch bei YForm 3.x wie auch bei YForm 2.x installierbar
+- Anpassungen Texte, Ansichten
+- Metafeld angepasst. Wenn noindex, nun auch nofollow
+
+
 Version 2.4.0 – 03.11.2018
 --------------------------
 
