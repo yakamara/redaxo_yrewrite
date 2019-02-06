@@ -40,17 +40,10 @@ if ($func != '') {
     $yform->setValueField('select_sql', ['clangs', $this->i18n('clangs'), 'select id,name from '.rex::getTable('clang'), '', 1, 0, '', 1, rex_clang::count(), 'notice' => '<small>'.$this->i18n('clangs_info').'</small>']);
     $yform->setValueField('select_sql', ['clang_start', $this->i18n('clang_start'), 'select id,name from '.rex::getTable('clang').' order by id', 'notice' => '<small>'.$this->i18n('clang_start_info').'</small>']);
     $yform->setValueField('checkbox', ['clang_start_hidden', $this->i18n('clang_start_hidden')]);
-
-    $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_seo')]);
-
     $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
-    
-//    $yform->setValueField('fieldset', ['seo',$this->i18n('rewriter_auto_redirects')]);
-    
-    $yform->setValueField('checkbox', ['auto_redirect', $this->i18n('yrewrite_auto_redirect')]);
+    $yform->setValueField('checkbox', ['auto_redirect', $this->i18n('auto_redirects'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect').'</small>']);
     $yform->setValueField('text', ['auto_redirect_days', $this->i18n('yrewrite_auto_redirect_days'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect_days_info').'</small>']);
-    
-    
+
     if ($func == 'delete') {
 
         if (!$csrf->isValid()) {
@@ -129,6 +122,8 @@ if ($showlist) {
     $list->setColumnSortable('id');
 
     $list->removeColumn('id');
+    $list->removeColumn('auto_redirect');
+    $list->removeColumn('auto_redirect_days');
 
     $list->setColumnLabel('domain', $this->i18n('domain'));
     $list->setColumnLabel('mount_id', $this->i18n('mount_id'));

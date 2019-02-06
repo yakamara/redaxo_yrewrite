@@ -65,7 +65,7 @@ class rex_yrewrite_seo
         if ($doIndex) {
             return '<meta name="robots" content="index, follow">';
         } else {
-            return '<meta name="robots" content="noindex, follow">';
+            return '<meta name="robots" content="noindex, nofollow">';
         }
     }
 

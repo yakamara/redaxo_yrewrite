@@ -1,10 +1,9 @@
 <?php
 
 /**
- * YREWRITE Addon.
+ * YRewrite.
  *
  * @author jan.kristinus@yakamara.de
- *
  * @package redaxo\yrewrite
  *
  * @var rex_addon $this
@@ -21,56 +20,45 @@ rex_sql_table::get(rex::getTable('article'))
     ->alter()
 ;
 
-$sql = rex_sql::factory();
-
-$sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_domain').'` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `domain` varchar(255) NOT NULL,
-    `mount_id` int(11) NOT NULL,
-    `start_id` int(11) NOT NULL,
-    `notfound_id` int(11) NOT NULL,
-    `clangs` varchar(255) NOT NULL,
-    `clang_start` int(11) NOT NULL,
-    `clang_start_hidden` tinyint(1) NOT NULL,
-    `robots` TEXT NOT NULL,
-    `title_scheme` varchar(255) NOT NULL,
-    `description` varchar(255) NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
-
-$sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_alias').'` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `alias_domain` varchar(255) NOT NULL,
-    `domain_id` int(11) NOT NULL,
-    `clang_start` int(11) NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
-
-$sql->setQuery('CREATE TABLE IF NOT EXISTS `'.rex::getTable('yrewrite_forward').'` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `domain_id` int(11) NOT NULL,
-    `status` int(11) NOT NULL,
-    `url` varchar(255) NOT NULL,
-    `type` varchar(255) NOT NULL,
-    `article_id` int(11) NOT NULL,
-    `clang` int(11) NOT NULL,
-    `extern` varchar(255) NOT NULL,
-    `media` varchar(255) NOT NULL,
-    `movetype` varchar(255) NOT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
-
-rex_sql_table::get(rex::getTable('yrewrite_domain'))
+$table = rex_sql_table::get(rex::getTable('yrewrite_domain'));
+$table
+    ->ensurePrimaryIdColumn()
+    ->ensureColumn(new rex_sql_column('domain', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('mount_id', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('start_id', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('notfound_id', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('clangs', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('clang_start', 'int(11)'))
     ->ensureColumn(new rex_sql_column('clang_start_hidden', 'tinyint(1)'))
+    ->ensureColumn(new rex_sql_column('robots', 'text'))
+    ->ensureColumn(new rex_sql_column('title_scheme', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('description', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('auto_redirect', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('auto_redirect_days', 'int(3)'))
-    ->alter()
-;
+    ->ensure();
 
-rex_sql_table::get(rex::getTable('yrewrite_forward'))
+
+$table = rex_sql_table::get(rex::getTable('yrewrite_alias'));
+$table
+    ->ensurePrimaryIdColumn()
+    ->ensureColumn(new rex_sql_column('alias_domain', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('domain_id', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('clang_start', 'int(11)'))
+    ->ensure();
+
+$table = rex_sql_table::get(rex::getTable('yrewrite_forward'));
+$table
+    ->ensurePrimaryIdColumn()
+    ->ensureColumn(new rex_sql_column('domain_id', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('status', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('url', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('type', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('article_id', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('clang', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('extern', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('media', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('movetype', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
-    ->alter()
-;
+    ->ensure();
 
 rex_delete_cache();
