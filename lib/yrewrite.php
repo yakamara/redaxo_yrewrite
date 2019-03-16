@@ -423,6 +423,16 @@ class rex_yrewrite
         return $path . ($urlparams ? '?' . $urlparams : '');
     }
 
+    public static function rewriteMedia(array $params)
+    {
+        $buster = '';
+        if (isset($params['buster']) && $params['buster']) {
+            $buster = '?buster='.$params['buster'];
+        }
+
+        return rex_url::frontend('media/'.$params['type'].'/'.$params['file'].$buster);
+    }
+
     /*
     *
     *  function: generatePathFile

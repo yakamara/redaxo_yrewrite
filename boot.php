@@ -54,6 +54,10 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 
     // get ARTICLE_ID from URL
     if (!rex::isBackend()) {
+        rex_extension::register('MEDIA_MANAGER_URL', function (rex_extension_point $ep) {
+            return rex_yrewrite::rewriteMedia($ep->getParams());
+        });
+
         rex_yrewrite::prepare();
     }
 
