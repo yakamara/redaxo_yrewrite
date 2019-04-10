@@ -16,6 +16,8 @@ page:
         docs: { title: 'translate:docs', icon: rex-icon fa-info-circle, itemclass: pull-right }
 
 requires:
+    php:
+        version: '^7.0'
     redaxo: '^5.5'
     packages:
         structure: '^2.0'
