@@ -117,7 +117,8 @@ class rex_yrewrite_seo
                 foreach ($domain->getClangs() as $clang) {
                     if ($lang = rex_clang::get($clang)) {
                         $article = rex_article::getCurrent($clang);
-                        if ($article->isOnline()) {
+                        if ($article->isOnline() && $lang->isOnline())
+                        {
                             $lang_domains[$lang->getCode()] = rex_yrewrite::getFullUrlByArticleId($article->getId(), $lang->getId());
                         }
                     }
@@ -318,6 +319,11 @@ class rex_yrewrite_seo
                     }
 
                     $this->article = rex_article::get($article_id, $clang_id);
+                    $category = $this->article->getParent() ?: $this->article->getCategory();
+
+                    if ($category && !$category->isOnline()) {
+                        continue;
+                    }
 
                     if (
                         ($this->article) &&
