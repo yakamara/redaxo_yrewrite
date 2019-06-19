@@ -221,7 +221,7 @@ class rex_yrewrite
         } else {
             if (!isset($_SERVER['REQUEST_URI'])) {
                 $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
-                if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") {
+                if (!empty($_SERVER['QUERY_STRING'])) {
                     $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
                 }
             }
@@ -337,7 +337,7 @@ class rex_yrewrite
                     foreach (rex_clang::getAllIds() as $clang_id) {
                         if (isset($i_cls[$clang_id]) && $i_cls[$clang_id] == $candidate) {
                             $url = $domain->getPath() . $candidate;
-                            if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") {
+                            if (!empty($_SERVER['QUERY_STRING'])) {
                                 $url .= '?' . $_SERVER['QUERY_STRING'];
                             }
                             header('HTTP/1.1 301 Moved Permanently');
