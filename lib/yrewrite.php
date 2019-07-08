@@ -498,9 +498,10 @@ class rex_yrewrite
             case 'ART_STATUS':
             case 'ART_META_UPDATED':
                 rex_article_cache::delete($params['id']);
-                $domain = self::$domainsByMountId[0][$params['clang']];
-                $path = self::$scheme->getClang($params['clang'], $domain);
-                $art = rex_article::get($params['id'], $params['clang']);
+                $clang = $params['clang'] ?? rex_clang::getCurrentId();
+                $domain = self::$domainsByMountId[0][$clang];
+                $path = self::$scheme->getClang($clang, $domain);
+                $art = rex_article::get($params['id'], $clang);
                 $tree = $art->getParentTree();
                 if ($art->isStartArticle()) {
                     $cat = array_pop($tree);
