@@ -498,22 +498,25 @@ class rex_yrewrite
             case 'ART_STATUS':
             case 'ART_META_UPDATED':
                 rex_article_cache::delete($params['id']);
-                $domain = self::$domainsByMountId[0][$params['clang']];
-                $path = self::$scheme->getClang($params['clang'], $domain);
-                $art = rex_article::get($params['id'], $params['clang']);
-                $tree = $art->getParentTree();
-                if ($art->isStartArticle()) {
-                    $cat = array_pop($tree);
-                }
-                foreach ($tree as $parent) {
-                    $path = self::$scheme->appendCategory($path, $parent, $domain);
-                    $setDomain($domain, $path, $parent);
-                    $setPath($domain, $path, rex_article::get($parent->getId(), $parent->getClang()));
-                }
-                if ($art->isStartArticle()) {
-                    $generatePaths($domain, $path, $cat);
-                } else {
-                    $setPath($domain, $path, $art);
+                $domain_id = self::getDomainByArticleId($params['id'])->getId();
+                $domain = self::$domainsByMountId[$domain_id][$params['clang']];
+                if ($domain) {
+                    $path = self::$scheme->getClang($params['clang'], $domain);
+                    $art = rex_article::get($params['id'], $params['clang']);
+                    $tree = $art->getParentTree();
+                    if ($art->isStartArticle()) {
+                        $cat = array_pop($tree);
+                    }
+                    foreach ($tree as $parent) {
+                        $path = self::$scheme->appendCategory($path, $parent, $domain);
+                        $setDomain($domain, $path, $parent);
+                        $setPath($domain, $path, rex_article::get($parent->getId(), $parent->getClang()));
+                    }
+                    if ($art->isStartArticle()) {
+                        $generatePaths($domain, $path, $cat);
+                    } else {
+                        $setPath($domain, $path, $art);
+                    }
                 }
                 break;
 
