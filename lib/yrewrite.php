@@ -444,56 +444,20 @@ class rex_yrewrite
     public static function generatePathFile($params)
     {
         $old_paths = self::$paths;
-        $setDomain = function (rex_yrewrite_domain &$domain, &$path, rex_structure_element $element) {
-            $id = $element->getId();
-            $clang = $element->getClang();
-            if (isset(self::$domainsByMountId[$id][$clang])) {
-                $domain = self::$domainsByMountId[$id][$clang];
-                $path = self::$scheme->getClang($clang, $domain);
-            }
-        };
 
-        $setPath = function (rex_yrewrite_domain $domain, $path, rex_article $art) use ($setDomain) {
-            $setDomain($domain, $path, $art);
-            if (($redirection = self::$scheme->getRedirection($art, $domain)) instanceof rex_structure_element) {
-                self::$paths['redirections'][$art->getId()][$art->getClang()] = [
-                    'id' => $redirection->getId(),
-                    'clang' => $redirection->getClang(),
-                ];
-                unset(self::$paths['paths'][$domain->getName()][$art->getId()][$art->getClang()]);
-                return;
-            }
-            unset(self::$paths['redirections'][$art->getId()][$art->getClang()]);
-            $url = self::$scheme->getCustomUrl($art, $domain);
-            if (!is_string($url)) {
-                $url = self::$scheme->appendArticle($path, $art, $domain);
-            }
-            self::$paths['paths'][$domain->getName()][$art->getId()][$art->getClang()] = ltrim($url, '/');
-        };
-
-        $generatePaths = function (rex_yrewrite_domain $domain, $path, rex_category $cat) use (&$generatePaths, $setDomain, $setPath) {
-            $path = self::$scheme->appendCategory($path, $cat, $domain);
-            $setDomain($domain, $path, $cat);
-            foreach ($cat->getChildren() as $child) {
-                $generatePaths($domain, $path, $child);
-            }
-            foreach ($cat->getArticles() as $art) {
-                $setPath($domain, $path, $art);
-            }
-        };
+        $generator = new rex_yrewrite_path_generator(self::$scheme, self::$domainsByMountId, self::$paths['paths'] ?? [], self::$paths['redirections'] ?? []);
 
         $ep = isset($params['extension_point']) ? $params['extension_point'] : '';
         switch ($ep) {
             // clang and id specific update
             case 'CAT_DELETED':
             case 'ART_DELETED':
-                foreach (self::$paths['paths'] as $domain => $c) {
-                    unset(self::$paths['paths'][$domain][$params['id']]);
-                }
-                unset(self::$paths['redirections'][$params['id']]);
+                $generator->removeArticleId($params['id']);
+
                 if (0 == $params['re_id']) {
                     break;
                 }
+
                 $params['id'] = $params['re_id'];
             // no break
             case 'CAT_ADDED':
@@ -509,24 +473,10 @@ class rex_yrewrite
                 // workaround for R<5.8: https://github.com/redaxo/redaxo/pull/2843
                 $clangId = $params['clang'] ?? $params['clang_id'];
 
+                // TODO: Is this really needed anymore?
                 rex_article_cache::delete($params['id']);
-                $domain = self::$domainsByMountId[0][$clangId];
-                $path = self::$scheme->getClang($clangId, $domain);
-                $art = rex_article::get($params['id'], $clangId);
-                $tree = $art->getParentTree();
-                if ($art->isStartArticle()) {
-                    $cat = array_pop($tree);
-                }
-                foreach ($tree as $parent) {
-                    $path = self::$scheme->appendCategory($path, $parent, $domain);
-                    $setDomain($domain, $path, $parent);
-                    $setPath($domain, $path, rex_article::get($parent->getId(), $parent->getClang()));
-                }
-                if ($art->isStartArticle()) {
-                    $generatePaths($domain, $path, $cat);
-                } else {
-                    $setPath($domain, $path, $art);
-                }
+
+                $generator->generate(rex_article::get($params['id'], $clangId));
                 break;
 
             // update all
@@ -535,19 +485,14 @@ class rex_yrewrite
             case 'CLANG_UPDATED':
             //case 'ALL_GENERATED':
             default:
-                self::$paths = ['paths' => [], 'redirections' => []];
-                foreach (rex_clang::getAllIds() as $clangId) {
-                    $domain = self::$domainsByMountId[0][$clangId];
-                    $path = self::$scheme->getClang($clangId, $domain);
-                    foreach (rex_category::getRootCategories(false, $clangId) as $cat) {
-                        $generatePaths($domain, $path, $cat);
-                    }
-                    foreach (rex_article::getRootArticles(false, $clangId) as $art) {
-                        $setPath($domain, $path, $art);
-                    }
-                }
+                $generator->generateAll();
                 break;
         }
+
+        self::$paths = [
+            'paths' => $generator->getPaths(),
+            'redirections' => $generator->getRedirections(),
+        ];
 
         $sql = rex_sql::factory()
 //                ->setDebug()
