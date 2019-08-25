@@ -506,10 +506,13 @@ class rex_yrewrite
             case 'ART_UPDATED':
             case 'ART_META_UPDATED':
             case 'ART_STATUS':
+                // workaround for R<5.8: https://github.com/redaxo/redaxo/pull/2843
+                $clangId = $params['clang'] ?? $params['clang_id'];
+
                 rex_article_cache::delete($params['id']);
-                $domain = self::$domainsByMountId[0][$params['clang']];
-                $path = self::$scheme->getClang($params['clang'], $domain);
-                $art = rex_article::get($params['id'], $params['clang']);
+                $domain = self::$domainsByMountId[0][$clangId];
+                $path = self::$scheme->getClang($clangId, $domain);
+                $art = rex_article::get($params['id'], $clangId);
                 $tree = $art->getParentTree();
                 if ($art->isStartArticle()) {
                     $cat = array_pop($tree);
@@ -549,13 +552,13 @@ class rex_yrewrite
         $sql = rex_sql::factory()
 //                ->setDebug()
                 ->setTable(rex::getTable('yrewrite_forward'));
-        
+
         // Alte Einträge ausschalten
-        
+
         $sql->setWhere('expiry_date > "0000-00-00" AND expiry_date < :date',['date'=>date('Y-m-d')]);
         $sql->setValue('status',0);
         $sql->update();
-        
+
         // vergleicht alle Einträge aus old_paths mit der aktuellen path Liste.
         // nur ausführen, wenn es old_paths überhaupt gibt
         if ($old_paths) {
@@ -564,7 +567,7 @@ class rex_yrewrite
                 $domain_id = $domain->getId();
                 $expiry_date = '0000-00-00';
                 if ($domain->getAutoRedirectDays()) {
-                    $expiry_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);            
+                    $expiry_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);
                 }
 
                 // Autoredirect nicht setzen, wenn autoredirect für diese Domain nicht eingeschaltet ist
@@ -615,10 +618,10 @@ class rex_yrewrite
 			                }
                         }
                     }
-                }            
+                }
             }
         }
-        
+
         rex_yrewrite_forward::init();
         rex_yrewrite_forward::generatePathFile();
         rex_file::putCache(self::$pathfile, self::$paths);
