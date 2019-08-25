@@ -452,33 +452,36 @@ class rex_yrewrite
             // clang and id specific update
             case 'CAT_DELETED':
             case 'ART_DELETED':
-                $generator->removeArticleId($params['id']);
+                $generator->removeArticle($params['id'], $params['clang']);
 
-                if (0 == $params['re_id']) {
-                    break;
+                if ($params['re_id'] > 0) {
+                    $generator->generate(rex_article::get($params['re_id'], $params['clang']));
                 }
 
-                $params['id'] = $params['re_id'];
-            // no break
-            case 'CAT_ADDED':
+                break;
             case 'CAT_MOVED':
+            case 'ART_MOVED':
+                // workaround for R<5.8: https://github.com/redaxo/redaxo/pull/2843
+                $clangId = $params['clang'] ?? $params['clang_id'];
+
+                $generator->removeArticle($params['id'], $clangId);
+                $generator->generate(rex_article::get($params['id'], $params['clang']));
+
+                break;
+            case 'CAT_ADDED':
             case 'CAT_UPDATED':
             case 'CAT_STATUS':
             case 'ART_ADDED':
             case 'ART_COPIED':
-            case 'ART_MOVED':
             case 'ART_UPDATED':
             case 'ART_META_UPDATED':
             case 'ART_STATUS':
-                // workaround for R<5.8: https://github.com/redaxo/redaxo/pull/2843
-                $clangId = $params['clang'] ?? $params['clang_id'];
-
                 // TODO: Is this really needed anymore?
                 rex_article_cache::delete($params['id']);
 
-                $generator->generate(rex_article::get($params['id'], $clangId));
-                break;
+                $generator->generate(rex_article::get($params['id'], $params['clang']));
 
+                break;
             // update all
             case 'CLANG_DELETED':
             case 'CLANG_ADDED':

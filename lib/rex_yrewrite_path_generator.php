@@ -83,13 +83,21 @@ class rex_yrewrite_path_generator
         }
     }
 
-    public function removeArticleId(int $articleId)
+    public function removeArticle(int $articleId, int $clangId)
     {
         foreach ($this->paths as $domain => $c) {
-            unset($this->paths[$domain][$articleId]);
+            unset($this->paths[$domain][$articleId][$clangId]);
+
+            if (empty($this->paths[$domain][$articleId])) {
+                unset($this->paths[$domain][$articleId]);
+            }
         }
 
-        unset($this->redirections[$articleId]);
+        unset($this->redirections[$articleId][$clangId]);
+
+        if (empty($this->redirections[$articleId])) {
+            unset($this->redirections[$articleId]);
+        }
     }
 
     private function setDomain(rex_structure_element $element, rex_yrewrite_domain $domain, string $path)
