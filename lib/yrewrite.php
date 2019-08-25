@@ -454,8 +454,8 @@ class rex_yrewrite
             case 'ART_DELETED':
                 $generator->removeArticle($params['id'], $params['clang']);
 
-                if ($params['re_id'] > 0) {
-                    $generator->generate(rex_article::get($params['re_id'], $params['clang']));
+                if ($params['parent_id'] > 0) {
+                    $generator->generate(rex_article::get($params['parent_id'], $params['clang']));
                 }
 
                 break;
