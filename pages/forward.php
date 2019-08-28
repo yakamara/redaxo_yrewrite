@@ -152,6 +152,9 @@ if ($showlist) {
     $list->setColumnSortable('domain_id');
     $list->setColumnSortable('status');
 
+    $list->setColumnLabel('expiry_date', $this->i18n('expiry_date'));
+
+
     $list->setColumnLabel('domain_id', $this->i18n('forward_url'));
     $list->setColumnFormat('domain_id', 'custom', function ($params) {
         $domain = rex_yrewrite::getDomainById($params['subject']);

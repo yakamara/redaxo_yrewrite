@@ -81,7 +81,7 @@ class rex_yrewrite_seo
         if ($this->article->getValue(self::$meta_index_field) == 1 || ($this->article->getValue(self::$meta_index_field) == 0 && $this->article->isOnline())) {
             return '<meta name="robots" content="index, follow">';
         } else {
-            return '<meta name="robots" content="noindex, follow">';
+            return '<meta name="robots" content="noindex, nofollow">';
         }
     }
 

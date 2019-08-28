@@ -33,8 +33,9 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
     // if anything changes -> refresh PathFile
     if (rex::isBackend()) {
         $extensionPoints = [
-            'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',
+            'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',  'CAT_MOVED',
             'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',  'ART_MOVED', 'ART_COPIED',
+            'ART_META_UPDATED', 'ART_TO_STARTARTICLE', 'ART_TO_CAT', 'CAT_TO_ART',
             /*'CLANG_ADDED',*/ 'CLANG_UPDATED', /*'CLANG_DELETED',*/
             /*'ARTICLE_GENERATED'*/
             //'ALL_GENERATED'
@@ -55,8 +56,12 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
         return rex_yrewrite::rewrite($params);
     });
 
-    // get ARTICLE_ID from URL
     if (!rex::isBackend()) {
+        rex_extension::register('MEDIA_MANAGER_URL', function (rex_extension_point $ep) {
+            return rex_yrewrite::rewriteMedia($ep->getParams());
+        });
+
+        // get ARTICLE_ID from URL
         rex_yrewrite::prepare();
     }
 

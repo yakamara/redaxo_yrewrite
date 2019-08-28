@@ -165,3 +165,9 @@ yrewrite_forward_301 = 301 - Movido de forma permanente: el reenvío persistente
 yrewrite_forward_302 = 302 - Found / Encontrado
 yrewrite_forward_303 = 303 - Ver Otro / reenvío normal
 yrewrite_forward_307 = 307 - Redirección temporal / Redirección temporal En el futuro, el contenido se puede encontrar de nuevo bajo la URL
+
+yrewrite_auto_redirect = Redirecciones automáticas 301 establecidas cuando se renombran o mueven los artículos. (Debería estar apagado durante el desarrollo y encendido en vivo).
+yrewrite_auto_redirect_days = Número de días hasta que los redireccionamientos automáticos se desactiven.
+yrewrite_auto_redirect_days_info = Introduzca 0 para desactivar la desactivación automática.
+yrewrite_auto_redirects = Redirecciones automáticas
+yrewrite_expiry_date = fecha de desactivación
