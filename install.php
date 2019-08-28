@@ -61,4 +61,9 @@ $table
     ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
     ->ensure();
 
+$c = rex_sql::factory();
+$c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_domain') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+$c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_alias') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+$c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+
 rex_delete_cache();
