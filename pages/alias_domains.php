@@ -42,6 +42,7 @@ if ($func != '') {
     $yform->setValidateField('empty', ['alias_domain', $this->i18n('no_domain_defined')]);
     $yform->setValidateField('empty', ['domain_id', $this->i18n('no_domain_defined')]);
     $yform->setValidateField('unique', ['alias_domain', $this->i18n('domain_already_defined')]);
+    $yform->setValidateField('preg_match', ['domain', '/^(?:http[s]?:\/\/)?[a-zA-Z0-9][a-zA-Z0-9._-]*\.(?:[a-zA-Z0-9][a-zA-Z0-9._-]*\.)*[a-zA-Z]{2,20}(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$' . '/', $this->i18n('domain_not_well_formed')]);
 
     if ($func == 'delete') {
         if (!$csrf->isValid()) {
