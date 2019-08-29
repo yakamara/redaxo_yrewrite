@@ -67,3 +67,5 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_alias') . '` CONVERT TO C
 $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
 rex_delete_cache();
+
+rex_yrewrite_seo_visibility::install();

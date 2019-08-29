@@ -171,3 +171,10 @@ yrewrite_auto_redirect_days = Anzahl Tage, bis automatische Redirects inaktiv ge
 yrewrite_auto_redirect_days_info = 0 eintragen, um die automatische Deaktivierung auszuschalten.
 yrewrite_auto_redirects = Automatische Weiterleitungen
 yrewrite_expiry_date = Deaktivierungsdatum
+
+yrewrite_perm_url_edit = Yrewrite: URL Editieren
+yrewrite_perm_seo_edit = Yrewrite: SEO-Daten Editieren
+yrewrite_seo_settings = Einstellungen
+yrewrite_seo_saved = Einstellungen gespeichert
+yrewrite_hide_url_block = URL-Block verbergen
+yrewrite_hide_seo_block = SEO-Block verbergen

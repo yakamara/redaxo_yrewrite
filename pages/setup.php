@@ -57,8 +57,11 @@ $fragment->setVar('title', $this->i18n('setup'));
 $fragment->setVar('body', $content, false);
 echo $fragment->parse('core/page/section.php');
 
-
-
+/**
+ * Process and display visibility settings form
+ */
+echo rex_yrewrite_seo_visibility::processFormPost();
+echo rex_yrewrite_seo_visibility::getForm();
 
 $domains = [];
 
