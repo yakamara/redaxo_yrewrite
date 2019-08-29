@@ -1,6 +1,37 @@
 Changelog
 =========
 
+Version 2.6beta – 29.08.2019
+--------------------------
+
+### Neu
+
+- Version braucht YForm 3.x, PHP 7.x
+- Diverse Übersetzungen ergänzt (Danke Yves und Fernando)
+- Mediamanager Urls wegen ab R5.7 richtig umgeschrieben
+- QueryCheck verbessert (Danke Hirbod)
+- Doppelter EP Aufruf entfernt
+- PathGenerator ausgelagert
+- Dateien mit Klassen passend verschoben und benannt
+- Einführung utf8mb4. Inhalte werden entsprechend konvertiert
+- .htaccesss angepasst. Nicht vorhandene Backenddateien leiten nicht mehr auf Frontpage
+- Permissions für das URL- und SEO-Editieren hinzugefügt (Danke Daniel Weitenauer)
+- Zugriff auf die Namen der SEO-Felder ermöglichen, um sie ändern zu können (Danke Daniel Weitenauer)
+- Möglichkeit zum generellen Ein- und Ausblenden der SEO-Blöcke hinzufügen (Danke Daniel Weitenauer)
+- Sitemap und XSL für eine nettere Darstellung erweitert (Danke Alex Platter)
+- canonical URL um EP YREWRITE_CANONICAL_URL erweitert (Danke Alex Platter)
+- Domains/Aliasdomain werden nun validiert, da sonst Fehler geworfen wurden
+- Bei WeiterleitungsURLs können nun auch Kommas verwendet werden
+- 404 Status wird nun auch bei Startseite als Fehlerseite gesetzt
+
+### Bugs
+
+- Kategorie verschieben Fehler behoben
+- Kategorie/Artikel löschen Fehler behoben
+- Artikelfunktionen (cat2art, art2cat, art2startarticle) erzeugen nun wieder richtige Pfade
+- Warnungen entfernt (Danke Alex Platter)
+
+
 
 Version 2.5.0 – 04.02.2019
 --------------------------
