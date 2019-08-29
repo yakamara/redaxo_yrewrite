@@ -26,7 +26,7 @@ Version 2.6beta – 29.08.2019
 
 ### Bugs
 
-- Kategorie verschieben Fehler behoben
+- Kategorie verschieben Fehler behoben (Danke Alexander Walther)
 - Kategorie/Artikel löschen Fehler behoben
 - Artikelfunktionen (cat2art, art2cat, art2startarticle) erzeugen nun wieder richtige Pfade
 - Warnungen entfernt (Danke Alex Platter)
