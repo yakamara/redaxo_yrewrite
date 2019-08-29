@@ -17,7 +17,7 @@ page:
 
 requires:
     php:
-        version: '^7.0'
+        version: '^7.1'
     redaxo: '^5.5'
     packages:
         structure: '^2.0'
