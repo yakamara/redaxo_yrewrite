@@ -68,4 +68,7 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO
 
 rex_delete_cache();
 
+if (!class_exists('rex_yrewrite_seo_visibility')) {
+    require_once('lib/yrewrite/seo_visibility.php');
+}
 rex_yrewrite_seo_visibility::install();
