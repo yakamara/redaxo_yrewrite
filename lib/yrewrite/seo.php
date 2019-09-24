@@ -224,7 +224,7 @@ class rex_yrewrite_seo
 
                     if (
                         ($article) &&
-                        self::checkArticlePerm($article) &&
+                        $article->isPermitted() &&
                         ($article->getValue(self::$meta_index_field) == 1 || ($article->isOnline() && $article->getValue(self::$meta_index_field) == 0)) &&
                         ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())
 
@@ -276,10 +276,9 @@ class rex_yrewrite_seo
         exit;
     }
 
+    /* @deprecated */
     public static function checkArticlePerm($article)
     {
-        $perm = true;
-        $perm = rex_extension::registerPoint(new rex_extension_point('YREWRITE_ARTICLE_PERM', $perm, ['article' => $article]));
-        return $perm;
+        return $article->isPermitted();
     }
 }
