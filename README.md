@@ -76,6 +76,7 @@ Unter Weiterleitungen können URLs definiert werden, die dann auf einen bestimmt
 
 Unter `Setup` kann die `.htaccess`-Datei neu überschrieben werden, die für die Verwendung von YRewrite benötigt wird. Außerdem sind die `sitemap.xml` und `robots.txt` je Domain einsehbar.
 
+> Hinweis: Das Addon leitet alle Anfragen von `/media/` über das Media-Manager-AddOn. Stelle daher sicher, dass sich keine deiner Dateien fürs Frontend, bspw. CSS- oder JS-Dateien, darin befinden. Ein guter Ort hierfür sind die Ordner `/assets/` oder die Verwendung des Theme-AddOns.
 
 # Klassen-Referenz
 
