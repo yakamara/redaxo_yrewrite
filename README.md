@@ -32,7 +32,11 @@ Voraussetzung für die aktuelle Version von YRewrite: REDAXO >= 5.5
 
 ## Setup
 
-Nach der Installation und dem Abschluss des Setups wird die `.htaccess`-Datei von REDAXO aktualisiert. Auch eine virtuelle `robots.txt` und `sitemap.xml` werden erstellt.
+Nach der Installation und dem Abschluss des Setups wird eine `.htaccess`-Datei im Hauptverzeichnis erstellt, die für die Verwendung von YRewrite benötigt wird. Auch eine virtuelle `robots.txt` und `sitemap.xml` werden erstellt.
+
+Unter dem Reiter `Setup` kann die `.htaccess`-Datei jederzeit neu geschrieben werden Außerdem sind die `sitemap.xml` und `robots.txt` je Domain einsehbar.
+
+> **Hinweis:** Das Addon leitet alle Anfragen von `/media/` über das Media-Manager-AddOn. Stelle daher sicher, dass es weder eine Struktur-Kategorie "Media" gibt, noch, dass sich keine deiner Dateien fürs Frontend, bspw. CSS- oder JS-Dateien, darin befinden. Gute Orte hierfür sind die Ordner `/assets/` oder die Verwendung des Theme-AddOns. Sollte es notwendig sein, eine Kategorie namens "Media" zu verwenden, dann müssen [die entsprechenden Zeilen in der .htaccess-Datei](https://github.com/yakamara/redaxo_yrewrite/blob/b519622a3be135f1380e35bf85783cc33e71664f/setup/.htaccess#L96-L97) auskommentiert oder umbenannt werden und diese fortan genutzt werden, wenn Medien aus dem Medien Manager verwendet werden. Dies hat weitere Auswirkungen, z.B. auf geschützte Dateien mit YCom - das Auskommentieren und Umbenennen sollte daher nur von erfahrenen REDAXO-Entwicklern vorgenommen werden.
 
 
 ## Domain hinzufügen
@@ -72,11 +76,9 @@ Unter Weiterleitungen können URLs definiert werden, die dann auf einen bestimmt
 
 > **Hinweis:** Mit dieser Einstellung können nicht bereits vorhandene Artikel / URLs umgeleitet werden, sondern nur URLs, die in der REDAXO-Installation nicht vorhanden sind. Das ist bspw. bei einem Relaunch der Fall, wenn alte URLs auf eine neue Zielseite umgeleitet werden sollen.
 
-## Setup
+## Weitere Schritte
 
-Unter `Setup` kann die `.htaccess`-Datei neu überschrieben werden, die für die Verwendung von YRewrite benötigt wird. Außerdem sind die `sitemap.xml` und `robots.txt` je Domain einsehbar.
-
-> Hinweis: Das Addon leitet alle Anfragen von `/media/` über das Media-Manager-AddOn. Stelle daher sicher, dass sich keine deiner Dateien fürs Frontend, bspw. CSS- oder JS-Dateien, darin befinden. Ein guter Ort hierfür sind die Ordner `/assets/` oder die Verwendung des Theme-AddOns.
+Die `sitemap.xml` kann pro Domain bspw. in der Google Search Console eingetragen werden, um die korrekte Indexierung der Domain(s) und deren Seiten zu überprüfen.
 
 # Klassen-Referenz
 
