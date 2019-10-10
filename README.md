@@ -370,11 +370,9 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 - xcore: https://github.com/RexDude/xcore
 
 
-# Links und Hilfe
+# Weitere Unterstützung
 
-## Bugmeldungen Hilfe und Links
-
-* Auf Github: https://github.com/yakamara/REDAXO_yrewrite/issues/
-* im Forum: https://www.REDAXO.org/forum/
-* im Slack-Channel: https://friendsofREDAXO.slack.com/
+* Bug melden via GitHub: https://github.com/yakamara/REDAXO_yrewrite/issues/
+* Hilfe via REDAXO Slack-Channel: https://friendsofREDAXO.slack.com/
+* Tricks via FriendsOfREDAXO: https://friendsofredaxo.github.io/tricks/ bei Addons > YRewrite
 
