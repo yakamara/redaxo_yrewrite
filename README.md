@@ -39,7 +39,7 @@ Nach der Installation und dem Abschluss des Setups wird die `.htaccess`-Datei vo
 
 1. In "YRewrite" unter "Domains" Auf das +-Zeichen klicken.
 2. Domain eintragen, bspw. `https://www.meine-domain.de/`.
-3. Mountpoint auswählen (optional). Das ist der der Startartikel einer Kategorie, in der sich YRewrite einklinken soll. Alle Artikel unterhalb des Mount-Artikels sind dann über die Domain aufrufbar. Wird kein Artikel ausgewählt, sind alle Ebenen dieser Domain zugeordnet (Standard).
+3. Mountpoint auswählen (optional). Das ist der Startartikel einer Kategorie, in der sich YRewrite einklinken soll. Alle Artikel unterhalb des Mount-Artikels sind dann über die Domain aufrufbar. Wird kein Artikel ausgewählt, sind alle Ebenen dieser Domain zugeordnet (Standard).
 4. Startseiten-Artikel auswählen. Das kann der Mount-Artikel sein oder eine separate Artikelseite. Diese wird als Startseite der Domain aufgerufen.
 5. Fehlerseiten-Artikel auswählen. Das ist der Artikel, der mit einem 404-Fehlercode ausgegeben wird, z.B., wenn eine Seite nicht gefunden werden kann oder ein Tippfehler in der Adresse vorliegt.
 6. Spracheinstellungen: Hier können Sprachen ausgewählt werden, die mit der Domain verknüpft werden. So lassen sich bspw. unterschiedliche Domains pro Sprache umsetzen.
