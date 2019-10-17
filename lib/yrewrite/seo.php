@@ -61,29 +61,47 @@ class rex_yrewrite_seo
         }
     }
 
-    public function getTitleTag()
+    public function getTags()
     {
-        return '<title>'.rex_escape(strip_tags($this->getTitle())).'</title>'; //  lang="de"
-    }
+        $tags = [];
+        $tagsOg = [];
+        $tagsTwitter = [];
+        $tagsTwitter['twitter:card'] = '<meta name="twitter:card" content="summary" />';
 
-    public function getDescriptionTag()
-    {
-        return '<meta name="description" content="'.rex_escape(strip_tags($this->getDescription())).'">'; //  lang="de"
-    }
+        $title = rex_escape(strip_tags($this->getTitle()));
+        $tags['title'] = '<title>'.$title.'</title>';
+        $tagsOg['og:title'] = '<meta property="og:title" content="'.$title.'" />';
+        $tagsTwitter['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
 
-    public function getCanonicalUrlTag()
-    {
-        return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'" />';
-    }
-
-    public function getRobotsTag()
-    {
-        if ($this->article->getValue(self::$meta_index_field) == 1 || ($this->article->getValue(self::$meta_index_field) == 0 && $this->article->isOnline())) {
-            return '<meta name="robots" content="index, follow">';
-        } else {
-            return '<meta name="robots" content="noindex, nofollow">';
+        $description = rex_escape(strip_tags($this->getDescription()));
+        if ($description != '') {
+            $tags['description'] = '<meta name="description" content="'.$description.'">';
+            $tagsOg['og:description'] = '<meta property="og:description" content="'.$description.'" />';
+            $tagsTwitter['twitter:description'] = '<meta name="twitter:description" content="'.$description.'" />';
         }
+
+        $content = 'noindex, nofollow';
+        if ($this->article->getValue(self::$meta_index_field) == 1 || ($this->article->getValue(self::$meta_index_field) == 0 && $this->article->isOnline())) {
+            $content = 'index, follow';
+        }
+        $tags['robots'] = '<meta name="robots" content="'.$content.'">';
+
+        $canonicalUrl = rex_escape($this->getCanonicalUrl());
+        $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
+        $tagsOg['og:url'] = '<meta property="og:url" href="'.$canonicalUrl.'" />';
+        $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'" />';
+
+
+        $hrefs = $this->getHrefLangs();
+        foreach ($hrefs as $code => $url){
+            $tags['hreflang:'.$code] = '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+        }
+
+        $tags += $tagsOg + $tagsTwitter;
+        $tags = \rex_extension::registerPoint(new \rex_extension_point('YREWRITE_SEO_TAGS', $tags));
+        return implode("\n", $tags);
     }
+
 
     public function getTitle()
     {
@@ -116,7 +134,7 @@ class rex_yrewrite_seo
     {
         $canonical_url = trim($this->article->getValue(self::$meta_canonical_url_field));
         if ($canonical_url == "") {
-            $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
+            $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClangId());
         }
         $canonical_url = rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_URL', $canonical_url, ['article' => $this->article]));
         return $canonical_url;
@@ -143,17 +161,6 @@ class rex_yrewrite_seo
         }
 
         return rex_extension::registerPoint(new rex_extension_point('YREWRITE_HREFLANG_TAGS', $lang_domains, ['article' => $this->article]));
-    }
-
-    public function getHreflangTags()
-    {
-        $return = '';
-        $lang_domains = $this->getHrefLangs();
-
-        foreach ($lang_domains as $code => $url){
-            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
-        }
-        return $return;
     }
 
     public function cleanString($str)
@@ -215,7 +222,7 @@ class rex_yrewrite_seo
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
-                    
+
                     if (!rex_clang::get($clang_id)->isOnline()) {
                         continue;
                     }
