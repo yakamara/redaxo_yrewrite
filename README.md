@@ -38,6 +38,52 @@ Unter dem Reiter `Setup` kann die `.htaccess`-Datei jederzeit neu geschrieben we
 
 > **Hinweis:** Das Addon leitet alle Anfragen von `/media/` über das Media-Manager-AddOn. Stelle daher sicher, dass es weder eine Struktur-Kategorie "Media" gibt, noch, dass sich keine deiner Dateien fürs Frontend, bspw. CSS- oder JS-Dateien, darin befinden. Gute Orte hierfür sind die Ordner `/assets/` oder die Verwendung des Theme-AddOns. Sollte es notwendig sein, eine Kategorie namens "Media" zu verwenden, dann müssen [die entsprechenden Zeilen in der .htaccess-Datei](https://github.com/yakamara/redaxo_yrewrite/blob/b519622a3be135f1380e35bf85783cc33e71664f/setup/.htaccess#L96-L97) auskommentiert oder umbenannt werden und diese fortan genutzt werden, wenn Medien aus dem Medien Manager verwendet werden. Dies hat weitere Auswirkungen, z.B. auf geschützte Dateien mit YCom - das Auskommentieren und Umbenennen sollte daher nur von erfahrenen REDAXO-Entwicklern vorgenommen werden.
 
+### NGINX-Konfiguration für YRewrite
+
+Eine vollständige nginx config für YRewrite.
+
+> Hinweis für PLESK-Websites: Die Direktiven können unter ***Einstellungen für Apache & nginx*** der gewünschten Domain im Abschnitt ***Zusätzliche nginx-Anweisungen*** hinterlegt werden. 
+
+```nginx
+charset utf-8;
+
+location / {
+  try_files $uri $uri/ /index.php$is_args$args;
+}
+
+rewrite ^/sitemap\.xml$                           /index.php?rex_yrewrite_func=sitemap last;
+rewrite ^/robots\.txt$                            /index.php?rex_yrewrite_func=robots last;
+rewrite ^/media[0-9]*/imagetypes/([^/]*)/([^/]*)  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
+rewrite ^/images/([^/]*)/([^/]*)                  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
+rewrite ^/imagetypes/([^/]*)/([^/]*)              /index.php?rex_media_type=$1&rex_media_file=$2;
+
+if ($uri !~ "^redaxo/.*") {
+  set $rule_6 4$rule_6;
+}
+
+if ($uri !~ "^media/.*"){
+  set $rule_6 5$rule_6;
+}
+
+
+#!!! WICHTIG !!! Falls Let's Encrypt fehlschlägt, diese Zeile auskommentieren (sollte jedoch funktionieren)
+location ~ /\. { deny  all; }
+
+# Zugriff auf diese Verzeichnisse verbieten
+location ^~ /redaxo/src { deny  all; }
+location ^~ /redaxo/data { deny  all; }
+location ^~ /redaxo/cache { deny  all; }
+location ^~ /redaxo/bin { deny  all; }
+
+
+# In einigen Fällen könnte folgende Anweisung zusätlich sinnvoll sein.
+
+location ~ /\.(ttf|eot|woff|woff2)$ {
+  add_header Access-Control-Allow-Origin *;
+  expires 604800s;
+}
+```
+
 
 ## Domain hinzufügen
 
