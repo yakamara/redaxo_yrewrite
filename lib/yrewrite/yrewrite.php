@@ -44,7 +44,7 @@ class rex_yrewrite
         if (rex::isBackend()) {
             $path = dirname($path);
         }
-        $path = rtrim($path, '/') . '/';
+        $path = rtrim($path, DIRECTORY_SEPARATOR) . '/';
         self::addDomain(new rex_yrewrite_domain('default', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId()));
 
         self::$pathfile = rex_path::addonCache('yrewrite', 'pathlist.json');
