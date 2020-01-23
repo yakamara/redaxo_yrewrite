@@ -73,6 +73,8 @@ yrewrite_warning_chars = The URL is invalid. Consider your characters. Only a-z 
 yrewrite_warning_urlexists = URL exists already {0}
 yrewrite_warning_otherarticle = To different article
 yrewrite_urlupdated = URL has been updated
+yrewrite_domain_not_well_formed = Domain/URL syntax ill formed
+
 
 yrewrite_seotitle = Title
 yrewrite_seodescription = Description
