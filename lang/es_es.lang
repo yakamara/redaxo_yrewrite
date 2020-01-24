@@ -73,6 +73,8 @@ yrewrite_warning_chars = La URL no es correcta Note la ortografía. Solo "a-z/0-
 yrewrite_warning_urlexists = Esta URL ya existe para artículos con id={0}
 yrewrite_warning_otherarticle = Al otro artículo
 yrewrite_urlupdated = Url ha sido actualizado
+yrewrite_domain_not_well_formed = El formato de dominio/url es incorrecto.
+
 
 yrewrite_seotitle = Título
 yrewrite_seodescription = Descripción
@@ -171,3 +173,10 @@ yrewrite_auto_redirect_days = Número de días hasta que los redireccionamientos
 yrewrite_auto_redirect_days_info = Introduzca 0 para desactivar la desactivación automática.
 yrewrite_auto_redirects = Redirecciones automáticas
 yrewrite_expiry_date = fecha de desactivación
+
+yrewrite_perm_url_edit = Yrewrite: Edición de URL
+yrewrite_perm_seo_edit = Yrewrite: Edición de datos SEO
+yrewrite_seo_settings = Ajustes
+yrewrite_seo_saved = Configuraciones guardadas
+yrewrite_hide_url_block = Ocultar bloque de URL
+yrewrite_hide_seo_block = Ocultar bloque SEO
