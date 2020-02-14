@@ -56,11 +56,11 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
         return rex_yrewrite::rewrite($params);
     });
 
-    if (!rex::isBackend()) {
-        rex_extension::register('MEDIA_MANAGER_URL', function (rex_extension_point $ep) {
-            return rex_yrewrite::rewriteMedia($ep->getParams());
-        });
+    rex_extension::register('MEDIA_MANAGER_URL', function (rex_extension_point $ep) {
+        return rex_yrewrite::rewriteMedia($ep->getParams());
+    });
 
+    if (!rex::isBackend()) {
         // get ARTICLE_ID from URL
         rex_yrewrite::prepare();
     }
