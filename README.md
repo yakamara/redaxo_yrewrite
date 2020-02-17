@@ -57,15 +57,6 @@ rewrite ^/media[0-9]*/imagetypes/([^/]*)/([^/]*)  /index.php?rex_media_type=$1&r
 rewrite ^/images/([^/]*)/([^/]*)                  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
 rewrite ^/imagetypes/([^/]*)/([^/]*)              /index.php?rex_media_type=$1&rex_media_file=$2;
 
-if ($uri !~ "^redaxo/.*") {
-  set $rule_6 4$rule_6;
-}
-
-if ($uri !~ "^media/.*"){
-  set $rule_6 5$rule_6;
-}
-
-
 #!!! WICHTIG !!! Falls Let's Encrypt fehlschlägt, diese Zeile auskommentieren (sollte jedoch funktionieren)
 location ~ /\. { deny  all; }
 
