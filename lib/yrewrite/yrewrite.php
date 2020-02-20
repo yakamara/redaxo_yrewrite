@@ -526,6 +526,10 @@ class rex_yrewrite
                 if (!$domain->getAutoRedirect()) continue;
                 foreach ($old_article_paths as $art_id => $old_paths ) {
                     foreach (rex_clang::getAllIds() as $clang_id) {
+                        if (!isset(self::$paths['paths'][$domain_name][$art_id][$clang_id]) || !isset($old_paths[$clang_id])) {
+                            continue;
+                        }
+
                         // Wenn es eine Abweichung im Pfad gibt, wird ein neuer Eintrag eingefügt
 		                if (self::$paths['paths'][$domain_name][$art_id][$clang_id] != $old_paths[$clang_id]) {
 		                	if($ep == 'CAT_DELETED' || $ep == 'ART_DELETED') {
