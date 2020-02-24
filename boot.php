@@ -60,8 +60,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
         return rex_yrewrite::rewriteMedia($ep->getParams());
     });
 
-    if (!rex::isBackend()) {
-        // get ARTICLE_ID from URL
+    if (!rex::getConsole()) {
         rex_yrewrite::prepare();
     }
 

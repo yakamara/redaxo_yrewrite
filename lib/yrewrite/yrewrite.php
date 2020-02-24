@@ -247,7 +247,7 @@ class rex_yrewrite
 
         $host = self::getHost();
 
-        if (isset(self::$paths['paths'][$host])) {
+        if (isset(self::$domainsByName[$host])) {
             $domain = self::$domainsByName[$host];
         } else {
             // check for aliases
@@ -300,6 +300,10 @@ class rex_yrewrite
             header('HTTP/1.1 301 Moved Permanently');
             header('Location: ' . $domainScheme . '://' . $host . $url . $params);
             exit;
+        }
+
+        if (rex::isBackend()) {
+            return true;
         }
 
         if (0 === strpos($url, $domain->getPath())) {
