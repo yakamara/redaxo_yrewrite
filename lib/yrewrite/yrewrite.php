@@ -296,7 +296,11 @@ class rex_yrewrite
 
         $currentScheme = self::isHttps() ? 'https' : 'http';
         $domainScheme = $domain->getScheme();
-        if ($domainScheme && $domainScheme !== $currentScheme) {
+        if (
+            $domainScheme && $domainScheme !== $currentScheme &&
+            // do not redirect to http in backend if core config use_https is true
+            (!rex::isBackend() || 'https' === $domainScheme || !rex::getProperty('use_https'))
+        ) {
             header('HTTP/1.1 301 Moved Permanently');
             header('Location: ' . $domainScheme . '://' . $host . $url . $params);
             exit;
