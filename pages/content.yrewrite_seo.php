@@ -32,6 +32,7 @@ $index_setting = [];
 $index_setting[] = rex_i18n::msg('yrewrite_index_status').'=0';
 $index_setting[] = rex_i18n::msg('yrewrite_index_index').'=1';
 $index_setting[] = rex_i18n::msg('yrewrite_index_noindex').'=-1';
+$index_setting[] = rex_i18n::msg('yrewrite_index_noindex_follow').'=2';
 
 $yform = new rex_yform();
 $yform->setObjectparams('form_action', rex_url::backendController(['page' => 'content/edit', 'article_id' => $article_id, 'clang' => $clang, 'ctype' => $ctype], false));
