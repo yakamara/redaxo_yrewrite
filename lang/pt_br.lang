@@ -101,6 +101,7 @@ yrewrite_index = Indexação e sitemap
 yrewrite_index_status = Autorizar dependendo da indexação status e exibi-los no Sitemap
 yrewrite_index_index = Permitir indexação / Mapa do site (Índice)
 yrewrite_index_noindex = Proibir indexação / exibir no Sitemap (noindex)
+yrewrite_index_noindex_follow = Proibir indexação e seguir links / exibir no Sitemap (noindex)
 
 yrewrite_htaccess_hasbeenset = Arquivo .htaccess foi criado/substituído
 yrewrite_htaccess_set = Definir arquivo .htaccess

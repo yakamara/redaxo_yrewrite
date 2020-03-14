@@ -104,6 +104,7 @@ yrewrite_index = Sökmotorindex och webbplatskarta (sitemap)
 yrewrite_index_status = Status controls Index and Sitemap
 yrewrite_index_index = Tillåter indexering / visa i sitemap (index)
 yrewrite_index_noindex = Tillåta inte indexering sida / visa inte i sitemap (NoIndex)
+yrewrite_index_noindex_follow = Tillåta inte indexering sida och följ länkar / visa inte i sitemap (NoIndex)
 
 yrewrite_htaccess_hasbeenset = .htaccess-filen har skapats eller skrivits över
 yrewrite_htaccess_set = skapa .htaccess fil

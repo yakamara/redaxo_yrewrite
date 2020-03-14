@@ -104,6 +104,7 @@ yrewrite_index = Search Engine Index and Sitemap
 yrewrite_index_status = Status controls Index and Sitemap
 yrewrite_index_index = allow Search Engine to index page / display in Sitemap (Index)
 yrewrite_index_noindex = do not allow Search Engine to index page / do not display in Sitemap (NoIndex)
+yrewrite_index_noindex_follow = do not allow Search Engine to index page and follow its links / do not display in Sitemap (NoIndex)
 
 yrewrite_htaccess_hasbeenset = .htaccess file has been created or overwritten
 yrewrite_htaccess_set = Set .htaccess file
