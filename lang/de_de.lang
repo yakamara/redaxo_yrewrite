@@ -44,6 +44,7 @@ yrewrite_clangs_info = Sprachen auswählen, die unter der Domain zu erreichen si
 yrewrite_alllangs = Alle Sprachen
 yrewrite_clang_start = Startsprache
 yrewrite_clang_start_info = Welche Sprache soll beim ersten Aufruf der Domain verwendet werden.
+yrewrite_clang_start_auto = Startsprache automatisch gemäß Browsersprache (obige Auswahl als Fallback)
 yrewrite_clang_start_hidden = Startsprache nicht in URL
 
 yrewrite_alias_domain = Alias Domain
