@@ -317,7 +317,8 @@ class rex_yrewrite
                     $code = trim(explode(';', $code, 2)[0]);
                     $code = str_replace('-', '_', mb_strtolower($code));
 
-                    foreach (rex_clang::getAll() as $clang) {
+                    foreach ($domain->getClangs() as $clangId) {
+                        $clang = rex_clang::get($clangId);
                         $clangCode = str_replace('-', '_', mb_strtolower($clang->getCode()));
                         if ($code === $clangCode) {
                             $startClang = $clang->getId();
