@@ -39,8 +39,8 @@ if ($func != '') {
     $yform->setValidateField('empty', ['notfound_id', $this->i18n('no_not_found_id_defined')]);
 
     $yform->setValueField('choice', ['clangs', $this->i18n('clangs'), 'select id, name from '.rex::getTable('clang'), 0, 1, '', '', '', '', '', '', '', '<small>'.$this->i18n('clangs_info').'</small>']);
-    $yform->setValueField('choice', ['clang_start', $this->i18n('clang_start'), 'select id, name from '.rex::getTable('clang'), 0, 0, '', '', '', '', '', '', '', '<small>'.$this->i18n('clang_start_info').'</small>']);
     $yform->setValueField('checkbox', ['clang_start_auto', $this->i18n('clang_start_auto')]);
+    $yform->setValueField('choice', ['clang_start', $this->i18n('clang_start'), 'select id, name from '.rex::getTable('clang'), 0, 0, '', '', '', '', '', '', '', '<small>'.$this->i18n('clang_start_info').'</small>']);
     $yform->setValueField('checkbox', ['clang_start_hidden', $this->i18n('clang_start_hidden')]);
     $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
     $yform->setValueField('checkbox', ['auto_redirect', $this->i18n('auto_redirects'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect').'</small>']);
@@ -49,7 +49,7 @@ if ($func != '') {
     $js = '
         <script>
             (function () {
-                var startClangAuto = document.getElementById(\'yform-yrewrite_domains_form-field-11\');
+                var startClangAuto = document.getElementById(\'yform-yrewrite_domains_form-field-10\');
                 var startClangHidden = document.getElementById(\'yform-yrewrite_domains_form-field-12\');
 
                 startClangAuto.addEventListener("change", function () {
