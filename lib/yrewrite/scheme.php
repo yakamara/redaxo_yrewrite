@@ -36,7 +36,7 @@ class rex_yrewrite_scheme
      */
     public function getClang($clang, rex_yrewrite_domain $domain)
     {
-        if (count($domain->getClangs()) <= 1 || $domain->isStartClangHidden() && $clang == $domain->getStartClang()) {
+        if ($domain->isStartClangHidden() && $clang == $domain->getStartClang()) {
             return '';
         }
 
