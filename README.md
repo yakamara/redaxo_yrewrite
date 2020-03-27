@@ -401,9 +401,9 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 }
 ```
 
-## Ersetzungsmuster mit eigenen Schemes verändern
+## Ersetzungsmuster mit einem eigenen Schema verändern
 
-Die Ersetzungsmuster können mit eigenen Schemes verändert werden. In diesem Beispiel wird `&` durch `und` getauscht.
+Die Ersetzungsmuster können mit eigenen Schema verändert werden. In diesem Beispiel wird `&` durch `und` getauscht.
 
 1. Datei in den lib-Ordner des Project-AddOns anlegen
 
@@ -439,14 +439,13 @@ class rex_project_rewrite_scheme extends rex_yrewrite_scheme
 }
 ```
 
-2. In der boot.php Datei des project AddOns diesen Code einfügen
+2. In der `boot.php`-Datei des `project`-AddOns diesen Code einfügen:
 
 `rex_yrewrite::setScheme(new rex_project_rewrite_scheme());`
 
 ## Addons, die eigene Schemes mitbringen:
 
 - YRewrite scheme: https://github.com/FriendsOfREDAXO/yrewrite_scheme
-- xcore: https://github.com/RexDude/xcore
 
 
 # Weitere Unterstützung
