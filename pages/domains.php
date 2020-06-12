@@ -39,11 +39,31 @@ if ($func != '') {
     $yform->setValidateField('empty', ['notfound_id', $this->i18n('no_not_found_id_defined')]);
 
     $yform->setValueField('choice', ['clangs', $this->i18n('clangs'), 'select id, name from '.rex::getTable('clang'), 0, 1, '', '', '', '', '', '', '', '<small>'.$this->i18n('clangs_info').'</small>']);
+    $yform->setValueField('checkbox', ['clang_start_auto', $this->i18n('clang_start_auto')]);
     $yform->setValueField('choice', ['clang_start', $this->i18n('clang_start'), 'select id, name from '.rex::getTable('clang'), 0, 0, '', '', '', '', '', '', '', '<small>'.$this->i18n('clang_start_info').'</small>']);
     $yform->setValueField('checkbox', ['clang_start_hidden', $this->i18n('clang_start_hidden')]);
     $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
     $yform->setValueField('checkbox', ['auto_redirect', $this->i18n('auto_redirects'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect').'</small>']);
     $yform->setValueField('text', ['auto_redirect_days', $this->i18n('yrewrite_auto_redirect_days'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect_days_info').'</small>']);
+
+    $js = '
+        <script>
+            (function () {
+                var startClangAuto = document.getElementById(\'yform-yrewrite_domains_form-field-10\');
+                var startClangHidden = document.getElementById(\'yform-yrewrite_domains_form-field-12\');
+
+                startClangAuto.addEventListener("change", function () {
+                    if (startClangAuto.checked) {
+                        startClangHidden.disabled = true;
+                        startClangHidden.checked = false;
+                    } else {
+                        startClangHidden.disabled = false;
+                    }
+                });
+                startClangAuto.dispatchEvent(new Event("change"));
+            })();
+        </script>
+    ';
 
     if ($func == 'delete') {
 
@@ -65,7 +85,7 @@ if ($func != '') {
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('getdata', true);
         $yform->setObjectparams('submit_btn_label', $this->i18n('save'));
-        
+
         $form = $yform->getForm();
 
         if ($yform->objparams['actions_executed']) {
@@ -77,7 +97,7 @@ if ($func != '') {
             $fragment = new rex_fragment();
             $fragment->setVar('class', 'edit', false);
             $fragment->setVar('title', $this->i18n('edit_domain'));
-            $fragment->setVar('body', $form, false);
+            $fragment->setVar('body', $form.$js, false);
             echo $fragment->parse('core/page/section.php');
 
         }
@@ -99,7 +119,7 @@ if ($func != '') {
             $fragment = new rex_fragment();
             $fragment->setVar('class', 'edit', false);
             $fragment->setVar('title', $this->i18n('add_domain'));
-            $fragment->setVar('body', $form, false);
+            $fragment->setVar('body', $form.$js, false);
             echo $fragment->parse('core/page/section.php');
 
         }
@@ -153,6 +173,7 @@ if ($showlist) {
     });
 
     $list->removeColumn('clang_start');
+    $list->removeColumn('clang_start_auto');
     $list->removeColumn('clang_start_hidden');
 
     $list->addColumn(rex_i18n::msg('function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));

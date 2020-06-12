@@ -42,9 +42,10 @@ yrewrite_notfound_info = Artikel angeben, der als 404 der Domain aufgerufen wird
 yrewrite_clangs = Sprachen
 yrewrite_clangs_info = Sprachen auswählen, die unter der Domain zu erreichen sind. Keine auswählen, wenn alle Sprachen (auch zukünftige) über diese Domain erreichbar sein sollen.
 yrewrite_alllangs = Alle Sprachen
-yrewrite_clang_start = Startsprache
-yrewrite_clang_start_info = Welche Sprache soll beim ersten Aufruf der Domain verwendet werden.
-yrewrite_clang_start_hidden = Startsprache nicht in URL
+yrewrite_clang_start_auto = Startsprache automatisch gemäß Sprache des Client-Browsers, bevorzugte Sprache als Fallback
+yrewrite_clang_start = Bevorzugte Sprache
+yrewrite_clang_start_info = Wird beim Aufruf der Startseite verwendet, wenn die Sprache nicht automatisch gesetzt werden kann/soll.
+yrewrite_clang_start_hidden = Bevorzugte Sprache nicht in URL
 
 yrewrite_alias_domain = Alias Domain
 yrewrite_alias_domains = Alias Domains

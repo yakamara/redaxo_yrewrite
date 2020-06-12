@@ -29,6 +29,7 @@ $table
     ->ensureColumn(new rex_sql_column('notfound_id', 'int(11)'))
     ->ensureColumn(new rex_sql_column('clangs', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('clang_start', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('clang_start_auto', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('clang_start_hidden', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('robots', 'text'))
     ->ensureColumn(new rex_sql_column('title_scheme', 'varchar(191)'))

@@ -79,7 +79,7 @@ class rex_yrewrite_scheme
     public function getCustomUrl(rex_article $art, rex_yrewrite_domain $domain)
     {
         if ($domain->getStartId() == $art->getId()) {
-            if ($domain->getStartClang() == $art->getClang()) {
+            if (!$domain->isStartClangAuto() && $domain->getStartClang() == $art->getClang()) {
                 return '/';
             }
             return $this->getClang($art->getClang(), $domain) . $this->suffix;

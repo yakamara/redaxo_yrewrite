@@ -308,6 +308,37 @@ class rex_yrewrite
 
         $url = ltrim($url, '/');
 
+        if ('' === $url && $domain->isStartClangAuto()) {
+            $startClang = null;
+            $startClangFallback = $domain->getStartClang();
+
+            if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+                foreach (explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $code) {
+                    $code = trim(explode(';', $code, 2)[0]);
+                    $code = str_replace('-', '_', mb_strtolower($code));
+
+                    foreach ($domain->getClangs() as $clangId) {
+                        $clang = rex_clang::get($clangId);
+                        $clangCode = str_replace('-', '_', mb_strtolower($clang->getCode()));
+                        if ($code === $clangCode) {
+                            $startClang = $clang->getId();
+                            break 2;
+                        }
+
+                        if (0 === strpos($code, $clangCode.'_')) {
+                            $startClangFallback = $clang->getId();
+                        }
+                    }
+                }
+            }
+
+            $startClang = $startClang ?? $startClangFallback;
+
+            header('HTTP/1.1 302 Found');
+            header('Location: ' . $domainScheme . '://' . $host . rex_getUrl($domain->getStartId(), $startClang) . $params);
+            exit;
+        }
+
         $structureAddon = rex_addon::get('structure');
         $structureAddon->setProperty('start_article_id', $domain->getStartId());
         $structureAddon->setProperty('notfound_article_id', $domain->getNotfoundId());
@@ -637,7 +668,8 @@ class rex_yrewrite
                     . ($domain['clang_start_hidden'] ? 'true' : 'false') . ','
                     . $domain['id'] . ','
                     . $domain['auto_redirect'] . ','
-                    . $domain['auto_redirect_days']
+                    . $domain['auto_redirect_days'] . ','
+                    . ($domain['clang_start_auto'] ? 'true' : 'false')
                     . '));';
             }
         }
