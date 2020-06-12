@@ -48,7 +48,7 @@ if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
     rex_sql::factory()
         ->setTable(rex::getTable('yrewrite_domain'))
         ->setWhere($where)
-        ->setValue('start_clang_hidden', 1)
+        ->setValue('clang_start_hidden', 1)
         ->update();
 
     rex_yrewrite::deleteCache();
