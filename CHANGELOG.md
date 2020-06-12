@@ -1,6 +1,27 @@
 Changelog
 =========
 
+Version 2.7 – xx.06.2019
+--------------------------
+
+### Neu
+
+- Sitemap Darstellung .xsl verbessert
+- Diverse Erkärung/Doku verbessert (Danke alexplusde,Hirbod)
+- Diverse Übersetzungen ergänzt (Damle Jürgen Weiss, Yves Torres)
+- Auto-Redirects: Umgang mit Domains beschränkt auf einzelne Sprachen korrigiert
+- Auch im Backend Domain-Aliase umleiten
+- noindex, follow ergänzt
+- Start-Clang optional automatisch gemäß Browsersprache
+- Auch wenn nur eine einzelne Sprache vorhanden ist, kann diese nun in der URL auftauchen
+- Bei Artikeln aus Default-Domain relative URLs erzeugen
+
+### Bugs
+
+- Korrektur für WindowsSysteme mit 'default'-Domain (Danke norbert)
+- MediaManager URLs werden nun auch im Backend umgeschrieben
+
+
 Version 2.6 – 24.09.2019
 --------------------------
 
@@ -96,7 +117,7 @@ Version 2.3.0 – 30.01.2018
 - Sitemapausgabe hat nun einen cleanOutputBuffer
 - URL Umbruch verbesser in der Artikel-URL-Ansicht
 - Bei Metadescription werden nun die Inhalte ge-strip_taged
-- Aufruf von media mit mediatypes in .htaccess 
+- Aufruf von media mit mediatypes in .htaccess
 - Artikel-SEO: Placeholder wird bei Title angezeigt
 
 
