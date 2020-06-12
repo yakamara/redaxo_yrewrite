@@ -39,3 +39,17 @@ if (rex_string::versionCompare($this->getVersion(), '2.1', '<=')) {
     rex_delete_cache();
 }
 
+if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
+    $where = 'clangs NOT LIKE "%,%"';
+    if (rex_clang::count() > 1) {
+        $where = 'clangs != "" AND '.$where;
+    }
+
+    rex_sql::factory()
+        ->setTable(rex::getTable('yrewrite_domain'))
+        ->setWhere($where)
+        ->setValue('start_clang_hidden', 1)
+        ->update();
+
+    rex_yrewrite::deleteCache();
+}
