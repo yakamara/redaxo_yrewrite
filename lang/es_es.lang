@@ -42,6 +42,7 @@ yrewrite_notfound_info = Especifique el elemento llamado como 404 del dominio. S
 yrewrite_clangs = Idiomas
 yrewrite_clangs_info = Seleccione los idiomas que se pueden alcanzar bajo el dominio. No seleccione si todos los idiomas (incluidos los futuros) deberían ser accesibles a través de este dominio.
 yrewrite_alllangs = Todos los idiomas
+yrewrite_clang_start_auto = Iniciar idioma automáticamente de acuerdo con el idioma del navegador del cliente, idioma preferido como reserva
 yrewrite_clang_start = iniciar idioma
 yrewrite_clang_start_info = ¿Qué idioma se debe usar al llamar al dominio por primera vez?
 yrewrite_clang_start_hidden = Lenguaje de inicio no en URL
