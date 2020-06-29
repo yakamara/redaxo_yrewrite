@@ -42,6 +42,7 @@ yrewrite_notfound_info = Specify article to use as 404 document. Can be retrieve
 yrewrite_clangs = Languages
 yrewrite_clangs_info = Choose languages which can be accessed on this domain. If all languages can be accessed, leave blank.
 yrewrite_alllangs = All languages
+yrewrite_clang_start_auto = Automatically detect starting laungauge based on client browser language, preferred language as fallback
 yrewrite_clang_start = Preferred language
 yrewrite_clang_start_info = Will be used when calling the start page if the language can/should not be set automatically.
 yrewrite_clang_start_hidden = Preferred language not in URL
