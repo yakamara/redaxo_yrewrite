@@ -42,6 +42,7 @@ yrewrite_notfound_info = Ange artikel som ska användas som 404-dokument. Kan h�
 yrewrite_clangs = Språk
 yrewrite_clangs_info = Välj språk som kan nås på den här domänen. Om alla språk är tillgängliga, lämna tomt.
 yrewrite_alllangs = Alla språk
+yrewrite_clang_start_auto = Startspråket automatiskt enligt klientens webbläsares språk, önskat språk som fallback
 yrewrite_clang_start = Startspråk
 yrewrite_clang_start_info = Vilket språk ska användas vid första öppnandet av domänen
 yrewrite_clang_start_hidden = Startspråk inte i URL
