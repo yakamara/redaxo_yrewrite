@@ -45,7 +45,7 @@ class rex_yrewrite
             $path = dirname($path);
         }
         $path = rtrim($path, DIRECTORY_SEPARATOR) . '/';
-        self::addDomain(new rex_yrewrite_domain('default', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId()));
+        self::addDomain(new rex_yrewrite_domain('default', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId(), rex_clang::getAllIds(), rex_clang::getStartId(), '', '', '', rex_clang::count() <= 1));
 
         self::$pathfile = rex_path::addonCache('yrewrite', 'pathlist.json');
         self::$configfile = rex_path::addonCache('yrewrite', 'config.php');
