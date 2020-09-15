@@ -134,7 +134,7 @@ yrewrite_forward_status = Status
 yrewrite_forward_active = aktiv
 yrewrite_forward_inactive = inaktiv
 yrewrite_forward_url = aufgerufene URL
-yrewrite_forward_url_info = Die URL muss ohne <code>/<code> am Anfang und Ende eingetragen werden, zum Beispiel <code>"foo/bar"</code>. Die Variante mit <code>/</code> wird automatisch auch weitergeleitet.
+yrewrite_forward_url_info = Die URL muss ohne <code>/</code> am Anfang und Ende eingetragen werden, zum Beispiel <code>"foo/bar"</code>. Die Variante mit <code>/</code> wird automatisch auch weitergeleitet.
 yrewrite_forward_type = Weiterleitung an
 
 yrewrite_forward_type_article = Artikel
