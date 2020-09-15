@@ -134,7 +134,7 @@ yrewrite_forward_status = Status
 yrewrite_forward_active = active
 yrewrite_forward_inactive = inactive
 yrewrite_forward_url = requested Url
-yrewrite_forward_url_info = The URL has to be entered without beginning and trailing slashes, for example "foo/bar". The variant with a slash will be automatically redirected.
+yrewrite_forward_url_info = The URL has to be entered without beginning and trailing slashes, for example <code>"foo/bar"</code>. The variant with a slash will be automatically redirected.<br> Optionally, parameters can also be specified, for example <code>"foo/bar?x=1&y=2"</code>.
 yrewrite_forward_type = Redirect to
 
 yrewrite_forward_type_article = Article
