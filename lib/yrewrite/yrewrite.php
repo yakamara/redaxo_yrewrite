@@ -156,7 +156,7 @@ class rex_yrewrite
         $clang = $clang ?: rex_clang::getCurrentId();
 
         foreach (self::$domainsByName as $name => $domain) {
-            if (isset(self::$paths['paths'][$name][$aid][$clang])) {
+            if (isset(self::$paths['paths'][$name][$aid][$clang]) || isset(self::$paths['redirections'][$name][$aid][$clang])) {
                 return $domain;
             }
         }
@@ -426,10 +426,16 @@ class rex_yrewrite
         $id = $params['id'];
         $clang = $params['clang'];
 
-        if (isset(self::$paths['redirections'][$id][$clang])) {
-            $params['id'] = self::$paths['redirections'][$id][$clang]['id'];
-            $params['clang'] = self::$paths['redirections'][$id][$clang]['clang'];
-            return self::rewrite($params, $yparams, $fullpath);
+        foreach (self::$paths['redirections'] as $domain => $redirections) {
+            if (isset($redirections[$id][$clang]['url'])) {
+                return $redirections[$id][$clang]['url'];
+            }
+
+            if (isset($redirections[$id][$clang])) {
+                $params['id'] = $redirections[$id][$clang]['id'];
+                $params['clang'] = $redirections[$id][$clang]['clang'];
+                return self::rewrite($params, $yparams, $fullpath);
+            }
         }
 
         //$url = urldecode($_SERVER['REQUEST_URI']);

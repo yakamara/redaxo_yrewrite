@@ -9,16 +9,24 @@
  * @var rex_addon $this
  */
 
-rex_sql_table::get(rex::getTable('article'))
-    ->ensureColumn(new rex_sql_column('yrewrite_url', 'text'))
-    ->ensureColumn(new rex_sql_column('yrewrite_canonical_url', 'text'))
-    ->ensureColumn(new rex_sql_column('yrewrite_priority', 'varchar(5)'))
-    ->ensureColumn(new rex_sql_column('yrewrite_changefreq', 'varchar(10)'))
-    ->ensureColumn(new rex_sql_column('yrewrite_title', 'varchar(191)'))
-    ->ensureColumn(new rex_sql_column('yrewrite_description', 'text'))
-    ->ensureColumn(new rex_sql_column('yrewrite_index', 'tinyint(1)'))
+$table = rex_sql_table::get(rex::getTable('article'));
+$urlTypeExists = $table->hasColumn('yrewrite_url_type');
+$table
+    ->ensureColumn(new rex_sql_column('yrewrite_url_type', "enum('AUTO','CUSTOM','REDIRECTION_INTERNAL','REDIRECTION_EXTERNAL')", false, 'AUTO'))
+    ->ensureColumn(new rex_sql_column('yrewrite_url', 'text'), 'yrewrite_url_type')
+    ->ensureColumn(new rex_sql_column('yrewrite_redirection', 'varchar(191)'), 'yrewrite_url')
+    ->ensureColumn(new rex_sql_column('yrewrite_title', 'varchar(191)'), 'yrewrite_redirection')
+    ->ensureColumn(new rex_sql_column('yrewrite_description', 'text'), 'yrewrite_title')
+    ->ensureColumn(new rex_sql_column('yrewrite_changefreq', 'varchar(10)'), 'yrewrite_description')
+    ->ensureColumn(new rex_sql_column('yrewrite_priority', 'varchar(5)'), 'yrewrite_changefreq')
+    ->ensureColumn(new rex_sql_column('yrewrite_index', 'tinyint(1)'), 'yrewrite_priority')
+    ->ensureColumn(new rex_sql_column('yrewrite_canonical_url', 'text'), 'yrewrite_index')
     ->alter()
 ;
+
+if (!$urlTypeExists) {
+    rex_sql::factory()->setQuery('UPDATE '.rex::getTable('article').' SET yrewrite_url_type = IF(yrewrite_url != "", "CUSTOM", "AUTO")');
+}
 
 $table = rex_sql_table::get(rex::getTable('yrewrite_domain'));
 $table
