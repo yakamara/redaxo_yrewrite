@@ -3,10 +3,6 @@ yrewrite = YRewrite
 # content page
 yrewrite_rewriter = URL
 yrewrite_rewriter_seo = Datos de SEO
-yrewrite_mode_url = URL
-yrewrite_mode_seo = SEO
-yrewrite_update_url = Actualizar URL
-yrewrite_update_seo = Actualizar datos de SEO
 
 yrewrite_url_type_custom = URL personalizada
 
