@@ -1,6 +1,6 @@
 # YRewrite
 
-## Übersicht 
+## Übersicht
 
 Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben. Mehrere Domains können dann sinnvoll sein, wenn
 
@@ -244,10 +244,10 @@ foreach($domains as $domain) {
 
 ## Übersicht
 
-YRewrite kann durch Schemes erweitert werden. 
+YRewrite kann durch Schemes erweitert werden.
 
 **Installation**
-- Als Datei im `lib`-Ordner des __project-AddOns__ ablegen. 
+- Als Datei im `lib`-Ordner des __project-AddOns__ ablegen.
 - Dateiname: `eigene_rewrite_class.php`
 - In die `boot.php` des project-AddOns einsetzen:
 
@@ -258,7 +258,7 @@ if (rex_addon::get(\'yrewrite\')->isAvailable()) {
 }
 ```
 
-Nachfolgend listen wir hier ein paar Beispiele. 
+Nachfolgend listen wir hier ein paar Beispiele.
 
 ## Endung auf .html setzen
 
@@ -328,7 +328,7 @@ class rex_yrewrite_scheme_gh extends rex_yrewrite_scheme
 
 ## URL manipulieren, hier mit dem AddOn Sprog
 
-So kann als Kategoriename ein Platzhalter wie {{contact}} verwendet werden und durch die in Sprog hinterlegten Sprachvarianten ersetzt werden. 
+So kann als Kategoriename ein Platzhalter wie {{contact}} verwendet werden und durch die in Sprog hinterlegten Sprachvarianten ersetzt werden.
 
 One Level, Kategoriename-Ersetzung durch Sprog.
 
@@ -344,7 +344,7 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 
     public function appendArticle($path, rex_article $art, rex_yrewrite_domain $domain)
     {
-        return $path . \'/\' . $this->normalize(sprogdown($art->getName(), $art->getClang()), $art->getClang()) . \'/\';
+        return $path . \'/\' . $this->normalize(sprogdown($art->getName(), $art->getClangId()), $art->getClangId()) . \'/\';
     }
 }
 ```
@@ -357,7 +357,7 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 {
     public function appendCategory($path, rex_category $cat, rex_yrewrite_domain $domain)
     {
-        return $path . \'/\' . $this->normalize(sprogdown($cat->getName(), $cat->getClang()), $cat->getClang());
+        return $path . \'/\' . $this->normalize(sprogdown($cat->getName(), $cat->getClangId()), $cat->getClangId());
     }
 }
 ```
@@ -398,7 +398,7 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 - Sitemapausgabe hat nun einen cleanOutputBuffer
 - URL Umbruch verbesser in der Artikel-URL-Ansicht
 - Bei Metadescription werden nun die Inhalte ge-strip_taged
-- Aufruf von media mit mediatypes in .htaccess 
+- Aufruf von media mit mediatypes in .htaccess
 - Artikel-SEO: Placeholder wird bei Title angezeigt
 
 

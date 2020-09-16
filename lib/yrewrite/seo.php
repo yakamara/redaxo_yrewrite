@@ -118,7 +118,7 @@ class rex_yrewrite_seo
     {
         $canonical_url = trim($this->article->getValue(self::$meta_canonical_url_field));
         if ($canonical_url == "") {
-            $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClang());
+            $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClangId());
         }
         $canonical_url = rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_URL', $canonical_url, ['article' => $this->article]));
         return $canonical_url;
@@ -217,7 +217,7 @@ class rex_yrewrite_seo
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
-                    
+
                     if (!rex_clang::get($clang_id)->isOnline()) {
                         continue;
                     }

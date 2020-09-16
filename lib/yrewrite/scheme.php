@@ -52,7 +52,7 @@ class rex_yrewrite_scheme
      */
     public function appendCategory($path, rex_category $cat, rex_yrewrite_domain $domain)
     {
-        return $path . '/' . $this->normalize($cat->getName(), $cat->getClang());
+        return $path . '/' . $this->normalize($cat->getName(), $cat->getClangId());
     }
 
     /**
@@ -67,7 +67,7 @@ class rex_yrewrite_scheme
         if ($art->isStartArticle() && $domain->getMountId() != $art->getId()) {
             return $path . $this->suffix;
         }
-        return $path . '/' . $this->normalize($art->getName(), $art->getClang()) . $this->suffix;
+        return $path . '/' . $this->normalize($art->getName(), $art->getClangId()) . $this->suffix;
     }
 
     /**
@@ -79,10 +79,10 @@ class rex_yrewrite_scheme
     public function getCustomUrl(rex_article $art, rex_yrewrite_domain $domain)
     {
         if ($domain->getStartId() == $art->getId()) {
-            if (!$domain->isStartClangAuto() && $domain->getStartClang() == $art->getClang()) {
+            if (!$domain->isStartClangAuto() && $domain->getStartClang() == $art->getClangId()) {
                 return '/';
             }
-            return $this->getClang($art->getClang(), $domain) . $this->suffix;
+            return $this->getClang($art->getClangId(), $domain) . $this->suffix;
         }
         if ($url = $art->getValue('yrewrite_url')) {
             return $url;

@@ -1,6 +1,6 @@
 # YRewrite
 
-## Übersicht 
+## Übersicht
 
 Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben. Mehrere Domains können dann sinnvoll sein, wenn
 
@@ -42,7 +42,7 @@ Unter dem Reiter `Setup` kann die `.htaccess`-Datei jederzeit neu geschrieben we
 
 Eine vollständige nginx config für YRewrite.
 
-> Hinweis für PLESK-Websites: Die Direktiven können unter ***Einstellungen für Apache & nginx*** der gewünschten Domain im Abschnitt ***Zusätzliche nginx-Anweisungen*** hinterlegt werden. 
+> Hinweis für PLESK-Websites: Die Direktiven können unter ***Einstellungen für Apache & nginx*** der gewünschten Domain im Abschnitt ***Zusätzliche nginx-Anweisungen*** hinterlegt werden.
 
 ```nginx
 charset utf-8;
@@ -283,10 +283,10 @@ foreach($domains as $domain) {
 
 ## Übersicht
 
-YRewrite kann durch Schemes erweitert werden. 
+YRewrite kann durch Schemes erweitert werden.
 
 **Installation**
-- Als Datei im `lib`-Ordner des __project-AddOns__ ablegen. 
+- Als Datei im `lib`-Ordner des __project-AddOns__ ablegen.
 - Dateiname: `eigene_rewrite_class.php`
 - In die `boot.php` des project-AddOns einsetzen:
 
@@ -297,7 +297,7 @@ if (rex_addon::get(\'yrewrite\')->isAvailable()) {
 }
 ```
 
-Nachfolgend listen wir hier ein paar Beispiele. 
+Nachfolgend listen wir hier ein paar Beispiele.
 
 ## Endung auf .html setzen
 
@@ -367,7 +367,7 @@ class rex_yrewrite_scheme_gh extends rex_yrewrite_scheme
 
 ## URL manipulieren, hier mit dem AddOn Sprog
 
-So kann als Kategoriename ein Platzhalter wie {{contact}} verwendet werden und durch die in Sprog hinterlegten Sprachvarianten ersetzt werden. 
+So kann als Kategoriename ein Platzhalter wie {{contact}} verwendet werden und durch die in Sprog hinterlegten Sprachvarianten ersetzt werden.
 
 One Level, Kategoriename-Ersetzung durch Sprog.
 
@@ -383,7 +383,7 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 
     public function appendArticle($path, rex_article $art, rex_yrewrite_domain $domain)
     {
-        return $path . \'/\' . $this->normalize(sprogdown($art->getName(), $art->getClang()), $art->getClang()) . \'/\';
+        return $path . \'/\' . $this->normalize(sprogdown($art->getName(), $art->getClangId()), $art->getClangId()) . \'/\';
     }
 }
 ```
@@ -396,7 +396,7 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 {
     public function appendCategory($path, rex_category $cat, rex_yrewrite_domain $domain)
     {
-        return $path . \'/\' . $this->normalize(sprogdown($cat->getName(), $cat->getClang()), $cat->getClang());
+        return $path . \'/\' . $this->normalize(sprogdown($cat->getName(), $cat->getClangId()), $cat->getClangId());
     }
 }
 ```

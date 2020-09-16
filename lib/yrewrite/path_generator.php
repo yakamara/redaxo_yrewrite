@@ -108,7 +108,7 @@ class rex_yrewrite_path_generator
     private function setDomain(rex_structure_element $element, rex_yrewrite_domain $domain, string $path)
     {
         $id = $element->getId();
-        $clang = $element->getClang();
+        $clang = $element->getClangId();
 
         if (isset($this->domains[$id][$clang])) {
             $domain = $this->domains[$id][$clang];
@@ -124,7 +124,7 @@ class rex_yrewrite_path_generator
 
         $domainName = $domain->getName();
         $articleId = $article->getId();
-        $clangId = $article->getClang();
+        $clangId = $article->getClangId();
 
         $urlType = $article->getValue('yrewrite_url_type');
 
@@ -147,7 +147,7 @@ class rex_yrewrite_path_generator
         if ($redirection instanceof rex_structure_element) {
             $this->redirections[$domainName][$articleId][$clangId] = [
                 'id' => $redirection->getId(),
-                'clang' => $redirection->getClang(),
+                'clang' => $redirection->getClangId(),
             ];
 
             unset($this->paths[$domainName][$articleId][$clangId]);
