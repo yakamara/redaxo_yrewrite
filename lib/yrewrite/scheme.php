@@ -109,11 +109,14 @@ class rex_yrewrite_scheme
      */
     public function getAlternativeCandidates($path, rex_yrewrite_domain $domain)
     {
-        if (!$this->suffix || substr($path, -strlen($this->suffix)) === $this->suffix) {
-            return null;
+        if ('/' === substr($path, -1)) {
+            return substr($path, 0, -1);
+        }
+        if ($this->suffix && substr($path, -strlen($this->suffix)) !== $this->suffix) {
+            return $path . $this->suffix;
         }
 
-        return $path . $this->suffix;
+        return null;
     }
 
     /**
