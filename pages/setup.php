@@ -35,12 +35,12 @@ $content = '
 
 
             <h3>' . $this->i18n('info_tipps') . '</h3>
-            <p>' . rex_i18n::rawMsg('yrewrite_info_tipps_text') . '    
-            
-            
+            <p>' . rex_i18n::rawMsg('yrewrite_info_tipps_text') . '
+
+
             <h3>' . $this->i18n('info_seo') . '</h3>
             <p>' . rex_i18n::rawMsg('yrewrite_info_seo_text') . '
-            
+
             <br /><br />'.highlight_string('<?php
 	  $seo = new rex_yrewrite_seo();
 	  echo $seo->getTitleTag().PHP_EOL;
@@ -60,8 +60,8 @@ echo $fragment->parse('core/page/section.php');
 /**
  * Process and display visibility settings form
  */
-echo rex_yrewrite_seo_visibility::processFormPost();
-echo rex_yrewrite_seo_visibility::getForm();
+echo rex_yrewrite_settings::processFormPost();
+echo rex_yrewrite_settings::getForm();
 
 $domains = [];
 
