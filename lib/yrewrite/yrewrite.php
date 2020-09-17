@@ -737,10 +737,11 @@ class rex_yrewrite
     {
         $domain = self::getHost();
         $http = 'http://';
+        $subfolder = rex_url::base();
         if (self::isHttps()) {
             $http = 'https://';
         }
-        return $http . $domain . '/' . $link;
+        return $http . $domain . $subfolder . $link;
     }
 
     public static function getHost()
