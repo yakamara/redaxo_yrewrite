@@ -175,7 +175,7 @@ yrewrite_expiry_date = Avaktiveringsdatum
 
 yrewrite_perm_url_edit = Yrewrite: redigera URL
 yrewrite_perm_seo_edit = Yrewrite: redigera SEO-data
-yrewrite_seo_settings = Inställningar
-yrewrite_seo_saved = Inställningar sparades
+yrewrite_settings = Inställningar
+yrewrite_settings_saved = Inställningar sparades
 yrewrite_hide_url_block = Dölj URL-block
 yrewrite_hide_seo_block = Dölj SEO-block

@@ -179,7 +179,8 @@ yrewrite_expiry_date = Date of deactivation
 
 yrewrite_perm_url_edit = Yrewrite: URL editing
 yrewrite_perm_seo_edit = Yrewrite: SEO-Data editing
-yrewrite_seo_settings = Settings
-yrewrite_seo_saved = Settings updated
+yrewrite_settings = Settings
+yrewrite_settings_saved = Settings updated
+yrewrite_unicode_urls = Allow unicode chars in URLs (umlauts, chinese/cyrillic characters etc.)
 yrewrite_hide_url_block = Hide URL-Block
 yrewrite_hide_seo_block = Hide SEO-Block

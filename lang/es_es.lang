@@ -175,7 +175,7 @@ yrewrite_expiry_date = fecha de desactivación
 
 yrewrite_perm_url_edit = Yrewrite: Edición de URL
 yrewrite_perm_seo_edit = Yrewrite: Edición de datos SEO
-yrewrite_seo_settings = Ajustes
-yrewrite_seo_saved = Configuraciones guardadas
+yrewrite_settings = Ajustes
+yrewrite_settings_saved = Configuraciones guardadas
 yrewrite_hide_url_block = Ocultar bloque de URL
 yrewrite_hide_seo_block = Ocultar bloque SEO
