@@ -1,25 +1,32 @@
 Changelog
 =========
 
-Version 2.7 – xx.06.2019
+Version 2.7 – 18.09.2020
 --------------------------
 
 ### Neu
 
+- URL-Typ in Artikel auswählbar: "Automatisch", "Eigene URL", "Umleitung zu Artikel", "Umleitung zu URL"
+- Optional können Unicode-URLs aktiviert werden, in denen dann auch Umlaute, chinesische/kyrillische Schriftzeichen etc. erhalten bleiben
 - Sitemap Darstellung .xsl verbessert
-- Diverse Erkärung/Doku verbessert (Danke alexplusde,Hirbod)
-- Diverse Übersetzungen ergänzt (Damle Jürgen Weiss, Yves Torres)
+- Diverse Erklärungen/Doku verbessert (Danke alexplusde,Hirbod)
+- Diverse Übersetzungen ergänzt (Danke Jürgen Weiss, Yves Torres, Fernando Averanga)
 - Auto-Redirects: Umgang mit Domains beschränkt auf einzelne Sprachen korrigiert
 - Auch im Backend Domain-Aliase umleiten
 - noindex, follow ergänzt
 - Start-Clang optional automatisch gemäß Browsersprache
 - Auch wenn nur eine einzelne Sprache vorhanden ist, kann diese nun in der URL auftauchen
 - Bei Artikeln aus Default-Domain relative URLs erzeugen
+- Weiterleitungen für URLs mit Query-Parametern können eingerichtet werden
+- Bei Custom URLs werden die Varianten mit/ohne Slash automatisch umgeleitet
 
 ### Bugs
 
 - Korrektur für WindowsSysteme mit 'default'-Domain (Danke norbert)
 - MediaManager URLs werden nun auch im Backend umgeschrieben
+- Domains mit expliziter Portangabe konnten nicht gespeichert werden
+- Bei Domains mit Unterordner stimmte die Sitemap nicht (Danke Daniel Springer)
+- Diverse Warnings/Notices behoben
 
 
 Version 2.6 – 24.09.2019
