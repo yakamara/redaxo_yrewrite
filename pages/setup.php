@@ -67,7 +67,7 @@ $domains = [];
 
 foreach (rex_yrewrite::getDomains() as $name => $domain) {
     if ($name != 'default') {
-        $domains[] = '<tr><td><a href="'.$domain->getUrl().'">'.htmlspecialchars($name).'</a></td><td><a href="'.$domain->getUrl().'sitemap.xml">sitemap.xml</a></td><td><a href="'.$domain->getUrl().'robots.txt">robots.txt</a></td></tr>';
+        $domains[] = '<tr><td><a target="_blank" href="'.$domain->getUrl().'">'.htmlspecialchars($name).'</a></td><td><a target="_blank" href="'.$domain->getUrl().'sitemap.xml">sitemap.xml</a></td><td><a target="_blank" href="'.$domain->getUrl().'robots.txt">robots.txt</a></td></tr>';
     }
 }
 
