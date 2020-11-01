@@ -190,7 +190,7 @@ class rex_yrewrite_domain
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getAutoRedirectDays()
     {

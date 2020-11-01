@@ -5,8 +5,3 @@ parameters:
 			count: 1
 			path: lib/yrewrite/settings.php
 
-		-
-			message: "#^Binary operation \"\\*\" between string and 24 results in an error\\.$#"
-			count: 1
-			path: lib/yrewrite/yrewrite.php
-
