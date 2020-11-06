@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method rex_yrewrite_settings\\:\\:getAddon\\(\\) should return rex_addon but returns rex_addon_interface\\.$#"
+			count: 1
+			path: lib/yrewrite/settings.php
+
