@@ -24,6 +24,7 @@ AddDefaultCharset utf-8
 	AddType application/x-font-ttf .ttf
 	AddType application/font-woff .woff
 	AddType application/font-woff2 .woff2
+	AddType application/wasm .wasm
 	AddType font/opentype .otf
 </IfModule>
 
