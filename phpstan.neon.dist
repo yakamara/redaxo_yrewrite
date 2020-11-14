@@ -4,5 +4,11 @@ includes:
 parameters:
     level: 5
     paths:
+        - boot.php
+        - docs.php
+        - help.php
+        - install.php
+        - uninstall.php
+        - update.php
         - lib/
 
