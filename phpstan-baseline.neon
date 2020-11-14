@@ -1,6 +1,16 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Variable \\$this might not be defined\\.$#"
+			count: 10
+			path: docs.php
+
+		-
+			message: "#^Variable \\$navi_list might not be defined\\.$#"
+			count: 1
+			path: docs.php
+
+		-
 			message: "#^Method rex_yrewrite_settings\\:\\:getAddon\\(\\) should return rex_addon but returns rex_addon_interface\\.$#"
 			count: 1
 			path: lib/yrewrite/settings.php
