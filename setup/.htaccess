@@ -80,7 +80,8 @@ AddDefaultCharset utf-8
 
 # REWRITING
 <IfModule mod_rewrite.c>
-    # ENABLE REWRITING
+    # ENABLE REWRITING 
+    # for example.org/category/article/ instead of index.php?article_id=1
     RewriteEngine On
 
     # Workaround for RewriteBase
@@ -88,10 +89,17 @@ AddDefaultCharset utf-8
     RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
     RewriteRule ^(.*) - [E=BASE:%1]
 
+    # SEO
+    # example.org/sitemap.xml will be generated adhoc by YRewrite
+    # example.org/robots.txt will be generated adhoc by YRewrite
     RewriteRule ^sitemap\.xml$ %{ENV:BASE}/index.php?rex_yrewrite_func=sitemap [NC,L]
     RewriteRule ^robots\.txt$ %{ENV:BASE}/index.php?rex_yrewrite_func=robots [NC,L]
 
     # REWRITE RULE FOR SEO FRIENDLY IMAGE MANAGER URLS
+    # use example.org/media/media-type-profile/file.ext for beautified URLs and optimized images.
+    # more details: https://www.redaxo.org/doku/master/media-manager
+    # IMPORTANT: these rule will also prevent subfolders and files of /media/ 
+    #            to be loaded directly. use the /assets/ folder instead 
     RewriteRule ^mediatypes/([^/]*)/([^/]*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2
     RewriteRule ^media/([^/]+)/(.*) %{ENV:BASE}/index.php?rex_media_type=$1&rex_media_file=$2&%{QUERY_STRING} [B]
     RewriteRule ^media/(.*) %{ENV:BASE}/index.php?rex_media_type=default&rex_media_file=$1&%{QUERY_STRING} [B]
