@@ -81,3 +81,5 @@ if (!class_exists('rex_yrewrite_settings')) {
     require_once('lib/yrewrite/settings.php');
 }
 rex_yrewrite_settings::install();
+
+rex_yrewrite::copyHtaccess();

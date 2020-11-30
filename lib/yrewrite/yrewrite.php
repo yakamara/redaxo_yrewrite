@@ -201,7 +201,6 @@ class rex_yrewrite
     public static function isInCurrentDomain($aid)
     {
         return (self::getDomainByArticleId($aid)->getName() == self::getCurrentDomain()->getName()) ? true : false;
-
     }
 
     // ----- url
@@ -553,8 +552,8 @@ class rex_yrewrite
 
         // Alte Einträge ausschalten
 
-        $sql->setWhere('expiry_date > "0000-00-00" AND expiry_date < :date',['date'=>date('Y-m-d')]);
-        $sql->setValue('status',0);
+        $sql->setWhere('expiry_date > "0000-00-00" AND expiry_date < :date', ['date'=>date('Y-m-d')]);
+        $sql->setValue('status', 0);
         $sql->update();
 
         // vergleicht alle Einträge aus old_paths mit der aktuellen path Liste.
@@ -565,59 +564,59 @@ class rex_yrewrite
                 $domain_id = $domain->getId();
                 $expiry_date = '0000-00-00';
                 if ($domain->getAutoRedirectDays()) {
-                    $expiry_date = date('Y-m-d',time()+$domain->getAutoRedirectDays()*24*60*60);
+                    $expiry_date = date('Y-m-d', time()+$domain->getAutoRedirectDays()*24*60*60);
                 }
 
                 // Autoredirect nicht setzen, wenn autoredirect für diese Domain nicht eingeschaltet ist
-                if (!$domain->getAutoRedirect()) continue;
-                foreach ($old_article_paths as $art_id => $old_paths ) {
+                if (!$domain->getAutoRedirect()) {
+                    continue;
+                }
+                foreach ($old_article_paths as $art_id => $old_paths) {
                     foreach (rex_clang::getAllIds() as $clang_id) {
                         if (!isset(self::$paths['paths'][$domain_name][$art_id][$clang_id]) || !isset($old_paths[$clang_id])) {
                             continue;
                         }
 
                         // Wenn es eine Abweichung im Pfad gibt, wird ein neuer Eintrag eingefügt
-		                if (self::$paths['paths'][$domain_name][$art_id][$clang_id] != $old_paths[$clang_id]) {
-		                	if($ep == 'CAT_DELETED' || $ep == 'ART_DELETED') {
-			                    $params = [
-			                        'article_id'=>$art_id
-			                    ];
-			                    $sql->setTable(rex::getTable('yrewrite_forward'));
-			                    $sql->setWhere($params);
-			                    $sql->delete();
-			                }
-			                else if($ep == 'CLANG_DELETED') {
-			                    $params = [
-			                        'clang'=>$clang_id
-			                    ];
-			                    $sql->setTable(rex::getTable('yrewrite_forward'));
-			                    $sql->setWhere($params);
-			                    $sql->delete();
-							}
-							else if($ep == 'CAT_MOVED' || $ep == 'CAT_UPDATED' || $ep == 'ART_MOVED' || $ep == 'ART_UPDATED' || $ep == 'ART_META_UPDATED') {
-			                    $params = [
-			                        'article_id'=>$art_id,
-			                        'clang'=>$clang_id,
-			                        'type'=>'article',
-			                        'domain_id'=>$domain_id,
-			                        'url'=>trim($old_paths[$clang_id],'/'),
-			                        'movetype'=>'301',
-			                        'status'=>1,
-			                        'expiry_date' => $expiry_date
-			                    ];
-			                    $sql->setTable(rex::getTable('yrewrite_forward'));
-			                    $sql->setValues($params);
-			                    $sql->insert();
+                        if (self::$paths['paths'][$domain_name][$art_id][$clang_id] != $old_paths[$clang_id]) {
+                            if ($ep == 'CAT_DELETED' || $ep == 'ART_DELETED') {
+                                $params = [
+                                    'article_id'=>$art_id
+                                ];
+                                $sql->setTable(rex::getTable('yrewrite_forward'));
+                                $sql->setWhere($params);
+                                $sql->delete();
+                            } elseif ($ep == 'CLANG_DELETED') {
+                                $params = [
+                                    'clang'=>$clang_id
+                                ];
+                                $sql->setTable(rex::getTable('yrewrite_forward'));
+                                $sql->setWhere($params);
+                                $sql->delete();
+                            } elseif ($ep == 'CAT_MOVED' || $ep == 'CAT_UPDATED' || $ep == 'ART_MOVED' || $ep == 'ART_UPDATED' || $ep == 'ART_META_UPDATED') {
+                                $params = [
+                                    'article_id'=>$art_id,
+                                    'clang'=>$clang_id,
+                                    'type'=>'article',
+                                    'domain_id'=>$domain_id,
+                                    'url'=>trim($old_paths[$clang_id], '/'),
+                                    'movetype'=>'301',
+                                    'status'=>1,
+                                    'expiry_date' => $expiry_date
+                                ];
+                                $sql->setTable(rex::getTable('yrewrite_forward'));
+                                $sql->setValues($params);
+                                $sql->insert();
 
-								// alte Redirects löschen wenn die URL der neuen URL des Artikels entspricht
-			                    $params = [
-			                        'url'=>trim(substr(rex_getUrl($art_id, $clang_id), strpos(rex_getUrl($art_id, $clang_id), $domain_name) + strlen($domain_name)), '/')
-			                    ];
-			                    $sql->setTable(rex::getTable('yrewrite_forward'));
-			                    $sql->setValues([]);
-			                    $sql->setWhere($params);
-			                    $sql->delete();
-			                }
+                                // alte Redirects löschen wenn die URL der neuen URL des Artikels entspricht
+                                $params = [
+                                    'url'=>trim(substr(rex_getUrl($art_id, $clang_id), strpos(rex_getUrl($art_id, $clang_id), $domain_name) + strlen($domain_name)), '/')
+                                ];
+                                $sql->setTable(rex::getTable('yrewrite_forward'));
+                                $sql->setValues([]);
+                                $sql->setWhere($params);
+                                $sql->delete();
+                            }
                         }
                     }
                 }
@@ -719,12 +718,19 @@ class rex_yrewrite
 
     public static function copyHtaccess()
     {
+        /* Backup current .htaccess in addon data folder */
+        if (rex_file::get(rex_path::base('.htaccess'))) {
+            rex_file::copy(rex_file::get(rex_path::base('.htaccess'), rex_path::addonData('yrewrite', date("F j, Y, g:i").'.htaccess.bak')));
+        }
+        
         rex_file::copy(rex_path::addon('yrewrite', 'setup/.htaccess'), rex_path::frontend('.htaccess'));
     }
 
     public static function isHttps()
     {
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == "https") return true;
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == "https") {
+            return true;
+        }
         return (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off');
     }
 

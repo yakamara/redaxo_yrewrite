@@ -27,13 +27,13 @@ if (rex_string::versionCompare($this->getVersion(), '2.1', '<=')) {
 
     rex_sql_table::get(rex::getTable('yrewrite_domain'))
         ->removeColumn('alias_domain')
-		->ensureColumn(new rex_sql_column('auto_redirect', 'tinyint(1)'))
-		->ensureColumn(new rex_sql_column('auto_redirect_days', 'int(3)'))
+        ->ensureColumn(new rex_sql_column('auto_redirect', 'tinyint(1)'))
+        ->ensureColumn(new rex_sql_column('auto_redirect_days', 'int(3)'))
         ->alter();
 
     rex_sql_table::get(rex::getTable('yrewrite_forward'))
         ->removeColumn('domain')
- 	    ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
+        ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
         ->alter();
 
     rex_delete_cache();
@@ -53,3 +53,5 @@ if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
 
     rex_yrewrite::deleteCache();
 }
+
+rex_yrewrite::copyHtaccess();
