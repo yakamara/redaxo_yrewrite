@@ -720,7 +720,7 @@ class rex_yrewrite
     {
         /* Backup current .htaccess in addon data folder */
         if (rex_file::get(rex_path::base('.htaccess'))) {
-            rex_file::copy(rex_file::get(rex_path::base('.htaccess'), rex_path::addonData('yrewrite', date("F j, Y, g:i").'.htaccess.bak')));
+            rex_file::copy(rex_file::get(rex_path::base('.htaccess')), rex_path::addonData('yrewrite', date("F j, Y, g:i").'.htaccess.bak'));
         }
         
         rex_file::copy(rex_path::addon('yrewrite', 'setup/.htaccess'), rex_path::frontend('.htaccess'));
