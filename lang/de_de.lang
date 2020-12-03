@@ -6,9 +6,9 @@ yrewrite_rewriter_seo = SEO-Daten
 
 yrewrite_url_type = URL-Typ
 yrewrite_url_type_auto = Automatisch
-yrewrite_url_type_custom = Eigene URL
-yrewrite_url_type_redirection_internal = Umleitung zu Artikel
-yrewrite_url_type_redirection_external = Umleitung zu URL
+yrewrite_url_type_custom = URL des Artikels anpassen
+yrewrite_url_type_redirection_internal = Artikel-URL mit fremder Artikel-URL überschreiben 
+yrewrite_url_type_redirection_external = Artikel-URL mit fremder Adresse überschreiben
 
 yrewrite_domains = Domains
 yrewrite_article_urls = Artikel-URLs
