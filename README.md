@@ -55,6 +55,7 @@ rewrite ^/sitemap\.xml$                           /index.php?rex_yrewrite_func=s
 rewrite ^/robots\.txt$                            /index.php?rex_yrewrite_func=robots last;
 rewrite ^/media[0-9]*/imagetypes/([^/]*)/([^/]*)  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
 rewrite ^/media/([^/]*)/([^/]*)                   /index.php?rex_media_type=$1&rex_media_file=$2&$args;
+rewrite ^/media/(.*)                              /index.php?rex_media_type=default&rex_media_file=$1&$query_string;
 rewrite ^/images/([^/]*)/([^/]*)                  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
 rewrite ^/imagetypes/([^/]*)/([^/]*)              /index.php?rex_media_type=$1&rex_media_file=$2;
 
