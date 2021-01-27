@@ -17,7 +17,7 @@ page:
 
 requires:
     php:
-        version: '>7.1'
+        version: '>=7.1'
     redaxo: '^5.7'
     packages:
         yform: '^3.2'
