@@ -4,7 +4,11 @@ yrewrite = YRewrite
 yrewrite_rewriter = URL
 yrewrite_rewriter_seo = SEO data
 
+yrewrite_url_type = URL-typ
+yrewrite_url_type_auto = Automatisk
 yrewrite_url_type_custom = Custom URL
+yrewrite_url_type_redirection_internal = Omdirigering till artikel
+yrewrite_url_type_redirection_external = Omdirigering till URL
 
 yrewrite_domains = Domäner
 yrewrite_article_urls = Artikel URLs
@@ -177,5 +181,6 @@ yrewrite_perm_url_edit = Yrewrite: redigera URL
 yrewrite_perm_seo_edit = Yrewrite: redigera SEO-data
 yrewrite_settings = Inställningar
 yrewrite_settings_saved = Inställningar sparades
+yrewrite_unicode_urls = Tillåt Unicode-tecken i webbadresser (ä,ö,å, kinesiska / kyrilliska tecken etc.)
 yrewrite_hide_url_block = Dölj URL-block
 yrewrite_hide_seo_block = Dölj SEO-block
