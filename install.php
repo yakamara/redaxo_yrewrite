@@ -21,6 +21,7 @@ $table
     ->ensureColumn(new rex_sql_column('yrewrite_priority', 'varchar(5)'), 'yrewrite_changefreq')
     ->ensureColumn(new rex_sql_column('yrewrite_index', 'tinyint(1)'), 'yrewrite_priority')
     ->ensureColumn(new rex_sql_column('yrewrite_canonical_url', 'text'), 'yrewrite_index')
+    
     ->alter()
 ;
 
@@ -68,6 +69,7 @@ $table
     ->ensureColumn(new rex_sql_column('media', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('movetype', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
+    ->ensureIndex(new rex_sql_index('domain_id_url', ['domain_id', 'url'], rex_sql_index::UNIQUE))
     ->ensure();
 
 $c = rex_sql::factory();
