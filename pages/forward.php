@@ -135,6 +135,8 @@ if ($showlist) {
         if (rex_get('sorttype','string') == 'desc') {
             $sql .= ' DESC';
         }
+    } else if(!rex_get('sort')) {
+        $sql .= ' ORDER BY id DESC';
     }
 
     $list = rex_list::factory($sql, 100);
