@@ -103,10 +103,10 @@ yrewrite_changefreq_never = nie [never]
 yrewrite_changefreq_always = immer [always]
 
 yrewrite_index = Indexierung und Sitemap
-yrewrite_index_status = In Abhängigkeit von Status Indexierung erlauben und in Sitemap anzeigen
-yrewrite_index_index = Indexierung erlauben / in Sitemap anzeigen (Index)
-yrewrite_index_noindex = Indexierung verbieten / nicht in Sitemap anzeigen (NoIndex)
-yrewrite_index_noindex_follow = Indexierung verbieten und Links folgen / nicht in Sitemap anzeigen (NoIndex)
+yrewrite_index_status = index / sitemap abhängig von Status
+yrewrite_index_index = index / follow / sitemap
+yrewrite_index_noindex = noindex / nofollow / nositemap
+yrewrite_index_noindex_follow = noindex / follow / sitemap
 
 yrewrite_htaccess_hasbeenset = .htaccess-Datei wurde gesetzt/ersetzt
 yrewrite_htaccess_set = .htaccess-Datei setzen
