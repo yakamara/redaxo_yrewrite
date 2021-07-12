@@ -44,6 +44,7 @@ $table
     ->ensureColumn(new rex_sql_column('description', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('auto_redirect', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('auto_redirect_days', 'int(3)'))
+    ->ensureIndex(new rex_sql_index('domain_clangs', ['domain', 'clangs'], rex_sql_index::UNIQUE))
     ->ensure();
 
 
