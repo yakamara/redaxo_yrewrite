@@ -59,17 +59,17 @@ rewrite ^/media/(.*)                              /index.php?rex_media_type=defa
 rewrite ^/images/([^/]*)/([^/]*)                  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
 rewrite ^/imagetypes/([^/]*)/([^/]*)              /index.php?rex_media_type=$1&rex_media_file=$2;
 
-#!!! WICHTIG !!! Falls Let's Encrypt fehlschlägt, diese Zeile auskommentieren (sollte jedoch funktionieren)
+// !!! WICHTIG !!! Falls Let's Encrypt fehlschlägt, diese Zeile auskommentieren (sollte jedoch funktionieren)
 location ~ /\. { deny  all; }
 
-# Zugriff auf diese Verzeichnisse verbieten
+// Zugriff auf diese Verzeichnisse verbieten
 location ^~ /redaxo/src { deny  all; }
 location ^~ /redaxo/data { deny  all; }
 location ^~ /redaxo/cache { deny  all; }
 location ^~ /redaxo/bin { deny  all; }
 
 
-# In einigen Fällen könnte folgende Anweisung zusätlich sinnvoll sein.
+// In einigen Fällen könnte folgende Anweisung zusätlich sinnvoll sein.
 
 location ~ /\.(ttf|eot|woff|woff2)$ {
   add_header Access-Control-Allow-Origin *;
@@ -127,7 +127,7 @@ Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/yrewrite
 
 ```
     $yrewrite = new rex_yrewrite;
-    # dump($yrewrite); // optional alle Eigenschaften und Methoden anzeigen
+    // dump($yrewrite); // optional alle Eigenschaften und Methoden anzeigen
 ```
 
 **Methoden**
