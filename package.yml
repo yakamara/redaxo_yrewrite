@@ -21,3 +21,4 @@ requires:
     redaxo: '^5.7'
     packages:
         yform: '>=3.2'
+        structure: '^2.7.0'
