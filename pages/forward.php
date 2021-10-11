@@ -35,20 +35,20 @@ if ($func != '') {
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_forward'));
     $yform->setObjectparams('form_name', 'yrewrite_forward_form');
 
-    $yform->setValueField('select', ['status', $this->i18n('forward_status'), ''.$this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
-    $yform->setValueField('select_sql', ['domain_id', $this->i18n('domain') . '', 'select id,domain as name from '.rex::getTable('yrewrite_domain') . ' ORDER BY name']);
+    $yform->setValueField('choice', ['status', $this->i18n('forward_status'), $this->i18n('forward_active').'=1,'.$this->i18n('forward_inactive').'=0']);
+    $yform->setValueField('choice', ['domain_id', $this->i18n('domain'), 'select id,domain as name from '.rex::getTable('yrewrite_domain') . ' ORDER BY name']);
     $yform->setValueField('text', ['url', $this->i18n('forward_url'), 'notice' => '<small>'.$this->i18n('forward_url_info').'</small>']);
     $yform->setValidateField('preg_match', ['url', '@^[%_\.+\-a-zA-Z0-9]+[/%_\.+\,\-a-zA-Z0-9]*(?<!\/)(?:\?.+)?$@', $this->i18n('warning_chars')]);
     // $this->i18n('warning_noslash')
     $yform->setValidateField('size_range', ['url', 1, 255, $this->i18n('warning_nottolong')]);
     $yform->setValidateField('empty', ['url', $this->i18n('forward_enter_url')]);
     $yform->setValidateField('unique', ['domain_id,url', $this->i18n('forward_domainurl_already_defined')]);
-    $yform->setValueField('select', ['movetype', $this->i18n('forward_move_method'), $this->i18n('forward_301').'=301,'.$this->i18n('forward_302').'=302,'.$this->i18n('forward_303').'=303,'.$this->i18n('forward_307').'=307', '', '303']);
-    $yform->setValueField('select', ['type', $this->i18n('forward_type'), ''.$this->i18n('forward_type_article').'=article,'.$this->i18n('forward_type_extern').'=extern,'.$this->i18n('forward_type_media').'=media']);
+    $yform->setValueField('choice', ['movetype', $this->i18n('forward_move_method'), $this->i18n('forward_301').'=301,'.$this->i18n('forward_302').'=302,'.$this->i18n('forward_303').'=303,'.$this->i18n('forward_307').'=307', '', '', '303']);
+    $yform->setValueField('choice', ['type', $this->i18n('forward_type'), $this->i18n('forward_type_article').'=article,'.$this->i18n('forward_type_extern').'=extern,'.$this->i18n('forward_type_media').'=media']);
 
     $yform->setValueField('html', ['', '<div id="rex-yrewrite-forward-article">']);
     $yform->setValueField('be_link', ['article_id', $this->i18n('forward_article_id')]);
-    $yform->setValueField('select_sql', ['clang', $this->i18n('forward_clang') . '', 'select id, name from '.rex::getTable('clang')]);
+    $yform->setValueField('choice', ['clang', $this->i18n('forward_clang'), 'select id, name from '.rex::getTable('clang')]);
     $yform->setValueField('html', ['', '</div>']);
 
     $yform->setValueField('html', ['', '<div id="rex-yrewrite-forward-extern">']);
