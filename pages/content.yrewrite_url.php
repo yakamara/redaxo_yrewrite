@@ -91,7 +91,7 @@ if ($isStartarticle) {
         if ($yrewrite_url == '') {
             return false;
         }
-        return !preg_match('/^[%_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url);
+        return !preg_match('/^[%#_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url);
     }, 'params' => [], 'message' => rex_i18n::msg('yrewrite_warning_chars')]);
 
     $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => function ($func, $yrewrite_url, $params, $field) {
