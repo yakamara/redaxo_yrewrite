@@ -11,19 +11,28 @@
 
 class rex_yrewrite
 {
-    /** @var rex_yrewrite_domain[][] */
+    /** @var array<int, array<int, rex_yrewrite_domain>> */
     private static $domainsByMountId = [];
 
-    /** @var rex_yrewrite_domain[] */
+    /** @var array<string, rex_yrewrite_domain> */
     private static $domainsByName = [];
 
-    /** @var rex_yrewrite_domain[] */
+    /** @var array<int, rex_yrewrite_domain> */
     private static $domainsById = [];
 
+    /** @var array<string, array{domain: rex_yrewrite_domain, clang_start: int}> */
     private static $aliasDomains = [];
+
+    /** @var string */
     private static $pathfile = '';
+
+    /** @var string */
     private static $configfile = '';
+
+    /** @var string */
     private static $call_by_article_id = 'allowed'; // forward, allowed, not_allowed
+
+    /** @var array{paths?: array<string, array<int, array<int, string>>>, redirections?: array<string, array<int, array<int, array>>>} */
     public static $paths = [];
 
     /** @var rex_yrewrite_scheme */
@@ -77,6 +86,11 @@ class rex_yrewrite
         }
     }
 
+    /**
+     * @param string $from_domain
+     * @param int $to_domain_id
+     * @param int $clang_start
+     */
     public static function addAliasDomain($from_domain, $to_domain_id, $clang_start = 0)
     {
         if (isset(self::$domainsById[$to_domain_id])) {
@@ -213,8 +227,6 @@ class rex_yrewrite
 
     public static function prepare()
     {
-        $clang = rex_clang::getCurrentId();
-
         // call_by_article allowed
         if (self::$call_by_article_id == 'allowed' && rex_request('article_id', 'int') > 0) {
             $url = rex_getUrl(rex_request('article_id', 'int'));
@@ -228,190 +240,8 @@ class rex_yrewrite
             $url = urldecode($_SERVER['REQUEST_URI']);
         }
 
-        // because of server differences
-        if (substr($url, 0, 1) != '/') {
-            $url = '/' . $url;
-        }
-
-        // delete params
-        $params = '';
-        if (($pos = strpos($url, '?')) !== false) {
-            $params = substr($url, $pos);
-            $url = substr($url, 0, $pos);
-        }
-
-        // delete anker
-        if (($pos = strpos($url, '#')) !== false) {
-            $url = substr($url, 0, $pos);
-        }
-
-        $host = self::getHost();
-
-        if (isset(self::$domainsByName[$host])) {
-            $domain = self::$domainsByName[$host];
-        } else {
-            // check for aliases
-            if (isset(self::$aliasDomains[$host])) {
-                /** @var rex_yrewrite_domain $domain */
-                $domain = self::$aliasDomains[$host]['domain'];
-
-                if (!$url && isset(self::$paths['paths'][$domain->getName()][$domain->getStartId()][self::$aliasDomains[$host]['clang_start']])) {
-                    $url = self::$paths['paths'][$domain->getName()][$domain->getStartId()][self::$aliasDomains[$host]['clang_start']];
-                }
-                // forward to original domain permanent move 301
-
-                if (0 === strpos($url, $domain->getPath())) {
-                    $url = substr($url, strlen($domain->getPath()));
-                }
-
-                $url = ltrim($url, '/');
-
-                header('HTTP/1.1 301 Moved Permanently');
-                header('Location: ' . $domain->getUrl() . $url . $params);
-                exit;
-            }
-
-            if ('www.' === substr($host, 0, 4)) {
-                $alternativeHost = substr($host, 4);
-            } else {
-                $alternativeHost = 'www.' . $host;
-            }
-            if (isset(self::$domainsByName[$alternativeHost])) {
-                $domain = self::$domainsByName[$alternativeHost];
-
-                header('HTTP/1.1 301 Moved Permanently');
-                header('Location: ' . $domain->getUrl() . ltrim($url, '/') . $params);
-                exit;
-            }
-
-            // no domain, no alias, domain with root mountpoint ?
-            if (isset(self::$domainsByMountId[0][$clang])) {
-                $domain = self::$domainsByMountId[0][$clang];
-
-            // no root domain -> default
-            } else {
-                $domain = self::$domainsByName['default'];
-            }
-        }
-
-        $currentScheme = self::isHttps() ? 'https' : 'http';
-        $domainScheme = $domain->getScheme();
-        $coreUseHttps = rex::getProperty('use_https');
-        if (
-            $domainScheme && $domainScheme !== $currentScheme &&
-            true !== $coreUseHttps && rex::getEnvironment() !== $coreUseHttps
-        ) {
-            header('HTTP/1.1 301 Moved Permanently');
-            header('Location: ' . $domainScheme . '://' . $host . $url . $params);
-            exit;
-        }
-
-        if (rex::isBackend()) {
-            return true;
-        }
-
-        if (0 === strpos($url, $domain->getPath())) {
-            $url = substr($url, strlen($domain->getPath()));
-        }
-
-        $url = ltrim($url, '/');
-
-        if ('' === $url && $domain->isStartClangAuto()) {
-            $startClang = null;
-            $startClangFallback = $domain->getStartClang();
-
-            if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-                foreach (explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $code) {
-                    $code = trim(explode(';', $code, 2)[0]);
-                    $code = str_replace('-', '_', mb_strtolower($code));
-
-                    foreach ($domain->getClangs() as $clangId) {
-                        $clang = rex_clang::get($clangId);
-                        $clangCode = str_replace('-', '_', mb_strtolower($clang->getCode()));
-                        if ($code === $clangCode) {
-                            $startClang = $clang->getId();
-                            break 2;
-                        }
-
-                        if (0 === strpos($code, $clangCode.'_')) {
-                            $startClangFallback = $clang->getId();
-                        }
-                    }
-                }
-            }
-
-            $startClang = $startClang ?? $startClangFallback;
-
-            header('HTTP/1.1 302 Found');
-            header('Location: ' . $domainScheme . '://' . $host . rex_getUrl($domain->getStartId(), $startClang) . $params);
-            exit;
-        }
-
-        $structureAddon = rex_addon::get('structure');
-        $structureAddon->setProperty('start_article_id', $domain->getStartId());
-        $structureAddon->setProperty('notfound_article_id', $domain->getNotfoundId());
-
-        // if no path -> startarticle
-        if ($url === '') {
-            $structureAddon->setProperty('article_id', $domain->getStartId());
-            rex_clang::setCurrentId($domain->getStartClang());
-            return true;
-        }
-
-        // normal exact check
-        foreach (self::$paths['paths'][$domain->getName()] as $i_id => $i_cls) {
-            foreach (rex_clang::getAllIds() as $clang_id) {
-                if (isset($i_cls[$clang_id]) && $i_cls[$clang_id] == $url) {
-                    $structureAddon->setProperty('article_id', $i_id);
-                    rex_clang::setCurrentId($clang_id);
-                    return true;
-                }
-            }
-        }
-
-        $candidates = self::$scheme->getAlternativeCandidates($url, $domain);
-        if ($candidates) {
-            foreach ((array) $candidates as $candidate) {
-                foreach (self::$paths['paths'][$domain->getName()] as $i_id => $i_cls) {
-                    foreach (rex_clang::getAllIds() as $clang_id) {
-                        if (isset($i_cls[$clang_id]) && $i_cls[$clang_id] == $candidate) {
-                            $url = $domain->getPath() . $candidate;
-                            if (!empty($_SERVER['QUERY_STRING'])) {
-                                $url .= '?' . $_SERVER['QUERY_STRING'];
-                            }
-                            header('HTTP/1.1 301 Moved Permanently');
-                            header('Location: ' . $url);
-                            exit;
-                        }
-                    }
-                }
-            }
-        }
-
-        $params = rex_extension::registerPoint(new rex_extension_point('YREWRITE_PREPARE', '', ['url' => $url, 'domain' => $domain]));
-
-        if (isset($params['article_id']) && $params['article_id'] > 0) {
-            if (isset($params['clang']) && $params['clang'] > 0) {
-                $clang = $params['clang'];
-            }
-
-            if (($article = rex_article::get($params['article_id'], $clang))) {
-                $structureAddon->setProperty('article_id', $params['article_id']);
-                rex_clang::setCurrentId($clang);
-                return true;
-            }
-        }
-
-        // no article found -> domain not found article
-        $structureAddon->setProperty('article_id', $domain->getNotfoundId());
-        rex_clang::setCurrentId($domain->getStartClang());
-        rex_response::setStatus(rex_response::HTTP_NOT_FOUND);
-        foreach (self::$paths['paths'][$domain->getName()][$domain->getStartId()] ?? [] as $clang => $clangUrl) {
-            if ($clang != $domain->getStartClang() && $clangUrl != '' && 0 === strpos($url, $clangUrl)) {
-                rex_clang::setCurrentId($clang);
-                break;
-            }
-        }
+        $resolver = new rex_yrewrite_path_resolver(self::$domainsByName, self::$domainsByMountId, self::$aliasDomains, self::$paths['paths'] ?? []);
+        $resolver->resolve($url);
 
         return true;
     }
