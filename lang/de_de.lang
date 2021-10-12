@@ -177,9 +177,10 @@ yrewrite_auto_redirect_days_info = <code>0</code> eintragen, um die automatische
 yrewrite_auto_redirects = Automatische Weiterleitungen
 yrewrite_expiry_date = Deaktivierungsdatum
 
+perm_general_yrewrite[forward] = YRewrite: Weiterleitungen
 yrewrite_perm_url_edit = YRewrite: URL editieren
 yrewrite_perm_seo_edit = YRewrite: SEO-Daten editieren
-yrewrite_perm_url_forward = YRewrite: Weiterleitungen
+
 yrewrite_settings = Einstellungen
 yrewrite_settings_saved = Einstellungen gespeichert
 yrewrite_unicode_urls = Unicode-Zeichen in URLs erlauben (Umlaute, chinesische/kyrillische Zeichen etc.)

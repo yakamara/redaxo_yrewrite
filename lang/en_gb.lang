@@ -177,9 +177,10 @@ yrewrite_auto_redirect_days_info = Enter 0 to disable automatic deactivation
 yrewrite_auto_redirects = Automatic redirects
 yrewrite_expiry_date = Date of deactivation
 
+perm_general_yrewrite[forward] = YRewrite: Redirects
 yrewrite_perm_url_edit = Yrewrite: URL editing
 yrewrite_perm_seo_edit = Yrewrite: SEO-Data editing
-yrewrite_perm_url_forward = YRewrite: Redirects
+
 yrewrite_settings = Settings
 yrewrite_settings_saved = Settings updated
 yrewrite_unicode_urls = Allow unicode chars in URLs (umlauts, chinese/cyrillic characters etc.)
