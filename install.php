@@ -53,6 +53,7 @@ $table
     ->ensureColumn(new rex_sql_column('alias_domain', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('domain_id', 'int(11)'))
     ->ensureColumn(new rex_sql_column('clang_start', 'int(11)'))
+    ->ensureIndex(new rex_sql_index('alias_domain', ['alias_domain'], rex_sql_index::UNIQUE))
     ->ensure();
 
 $table = rex_sql_table::get(rex::getTable('yrewrite_forward'));
