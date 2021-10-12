@@ -21,7 +21,6 @@ $table
     ->ensureColumn(new rex_sql_column('yrewrite_priority', 'varchar(5)'), 'yrewrite_changefreq')
     ->ensureColumn(new rex_sql_column('yrewrite_index', 'tinyint(1)'), 'yrewrite_priority')
     ->ensureColumn(new rex_sql_column('yrewrite_canonical_url', 'text'), 'yrewrite_index')
-    
     ->alter()
 ;
 
