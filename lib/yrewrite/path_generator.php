@@ -126,8 +126,6 @@ class rex_yrewrite_path_generator
         $articleId = $article->getId();
         $clangId = $article->getClangId();
 
-        unset($this->redirections[$domainName][$articleId][$clangId]);
-
         $url = $this->scheme->getCustomUrl($article, $domain);
 
         if (!is_string($url)) {
@@ -168,6 +166,8 @@ class rex_yrewrite_path_generator
         }
 
         $this->paths[$domainName][$articleId][$clangId] = $url;
+
+        unset($this->redirections[$domainName][$articleId][$clangId]);
     }
 
     private function generatePaths(rex_yrewrite_domain $domain, $path, rex_category $category)
