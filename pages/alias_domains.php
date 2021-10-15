@@ -33,7 +33,11 @@ if ($func != '') {
     $yform->setObjectparams('main_table', rex::getTable('yrewrite_alias'));
     $yform->setObjectparams('form_name', 'yrewrite_alias_domains_form');
 
-    $yform->setValueField('text', ['alias_domain', $this->i18n('alias_domain_refersto')]);
+    $yform->setValueField('text', [
+        'name' => 'alias_domain',
+        'label' => $this->i18n('alias_domain_refersto'),
+        'notice' => $this->i18n('alias_domain_refersto_notice'),
+    ]);
     $yform->setValueField('choice', ['domain_id', $this->i18n('domain_willbereferdto'), 'SELECT id, domain AS label FROM '.rex::getTable('yrewrite_domain')]);
     if (rex_clang::count() > 1) {
         $yform->setValueField('choice', ['clang_start', $this->i18n('clang_start'), 'SELECT id, name AS label FROM '.rex::getTable('clang').' ORDER BY id']);
