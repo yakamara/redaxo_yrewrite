@@ -60,6 +60,7 @@ yrewrite_domain_robots = robots.txt
 yrewrite_root = --- Root Ebene --- [0]
 
 yrewrite_alias_domain_refersto = Diese Domain wird weitergeleitet
+yrewrite_alias_domain_refersto_notice = Bitte ohne `http[s]://` eingeben
 yrewrite_domain_willbereferdto = auf diese Domain
 
 yrewrite_domain_already_defined = Domain wurde bereits definiert
