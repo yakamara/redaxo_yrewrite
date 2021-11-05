@@ -199,6 +199,9 @@ class rex_yrewrite_path_resolver
 
             foreach ($domain->getClangs() as $clangId) {
                 $clang = rex_clang::get($clangId);
+                if(!$clang->isOnline()) {
+	                continue;
+                }
                 $clangCode = str_replace('-', '_', mb_strtolower($clang->getCode()));
                 if ($code === $clangCode) {
                     $startClang = $clang->getId();
