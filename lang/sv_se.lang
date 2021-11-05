@@ -60,6 +60,7 @@ yrewrite_domain_robots = Robots fil
 yrewrite_root = --- Root --- [0]
 
 yrewrite_alias_domain_refersto = Denna domän vidarebefordras
+yrewrite_alias_domain_refersto_notice = Vänligen ange utan 'http[s]://'
 yrewrite_domain_willbereferdto = till denna domän
 
 yrewrite_domain_already_defined = Domänen har redan definierats
@@ -177,8 +178,10 @@ yrewrite_auto_redirect_days_info = Ange 0 för att stänga av automatisk avaktiv
 yrewrite_auto_redirects = Automatiska vidarebefordringar
 yrewrite_expiry_date = Avaktiveringsdatum
 
+perm_general_yrewrite[forward] = YRewrite: omdirigeringar
 yrewrite_perm_url_edit = Yrewrite: redigera URL
 yrewrite_perm_seo_edit = Yrewrite: redigera SEO-data
+
 yrewrite_settings = Inställningar
 yrewrite_settings_saved = Inställningar sparades
 yrewrite_unicode_urls = Tillåt Unicode-tecken i webbadresser (ä,ö,å, kinesiska / kyrilliska tecken etc.)
