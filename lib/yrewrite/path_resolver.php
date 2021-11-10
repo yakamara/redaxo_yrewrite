@@ -113,7 +113,8 @@ class rex_yrewrite_path_resolver
         rex_clang::setCurrentId($domain->getStartClang());
         rex_response::setStatus(rex_response::HTTP_NOT_FOUND);
         foreach ($this->paths[$domain->getName()][$domain->getStartId()] ?? [] as $clang => $clangUrl) {
-            if ($clang != $domain->getStartClang() && $clangUrl != '' && 0 === strpos($url, $clangUrl)) {
+			$rex_clang = rex_clang::get($clang);
+            if ($clang != $domain->getStartClang() && $clangUrl != '' && $rex_clang->isOnline() && 0 === strpos($url, $clangUrl)) {
                 rex_clang::setCurrentId($clang);
                 return;
             }
