@@ -54,4 +54,3 @@ if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
     rex_yrewrite::deleteCache();
 }
 
-rex_yrewrite::copyHtaccess();
