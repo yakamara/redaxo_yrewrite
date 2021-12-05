@@ -7,7 +7,9 @@
  *
  * @package redaxo\yrewrite
  *
+ * @psalm-scope-this rex_addon
  * @var rex_addon $this
+ * @var array{article_id: int, clang: int, ctype: int} $params
  */
 
 $content = '';
