@@ -49,12 +49,7 @@ class rex_yrewrite
         self::$aliasDomains = [];
         self::$paths = [];
 
-        $path = dirname($_SERVER['SCRIPT_NAME']);
-        if (rex::isBackend()) {
-            $path = dirname($path);
-        }
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . '/';
-        self::addDomain(new rex_yrewrite_domain('default', null, $path, 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId(), rex_clang::getAllIds(), rex_clang::getStartId(), '', '', '', rex_clang::count() <= 1));
+        self::addDomain(new rex_yrewrite_domain('default', null, self::getSubPath(), 0, rex_article::getSiteStartArticleId(), rex_article::getNotfoundArticleId(), rex_clang::getAllIds(), rex_clang::getStartId(), '', '', '', rex_clang::count() <= 1));
 
         self::$pathfile = rex_path::addonCache('yrewrite', 'pathlist.json');
         self::$configfile = rex_path::addonCache('yrewrite', 'config.php');
@@ -571,7 +566,7 @@ class rex_yrewrite
     {
         $domain = self::getHost();
         $http = 'http://';
-        $subfolder = rex_url::base();
+        $subfolder = self::getSubPath();
         if (self::isHttps()) {
             $http = 'https://';
         }
@@ -584,5 +579,15 @@ class rex_yrewrite
             return $_SERVER['HTTP_X_FORWARDED_SERVER'];
         }
         return @$_SERVER['HTTP_HOST'];
+    }
+
+    private static function getSubPath(): string
+    {
+        $path = dirname($_SERVER['SCRIPT_NAME']);
+        if (rex::isBackend()) {
+            $path = dirname($path);
+        }
+
+        return rtrim($path, DIRECTORY_SEPARATOR) . '/';
     }
 }
