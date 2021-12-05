@@ -39,7 +39,7 @@ class rex_yrewrite_forward
 
         /** @var rex_yrewrite_domain $domain */
         $domain = $params['domain'];
-        $url = $params['url'];
+        $url = mb_strtolower($params['url']);
 
         foreach (self::$paths as $p) {
             $forwardDomain = rex_yrewrite::getDomainById($p['domain_id']);
@@ -94,13 +94,11 @@ class rex_yrewrite_forward
 
         foreach ($content as &$row) {
             $url = explode('?', (string) $row['url'], 2);
+            $row['url'] = mb_strtolower($url[0]);
 
-            if (!isset($url[1])) {
-                continue;
+            if (isset($url[1])) {
+                parse_str($url[1], $row['params']);
             }
-
-            $row['url'] = $url[0];
-            parse_str($url[1], $row['params']);
         }
 
         rex_file::put(self::$pathfile, json_encode($content));
