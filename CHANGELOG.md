@@ -1,6 +1,35 @@
 Changelog
 =========
 
+Version 2.8 – 05.12.2021
+--------------------------
+
+### Neu
+
+- Installation unter PHP 8 und mit yform 4 ermöglicht (@alxndr-w, @TobiasKrais)
+- Neue REX_VAR: `REX_YREWRITE_DOMAIN` (@dergel)
+- Eigene URLs können Anker (`#foo`) enthalten (@tbaddade)
+- Artikel-spezifische Weiterleitungen: Original-URL ist aufrufbar und wird umgeleitet (@gharlan)
+- Weiterleitungen funktionieren nun ohne Berücksichtigung von Groß-/Kleinschreibung (@gharlan)
+- Weiterleitungen: URL/Ziel-URL können mehr als 191 Zeichen enthalten (@tbaddade)
+- Weiterleitungen werden standardmäßig absteigend nach Erstellung sortiert (@alxndr-w)
+- Unique-Keys auf Datenbankebene (@alxndr-w, @tbaddade)
+- Medien über Media Manager nutzen den Addonspezifischen Media-Type `yrewrite_default` (@gharlan)
+- Mime-Type für `.wasm`-Extension ergänzt (@novinet-markusd)
+- Setup-Page: Vorschaulinks öffnen in neuem Tab (@frood)
+- Texte/Readme optimiert (@skerbis, @tbaddade, @alxndr-w, @dergel)
+- Schwedische Übersetzung (@interweave-media)
+
+### Bugfixes
+
+* Anpassungen für neuere yform-Versionen (@marcohanke, @alxndr-w, @tbaddade)
+* Domainänderungen wirkten sich wegen Opcache teils verzögert aus (@gharlan)
+* Weiterleitungen konnten keine Umlaute enthalten (@gharlan)
+* Offline-Sprachen werden bei automatischer Sprachumleitung und beim 404-Artikel nicht mehr berücksichtigt (@TobiasKrais)
+* Es entstanden teils Redirects mit ungültiger URL (fehlender Slash zwischendrin) (@TobiasKrais, @gharlan)
+* `rex_yrewrite::getFullPath` hat im Backend eine ungültige URL geliefert (@gharlan)
+
+
 Version 2.7 – 18.09.2020
 --------------------------
 
