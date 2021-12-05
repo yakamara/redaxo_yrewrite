@@ -10,16 +10,16 @@
 
 class rex_yrewrite_seo
 {
-    public $article = null,
-        $domain = null;
+    public $article;
+    public $domain;
 
-    public static $priority = ['1.0', '0.7', '0.5', '0.3', '0.1', '0.0'],
-        $priority_default = '',
-        $index_setting_default = 0,
-        $changefreq = ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'],
-        $changefreq_default = 'weekly',
-        $robots_default = "User-agent: *\nDisallow:",
-        $title_scheme_default = '%T / %SN';
+    public static $priority = ['1.0', '0.7', '0.5', '0.3', '0.1', '0.0'];
+    public static $priority_default = '';
+    public static $index_setting_default = 0;
+    public static $changefreq = ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'];
+    public static $changefreq_default = 'weekly';
+    public static $robots_default = "User-agent: *\nDisallow:";
+    public static $title_scheme_default = '%T / %SN';
 
     /**
      * @var string
@@ -48,10 +48,10 @@ class rex_yrewrite_seo
 
     public function __construct($article_id = 0, $clang = null)
     {
-        if ($article_id == 0) {
+        if (0 == $article_id) {
             $article_id = rex_article::getCurrentId();
         }
-        if (is_null($clang)) {
+        if (null === $clang) {
             $clang = rex_clang::getCurrentId();
         }
 
@@ -78,27 +78,27 @@ class rex_yrewrite_seo
 
     public function getRobotsTag()
     {
-        if ($this->article->getValue(self::$meta_index_field) == 1 || ($this->article->getValue(self::$meta_index_field) == 0 && $this->article->isOnline())) {
+        if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
             return '<meta name="robots" content="index, follow">';
-        } else if ($this->article->getValue(self::$meta_index_field) == 2) {
-            return '<meta name="robots" content="noindex, follow">';
-        } else {
-            return '<meta name="robots" content="noindex, nofollow">';
         }
+        if (2 == $this->article->getValue(self::$meta_index_field)) {
+            return '<meta name="robots" content="noindex, follow">';
+        }
+        return '<meta name="robots" content="noindex, nofollow">';
     }
 
     public function getTitle()
     {
         $title_scheme = htmlspecialchars_decode(trim($this->domain->getTitle()));
-        if ($title_scheme == '') {
+        if ('' == $title_scheme) {
             $title_scheme = self::$title_scheme_default;
         }
 
         $ytitle = '';
-        if ($this->article && $this->article->getValue(self::$meta_title_field) != '') {
+        if ($this->article && '' != $this->article->getValue(self::$meta_title_field)) {
             $ytitle = $this->article->getValue(self::$meta_title_field);
         }
-        if ($ytitle == '') {
+        if ('' == $ytitle) {
             $ytitle = $this->article->getValue('name');
         }
 
@@ -117,7 +117,7 @@ class rex_yrewrite_seo
     public function getCanonicalUrl()
     {
         $canonical_url = trim($this->article->getValue(self::$meta_canonical_url_field));
-        if ($canonical_url == "") {
+        if ('' == $canonical_url) {
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClangId());
         }
         $canonical_url = rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_URL', $canonical_url, ['article' => $this->article]));
@@ -134,8 +134,7 @@ class rex_yrewrite_seo
                 foreach ($domain->getClangs() as $clang) {
                     if ($lang = rex_clang::get($clang)) {
                         $article = rex_article::getCurrent($clang);
-                        if ($article->isOnline() && $lang->isOnline())
-                        {
+                        if ($article->isOnline() && $lang->isOnline()) {
                             $lang_domains[$lang->getCode()] = rex_yrewrite::getFullUrlByArticleId($article->getId(), $lang->getId());
                         }
                     }
@@ -152,7 +151,7 @@ class rex_yrewrite_seo
         $return = '';
         $lang_domains = $this->getHrefLangs();
 
-        foreach ($lang_domains as $code => $url){
+        foreach ($lang_domains as $code => $url) {
             $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
         }
         return $return;
@@ -160,14 +159,14 @@ class rex_yrewrite_seo
 
     public function cleanString($str)
     {
-        return str_replace(["\n","\r"], [' ',''], $str);
+        return str_replace(["\n", "\r"], [' ', ''], $str);
     }
 
     // ----- global static functions
 
     public function sendRobotsTxt($domain = '')
     {
-        if ($domain == '') {
+        if ('' == $domain) {
             $domain = rex_yrewrite::getHost();
         }
 
@@ -177,7 +176,7 @@ class rex_yrewrite_seo
 
         if (rex_yrewrite::getDomainByName($domain)) {
             $robots = rex_yrewrite::getDomainByName($domain)->getRobots();
-            if ($robots != '') {
+            if ('' != $robots) {
                 $content .= $robots;
             } else {
                 $content .= self::$robots_default;
@@ -190,23 +189,19 @@ class rex_yrewrite_seo
 
     public function sendSitemap($domain = '')
     {
-
         $domains = rex_yrewrite::getDomains();
 
-        if ($domain == '') {
+        if ('' == $domain) {
             $domain = rex_yrewrite::getHost();
         }
 
         $sitemap = [];
 
-        if (rex_yrewrite::getDomainByName($domain) || count($domains) == 1 ) {
-
-            if (count($domains) == 1) {
+        if (rex_yrewrite::getDomainByName($domain) || 1 == count($domains)) {
+            if (1 == count($domains)) {
                 $domain = rex_yrewrite::getDefaultDomain();
-
             } else {
                 $domain = rex_yrewrite::getDomainByName($domain);
-
             }
 
             $domain_article_id = $domain->getStartId();
@@ -217,7 +212,6 @@ class rex_yrewrite_seo
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
-
                     if (!rex_clang::get($clang_id)->isOnline()) {
                         continue;
                     }
@@ -227,11 +221,9 @@ class rex_yrewrite_seo
                     if (
                         ($article) &&
                         $article->isPermitted() &&
-                        ($article->getValue(self::$meta_index_field) == 1 || ($article->isOnline() && $article->getValue(self::$meta_index_field) == 0)) &&
+                        (1 == $article->getValue(self::$meta_index_field) || ($article->isOnline() && 0 == $article->getValue(self::$meta_index_field))) &&
                         ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())
-
                     ) {
-
                         $changefreq = $article->getValue(self::$meta_changefreq_field);
                         if (!in_array($changefreq, self::$changefreq)) {
                             $changefreq = self::$changefreq_default;
@@ -278,7 +270,7 @@ class rex_yrewrite_seo
         exit;
     }
 
-    /* @deprecated */
+    /** @deprecated */
     public static function checkArticlePerm($article)
     {
         return $article->isPermitted();

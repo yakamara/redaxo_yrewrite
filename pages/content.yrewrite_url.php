@@ -72,7 +72,7 @@ if ($isStartarticle) {
         'placeholder' => 'https://example.com',
     ]]);
 
-    $yform->setActionField('callback', [function () use ($yform) {
+    $yform->setActionField('callback', [static function () use ($yform) {
         switch ($yform->objparams['value_pool']['sql']['yrewrite_url_type']) {
             case 'REDIRECTION_INTERNAL':
                 $yform->objparams['value_pool']['sql']['yrewrite_redirection'] = $yform->objparams['value_pool']['sql']['yrewrite_redirection_internal'];
@@ -85,23 +85,23 @@ if ($isStartarticle) {
         unset($yform->objparams['value_pool']['sql']['yrewrite_redirection_external']);
     }]);
 
-    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => function ($func, $yrewrite_url) {
+    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => static function ($func, $yrewrite_url) {
         return strlen($yrewrite_url) > 250;
     }, 'params' => [], 'message' => rex_i18n::msg('yrewrite_warning_nottolong')]);
 
-    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => function ($func, $yrewrite_url) {
-        if ($yrewrite_url == '') {
+    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => static function ($func, $yrewrite_url) {
+        if ('' == $yrewrite_url) {
             return false;
         }
         return !preg_match('/^[%#_\.+\-\/a-zA-Z0-9]+$/', $yrewrite_url);
     }, 'params' => [], 'message' => rex_i18n::msg('yrewrite_warning_chars')]);
 
-    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => function ($func, $yrewrite_url, $params, $field) {
-        if ($yrewrite_url == '') {
+    $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => static function ($func, $yrewrite_url, $params, $field) {
+        if ('' == $yrewrite_url) {
             return false;
         }
         $return = (($a = rex_yrewrite::getArticleIdByUrl($params['domain'], $yrewrite_url)) && (key($a) != $params['article_id'] || current($a) != $params['clang']));
-        if ($return && $yrewrite_url != '') {
+        if ($return && '' != $yrewrite_url) {
             $field->setElement('message', rex_i18n::msg('yrewrite_warning_urlexists', key($a)));
         } else {
             $return = false;
@@ -125,7 +125,7 @@ if ($isStartarticle) {
 
     echo $form;
 
-    if ("AUTO" === rex_article::get($article_id, $clang)->getValue('yrewrite_url_type')) {
+    if ('AUTO' === rex_article::get($article_id, $clang)->getValue('yrewrite_url_type')) {
         $autoUrl = rex_getUrl();
         if (0 === strpos($autoUrl, $domain->getUrl())) {
             $autoUrl = substr($autoUrl, strlen($domain->getUrl()));

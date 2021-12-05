@@ -42,7 +42,7 @@ class rex_yrewrite_domain
         $this->mountId = $mountId;
         $this->startId = $startId;
         $this->notfoundId = $notfoundId;
-        $this->clangs = is_null($clangs) ? rex_clang::getAllIds() : $clangs;
+        $this->clangs = null === $clangs ? rex_clang::getAllIds() : $clangs;
         $this->startClang = $startClang;
         $this->startClangAuto = $startClangAuto;
         $this->startClangHidden = $startClangHidden;

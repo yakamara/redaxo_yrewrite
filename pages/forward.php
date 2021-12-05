@@ -20,13 +20,13 @@ $domains = rex_yrewrite::getDomains();
 
 rex_yrewrite_forward::init();
 
-if (count($domains) == 1) {
+if (1 == count($domains)) {
     echo rex_view::error($this->i18n('error_domain_missing'));
     $func = '';
     $showlist = false;
 }
 
-if ($func != '') {
+if ('' != $func) {
     $yform = new rex_yform();
     // $yform->setDebug(TRUE);
     $yform->setHiddenField('page', 'yrewrite/forward');
@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
 
 </script>';
 
-    if ($func == 'delete') {
+    if ('delete' == $func) {
         if (!$csrf->isValid()) {
             echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
         } else {
@@ -89,7 +89,7 @@ jQuery(document).ready(function() {
             echo rex_view::success($this->i18n('forward_deleted'));
             rex_yrewrite_forward::generatePathFile();
         }
-    } elseif ($func == 'edit') {
+    } elseif ('edit' == $func) {
         $yform->setHiddenField('data_id', $data_id);
         $yform->setActionField('db', [rex::getTable('yrewrite_forward'), 'id=' . $data_id]);
         $yform->setObjectparams('main_id', $data_id);
@@ -109,7 +109,7 @@ jQuery(document).ready(function() {
             $fragment->setVar('body', $form, false);
             echo $fragment->parse('core/page/section.php');
         }
-    } elseif ($func == 'add') {
+    } elseif ('add' == $func) {
         $yform->setActionField('db', [rex::getTable('yrewrite_forward')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
@@ -131,12 +131,12 @@ jQuery(document).ready(function() {
 
 if ($showlist) {
     $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_forward');
-    if (rex_get('sort','string') == 'domain_id') {
+    if ('domain_id' == rex_get('sort', 'string')) {
         $sql .= ' ORDER BY url';
-        if (rex_get('sorttype','string') == 'desc') {
+        if ('desc' == rex_get('sorttype', 'string')) {
             $sql .= ' DESC';
         }
-    } else if(!rex_get('sort')) {
+    } elseif (!rex_get('sort')) {
         $sql .= ' ORDER BY id DESC';
     }
 
@@ -157,9 +157,8 @@ if ($showlist) {
 
     $list->setColumnLabel('expiry_date', $this->i18n('expiry_date'));
 
-
     $list->setColumnLabel('domain_id', $this->i18n('forward_url'));
-    $list->setColumnFormat('domain_id', 'custom', function ($params) {
+    $list->setColumnFormat('domain_id', 'custom', static function ($params) {
         $domain = rex_yrewrite::getDomainById($params['subject']);
         $url = $domain ? $domain->getUrl() : '';
         $url .= $params['list']->getValue('url');
@@ -185,9 +184,9 @@ if ($showlist) {
     // $list->setColumnLabel('status', rex_i18n::msg('b_function'));
     $list->setColumnParams('status', ['func' => 'status', 'oid' => '###id###']);
     $list->setColumnLayout('status', ['<th>###VALUE###</th>', '<td>###VALUE###</td>']);
-    $list->setColumnFormat('status', 'custom', function ($params) {
+    $list->setColumnFormat('status', 'custom', static function ($params) {
         $list = $params['list'];
-        if ($list->getValue('status') == 1) {
+        if (1 == $list->getValue('status')) {
             $str = '<span class="rex-online">'.rex_i18n::msg('yrewrite_forward_active').'</span>';
         } else {
             $str = '<span class="rex-offline">'.rex_i18n::msg('yrewrite_forward_inactive').'</span>';

@@ -16,7 +16,7 @@ $data_id = rex_request('data_id', 'int', 0);
 $func = rex_request('func', 'string');
 $csrf = rex_csrf_token::factory('yrewrite_domains');
 
-if ($func != '') {
+if ('' != $func) {
     $yform = new rex_yform();
     // $yform->setDebug(TRUE);
     $yform->setHiddenField('page', 'yrewrite/domains');
@@ -43,7 +43,7 @@ if ($func != '') {
     $yform->setValueField('checkbox', ['clang_start_auto', $this->i18n('clang_start_auto')]);
     $yform->setValueField('choice', ['clang_start', $this->i18n('clang_start'), 'select id, name from '.rex::getTable('clang'), 0, 0, '', '', '', '', '', '', '', '<small>'.$this->i18n('clang_start_info').'</small>']);
     $yform->setValueField('checkbox', ['clang_start_hidden', $this->i18n('clang_start_hidden')]);
-    $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'),rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>'] );
+    $yform->setValueField('text', ['title_scheme', $this->i18n('domain_title_scheme'), rex_yrewrite_seo::$title_scheme_default, 'notice' => '<small>'.$this->i18n('domain_title_scheme_info').'</small>']);
     $yform->setValueField('checkbox', ['auto_redirect', $this->i18n('auto_redirects'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect').'</small>']);
     $yform->setValueField('text', ['auto_redirect_days', $this->i18n('yrewrite_auto_redirect_days'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect_days_info').'</small>']);
 
@@ -66,8 +66,7 @@ if ($func != '') {
         </script>
     ';
 
-    if ($func == 'delete') {
-
+    if ('delete' == $func) {
         if (!$csrf->isValid()) {
             echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
         } else {
@@ -76,10 +75,8 @@ if ($func != '') {
             echo rex_view::success($this->i18n('domain_deleted'));
             rex_yrewrite::deleteCache();
         }
-
-    } else if ($func == 'edit') {
-
-        $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),'','','short']);
+    } elseif ('edit' == $func) {
+        $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'), '', '', 'short']);
         $yform->setHiddenField('data_id', $data_id);
         $yform->setActionField('db', [rex::getTable('yrewrite_domain'), 'id=' . $data_id]);
         $yform->setObjectparams('main_id', $data_id);
@@ -92,7 +89,6 @@ if ($func != '') {
         if ($yform->objparams['actions_executed']) {
             echo rex_view::success($this->i18n('domain_updated'));
             rex_yrewrite::deleteCache();
-
         } else {
             $showlist = false;
             $fragment = new rex_fragment();
@@ -100,12 +96,9 @@ if ($func != '') {
             $fragment->setVar('title', $this->i18n('edit_domain'));
             $fragment->setVar('body', $form.$js, false);
             echo $fragment->parse('core/page/section.php');
-
         }
-
-    } elseif ($func == 'add') {
-
-        $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'),rex_yrewrite_seo::$robots_default,'','short']);
+    } elseif ('add' == $func) {
+        $yform->setValueField('textarea', ['robots', $this->i18n('domain_robots'), rex_yrewrite_seo::$robots_default, '', 'short']);
         $yform->setActionField('db', [rex::getTable('yrewrite_domain')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
@@ -113,7 +106,6 @@ if ($func != '') {
         if ($yform->objparams['actions_executed']) {
             echo rex_view::success($this->i18n('domain_added'));
             rex_yrewrite::deleteCache();
-
         } else {
             $showlist = false;
 
@@ -122,13 +114,11 @@ if ($func != '') {
             $fragment->setVar('title', $this->i18n('add_domain'));
             $fragment->setVar('body', $form.$js, false);
             echo $fragment->parse('core/page/section.php');
-
         }
     }
 }
 
 if ($showlist) {
-
     $sql = 'SELECT * FROM ' . rex::getTable('yrewrite_domain') . ' ORDER BY domain';
 
     $list = rex_list::factory($sql, 100);
@@ -155,13 +145,13 @@ if ($showlist) {
     $list->setColumnLabel('clangs', $this->i18n('clangs'));
     $list->setColumnFormat('clangs', 'custom', function ($params) {
         $clangs = $params['subject'];
-        if ($clangs == '') {
+        if ('' == $clangs) {
             $return = $this->i18n('alllangs');
         } else {
             $return = [];
             foreach (explode(',', $clangs) as $clang) {
-            	if(rex_clang::get($clang)) {
-                	$return[] = rex_clang::get($clang)->getName();
+                if (rex_clang::get($clang)) {
+                    $return[] = rex_clang::get($clang)->getName();
                 }
             }
             if (count($return) > 1) {
@@ -188,18 +178,18 @@ if ($showlist) {
 
     $showArticle = function ($params) {
         $id = $params['list']->getValue($params['field']);
-        if ($id == 0) {
+        if (0 == $id) {
             return $this->i18n('root');
-        } else {
-            if (($article = rex_article::get($id))) {
-                if ($article->isStartArticle()) {
-                    $link = 'index.php?page=structure&category_id='.$id.'&clang=1';
-                } else {
-                    $link = 'index.php?page=content&article_id='.$id.'&mode=edit&clang=1';
-                }
-                return $article->getName().' [<a href="'.$link.'">'.$id.'</a>]';
-            }
         }
+        if (($article = rex_article::get($id))) {
+            if ($article->isStartArticle()) {
+                $link = 'index.php?page=structure&category_id='.$id.'&clang=1';
+            } else {
+                $link = 'index.php?page=content&article_id='.$id.'&mode=edit&clang=1';
+            }
+            return $article->getName().' [<a href="'.$link.'">'.$id.'</a>]';
+        }
+
         return '['.$id.']';
     };
 

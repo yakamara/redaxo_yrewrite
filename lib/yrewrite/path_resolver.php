@@ -75,7 +75,7 @@ class rex_yrewrite_path_resolver
         $structureAddon->setProperty('notfound_article_id', $domain->getNotfoundId());
 
         // if no path -> startarticle
-        if ($url === '') {
+        if ('' === $url) {
             $structureAddon->setProperty('article_id', $domain->getStartId());
             rex_clang::setCurrentId($domain->getStartClang());
             return;
@@ -123,7 +123,7 @@ class rex_yrewrite_path_resolver
         rex_response::setStatus(rex_response::HTTP_NOT_FOUND);
         foreach ($this->paths[$domain->getName()][$domain->getStartId()] ?? [] as $clang => $clangUrl) {
             $rex_clang = rex_clang::get($clang);
-            if ($clang != $domain->getStartClang() && $clangUrl != '' && $rex_clang->isOnline() && 0 === strpos($url, $clangUrl)) {
+            if ($clang != $domain->getStartClang() && '' != $clangUrl && $rex_clang->isOnline() && 0 === strpos($url, $clangUrl)) {
                 rex_clang::setCurrentId($clang);
                 return;
             }
@@ -134,7 +134,7 @@ class rex_yrewrite_path_resolver
     private function normalizeAndSplitUrl(string $url): array
     {
         // because of server differences
-        if (substr($url, 0, 1) !== '/') {
+        if ('/' !== substr($url, 0, 1)) {
             $url = '/' . $url;
         }
 
@@ -264,7 +264,6 @@ class rex_yrewrite_path_resolver
                 header('HTTP/1.1 '.rex_response::HTTP_MOVED_PERMANENTLY);
                 header('Location: ' . $url);
                 exit;
-
             }
         }
     }
