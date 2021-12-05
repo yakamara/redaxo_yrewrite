@@ -1,7 +1,7 @@
 <?php
 
 /**
- * REX_YREWRITE_DOMAIN[field="id"]
+ * REX_YREWRITE_DOMAIN[field="id"].
  */
 class rex_var_yrewrite_domain extends rex_var
 {

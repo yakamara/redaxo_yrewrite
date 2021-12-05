@@ -59,7 +59,7 @@ class rex_yrewrite_settings
             [
                 'label' => '<label for="yrewrite-hide-seo-block">'.$addon->i18n('yrewrite_hide_seo_block').'</label>',
                 'field' => '<input type="checkbox" id="yrewrite-hide-seo-block" name="yrewrite_hide_seo_block" value="1" '.($addon->getConfig('yrewrite_hide_seo_block') ? ' checked="checked"' : '').' />',
-            ]
+            ],
         ];
 
         $fragment = new rex_fragment();
@@ -68,7 +68,7 @@ class rex_yrewrite_settings
 
         // Submit
         $submit_elements = [
-            [ 'field' => '<button class="btn btn-save rex-form-aligned" type="submit" name="submit" value="1" '.rex::getAccesskey($addon->i18n('submit'), 'save').'>'.$addon->i18n('save').'</button>' ]
+            ['field' => '<button class="btn btn-save rex-form-aligned" type="submit" name="submit" value="1" '.rex::getAccesskey($addon->i18n('submit'), 'save').'>'.$addon->i18n('save').'</button>'],
         ];
 
         $fragment = new rex_fragment();

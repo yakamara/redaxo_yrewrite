@@ -47,7 +47,6 @@ $table
     ->ensureIndex(new rex_sql_index('domain', ['domain'], rex_sql_index::UNIQUE))
     ->ensure();
 
-
 $table = rex_sql_table::get(rex::getTable('yrewrite_alias'));
 $table
     ->ensurePrimaryIdColumn()
@@ -81,6 +80,6 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO
 rex_delete_cache();
 
 if (!class_exists('rex_yrewrite_settings')) {
-    require_once('lib/yrewrite/settings.php');
+    require_once 'lib/yrewrite/settings.php';
 }
 rex_yrewrite_settings::install();

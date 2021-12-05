@@ -18,13 +18,13 @@ $csrf = rex_csrf_token::factory('yrewrite_alias_domains');
 
 $domains = rex_yrewrite::getDomains();
 
-if (count($domains) == 1) {
+if (1 == count($domains)) {
     echo rex_view::error($this->i18n('error_domain_missing'));
     $func = '';
     $showlist = false;
 }
 
-if ($func != '') {
+if ('' != $func) {
     $yform = new rex_yform();
     // $yform->setDebug(TRUE);
     $yform->setHiddenField('page', 'yrewrite/alias_domains');
@@ -49,7 +49,7 @@ if ($func != '') {
     $yform->setValidateField('unique', ['alias_domain', $this->i18n('domain_already_defined')]);
     $yform->setValidateField('preg_match', ['alias_domain', '/[a-zA-Z0-9][a-zA-Z0-9._-]*' . '/', $this->i18n('domain_not_well_formed')]);
 
-    if ($func == 'delete') {
+    if ('delete' == $func) {
         if (!$csrf->isValid()) {
             echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
         } else {
@@ -58,7 +58,7 @@ if ($func != '') {
             echo rex_view::success($this->i18n('domain_deleted'));
             rex_yrewrite::deleteCache();
         }
-    } elseif ($func == 'edit') {
+    } elseif ('edit' == $func) {
         $yform->setHiddenField('data_id', $data_id);
         $yform->setActionField('db', [rex::getTable('yrewrite_alias'), 'id=' . $data_id]);
         $yform->setObjectparams('main_id', $data_id);
@@ -78,7 +78,7 @@ if ($func != '') {
             $fragment->setVar('body', $form, false);
             echo $fragment->parse('core/page/section.php');
         }
-    } elseif ($func == 'add') {
+    } elseif ('add' == $func) {
         $yform->setActionField('db', [rex::getTable('yrewrite_alias')]);
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('add'));
         $form = $yform->getForm();
@@ -118,7 +118,7 @@ if ($showlist) {
     $list->setColumnLabel('alias_domain', $this->i18n('alias_domain'));
 
     $list->setColumnLabel('domain_id', $this->i18n('domain'));
-    $list->setColumnFormat('domain_id', 'custom', function ($params) {
+    $list->setColumnFormat('domain_id', 'custom', static function ($params) {
         $domain = rex_yrewrite::getDomainById($params['subject']);
 
         return $domain ? $domain->getUrl() : '';
