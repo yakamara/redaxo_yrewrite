@@ -273,7 +273,7 @@ class rex_yrewrite_path_resolver
     private function redirect(string $host, string $url, string $params, string $status = rex_response::HTTP_MOVED_PERMANENTLY)
     {
         header('HTTP/1.1 '.$status);
-        header('Location: ' . $host . ltrim($url, '/') . $params);
+        header('Location: ' . rtrim($host, '/') . '/' . ltrim($url, '/') . $params);
         exit;
     }
 }
