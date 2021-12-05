@@ -527,6 +527,10 @@ class rex_yrewrite
         }
 
         rex_file::put(self::$configfile, $content);
+
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate(self::$configfile);
+        }
     }
 
     public static function readConfig()
