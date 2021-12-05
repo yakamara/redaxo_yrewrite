@@ -67,7 +67,7 @@ class rex_yrewrite_path_resolver
         if ('' === $url && $domain->isStartClangAuto()) {
             $startClang = $this->resolveAutoStartClang($domain);
 
-            $this->redirect($domainScheme . '://' . $host, rex_getUrl($domain->getStartId(), $startClang), $params, '302 Found');
+            $this->redirect($currentScheme . '://' . $host, rex_getUrl($domain->getStartId(), $startClang), $params, '302 Found');
         }
 
         $structureAddon = rex_addon::get('structure');
