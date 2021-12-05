@@ -17,18 +17,23 @@ class rex_yrewrite_path_resolver
     /** @var array<string, array<int, array<int, string>>> */
     private $paths;
 
+    /** @var array<string, array<int, array<int, array>>> */
+    private $redirections;
+
     /**
      * @param array<string, rex_yrewrite_domain> $domainsByName
      * @param array<int, array<int, rex_yrewrite_domain>> $domainsByMountId
      * @param array<string, array{domain: rex_yrewrite_domain, clang_start: int}> $aliasDomains
      * @param array<string, array<int, array<int, string>>> $paths
+     * @param array<string, array<int, array<int, array>>> $redirections
      */
-    public function __construct(array $domainsByName, array $domainsByMountId, array $aliasDomains, array $paths)
+    public function __construct(array $domainsByName, array $domainsByMountId, array $aliasDomains, array $paths, array $redirections)
     {
         $this->domainsByName = $domainsByName;
         $this->domainsByMountId = $domainsByMountId;
         $this->aliasDomains = $aliasDomains;
         $this->paths = $paths;
+        $this->redirections = $redirections;
     }
 
     public function resolve(string $url): void
@@ -83,12 +88,16 @@ class rex_yrewrite_path_resolver
             return;
         }
 
+        $this->resolveRedirectionPath($domain, $url, $params);
+
         $candidates = rex_yrewrite::getScheme()->getAlternativeCandidates($url, $domain);
         if ($candidates) {
             foreach ((array) $candidates as $candidate) {
                 if ($this->searchPath($domain, $candidate)) {
                     $this->redirect($domain->getUrl(), $candidate, $params);
                 }
+
+                $this->resolveRedirectionPath($domain, $candidate, $params);
             }
         }
 
@@ -228,6 +237,32 @@ class rex_yrewrite_path_resolver
         }
 
         return null;
+    }
+
+    private function resolveRedirectionPath(rex_yrewrite_domain $domain, string $url, string $params): void
+    {
+        $clangIds = rex_clang::getAllIds();
+
+        foreach ($this->redirections[$domain->getName()] as $clangRedirections) {
+            foreach ($clangIds as $clangId) {
+                $redirection = $clangRedirections[$clangId] ?? null;
+
+                if (!isset($redirection['path']) || $redirection['path'] !== $url) {
+                    continue;
+                }
+
+                if (isset($redirection['url'])) {
+                    $url = $redirection['url'];
+                } else {
+                    $url = rex_yrewrite::getFullUrlByArticleId($redirection['id'], $redirection['clang']).$params;
+                }
+
+                header('HTTP/1.1 '.rex_response::HTTP_MOVED_PERMANENTLY);
+                header('Location: ' . $url);
+                exit;
+
+            }
+        }
     }
 
     /** @return never-return */

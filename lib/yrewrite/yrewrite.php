@@ -240,7 +240,7 @@ class rex_yrewrite
             $url = urldecode($_SERVER['REQUEST_URI']);
         }
 
-        $resolver = new rex_yrewrite_path_resolver(self::$domainsByName, self::$domainsByMountId, self::$aliasDomains, self::$paths['paths'] ?? []);
+        $resolver = new rex_yrewrite_path_resolver(self::$domainsByName, self::$domainsByMountId, self::$aliasDomains, self::$paths['paths'] ?? [], self::$paths['redirections'] ?? []);
         $resolver->resolve($url);
 
         return true;
