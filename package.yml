@@ -1,8 +1,8 @@
 package: yrewrite
 version: '2.7'
 author: Jan Kristinus, Gregor Harlan
-supportpage: https://github.com/yakamara/redaxo_yrewrite/issues
-docspage: https://github.com/yakamara/redaxo_yrewrite/edit/master/README.md
+supportpage: https://github.com/yakamara/redaxo_yrewrite
+docspage: https://github.com/yakamara/redaxo_yrewrite/edit/main/README.md
 
 page:
     title: YRewrite
@@ -17,8 +17,8 @@ page:
 
 requires:
     php:
-        version: '>=7.1'
+        version: '>=7.3'
     redaxo: '^5.7'
     packages:
-        yform: '>=3.2'
+        yform: '>=3.2,<5.0.0-dev'
         structure: '^2.7.0'
