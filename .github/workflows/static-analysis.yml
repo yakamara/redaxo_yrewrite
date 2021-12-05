@@ -1,4 +1,4 @@
-name: Linting
+name: Static Analysis
 
 on:
     push:
@@ -7,9 +7,9 @@ on:
         types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
-    rexlint:
-        runs-on: ubuntu-18.04
-        if: github.event.pull_request.draft == false
+    psalm-analysis:
+        name: psalm static code analysis
+        runs-on: ubuntu-latest
 
         steps:
             -   name: Checkout
@@ -18,7 +18,8 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 7.3
+                    php-version: 7.4
+                    extensions: intl
                     coverage: none # disable xdebug, pcov
 
             -   name: Composer install
@@ -26,5 +27,5 @@ jobs:
                 with:
                     composer-options: --ansi --prefer-dist
 
-            -   name: Run rexlint
-                run: vendor/bin/rexlint
+            -   name: Run psalm analysis
+                run: vendor/bin/psalm --show-info=false --shepherd --diff --output-format=github
