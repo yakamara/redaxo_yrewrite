@@ -481,7 +481,7 @@ class rex_yrewrite
                 continue;
             }
 
-            $name = $domain['domain'];
+            $name = (string) $domain['domain'];
             if (false === strpos($name, '//')) {
                 $name = '//'.$name;
             }
@@ -503,11 +503,11 @@ class rex_yrewrite
                     . $domain['mount_id'] . ', '
                     . $domain['start_id'] . ', '
                     . $domain['notfound_id'] . ', '
-                    . (strlen(trim($domain['clangs'])) ? 'array(' . $domain['clangs'] . ')' : 'null') . ', '
+                    . (strlen(trim((string) $domain['clangs'])) ? 'array(' . $domain['clangs'] . ')' : 'null') . ', '
                     . $domain['clang_start'] . ', '
-                    . '"' . htmlspecialchars($domain['title_scheme']) . '", '
-                    . '"' . htmlspecialchars($domain['description']) . '", '
-                    . '"' . htmlspecialchars($domain['robots']) . '", '
+                    . '"' . rex_escape($domain['title_scheme']) . '", '
+                    . '"' . rex_escape($domain['description']) . '", '
+                    . '"' . rex_escape($domain['robots']) . '", '
                     . ($domain['clang_start_hidden'] ? 'true' : 'false') . ','
                     . $domain['id'] . ','
                     . $domain['auto_redirect'] . ','

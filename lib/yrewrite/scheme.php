@@ -73,7 +73,7 @@ class rex_yrewrite_scheme
             }
             return $this->getClang($art->getClangId(), $domain) . $this->suffix;
         }
-        if ($url = $art->getValue('yrewrite_url')) {
+        if ($url = (string) $art->getValue('yrewrite_url')) {
             return $url;
         }
         return false;
