@@ -101,7 +101,9 @@ class rex_yrewrite_path_resolver
             }
         }
 
-        $params = rex_extension::registerPoint(new rex_extension_point('YREWRITE_PREPARE', '', ['url' => $url, 'domain' => $domain]));
+        /** @var array{article_id?: int, clang?: int} $params */
+        $params = [];
+        $params = rex_extension::registerPoint(new rex_extension_point('YREWRITE_PREPARE', $params, ['url' => $url, 'domain' => $domain]));
 
         if (isset($params['article_id']) && $params['article_id'] > 0) {
             if (isset($params['clang']) && $params['clang'] > 0) {
