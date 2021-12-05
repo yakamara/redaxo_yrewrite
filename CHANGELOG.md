@@ -17,7 +17,7 @@ Version 2.8 – 05.12.2021
 - Medien über Media Manager nutzen den Addonspezifischen Media-Type `yrewrite_default` (@gharlan)
 - Mime-Type für `.wasm`-Extension ergänzt (@novinet-markusd)
 - Setup-Page: Vorschaulinks öffnen in neuem Tab (@frood)
-- Text/Readme optimiert (@skerbis, @tbaddade, @alxndr-w, @dergel)
+- Texte/Readme optimiert (@skerbis, @tbaddade, @alxndr-w, @dergel)
 - Schwedische Übersetzung (@interweave-media)
 
 ### Bugfixes
