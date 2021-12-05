@@ -150,7 +150,7 @@ class rex_yrewrite_path_generator
         }
 
         if ('REDIRECTION_INTERNAL' === $urlType) {
-            $redirection = rex_article::get($article->getValue('yrewrite_redirection'), $clangId);
+            $redirection = rex_article::get((int) $article->getValue('yrewrite_redirection'), $clangId);
         } else {
             $redirection = $this->scheme->getRedirection($article, $domain);
         }

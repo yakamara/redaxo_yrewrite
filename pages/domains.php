@@ -150,6 +150,7 @@ if ($showlist) {
         } else {
             $return = [];
             foreach (explode(',', $clangs) as $clang) {
+                $clang = (int) $clang;
                 if (rex_clang::get($clang)) {
                     $return[] = rex_clang::get($clang)->getName();
                 }

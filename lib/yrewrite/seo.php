@@ -248,7 +248,7 @@ class rex_yrewrite_seo
                         $sitemap[] =
                           "\n".'<url>'.
                           "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
-                          "\n".'<lastmod>'.date(DATE_W3C, $article->getValue('updatedate')).'</lastmod>'. // serverzeitzone passt
+                          "\n".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'. // serverzeitzone passt
                           "\n".'<changefreq>'.$changefreq.'</changefreq>'.
                           "\n".'<priority>'.$priority.'</priority>'.
                           "\n".'</url>';

@@ -93,7 +93,7 @@ class rex_yrewrite_forward
         $content = $gc->getArray('select * from '.rex::getTable('yrewrite_forward'));
 
         foreach ($content as &$row) {
-            $url = explode('?', $row['url'], 2);
+            $url = explode('?', (string) $row['url'], 2);
 
             if (!isset($url[1])) {
                 continue;
