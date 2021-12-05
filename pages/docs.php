@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @psalm-scope-this rex_addon
+ * @var rex_addon $this
+ */
+
 $readme_i18n = rex_path::addon($this->getName()).'/docs/README.'.rex::getUser()->getLanguage().'.md';
 
 if(rex::getUser()->getLanguage() && file_exists($readme_i18n)) {
@@ -21,7 +26,7 @@ foreach ($h2_chapter as $h2_index => $h2_content) {
     $h2_index = (isset($headline[0])) ? rex_string::normalize($headline[0]) : '';
     preg_match_all('/(?!## )*^## (.*)\n((?:.|\n(?!## ))*)/m', $h2_content, $matches);
     if (isset($headline[1]) && count(array_filter($matches))) {
-        
+
         if($docs_chapter_active && $docs_chapter_active == $h2_index) {
             $class = "panel-primary";
             $navi_list[] = '<div class="panel '.$class.'"><div class="panel-heading"><strong>'.$headline[0].'</strong></div><div class="list-group">';
@@ -53,7 +58,7 @@ $navi_view = implode("\n", $navi_list);
 
     $miu = rex_markdown::factory();
 
-// Navigation 
+// Navigation
 
 $blocks_view = $miu->parse($blocks_view);
 $fragment = new rex_fragment();

@@ -7,6 +7,7 @@
  *
  * @package redaxo\yrewrite
  *
+ * @psalm-scope-this rex_addon
  * @var rex_addon $this
  */
 
