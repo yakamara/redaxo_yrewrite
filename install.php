@@ -61,15 +61,15 @@ $table
     ->ensurePrimaryIdColumn()
     ->ensureColumn(new rex_sql_column('domain_id', 'int(11)'))
     ->ensureColumn(new rex_sql_column('status', 'int(11)'))
-    ->ensureColumn(new rex_sql_column('url', 'text'))
+    ->ensureColumn(new rex_sql_column('url', 'varchar(512)'))
     ->ensureColumn(new rex_sql_column('type', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('article_id', 'int(11)'))
     ->ensureColumn(new rex_sql_column('clang', 'int(11)'))
-    ->ensureColumn(new rex_sql_column('extern', 'text'))
+    ->ensureColumn(new rex_sql_column('extern', 'varchar(512)'))
     ->ensureColumn(new rex_sql_column('media', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('movetype', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
-    ->ensureIndex(new rex_sql_index('domain_id_url', ['domain_id', 'url'], rex_sql_index::UNIQUE))
+    //->ensureIndex(new rex_sql_index('domain_id_url', ['domain_id', 'url'], rex_sql_index::UNIQUE))
     ->ensure();
 
 $c = rex_sql::factory();
