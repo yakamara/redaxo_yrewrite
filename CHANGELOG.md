@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.8.1 – 06.12.2021
+--------------------------
+
+### Bugfixes
+
+* Update/Installation schlug fehl wegen eines Unique-Keys auf eine TEXT-Spalte (@gharlan)
+
+
 Version 2.8 – 05.12.2021
 --------------------------
 
