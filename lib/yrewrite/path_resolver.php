@@ -234,7 +234,7 @@ class rex_yrewrite_path_resolver
     {
         $clangIds = rex_clang::getAllIds();
 
-        foreach ($this->paths[$domain->getName()] as $articleId => $clangPaths) {
+        foreach ($this->paths[$domain->getName()] ?? [] as $articleId => $clangPaths) {
             foreach ($clangIds as $clangId) {
                 if (isset($clangPaths[$clangId]) && $clangPaths[$clangId] == $url) {
                     return ['article_id' => $articleId, 'clang_id' => $clangId];
@@ -249,7 +249,7 @@ class rex_yrewrite_path_resolver
     {
         $clangIds = rex_clang::getAllIds();
 
-        foreach ($this->redirections[$domain->getName()] as $clangRedirections) {
+        foreach ($this->redirections[$domain->getName()] ?? [] as $clangRedirections) {
             foreach ($clangIds as $clangId) {
                 $redirection = $clangRedirections[$clangId] ?? null;
 
