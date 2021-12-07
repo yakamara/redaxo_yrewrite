@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.8.2 – 07.12.2021
+--------------------------
+
+### Bugfixes
+
+* Notice im path_resolver wird vermieden (@gharlan)
+
+
 Version 2.8.1 – 06.12.2021
 --------------------------
 
