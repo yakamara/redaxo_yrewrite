@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.8.3 – 15.12.2021
+--------------------------
+
+### Bugfixes
+
+* Im Release fehlte die `.htaccess`-Datei (@gharlan)
+
+
 Version 2.8.2 – 07.12.2021
 --------------------------
 
