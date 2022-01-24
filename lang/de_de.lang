@@ -16,8 +16,8 @@ yrewrite_setup = Setup
 yrewrite_docs = Dokumentation
 yrewrite_docs_navigation = Navigation
 
-yrewrite_error_domain_missing = Bitte zunächst eine Domain anlegen.
 yrewrite_error_article_in_use = Artikel kann nicht gelöscht werden, da er noch genutzt wird.
+yrewrite_error_domain_missing = Bitte zunächst eine Domain anlegen.
 
 yrewrite_startarticleisalways = Dies ist der Startartikel der Domain "{0}" und kann nicht verändert werden. Die URL ist hier immer "/"
 
