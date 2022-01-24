@@ -41,7 +41,9 @@ class rex_yrewrite_path_resolver
         [$url, $params] = $this->normalizeAndSplitUrl($url);
 
         $host = rex_yrewrite::getHost();
-
+        if (is_null($host)){
+            return;
+        }
         $domain = $this->resolveDomain($host, $url, $params);
 
         $currentScheme = rex_yrewrite::isHttps() ? 'https' : 'http';
