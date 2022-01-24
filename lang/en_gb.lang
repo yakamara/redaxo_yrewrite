@@ -16,6 +16,7 @@ yrewrite_setup = Setup
 yrewrite_docs = Documentation
 yrewrite_docs_navigation = Navigation
 
+yrewrite_error_article_in_use = Cannot delete article because it is in use.
 yrewrite_error_domain_missing = Please add a domain first.
 
 yrewrite_startarticleisalways = This is the start article of domain "{0}" and cannot be changed. This URL is always "/"
