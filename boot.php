@@ -48,6 +48,31 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
                 rex_yrewrite::generatePathFile($params);
             });
         }
+        
+        // prevent article deletion if used in domain settings
+       	rex_extension::register('ART_PRE_DELETED', static function (rex_extension_point $ep) {
+			$warning = [];
+			$params = $ep->getParams();
+			$article_id = $params['id'];
+				
+			$sql = rex_sql::factory();
+			$sql->setQuery('SELECT id, domain FROM `' . rex::getTablePrefix() . 'yrewrite_domain` '
+					.'WHERE start_id = '. $article_id .' OR mount_id = '. $article_id .' OR notfound_id = '. $article_id);
+
+			// Warnings
+			for($i = 0; $i < $sql->getRows(); $i++) {
+				$message = '<a href="'. rex_url::backendPage('yrewrite/domains', ['func' => 'edit', 'data_id' => $sql->getValue('id')]) .'">YRewrite '. rex_i18n::msg('yrewrite_domains') .': '. $sql->getValue('domain') .'</a>';
+					$warning[] = $message;
+					$sql->next();
+				}
+
+				if(count($warning) > 0) {
+					throw new rex_api_exception(rex_i18n::msg('yrewrite_rex_article_cannot_delete')."<ul><li>". implode("</li><li>", $warning) ."</li></ul>");
+				}
+				else {
+					return "";
+				}
+		});
     }
     //rex_extension::register('ALL_GENERATED', 'rex_yrewrite::init');
     rex_extension::register('URL_REWRITE', static function (rex_extension_point $ep) {
