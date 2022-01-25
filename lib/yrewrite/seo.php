@@ -32,6 +32,10 @@ class rex_yrewrite_seo
     /**
      * @var string
      */
+    public static $meta_image_field = 'yrewrite_image';
+    /**
+     * @var string
+     */
     public static $meta_changefreq_field = 'yrewrite_changefreq';
     /**
      * @var string
