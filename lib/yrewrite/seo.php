@@ -114,6 +114,11 @@ class rex_yrewrite_seo
         return $this->cleanString($this->article->getValue(self::$meta_description_field));
     }
 
+    public function getImage()
+    {
+        return $this->cleanString($this->article->getValue(self::$meta_image_field));
+    }
+
     public function getCanonicalUrl()
     {
         $canonical_url = trim($this->article->getValue(self::$meta_canonical_url_field));
