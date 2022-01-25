@@ -245,13 +245,21 @@ class rex_yrewrite_seo
                             }
                         }
 
-                        $sitemap[] =
+                        $sitemap_entry =
                           "\n".'<url>'.
                           "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
-                          "\n".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'. // serverzeitzone passt
-                          "\n".'<changefreq>'.$changefreq.'</changefreq>'.
+                          "\n".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'; // serverzeitzone passt
+                        if($article->getValue(self::$meta_image_field)) {
+                            $media = rex_media::get($article->getValue(self::$meta_image_field));
+                            $sitemap_entry .= "\n".'<image:image>'.
+                                "\n".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), "/").$media->getUrl().'</image:loc>'.
+                                "\n".'<image:title>'.rex_escape(strip_tags($media->getTitle())).'</image:title>'.
+                                "\n".'</image:image>';
+                        }
+                        $sitemap_entry .= "\n".'<changefreq>'.$changefreq.'</changefreq>'.
                           "\n".'<priority>'.$priority.'</priority>'.
                           "\n".'</url>';
+                        $sitemap[] = $sitemap_entry;
                     }
                 }
             }
