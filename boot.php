@@ -48,6 +48,30 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
                 rex_yrewrite::generatePathFile($params);
             });
         }
+        
+        // prevent deletion of seo image
+        rex_extension::register('MEDIA_IS_IN_USE', static function (rex_extension_point $ep) {
+                $warning = $ep->getSubject();
+                $params = $ep->getParams();
+                $filename = $params['filename'];
+
+                $sql = rex_sql::factory();
+                $sql->setQuery('SELECT id, clang_id, name FROM `' . rex::getTablePrefix() . 'article` '
+                    .'WHERE yrewrite_image = "'. $filename .'"');  
+
+                for($i = 0; $i < $sql->getRows(); $i++) {
+                    $message = '<a href="javascript:openPage(\'index.php?page=content/edit&mode=edit&article_id='.
+                        $sql->getValue('id') .'&clang='. $sql->getValue('clang_id') .'\')">'. $sql_staff->getValue('name') .'</a>';
+                    if(!in_array($message, $warning)) {
+                        $warning[] = $message;
+                    }
+                    $sql->next();
+                }
+
+                return $warning;
+            ); 
+        );
+
     }
     //rex_extension::register('ALL_GENERATED', 'rex_yrewrite::init');
     rex_extension::register('URL_REWRITE', static function (rex_extension_point $ep) {
