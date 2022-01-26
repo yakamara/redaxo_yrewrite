@@ -54,7 +54,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 			$warning = [];
 			$params = $ep->getParams();
 			$article_id = $params['id'];
-				
+
 			$sql = rex_sql::factory();
 			$sql->setQuery('SELECT id, domain FROM `' . rex::getTablePrefix() . 'yrewrite_domain` '
 					.'WHERE start_id = '. $article_id .' OR mount_id = '. $article_id .' OR notfound_id = '. $article_id);
@@ -74,6 +74,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 				}
 		});
     }
+
     //rex_extension::register('ALL_GENERATED', 'rex_yrewrite::init');
     rex_extension::register('URL_REWRITE', static function (rex_extension_point $ep) {
         $params = $ep->getParams();
