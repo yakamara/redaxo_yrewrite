@@ -62,16 +62,16 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 			// Warnings
 			for($i = 0; $i < $sql->getRows(); $i++) {
 				$message = '<a href="'. rex_url::backendPage('yrewrite/domains', ['func' => 'edit', 'data_id' => $sql->getValue('id')]) .'">YRewrite '. rex_i18n::msg('yrewrite_domains') .': '. $sql->getValue('domain') .'</a>';
-					$warning[] = $message;
-					$sql->next();
-				}
+				$warning[] = $message;
+				$sql->next();
+			}
 
-				if(count($warning) > 0) {
-					throw new rex_api_exception(rex_i18n::msg('yrewrite_rex_article_cannot_delete')."<ul><li>". implode("</li><li>", $warning) ."</li></ul>");
-				}
-				else {
-					return "";
-				}
+			if(count($warning) > 0) {
+				throw new rex_api_exception(rex_i18n::msg('yrewrite_rex_article_cannot_delete')."<ul><li>". implode("</li><li>", $warning) ."</li></ul>");
+			}
+			else {
+				return "";
+			}
 		});
     }
 
