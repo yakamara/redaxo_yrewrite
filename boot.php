@@ -48,7 +48,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
                 rex_yrewrite::generatePathFile($params);
             });
         }
-        
+
         // prevent article deletion if used in domain settings
        	rex_extension::register('ART_PRE_DELETED', static function (rex_extension_point $ep) {
 			$warning = [];
@@ -67,10 +67,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 			}
 
 			if(count($warning) > 0) {
-				throw new rex_api_exception(rex_i18n::msg('yrewrite_rex_article_cannot_delete')."<ul><li>". implode("</li><li>", $warning) ."</li></ul>");
-			}
-			else {
-				return "";
+				throw new rex_api_exception(rex_i18n::msg('yrewrite_rex_article_cannot_delete') .'<ul><li>'. implode('</li><li>', $warning) .'</li></ul>');
 			}
 		});
     }
