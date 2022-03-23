@@ -9,7 +9,7 @@ page:
     perm: yrewrite[forward]
     pjax: true
     subpages:
-        domains: { title: 'translate:domains', perm: admin }
+        domains: { title: 'translate:domains', perm: 'yrewrite[domain]' }
         alias_domains: { title: 'translate:alias_domains', perm: admin }
         forward: { title: 'translate:forward', perm: 'yrewrite[forward]' }
         setup: { title: 'translate:setup', perm: admin }
