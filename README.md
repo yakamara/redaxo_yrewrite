@@ -18,7 +18,7 @@ Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben.
 * Individuelle URL pro Artikel möglich
 * Seitentitel Schema definierbar / pro Domain/Sprache
 * Alias Domains die auf die Hauptdomain verweisen
-* Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln
+* Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln, sogar Protokoll-Tausch in bspw. `tel:`, `mailto:` u.a.
 * Canonical Urls
 
 ## Installation
@@ -114,6 +114,8 @@ Alias-Domains müssen nicht eingetragen werden, wenn die Domain nicht auf das Se
 Unter Weiterleitungen können URLs definiert werden, die dann auf einen bestimmten Artikel oder eine andere Adresse umgeleitet werden.
 
 > **Hinweis:** Mit dieser Einstellung können nicht bereits vorhandene Artikel / URLs umgeleitet werden, sondern nur URLs, die in der REDAXO-Installation nicht vorhanden sind. Das ist bspw. bei einem Relaunch der Fall, wenn alte URLs auf eine neue Zielseite umgeleitet werden sollen.
+
+> **Tipp**: Damit lässt sich auch ein Artikel oder eine Kategorie zu einem gänzlich anderen URI-Protokoll ändern, bspw. `tel:`, `mailto:` u.a. Diese werden auch an anderer Stelle, bspw. von der `rex_navigation::factory()`, berücksichtigt.
 
 ## Weitere Schritte
 
