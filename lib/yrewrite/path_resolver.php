@@ -198,14 +198,14 @@ class rex_yrewrite_path_resolver
 
     private function resolveAutoStartClang(rex_yrewrite_domain $domain): int
     {
-        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+        if (!isset(rex_server('HTTP_ACCEPT_LANGUAGE'))) {
             return $domain->getStartClang();
         }
 
         $startClang = null;
         $startClangFallback = $domain->getStartClang();
 
-        foreach (explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $code) {
+        foreach (explode(',', rex_server('HTTP_ACCEPT_LANGUAGE')) as $code) {
             $code = trim(explode(';', $code, 2)[0]);
             $code = str_replace('-', '_', mb_strtolower($code));
 

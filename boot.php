@@ -12,7 +12,7 @@
  */
 
 if (!rex::isBackend()) {
-    $path = rtrim(dirname($_SERVER['SCRIPT_NAME']), DIRECTORY_SEPARATOR) . '/';
+    $path = rtrim(dirname(rex_server('SCRIPT_NAME')), DIRECTORY_SEPARATOR) . '/';
     rex_url::init(new rex_path_default_provider($path, 'redaxo', false));
 } elseif (rex::getUser()) {
     rex_view::addCssFile($this->getAssetsUrl('yrewrite.css'));

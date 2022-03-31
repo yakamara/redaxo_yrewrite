@@ -224,13 +224,13 @@ class rex_yrewrite
         if ('allowed' == self::$call_by_article_id && rex_request('article_id', 'int') > 0) {
             $url = rex_getUrl(rex_request('article_id', 'int'));
         } else {
-            if (!isset($_SERVER['REQUEST_URI'])) {
-                $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
-                if (!empty($_SERVER['QUERY_STRING'])) {
-                    $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+            if (!isset(rex_server('REQUEST_URI'))) {
+                $_SERVER['REQUEST_URI'] = substr(rex_server('PHP_SELF'), 1);
+                if (!empty(rex_server('QUERY_STRING'))) {
+                    $_SERVER['REQUEST_URI'] .= '?' . rex_server('QUERY_STRING');
                 }
             }
-            $url = urldecode($_SERVER['REQUEST_URI']);
+            $url = urldecode(rex_server('REQUEST_URI'));
         }
 
         $resolver = new rex_yrewrite_path_resolver(self::$domainsByName, self::$domainsByMountId, self::$aliasDomains, self::$paths['paths'] ?? [], self::$paths['redirections'] ?? []);
@@ -261,7 +261,7 @@ class rex_yrewrite
             }
         }
 
-        //$url = urldecode($_SERVER['REQUEST_URI']);
+        //$url = urldecode(rex_server('REQUEST_URI'));
         $domainName = self::getHost();
 
         $path = '';
@@ -551,10 +551,10 @@ class rex_yrewrite
 
     public static function isHttps()
     {
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) {
+        if (isset(rex_server('HTTP_X_FORWARDED_PROTO')) && 'https' == rex_server('HTTP_X_FORWARDED_PROTO')) {
             return true;
         }
-        return (isset($_SERVER['SERVER_PORT']) && 443 == $_SERVER['SERVER_PORT']) || (isset($_SERVER['HTTPS']) && 'off' != strtolower($_SERVER['HTTPS']));
+        return (isset(rex_server('SERVER_PORT')) && 443 == rex_server('SERVER_PORT')) || (isset(rex_server('HTTPS')) && 'off' != strtolower(rex_server('HTTPS')));
     }
 
     public static function deleteCache()
@@ -575,15 +575,15 @@ class rex_yrewrite
 
     public static function getHost()
     {
-        if (isset($_SERVER['HTTP_X_FORWARDED_SERVER'])) {
-            return $_SERVER['HTTP_X_FORWARDED_SERVER'];
+        if (isset(rex_server('HTTP_X_FORWARDED_SERVER'))) {
+            return rex_server('HTTP_X_FORWARDED_SERVER');
         }
-        return @$_SERVER['HTTP_HOST'];
+        return @rex_server('HTTP_HOST');
     }
 
     private static function getSubPath(): string
     {
-        $path = dirname($_SERVER['SCRIPT_NAME']);
+        $path = dirname(rex_server('SCRIPT_NAME'));
         if (rex::isBackend()) {
             $path = dirname($path);
         }
