@@ -257,11 +257,11 @@ class rex_yrewrite_seo
                         $sitemap_entry =
                           "\n".'<url>'.
                           "\n\t".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
-                          "\n\t".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'; // serverzeitzone passt
+                          "\n\t".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'; // Serverzeitzone passt
                         if($article->getValue(self::$meta_image_field)) {
                             $media = rex_media::get($article->getValue(self::$meta_image_field));
                             $sitemap_entry .= "\n\t".'<image:image>'.
-                                "\n\t\t".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), "/").$media->getUrl().'</image:loc>'.
+                                "\n\t\t".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), "/").rex_media_manager::getUrl('rex_media_medium', $media->getFileName()).'</image:loc>'.
                                 ($media->getTitle() ? "\n\t\t".'<image:title>'.rex_escape($media->getTitle()).'</image:title>' : '').
                                 "\n\t".'</image:image>';
                         }
