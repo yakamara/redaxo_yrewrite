@@ -59,8 +59,8 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 			$sql->setQuery('SELECT id, clang_id, name FROM `' . rex::getTablePrefix() . 'article` WHERE yrewrite_image = ?', [$filename]);
 
 			for($i = 0; $i < $sql->getRows(); $i++) {
-				$message = '<a href="javascript:openPage(\'index.php?page=content/edit&mode=edit&article_id='.
-					$sql->getValue('id') .'&clang='. $sql->getValue('clang_id') .'\')">'. rex_i18n::msg('yrewrite_seoimage_error_delete') .' '. $sql->getValue('name') .'</a>';
+				$message = rex_i18n::msg('yrewrite_seoimage_error_delete') .' <a href="javascript:openPage(\'index.php?page=content/edit&mode=edit&article_id='.
+					$sql->getValue('id') .'&clang='. $sql->getValue('clang_id') .'\')">'. $sql->getValue('name') .'</a>';
 				if(!in_array($message, $warning)) {
 					$warning[] = $message;
 				}
