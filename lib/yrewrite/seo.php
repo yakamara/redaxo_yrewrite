@@ -262,7 +262,7 @@ class rex_yrewrite_seo
                             $media = rex_media::get($article->getValue(self::$meta_image_field));
                             $sitemap_entry .= "\n\t".'<image:image>'.
                                 "\n\t\t".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), "/").$media->getUrl().'</image:loc>'.
-                                ($media->getTitle() ? "\n\t\t".'<image:title>'.rex_escape(strip_tags($media->getTitle())).'</image:title>' : '').
+                                ($media->getTitle() ? "\n\t\t".'<image:title>'.rex_escape($media->getTitle()).'</image:title>' : '').
                                 "\n\t".'</image:image>';
                         }
                         $sitemap_entry .= "\n\t".'<changefreq>'.$changefreq.'</changefreq>'.
