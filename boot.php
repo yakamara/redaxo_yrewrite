@@ -61,7 +61,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 
 			for($i = 0; $i < $sql->getRows(); $i++) {
 				$message = '<a href="javascript:openPage(\'index.php?page=content/edit&mode=edit&article_id='.
-					$sql->getValue('id') .'&clang='. $sql->getValue('clang_id') .'\')">'. $sql->getValue('name') .'</a>';
+					$sql->getValue('id') .'&clang='. $sql->getValue('clang_id') .'\')">'. rex_i18n::msg('yrewrite_seoimage_errordelete') .' '. $sql->getValue('name') .'</a>';
 				if(!in_array($message, $warning)) {
 					$warning[] = $message;
 				}
