@@ -56,8 +56,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 			$filename = $params['filename'];
 
 			$sql = rex_sql::factory();
-			$sql->setQuery('SELECT id, clang_id, name FROM `' . rex::getTablePrefix() . 'article` '
-				.'WHERE yrewrite_image = "'. $filename .'"');  
+			$sql->setQuery('SELECT id, clang_id, name FROM `' . rex::getTablePrefix() . 'article` WHERE yrewrite_image = ?', [$filename]);
 
 			for($i = 0; $i < $sql->getRows(); $i++) {
 				$message = '<a href="javascript:openPage(\'index.php?page=content/edit&mode=edit&article_id='.
