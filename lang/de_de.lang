@@ -82,6 +82,7 @@ yrewrite_domain_not_well_formed = Domain/URL-Format stimmt nicht.
 yrewrite_seotitle = Titel
 yrewrite_seodescription = Description
 yrewrite_seoimage = Bild
+yrewrite_seoimage_errordelete = SEO Bild des Artikels
 yrewrite_priority = Wichtigkeit:
 yrewrite_changefreq = Aktualisierungshäufigkeit:
 
