@@ -102,6 +102,46 @@ class rex_yrewrite_seo
         return implode("\n", $tags);
     }
 
+    /** @deprecated use getTags instead */
+    public function getTitleTag()
+    {
+        return '<title>'.rex_escape(strip_tags($this->getTitle())).'</title>'; // lang="de"
+    }
+
+    /** @deprecated use getTags instead */
+    public function getDescriptionTag()
+    {
+        return '<meta name="description" content="'.rex_escape(strip_tags($this->getDescription())).'">'; //  lang="de"
+    }
+
+    /** @deprecated use getTags instead */
+    public function getCanonicalUrlTag()
+    {
+        return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'" />';
+    }
+
+    /** @deprecated use getTags instead */
+    public function getRobotsTag()
+    {
+        if ($this->article->getValue(self::$meta_index_field) == 1 || ($this->article->getValue(self::$meta_index_field) == 0 && $this->article->isOnline())) {
+            return '<meta name="robots" content="index, follow">';
+        } else {
+            return '<meta name="robots" content="noindex, nofollow">';
+        }
+    }
+
+    /** @deprecated use getTags instead */
+    public function getHreflangTags()
+    {
+        $return = '';
+        $lang_domains = $this->getHrefLangs();
+
+        foreach ($lang_domains as $code => $url){
+            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+        }
+        return $return;
+    }
+
 
     public function getTitle()
     {
