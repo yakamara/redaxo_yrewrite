@@ -1,6 +1,6 @@
 # YRewrite
 
-## Übersicht 
+## Übersicht
 
 Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben. Mehrere Domains können dann sinnvoll sein, wenn
 
@@ -18,7 +18,7 @@ Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben.
 * Individuelle URL pro Artikel möglich
 * Seitentitel Schema definierbar / pro Domain/Sprache
 * Alias Domains die auf die Hauptdomain verweisen
-* Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln
+* Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln, sogar Protokoll-Tausch in bspw. `tel:`, `mailto:` u.a.
 * Canonical Urls
 
 ## Installation
@@ -37,6 +37,45 @@ Nach der Installation und dem Abschluss des Setups wird eine `.htaccess`-Datei i
 Unter dem Reiter `Setup` kann die `.htaccess`-Datei jederzeit neu geschrieben werden Außerdem sind die `sitemap.xml` und `robots.txt` je Domain einsehbar.
 
 > **Hinweis:** Das Addon leitet alle Anfragen von `/media/` über das Media-Manager-AddOn. Stelle daher sicher, dass es weder eine Struktur-Kategorie "Media" gibt, noch, dass sich keine deiner Dateien fürs Frontend, bspw. CSS- oder JS-Dateien, darin befinden. Gute Orte hierfür sind die Ordner `/assets/` oder die Verwendung des Theme-AddOns. Sollte es notwendig sein, eine Kategorie namens "Media" zu verwenden, dann müssen [die entsprechenden Zeilen in der .htaccess-Datei](https://github.com/yakamara/redaxo_yrewrite/blob/b519622a3be135f1380e35bf85783cc33e71664f/setup/.htaccess#L96-L97) auskommentiert oder umbenannt werden und diese fortan genutzt werden, wenn Medien aus dem Medien Manager verwendet werden. Dies hat weitere Auswirkungen, z.B. auf geschützte Dateien mit YCom - das Auskommentieren und Umbenennen sollte daher nur von erfahrenen REDAXO-Entwicklern vorgenommen werden.
+
+### NGINX-Konfiguration für YRewrite
+
+Eine vollständige nginx config für YRewrite.
+
+> Hinweis für PLESK-Websites: Die Direktiven können unter ***Einstellungen für Apache & nginx*** der gewünschten Domain im Abschnitt ***Zusätzliche nginx-Anweisungen*** hinterlegt werden.
+
+```nginx
+charset utf-8;
+
+location / {
+  try_files $uri $uri/ /index.php$is_args$args;
+}
+
+rewrite ^/sitemap\.xml$                           /index.php?rex_yrewrite_func=sitemap last;
+rewrite ^/robots\.txt$                            /index.php?rex_yrewrite_func=robots last;
+rewrite ^/media[0-9]*/imagetypes/([^/]*)/([^/]*)  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
+rewrite ^/media/([^/]*)/([^/]*)                   /index.php?rex_media_type=$1&rex_media_file=$2&$args;
+rewrite ^/media/(.*)                              /index.php?rex_media_type=yrewrite_default&rex_media_file=$1&$query_string;
+rewrite ^/images/([^/]*)/([^/]*)                  /index.php?rex_media_type=$1&rex_media_file=$2&$args;
+rewrite ^/imagetypes/([^/]*)/([^/]*)              /index.php?rex_media_type=$1&rex_media_file=$2;
+
+// !!! WICHTIG !!! Falls Let's Encrypt fehlschlägt, diese Zeile auskommentieren (sollte jedoch funktionieren)
+location ~ /\. { deny  all; }
+
+// Zugriff auf diese Verzeichnisse verbieten
+location ^~ /redaxo/src { deny  all; }
+location ^~ /redaxo/data { deny  all; }
+location ^~ /redaxo/cache { deny  all; }
+location ^~ /redaxo/bin { deny  all; }
+
+
+// In einigen Fällen könnte folgende Anweisung zusätlich sinnvoll sein.
+
+location ~ /\.(ttf|eot|woff|woff2)$ {
+  add_header Access-Control-Allow-Origin *;
+  expires 604800s;
+}
+```
 
 
 ## Domain hinzufügen
@@ -76,6 +115,8 @@ Unter Weiterleitungen können URLs definiert werden, die dann auf einen bestimmt
 
 > **Hinweis:** Mit dieser Einstellung können nicht bereits vorhandene Artikel / URLs umgeleitet werden, sondern nur URLs, die in der REDAXO-Installation nicht vorhanden sind. Das ist bspw. bei einem Relaunch der Fall, wenn alte URLs auf eine neue Zielseite umgeleitet werden sollen.
 
+> **Tipp**: Damit lässt sich auch ein Artikel oder eine Kategorie zu einem gänzlich anderen URI-Protokoll ändern, bspw. `tel:`, `mailto:` u.a. Diese werden auch an anderer Stelle, bspw. von der `rex_navigation::factory()`, berücksichtigt.
+
 ## Weitere Schritte
 
 Die `sitemap.xml` kann pro Domain bspw. in der Google Search Console eingetragen werden, um die korrekte Indexierung der Domain(s) und deren Seiten zu überprüfen.
@@ -88,7 +129,7 @@ Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/yrewrite
 
 ```
     $yrewrite = new rex_yrewrite;
-    # dump($yrewrite); // optional alle Eigenschaften und Methoden anzeigen
+    // dump($yrewrite); // optional alle Eigenschaften und Methoden anzeigen
 ```
 
 **Methoden**
@@ -246,10 +287,10 @@ foreach($domains as $domain) {
 
 ## Übersicht
 
-YRewrite kann durch Schemes erweitert werden. 
+YRewrite kann durch Schemes erweitert werden.
 
 **Installation**
-- Als Datei im `lib`-Ordner des __project-AddOns__ ablegen. 
+- Als Datei im `lib`-Ordner des __project-AddOns__ ablegen.
 - Dateiname: `eigene_rewrite_class.php`
 - In die `boot.php` des project-AddOns einsetzen:
 
@@ -260,7 +301,7 @@ if (rex_addon::get(\'yrewrite\')->isAvailable()) {
 }
 ```
 
-Nachfolgend listen wir hier ein paar Beispiele. 
+Nachfolgend listen wir hier ein paar Beispiele.
 
 ## Endung auf .html setzen
 
@@ -330,7 +371,7 @@ class rex_yrewrite_scheme_gh extends rex_yrewrite_scheme
 
 ## URL manipulieren, hier mit dem AddOn Sprog
 
-So kann als Kategoriename ein Platzhalter wie {{contact}} verwendet werden und durch die in Sprog hinterlegten Sprachvarianten ersetzt werden. 
+So kann als Kategoriename ein Platzhalter wie {{contact}} verwendet werden und durch die in Sprog hinterlegten Sprachvarianten ersetzt werden.
 
 One Level, Kategoriename-Ersetzung durch Sprog.
 
@@ -346,7 +387,7 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 
     public function appendArticle($path, rex_article $art, rex_yrewrite_domain $domain)
     {
-        return $path . \'/\' . $this->normalize(sprogdown($art->getName(), $art->getClang()), $art->getClang()) . \'/\';
+        return $path . \'/\' . $this->normalize(sprogdown($art->getName(), $art->getClangId()), $art->getClangId()) . \'/\';
     }
 }
 ```
@@ -359,15 +400,56 @@ class translate_url_with_sprog extends rex_yrewrite_scheme
 {
     public function appendCategory($path, rex_category $cat, rex_yrewrite_domain $domain)
     {
-        return $path . \'/\' . $this->normalize(sprogdown($cat->getName(), $cat->getClang()), $cat->getClang());
+        return $path . \'/\' . $this->normalize(sprogdown($cat->getName(), $cat->getClangId()), $cat->getClangId());
     }
 }
 ```
 
+## Ersetzungsmuster mit einem eigenen Schema verändern
+
+Die Ersetzungsmuster können mit eigenen Schema verändert werden. In diesem Beispiel wird `&` durch `und` getauscht.
+
+1. Datei in den lib-Ordner des Project-AddOns anlegen
+
+```
+<?php
+
+class rex_project_rewrite_scheme extends rex_yrewrite_scheme
+{
+    /**
+     * @param string $string
+     * @param int $clang
+     *
+     * @return string
+     */
+    public function normalize($string, $clang = 1)
+    {
+        $string = str_replace(
+            ['&'],
+            ['und'],
+            $string
+        );
+
+        // Id 2 = ungarisch
+        if ($clang == 2) {
+            $string = str_replace(
+                ['ő', 'ű'],
+                ['oe', 'ue'],
+                $string
+            );
+        }
+        return parent::normalize($string, $clang);
+    }
+}
+```
+
+2. In der `boot.php`-Datei des `project`-AddOns diesen Code einfügen:
+
+`rex_yrewrite::setScheme(new rex_project_rewrite_scheme());`
+
 ## Addons, die eigene Schemes mitbringen:
 
 - YRewrite scheme: https://github.com/FriendsOfREDAXO/yrewrite_scheme
-- xcore: https://github.com/RexDude/xcore
 
 
 # Weitere Unterstützung

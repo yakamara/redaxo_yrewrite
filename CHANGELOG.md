@@ -1,6 +1,87 @@
 Changelog
 =========
 
+Version 2.8.3 – 15.12.2021
+--------------------------
+
+### Bugfixes
+
+* Im Release fehlte die `.htaccess`-Datei (@gharlan)
+
+
+Version 2.8.2 – 07.12.2021
+--------------------------
+
+### Bugfixes
+
+* Notice im path_resolver wird vermieden (@gharlan)
+
+
+Version 2.8.1 – 06.12.2021
+--------------------------
+
+### Bugfixes
+
+* Update/Installation schlug fehl wegen eines Unique-Keys auf eine TEXT-Spalte (@gharlan)
+
+
+Version 2.8 – 05.12.2021
+--------------------------
+
+### Neu
+
+- Installation unter PHP 8 und mit yform 4 ermöglicht (@alxndr-w, @TobiasKrais)
+- Neue REX_VAR: `REX_YREWRITE_DOMAIN` (@dergel)
+- Eigene URLs können Anker (`#foo`) enthalten (@tbaddade)
+- Artikel-spezifische Weiterleitungen: Original-URL ist aufrufbar und wird umgeleitet (@gharlan)
+- Weiterleitungen funktionieren nun ohne Berücksichtigung von Groß-/Kleinschreibung (@gharlan)
+- Weiterleitungen: URL/Ziel-URL können mehr als 191 Zeichen enthalten (@tbaddade)
+- Weiterleitungen werden standardmäßig absteigend nach Erstellung sortiert (@alxndr-w)
+- Unique-Keys auf Datenbankebene (@alxndr-w, @tbaddade)
+- Medien über Media Manager nutzen den Addonspezifischen Media-Type `yrewrite_default` (@gharlan)
+- Mime-Type für `.wasm`-Extension ergänzt (@novinet-markusd)
+- Setup-Page: Vorschaulinks öffnen in neuem Tab (@frood)
+- Texte/Readme optimiert (@skerbis, @tbaddade, @alxndr-w, @dergel)
+- Schwedische Übersetzung (@interweave-media)
+
+### Bugfixes
+
+* Anpassungen für neuere yform-Versionen (@marcohanke, @alxndr-w, @tbaddade)
+* Domainänderungen wirkten sich wegen Opcache teils verzögert aus (@gharlan)
+* Weiterleitungen konnten keine Umlaute enthalten (@gharlan)
+* Offline-Sprachen werden bei automatischer Sprachumleitung und beim 404-Artikel nicht mehr berücksichtigt (@TobiasKrais)
+* Es entstanden teils Redirects mit ungültiger URL (fehlender Slash zwischendrin) (@TobiasKrais, @gharlan)
+* `rex_yrewrite::getFullPath` hat im Backend eine ungültige URL geliefert (@gharlan)
+
+
+Version 2.7 – 18.09.2020
+--------------------------
+
+### Neu
+
+- URL-Typ in Artikel auswählbar: "Automatisch", "Eigene URL", "Umleitung zu Artikel", "Umleitung zu URL"
+- Optional können Unicode-URLs aktiviert werden, in denen dann auch Umlaute, chinesische/kyrillische Schriftzeichen etc. erhalten bleiben
+- Sitemap Darstellung .xsl verbessert
+- Diverse Erklärungen/Doku verbessert (Danke alexplusde,Hirbod)
+- Diverse Übersetzungen ergänzt (Danke Jürgen Weiss, Yves Torres, Fernando Averanga)
+- Auto-Redirects: Umgang mit Domains beschränkt auf einzelne Sprachen korrigiert
+- Auch im Backend Domain-Aliase umleiten
+- noindex, follow ergänzt
+- Start-Clang optional automatisch gemäß Browsersprache
+- Auch wenn nur eine einzelne Sprache vorhanden ist, kann diese nun in der URL auftauchen
+- Bei Artikeln aus Default-Domain relative URLs erzeugen
+- Weiterleitungen für URLs mit Query-Parametern können eingerichtet werden
+- Bei Custom URLs werden die Varianten mit/ohne Slash automatisch umgeleitet
+
+### Bugs
+
+- Korrektur für WindowsSysteme mit 'default'-Domain (Danke norbert)
+- MediaManager URLs werden nun auch im Backend umgeschrieben
+- Domains mit expliziter Portangabe konnten nicht gespeichert werden
+- Bei Domains mit Unterordner stimmte die Sitemap nicht (Danke Daniel Springer)
+- Diverse Warnings/Notices behoben
+
+
 Version 2.6 – 24.09.2019
 --------------------------
 
@@ -96,7 +177,7 @@ Version 2.3.0 – 30.01.2018
 - Sitemapausgabe hat nun einen cleanOutputBuffer
 - URL Umbruch verbesser in der Artikel-URL-Ansicht
 - Bei Metadescription werden nun die Inhalte ge-strip_taged
-- Aufruf von media mit mediatypes in .htaccess 
+- Aufruf von media mit mediatypes in .htaccess
 - Artikel-SEO: Placeholder wird bei Title angezeigt
 
 

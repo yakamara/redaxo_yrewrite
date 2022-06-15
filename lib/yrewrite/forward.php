@@ -31,7 +31,7 @@ class rex_yrewrite_forward
     public static function getForward($params)
     {
         // Url wurde von einer anderen Extension bereits gesetzt
-        if (isset($params['subject']) && $params['subject'] != '') {
+        if (isset($params['subject']) && '' != $params['subject']) {
             return $params['subject'];
         }
 
@@ -39,7 +39,7 @@ class rex_yrewrite_forward
 
         /** @var rex_yrewrite_domain $domain */
         $domain = $params['domain'];
-        $url = $params['url'];
+        $url = mb_strtolower($params['url']);
 
         foreach (self::$paths as $p) {
             $forwardDomain = rex_yrewrite::getDomainById($p['domain_id']);
@@ -48,21 +48,29 @@ class rex_yrewrite_forward
                 continue;
             }
 
-            if ($p['url'] == $url || $p['url'] . '/' == $url) {
-                $forward_url = '';
-                if ($p['type'] == 'article' && ($art = rex_article::get($p['article_id'], $p['clang']))) {
-                    $forward_url = rex_getUrl($p['article_id'], $p['clang']);
-                } elseif ($p['type'] == 'media' && ($media = rex_media::get($p['media']))) {
-                    $forward_url = rex_url::media($p['media']);
-                } elseif ($p['type'] == 'extern' && $p['extern'] != '') {
-                    $forward_url = $p['extern'];
-                }
+            if ($p['url'] !== $url && $p['url'] . '/' !== $url) {
+                continue;
+            }
 
-                if ($forward_url != '') {
-                    header('HTTP/1.1 '.self::$movetypes[$p['movetype']]);
-                    header('Location: ' . $forward_url);
-                    exit;
+            foreach ($p['params'] ?? [] as $key => $value) {
+                if (rex_get($key) !== $value) {
+                    continue 2;
                 }
+            }
+
+            $forward_url = '';
+            if ('article' == $p['type'] && ($art = rex_article::get($p['article_id'], $p['clang']))) {
+                $forward_url = rex_getUrl($p['article_id'], $p['clang']);
+            } elseif ('media' == $p['type'] && ($media = rex_media::get($p['media']))) {
+                $forward_url = rex_url::media($p['media']);
+            } elseif ('extern' == $p['type'] && '' != $p['extern']) {
+                $forward_url = $p['extern'];
+            }
+
+            if ('' != $forward_url) {
+                header('HTTP/1.1 '.self::$movetypes[$p['movetype']]);
+                header('Location: ' . $forward_url);
+                exit;
             }
         }
         return false;
@@ -83,6 +91,16 @@ class rex_yrewrite_forward
     {
         $gc = rex_sql::factory();
         $content = $gc->getArray('select * from '.rex::getTable('yrewrite_forward'));
+
+        foreach ($content as &$row) {
+            $url = explode('?', (string) $row['url'], 2);
+            $row['url'] = mb_strtolower($url[0]);
+
+            if (isset($url[1])) {
+                parse_str($url[1], $row['params']);
+            }
+        }
+
         rex_file::put(self::$pathfile, json_encode($content));
     }
 }

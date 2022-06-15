@@ -7,17 +7,18 @@
  *
  * @package redaxo\yrewrite
  *
+ * @psalm-scope-this rex_addon
  * @var rex_addon $this
  */
 
 $func = rex_request('func', 'string');
 $csrf = rex_csrf_token::factory('yrewrite_setup');
 
-if ($func != '') {
+if ('' != $func) {
     if (!$csrf->isValid()) {
         echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
     } else {
-        if ($func == 'htaccess') {
+        if ('htaccess' == $func) {
             rex_yrewrite::copyHtaccess();
             echo rex_view::success($this->i18n('htaccess_hasbeenset'));
         }
@@ -35,12 +36,12 @@ $content = '
 
 
             <h3>' . $this->i18n('info_tipps') . '</h3>
-            <p>' . rex_i18n::rawMsg('yrewrite_info_tipps_text') . '    
-            
-            
+            <p>' . rex_i18n::rawMsg('yrewrite_info_tipps_text') . '
+
+
             <h3>' . $this->i18n('info_seo') . '</h3>
             <p>' . rex_i18n::rawMsg('yrewrite_info_seo_text') . '
-            
+
             <br /><br />'.highlight_string('<?php
 	  $seo = new rex_yrewrite_seo();
 	  echo $seo->getTitleTag().PHP_EOL;
@@ -58,19 +59,18 @@ $fragment->setVar('body', $content, false);
 echo $fragment->parse('core/page/section.php');
 
 /**
- * Process and display visibility settings form
+ * Process and display visibility settings form.
  */
-echo rex_yrewrite_seo_visibility::processFormPost();
-echo rex_yrewrite_seo_visibility::getForm();
+echo rex_yrewrite_settings::processFormPost();
+echo rex_yrewrite_settings::getForm();
 
 $domains = [];
 
 foreach (rex_yrewrite::getDomains() as $name => $domain) {
-    if ($name != 'default') {
-        $domains[] = '<tr><td><a href="'.$domain->getUrl().'">'.htmlspecialchars($name).'</a></td><td><a href="'.$domain->getUrl().'sitemap.xml">sitemap.xml</a></td><td><a href="'.$domain->getUrl().'robots.txt">robots.txt</a></td></tr>';
+    if ('default' != $name) {
+        $domains[] = '<tr><td><a target="_blank" href="'.$domain->getUrl().'">'.htmlspecialchars($name).'</a></td><td><a target="_blank" href="'.$domain->getUrl().'sitemap.xml">sitemap.xml</a></td><td><a target="_blank" href="'.$domain->getUrl().'robots.txt">robots.txt</a></td></tr>';
     }
 }
-
 
 $tables = '<table class="table table-hover">
             <tr>

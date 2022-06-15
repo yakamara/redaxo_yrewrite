@@ -1,13 +1,14 @@
 yrewrite = YRewrite
 
 # content page
-yrewrite_rewriter = Rewrite URLs
+yrewrite_rewriter = URL
 yrewrite_rewriter_seo = SEO data
-yrewrite_mode_url = URL
-yrewrite_mode_seo = URL
-yrewrite_customurl = Custom URL
-yrewrite_update_url = Aktualisera URL
-yrewrite_update_seo = Aktualisera SEO-data
+
+yrewrite_url_type = URL-typ
+yrewrite_url_type_auto = Automatisk
+yrewrite_url_type_custom = Custom URL
+yrewrite_url_type_redirection_internal = Omdirigering till artikel
+yrewrite_url_type_redirection_external = Omdirigering till URL
 
 yrewrite_domains = Domäner
 yrewrite_article_urls = Artikel URLs
@@ -42,6 +43,7 @@ yrewrite_notfound_info = Ange artikel som ska användas som 404-dokument. Kan h�
 yrewrite_clangs = Språk
 yrewrite_clangs_info = Välj språk som kan nås på den här domänen. Om alla språk är tillgängliga, lämna tomt.
 yrewrite_alllangs = Alla språk
+yrewrite_clang_start_auto = Startspråket automatiskt enligt klientens webbläsares språk, önskat språk som fallback
 yrewrite_clang_start = Startspråk
 yrewrite_clang_start_info = Vilket språk ska användas vid första öppnandet av domänen
 yrewrite_clang_start_hidden = Startspråk inte i URL
@@ -58,6 +60,7 @@ yrewrite_domain_robots = Robots fil
 yrewrite_root = --- Root --- [0]
 
 yrewrite_alias_domain_refersto = Denna domän vidarebefordras
+yrewrite_alias_domain_refersto_notice = Vänligen ange utan 'http[s]://'
 yrewrite_domain_willbereferdto = till denna domän
 
 yrewrite_domain_already_defined = Domänen har redan definierats
@@ -73,6 +76,8 @@ yrewrite_warning_chars = Webbadressen är felaktig. Beakta stavning. Använda en
 yrewrite_warning_urlexists = URL finns redan {0}
 yrewrite_warning_otherarticle = Till annan artikel
 yrewrite_urlupdated = URL aktualiserades
+yrewrite_domain_not_well_formed = Domän / url-format är fel.
+
 
 yrewrite_seotitle = Titel
 yrewrite_seodescription = Beskrivning
@@ -102,6 +107,7 @@ yrewrite_index = Sökmotorindex och webbplatskarta (sitemap)
 yrewrite_index_status = Status controls Index and Sitemap
 yrewrite_index_index = Tillåter indexering / visa i sitemap (index)
 yrewrite_index_noindex = Tillåta inte indexering sida / visa inte i sitemap (NoIndex)
+yrewrite_index_noindex_follow = Tillåta inte indexering sida och följ länkar / visa inte i sitemap (NoIndex)
 
 yrewrite_htaccess_hasbeenset = .htaccess-filen har skapats eller skrivits över
 yrewrite_htaccess_set = skapa .htaccess fil
@@ -171,3 +177,13 @@ yrewrite_auto_redirect_days = Antal dagar tills automatiska omdirigeringar (redi
 yrewrite_auto_redirect_days_info = Ange 0 för att stänga av automatisk avaktivering.
 yrewrite_auto_redirects = Automatiska vidarebefordringar
 yrewrite_expiry_date = Avaktiveringsdatum
+
+perm_general_yrewrite[forward] = YRewrite: omdirigeringar
+yrewrite_perm_url_edit = Yrewrite: redigera URL
+yrewrite_perm_seo_edit = Yrewrite: redigera SEO-data
+
+yrewrite_settings = Inställningar
+yrewrite_settings_saved = Inställningar sparades
+yrewrite_unicode_urls = Tillåt Unicode-tecken i webbadresser (ä,ö,å, kinesiska / kyrilliska tecken etc.)
+yrewrite_hide_url_block = Dölj URL-block
+yrewrite_hide_seo_block = Dölj SEO-block

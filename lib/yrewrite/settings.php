@@ -6,7 +6,7 @@
  * @package redaxo\yrewrite
  */
 
-class rex_yrewrite_seo_visibility
+class rex_yrewrite_settings
 {
     /**
      * @return rex_addon
@@ -27,10 +27,13 @@ class rex_yrewrite_seo_visibility
 
         // Process form data
         if (rex_post('submit', 'boolean')) {
+            $addon->setConfig('unicode_urls', rex_post('yrewrite_unicode_urls', 'bool'));
             $addon->setConfig('yrewrite_hide_url_block', rex_post('yrewrite_hide_url_block', 'bool'));
             $addon->setConfig('yrewrite_hide_seo_block', rex_post('yrewrite_hide_seo_block', 'bool'));
 
-            $message = rex_view::success($addon->i18n('yrewrite_seo_saved'));
+            rex_yrewrite::deleteCache();
+
+            $message = rex_view::success($addon->i18n('yrewrite_settings_saved'));
         }
 
         return $message;
@@ -46,13 +49,17 @@ class rex_yrewrite_seo_visibility
         // Checkboxes
         $checkbox_elements = [
             [
+                'label' => '<label for="yrewrite-unicode-urls">'.$addon->i18n('yrewrite_unicode_urls').'</label>',
+                'field' => '<input type="checkbox" id="yrewrite-unicode-urls" name="yrewrite_unicode_urls" value="1" '.($addon->getConfig('unicode_urls') ? ' checked="checked"' : '').' />',
+            ],
+            [
                 'label' => '<label for="yrewrite-hide-url-block">'.$addon->i18n('yrewrite_hide_url_block').'</label>',
                 'field' => '<input type="checkbox" id="yrewrite-hide-url-block" name="yrewrite_hide_url_block" value="1" '.($addon->getConfig('yrewrite_hide_url_block') ? ' checked="checked"' : '').' />',
             ],
             [
                 'label' => '<label for="yrewrite-hide-seo-block">'.$addon->i18n('yrewrite_hide_seo_block').'</label>',
                 'field' => '<input type="checkbox" id="yrewrite-hide-seo-block" name="yrewrite_hide_seo_block" value="1" '.($addon->getConfig('yrewrite_hide_seo_block') ? ' checked="checked"' : '').' />',
-            ]
+            ],
         ];
 
         $fragment = new rex_fragment();
@@ -61,7 +68,7 @@ class rex_yrewrite_seo_visibility
 
         // Submit
         $submit_elements = [
-            [ 'field' => '<button class="btn btn-save rex-form-aligned" type="submit" name="submit" value="1" '.rex::getAccesskey($addon->i18n('submit'), 'save').'>'.$addon->i18n('save').'</button>' ]
+            ['field' => '<button class="btn btn-save rex-form-aligned" type="submit" name="submit" value="1" '.rex::getAccesskey($addon->i18n('submit'), 'save').'>'.$addon->i18n('save').'</button>'],
         ];
 
         $fragment = new rex_fragment();
@@ -72,7 +79,7 @@ class rex_yrewrite_seo_visibility
         // Form
         $fragment = new rex_fragment();
         $fragment->setVar('class', 'edit');
-        $fragment->setVar('title', $addon->i18n('yrewrite_seo_settings'));
+        $fragment->setVar('title', $addon->i18n('yrewrite_settings'));
         $fragment->setVar('body', $checkboxes, false);
         $fragment->setVar('buttons', $submit, false);
 
@@ -90,6 +97,9 @@ class rex_yrewrite_seo_visibility
     {
         $addon = self::getAddon();
 
+        if (!$addon->hasConfig('unicode_urls')) {
+            $addon->setConfig('unicode_urls', false);
+        }
         if (!$addon->hasConfig('yrewrite_hide_url_block')) {
             $addon->setConfig('yrewrite_hide_url_block', false);
         }

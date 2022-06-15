@@ -1,13 +1,14 @@
 yrewrite = YRewrite
 
 # content page
-yrewrite_rewriter = Rewrite URLs
+yrewrite_rewriter = URL
 yrewrite_rewriter_seo = SEO Data
-yrewrite_mode_url = URL
-yrewrite_mode_seo = SEO
-yrewrite_customurl = Custom URL
-yrewrite_update_url = Update URL
-yrewrite_update_seo = Update SEO-Data
+
+yrewrite_url_type = URL type
+yrewrite_url_type_auto = Auto
+yrewrite_url_type_custom = Custom URL
+yrewrite_url_type_redirection_internal = Redirection to article
+yrewrite_url_type_redirection_external = Redirection to URL
 
 yrewrite_domains = Domains
 yrewrite_article_urls = Article URLs
@@ -42,9 +43,10 @@ yrewrite_notfound_info = Specify article to use as 404 document. Can be retrieve
 yrewrite_clangs = Languages
 yrewrite_clangs_info = Choose languages which can be accessed on this domain. If all languages can be accessed, leave blank.
 yrewrite_alllangs = All languages
-yrewrite_clang_start = Start language
-yrewrite_clang_start_info = Which language should be used when first accessing the domain
-yrewrite_clang_start_hidden = Start language not in URL
+yrewrite_clang_start_auto = Automatically detect starting laungauge based on client browser language, preferred language as fallback
+yrewrite_clang_start = Preferred language
+yrewrite_clang_start_info = Will be used when calling the start page if the language can/should not be set automatically.
+yrewrite_clang_start_hidden = Preferred language not in URL
 
 yrewrite_alias_domain = Alias domain
 yrewrite_alias_domains = Alias domains
@@ -73,6 +75,8 @@ yrewrite_warning_chars = The URL is invalid. Consider your characters. Only a-z 
 yrewrite_warning_urlexists = URL exists already {0}
 yrewrite_warning_otherarticle = To different article
 yrewrite_urlupdated = URL has been updated
+yrewrite_domain_not_well_formed = Domain/URL syntax ill formed
+
 
 yrewrite_seotitle = Title
 yrewrite_seodescription = Description
@@ -102,6 +106,7 @@ yrewrite_index = Search Engine Index and Sitemap
 yrewrite_index_status = Status controls Index and Sitemap
 yrewrite_index_index = allow Search Engine to index page / display in Sitemap (Index)
 yrewrite_index_noindex = do not allow Search Engine to index page / do not display in Sitemap (NoIndex)
+yrewrite_index_noindex_follow = do not allow Search Engine to index page and follow its links / do not display in Sitemap (NoIndex)
 
 yrewrite_htaccess_hasbeenset = .htaccess file has been created or overwritten
 yrewrite_htaccess_set = Set .htaccess file
@@ -130,7 +135,7 @@ yrewrite_forward_status = Status
 yrewrite_forward_active = active
 yrewrite_forward_inactive = inactive
 yrewrite_forward_url = requested Url
-yrewrite_forward_url_info = The URL has to be entered without beginning and trailing slashes, for example "foo/bar". The variant with a slash will be automatically redirected.
+yrewrite_forward_url_info = The URL has to be entered without beginning and trailing slashes, for example <code>"foo/bar"</code>. The variant with a slash will be automatically redirected.<br> Optionally, parameters can also be specified, for example <code>"foo/bar?x=1&y=2"</code>.
 yrewrite_forward_type = Redirect to
 
 yrewrite_forward_type_article = Article
@@ -172,9 +177,12 @@ yrewrite_auto_redirect_days_info = Enter 0 to disable automatic deactivation
 yrewrite_auto_redirects = Automatic redirects
 yrewrite_expiry_date = Date of deactivation
 
+perm_general_yrewrite[forward] = YRewrite: Redirects
 yrewrite_perm_url_edit = Yrewrite: URL editing
 yrewrite_perm_seo_edit = Yrewrite: SEO-Data editing
-yrewrite_seo_settings = Settings
-yrewrite_seo_saved = Settings updated
+
+yrewrite_settings = Settings
+yrewrite_settings_saved = Settings updated
+yrewrite_unicode_urls = Allow unicode chars in URLs (umlauts, chinese/cyrillic characters etc.)
 yrewrite_hide_url_block = Hide URL-Block
 yrewrite_hide_seo_block = Hide SEO-Block

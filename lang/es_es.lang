@@ -1,13 +1,10 @@
 yrewrite = YRewrite
 
 # content page
-yrewrite_rewriter = URL personalizada
+yrewrite_rewriter = URL
 yrewrite_rewriter_seo = Datos de SEO
-yrewrite_mode_url = URL
-yrewrite_mode_seo = SEO
-yrewrite_customurl = URL personalizada
-yrewrite_update_url = Actualizar URL
-yrewrite_update_seo = Actualizar datos de SEO
+
+yrewrite_url_type_custom = URL personalizada
 
 yrewrite_domains = Dominios
 yrewrite_article_urls = URL de artículos
@@ -42,6 +39,7 @@ yrewrite_notfound_info = Especifique el elemento llamado como 404 del dominio. S
 yrewrite_clangs = Idiomas
 yrewrite_clangs_info = Seleccione los idiomas que se pueden alcanzar bajo el dominio. No seleccione si todos los idiomas (incluidos los futuros) deberían ser accesibles a través de este dominio.
 yrewrite_alllangs = Todos los idiomas
+yrewrite_clang_start_auto = Iniciar idioma automáticamente de acuerdo con el idioma del navegador del cliente, idioma preferido como reserva
 yrewrite_clang_start = iniciar idioma
 yrewrite_clang_start_info = ¿Qué idioma se debe usar al llamar al dominio por primera vez?
 yrewrite_clang_start_hidden = Lenguaje de inicio no en URL
@@ -73,6 +71,8 @@ yrewrite_warning_chars = La URL no es correcta Note la ortografía. Solo "a-z/0-
 yrewrite_warning_urlexists = Esta URL ya existe para artículos con id={0}
 yrewrite_warning_otherarticle = Al otro artículo
 yrewrite_urlupdated = Url ha sido actualizado
+yrewrite_domain_not_well_formed = El formato de dominio/url es incorrecto.
+
 
 yrewrite_seotitle = Título
 yrewrite_seodescription = Descripción
@@ -102,6 +102,7 @@ yrewrite_index = Indexación y mapa del sitio
 yrewrite_index_status = Según el estado, permita indexar y ver en el mapa del sitio
 yrewrite_index_index = Permitir indexación / Mostrar mapa del sitio (índice)
 yrewrite_index_noindex = Prohibir indexación / no mostrar en Sitemap (NoIndex)
+yrewrite_index_noindex_follow = Prohibir indexación y seguir enlaces / no mostrar en Sitemap (NoIndex)
 
 yrewrite_htaccess_hasbeenset = El archivo .htaccess fue establecido/reemplazado
 yrewrite_htaccess_set = Establecer archivo .htaccess
@@ -171,3 +172,10 @@ yrewrite_auto_redirect_days = Número de días hasta que los redireccionamientos
 yrewrite_auto_redirect_days_info = Introduzca 0 para desactivar la desactivación automática.
 yrewrite_auto_redirects = Redirecciones automáticas
 yrewrite_expiry_date = fecha de desactivación
+
+yrewrite_perm_url_edit = Yrewrite: Edición de URL
+yrewrite_perm_seo_edit = Yrewrite: Edición de datos SEO
+yrewrite_settings = Ajustes
+yrewrite_settings_saved = Configuraciones guardadas
+yrewrite_hide_url_block = Ocultar bloque de URL
+yrewrite_hide_seo_block = Ocultar bloque SEO

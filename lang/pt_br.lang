@@ -1,13 +1,10 @@
 yrewrite = YRewrite
 
 # content page
-yrewrite_rewriter = Reescrever URLs
+yrewrite_rewriter = URL
 yrewrite_rewriter_seo = Dados Seo
-yrewrite_mode_url = URL
-yrewrite_mode_seo = SEO
-yrewrite_customurl = Customizar URL
-yrewrite_update_url = Atualizar URL
-yrewrite_update_seo = Atualizar dados SEO
+
+yrewrite_url_type_custom = Customizar URL
 
 yrewrite_domains = Domínios
 yrewrite_article_urls = Urls do Produto
@@ -101,6 +98,7 @@ yrewrite_index = Indexação e sitemap
 yrewrite_index_status = Autorizar dependendo da indexação status e exibi-los no Sitemap
 yrewrite_index_index = Permitir indexação / Mapa do site (Índice)
 yrewrite_index_noindex = Proibir indexação / exibir no Sitemap (noindex)
+yrewrite_index_noindex_follow = Proibir indexação e seguir links / exibir no Sitemap (noindex)
 
 yrewrite_htaccess_hasbeenset = Arquivo .htaccess foi criado/substituído
 yrewrite_htaccess_set = Definir arquivo .htaccess

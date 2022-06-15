@@ -11,10 +11,10 @@ class rex_yrewrite_path_generator
     /** @var rex_yrewrite_domain[][] */
     private $domains;
 
-    /** @var array */
+    /** @var array<string, array<int, array<int, string>>> */
     private $paths;
 
-    /** @var array */
+    /** @var array<string, array<int, array<int, array>>> */
     private $redirections;
 
     public function __construct(rex_yrewrite_scheme $scheme, array $domains, array $paths, array $redirections)
@@ -25,11 +25,13 @@ class rex_yrewrite_path_generator
         $this->redirections = $redirections;
     }
 
+    /** @return array<string, array<int, array<int, string>>> */
     public function getPaths(): array
     {
         return $this->paths;
     }
 
+    /** @return array<string, array<int, array<int, array>>> */
     public function getRedirections(): array
     {
         return $this->redirections;
@@ -93,17 +95,22 @@ class rex_yrewrite_path_generator
             }
         }
 
-        unset($this->redirections[$articleId][$clangId]);
+        foreach ($this->redirections as $domain => $_) {
+            unset($this->redirections[$domain][$articleId][$clangId]);
 
-        if (empty($this->redirections[$articleId])) {
-            unset($this->redirections[$articleId]);
+            if (empty($this->redirections[$domain][$articleId])) {
+                unset($this->redirections[$domain][$articleId]);
+            }
+            if (empty($this->redirections[$domain])) {
+                unset($this->redirections[$domain]);
+            }
         }
     }
 
     private function setDomain(rex_structure_element $element, rex_yrewrite_domain $domain, string $path)
     {
         $id = $element->getId();
-        $clang = $element->getClang();
+        $clang = $element->getClangId();
 
         if (isset($this->domains[$id][$clang])) {
             $domain = $this->domains[$id][$clang];
@@ -117,23 +124,9 @@ class rex_yrewrite_path_generator
     {
         [$domain, $path] = $this->setDomain($article, $domain, $path);
 
+        $domainName = $domain->getName();
         $articleId = $article->getId();
-        $clangId = $article->getClang();
-
-        $redirection = $this->scheme->getRedirection($article, $domain);
-
-        if ($redirection instanceof rex_structure_element) {
-            $this->redirections[$articleId][$clangId] = [
-                'id' => $redirection->getId(),
-                'clang' => $redirection->getClang(),
-            ];
-
-            unset($this->paths[$domain->getName()][$articleId][$clangId]);
-
-            return;
-        }
-
-        unset($this->redirections[$articleId][$clangId]);
+        $clangId = $article->getClangId();
 
         $url = $this->scheme->getCustomUrl($article, $domain);
 
@@ -141,7 +134,42 @@ class rex_yrewrite_path_generator
             $url = $this->scheme->appendArticle($path, $article, $domain);
         }
 
-        $this->paths[$domain->getName()][$articleId][$clangId] = ltrim($url, '/');
+        $url = ltrim($url, '/');
+
+        $urlType = $article->getValue('yrewrite_url_type');
+
+        if ('REDIRECTION_EXTERNAL' === $urlType) {
+            $this->redirections[$domainName][$articleId][$clangId] = [
+                'url' => $article->getValue('yrewrite_redirection'),
+                'path' => $url,
+            ];
+
+            unset($this->paths[$domainName][$articleId][$clangId]);
+
+            return;
+        }
+
+        if ('REDIRECTION_INTERNAL' === $urlType) {
+            $redirection = rex_article::get((int) $article->getValue('yrewrite_redirection'), $clangId);
+        } else {
+            $redirection = $this->scheme->getRedirection($article, $domain);
+        }
+
+        if ($redirection instanceof rex_structure_element) {
+            $this->redirections[$domainName][$articleId][$clangId] = [
+                'id' => $redirection->getId(),
+                'clang' => $redirection->getClangId(),
+                'path' => $url,
+            ];
+
+            unset($this->paths[$domainName][$articleId][$clangId]);
+
+            return;
+        }
+
+        $this->paths[$domainName][$articleId][$clangId] = $url;
+
+        unset($this->redirections[$domainName][$articleId][$clangId]);
     }
 
     private function generatePaths(rex_yrewrite_domain $domain, $path, rex_category $category)
