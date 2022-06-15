@@ -68,12 +68,12 @@ class rex_yrewrite_seo
         $tagsTwitter = [];
         $tagsTwitter['twitter:card'] = '<meta name="twitter:card" content="summary" />';
 
-        $title = rex_escape(strip_tags($this->getTitle()));
+        $title = rex_escape($this->getTitle());
         $tags['title'] = '<title>'.$title.'</title>';
         $tagsOg['og:title'] = '<meta property="og:title" content="'.$title.'" />';
         $tagsTwitter['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
 
-        $description = rex_escape(strip_tags($this->getDescription()));
+        $description = rex_escape($this->getDescription());
         if ($description != '') {
             $tags['description'] = '<meta name="description" content="'.$description.'">';
             $tagsOg['og:description'] = '<meta property="og:description" content="'.$description.'" />';
