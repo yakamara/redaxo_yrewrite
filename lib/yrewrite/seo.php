@@ -61,7 +61,7 @@ class rex_yrewrite_seo
         }
     }
 
-    public function getTags()
+    public function getTags(): string
     {
         $tags = [];
         $tagsOg = [];
