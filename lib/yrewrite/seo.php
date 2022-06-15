@@ -97,7 +97,7 @@ class rex_yrewrite_seo
         }
 
         $tags += $tagsOg + $tagsTwitter;
-        $tags = \rex_extension::registerPoint(new \rex_extension_point('YREWRITE_SEO_TAGS', $tags));
+        $tags = rex_extension::registerPoint(new \rex_extension_point('YREWRITE_SEO_TAGS', $tags));
         return implode("\n", $tags);
     }
 
