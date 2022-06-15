@@ -74,14 +74,14 @@ class rex_yrewrite_seo
         $tagsTwitter['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
 
         $description = rex_escape($this->getDescription());
-        if ($description != '') {
+        if ('' != $description) {
             $tags['description'] = '<meta name="description" content="'.$description.'">';
             $tagsOg['og:description'] = '<meta property="og:description" content="'.$description.'" />';
             $tagsTwitter['twitter:description'] = '<meta name="twitter:description" content="'.$description.'" />';
         }
 
         $content = 'noindex, nofollow';
-        if ($this->article->getValue(self::$meta_index_field) == 1 || ($this->article->getValue(self::$meta_index_field) == 0 && $this->article->isOnline())) {
+        if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
             $content = 'index, follow';
         }
         $tags['robots'] = '<meta name="robots" content="'.$content.'">';
@@ -91,9 +91,8 @@ class rex_yrewrite_seo
         $tagsOg['og:url'] = '<meta property="og:url" href="'.$canonicalUrl.'" />';
         $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'" />';
 
-
         $hrefs = $this->getHrefLangs();
-        foreach ($hrefs as $code => $url){
+        foreach ($hrefs as $code => $url) {
             $tags['hreflang:'.$code] = '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
         }
 
