@@ -130,19 +130,6 @@ class rex_yrewrite_seo
         }
     }
 
-    /** @deprecated use getTags instead */
-    public function getHreflangTags()
-    {
-        $return = '';
-        $lang_domains = $this->getHrefLangs();
-
-        foreach ($lang_domains as $code => $url){
-            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
-        }
-        return $return;
-    }
-
-
     public function getTitle()
     {
         $title_scheme = htmlspecialchars_decode(trim($this->domain->getTitle()));
@@ -173,7 +160,7 @@ class rex_yrewrite_seo
     public function getCanonicalUrl()
     {
         $canonical_url = trim($this->article->getValue(self::$meta_canonical_url_field));
-        if ($canonical_url == "") {
+        if ('' == $canonical_url) {
             $canonical_url = rex_yrewrite::getFullUrlByArticleId($this->article->getId(), $this->article->getClangId());
         }
         $canonical_url = rex_extension::registerPoint(new rex_extension_point('YREWRITE_CANONICAL_URL', $canonical_url, ['article' => $this->article]));
@@ -201,6 +188,18 @@ class rex_yrewrite_seo
         }
 
         return rex_extension::registerPoint(new rex_extension_point('YREWRITE_HREFLANG_TAGS', $lang_domains, ['article' => $this->article]));
+    }
+
+    /** @deprecated use getTags instead */
+    public function getHreflangTags()
+    {
+        $return = '';
+        $lang_domains = $this->getHrefLangs();
+
+        foreach ($lang_domains as $code => $url){
+            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+        }
+        return $return;
     }
 
     public function cleanString($str)
@@ -262,7 +261,6 @@ class rex_yrewrite_seo
 
             foreach (rex_yrewrite::getPathsByDomain($domain->getName()) as $article_id => $path) {
                 foreach ($domain->getClangs() as $clang_id) {
-
                     if (!rex_clang::get($clang_id)->isOnline()) {
                         continue;
                     }
