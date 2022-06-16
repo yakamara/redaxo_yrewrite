@@ -53,7 +53,7 @@ $seo->article->yrewrite_title = '';
 
 $yform->setValueField('text', ['name' => 'yrewrite_title', 'label' => rex_i18n::msg('yrewrite_seotitle'), 'placeholder' => $seo->getTitle()]);
 $yform->setValueField('textarea', ['yrewrite_description', rex_i18n::msg('yrewrite_seodescription'), 'rows' => 3]);
-$yform->setValueField('be_media', ["yrewrite_image",rex_i18n::msg('yrewrite_seoimage'),"1","0","general","jpg,gif,png,jpeg,webp"]);
+$yform->setValueField('be_media', ['yrewrite_image', rex_i18n::msg('yrewrite_seoimage'), '1', '0', 'general', 'jpg,gif,png,jpeg,webp']);
 
 $yform->setValueField('choice', ['yrewrite_changefreq', rex_i18n::msg('yrewrite_changefreq'), implode(',', $select_changefreq), '', '', rex_yrewrite_seo::$changefreq_default]);
 $yform->setValueField('choice', ['yrewrite_priority', rex_i18n::msg('yrewrite_priority'), implode(',', $select_priority), '', '', rex_yrewrite_seo::$priority_default]);
