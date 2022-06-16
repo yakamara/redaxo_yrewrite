@@ -18,7 +18,7 @@ Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben.
 * Individuelle URL pro Artikel möglich
 * Seitentitel Schema definierbar / pro Domain/Sprache
 * Alias Domains die auf die Hauptdomain verweisen
-* Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln
+* Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln, sogar Protokoll-Tausch in bspw. `tel:`, `mailto:` u.a.
 * Canonical Urls
 
 ## Installation
@@ -32,9 +32,13 @@ Voraussetzung für die aktuelle Version von YRewrite: REDAXO >= 5.5
 
 ## Setup
 
-Nach der Installation und dem Abschluss des Setups wird eine `.htaccess`-Datei im Hauptverzeichnis erstellt, die für die Verwendung von YRewrite benötigt wird. Auch eine virtuelle `robots.txt` und `sitemap.xml` werden erstellt.
+Unter dem Reiter `Setup` sind die `sitemap.xml` und `robots.txt` je eingerichteter Domain einsehbar. Außerdem lässt sich ein Setup durchführen, bei der die Apache-Konfiguration für YRewrite über eine `.htaccess`-Datei erstellt wird.
 
-Unter dem Reiter `Setup` kann die `.htaccess`-Datei jederzeit neu geschrieben werden Außerdem sind die `sitemap.xml` und `robots.txt` je Domain einsehbar.
+### Apache-Konfiguration für YRewrite
+
+Das Setup ausführen, um eine `.htaccess`-Datei im Hauptverzeichnis zu erstellen, die für die Verwendung von YRewrite benötigt wird. Anschließend werden alle Frontend-URLs in suchmaschinenfreundliche URLs umgeschrieben ("Rewriteing").
+
+> **Hinweis** Sollten nach Abeschluss des Setups die Frontend-URLs nicht funktionieren, bitte prüfen, ob es sich um einen Apache- oder NGINX-Server handelt (siehe unten). Außerdem prüfen, ob das Webhosting-Paket eigene `.htaccess`-Regeln erlaubt.
 
 > **Hinweis:** Das Addon leitet alle Anfragen von `/media/` über das Media-Manager-AddOn. Stelle daher sicher, dass es weder eine Struktur-Kategorie "Media" gibt, noch, dass sich keine deiner Dateien fürs Frontend, bspw. CSS- oder JS-Dateien, darin befinden. Gute Orte hierfür sind die Ordner `/assets/` oder die Verwendung des Theme-AddOns. Sollte es notwendig sein, eine Kategorie namens "Media" zu verwenden, dann müssen [die entsprechenden Zeilen in der .htaccess-Datei](https://github.com/yakamara/redaxo_yrewrite/blob/b519622a3be135f1380e35bf85783cc33e71664f/setup/.htaccess#L96-L97) auskommentiert oder umbenannt werden und diese fortan genutzt werden, wenn Medien aus dem Medien Manager verwendet werden. Dies hat weitere Auswirkungen, z.B. auf geschützte Dateien mit YCom - das Auskommentieren und Umbenennen sollte daher nur von erfahrenen REDAXO-Entwicklern vorgenommen werden.
 
@@ -114,6 +118,8 @@ Alias-Domains müssen nicht eingetragen werden, wenn die Domain nicht auf das Se
 Unter Weiterleitungen können URLs definiert werden, die dann auf einen bestimmten Artikel oder eine andere Adresse umgeleitet werden.
 
 > **Hinweis:** Mit dieser Einstellung können nicht bereits vorhandene Artikel / URLs umgeleitet werden, sondern nur URLs, die in der REDAXO-Installation nicht vorhanden sind. Das ist bspw. bei einem Relaunch der Fall, wenn alte URLs auf eine neue Zielseite umgeleitet werden sollen.
+
+> **Tipp**: Damit lässt sich auch ein Artikel oder eine Kategorie zu einem gänzlich anderen URI-Protokoll ändern, bspw. `tel:`, `mailto:` u.a. Diese werden auch an anderer Stelle, bspw. von der `rex_navigation::factory()`, berücksichtigt.
 
 ## Weitere Schritte
 
