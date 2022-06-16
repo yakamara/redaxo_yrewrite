@@ -50,7 +50,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
         }
 
         // prevent article deletion if used in domain settings
-       	rex_extension::register('ART_PRE_DELETED', static function (rex_extension_point $ep) {
+        rex_extension::register('ART_PRE_DELETED', static function (rex_extension_point $ep) {
             $warning = [];
             $params = $ep->getParams();
             $article_id = $params['id'];
@@ -60,17 +60,17 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
                 .'WHERE start_id = '. $article_id .' OR mount_id = '. $article_id .' OR notfound_id = '. $article_id);
 
             // Warnings
-            for($i = 0; $i < $sql->getRows(); $i++) {
+            for ($i = 0; $i < $sql->getRows(); ++$i) {
                 $message = '<a href="'. rex_url::backendPage('yrewrite/domains', ['func' => 'edit', 'data_id' => $sql->getValue('id')]) .'">YRewrite '. rex_i18n::msg('yrewrite_domains') .': '. $sql->getValue('domain') .'</a>';
                 $warning[] = $message;
                 $sql->next();
             }
 
-            if(count($warning) > 0) {
+            if (count($warning) > 0) {
                 throw new rex_api_exception(rex_i18n::msg('yrewrite_rex_article_cannot_delete') .'<ul><li>'. implode('</li><li>', $warning) .'</li></ul>');
             }
         });
-      
+
         // prevent deletion of seo image
         rex_extension::register('MEDIA_IS_IN_USE', static function (rex_extension_point $ep) {
             $warning = $ep->getSubject();
