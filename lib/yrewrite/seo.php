@@ -65,21 +65,65 @@ class rex_yrewrite_seo
         }
     }
 
-    public function getTitleTag()
+    public function getTags(): string
     {
-        return '<title>'.rex_escape(strip_tags($this->getTitle())).'</title>'; //  lang="de"
+        $tags = [];
+        $tagsOg = [];
+        $tagsTwitter = [];
+        $tagsTwitter['twitter:card'] = '<meta name="twitter:card" content="summary" />';
+
+        $title = rex_escape($this->getTitle());
+        $tags['title'] = '<title>'.$title.'</title>';
+        $tagsOg['og:title'] = '<meta property="og:title" content="'.$title.'" />';
+        $tagsTwitter['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
+
+        $description = rex_escape($this->getDescription());
+        if ('' != $description) {
+            $tags['description'] = '<meta name="description" content="'.$description.'">';
+            $tagsOg['og:description'] = '<meta property="og:description" content="'.$description.'" />';
+            $tagsTwitter['twitter:description'] = '<meta name="twitter:description" content="'.$description.'" />';
+        }
+
+        $content = 'noindex, nofollow';
+        if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
+            $content = 'index, follow';
+        }
+        $tags['robots'] = '<meta name="robots" content="'.$content.'">';
+
+        $canonicalUrl = rex_escape($this->getCanonicalUrl());
+        $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
+        $tagsOg['og:url'] = '<meta property="og:url" href="'.$canonicalUrl.'" />';
+        $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'" />';
+
+        $hrefs = $this->getHrefLangs();
+        foreach ($hrefs as $code => $url) {
+            $tags['hreflang:'.$code] = '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+        }
+
+        $tags += $tagsOg + $tagsTwitter;
+        $tags = rex_extension::registerPoint(new \rex_extension_point('YREWRITE_SEO_TAGS', $tags));
+        return implode("\n", $tags);
     }
 
+    /** @deprecated use getTags instead */
+    public function getTitleTag()
+    {
+        return '<title>'.rex_escape(strip_tags($this->getTitle())).'</title>'; // lang="de"
+    }
+
+    /** @deprecated use getTags instead */
     public function getDescriptionTag()
     {
         return '<meta name="description" content="'.rex_escape(strip_tags($this->getDescription())).'">'; //  lang="de"
     }
 
+    /** @deprecated use getTags instead */
     public function getCanonicalUrlTag()
     {
         return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'" />';
     }
 
+    /** @deprecated use getTags instead */
     public function getRobotsTag()
     {
         if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
@@ -155,6 +199,7 @@ class rex_yrewrite_seo
         return rex_extension::registerPoint(new rex_extension_point('YREWRITE_HREFLANG_TAGS', $lang_domains, ['article' => $this->article]));
     }
 
+    /** @deprecated use getTags instead */
     public function getHreflangTags()
     {
         $return = '';
