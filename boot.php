@@ -67,7 +67,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
             }
 
             if (count($warning) > 0) {
-                throw new rex_api_exception(rex_i18n::msg('yrewrite_rex_article_cannot_delete') .'<ul><li>'. implode('</li><li>', $warning) .'</li></ul>');
+                throw new rex_api_exception(rex_i18n::msg('yrewrite_error_article_in_use') .'<ul><li>'. implode('</li><li>', $warning) .'</li></ul>');
             }
         });
 
