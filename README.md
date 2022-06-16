@@ -102,6 +102,8 @@ Diese Vorgehensweise für alle gewünschten Domains wiederholen.
 
 > **Hinweis:** Domains mit Umlauten bitte derzeit decodiert eintragen. Umwandlung bspw. mit https://www.punycoder.com
 
+> **Hinweis:** Informationen zu Best Practice zu Domains und mehrsprachigen Websites auch unter [Multiregionale und mehrsprachige Websites verwalten](https://developers.google.com/search/docs/advanced/crawling/managing-multi-regional-sites?hl=de) aus der Google Search Central Dokumentation.
+
 ## Alias-Domain hinzufügen
 
 Alias-Domains werden nur dann benötigt, wenn mehrere Domains auf den selben Ordner im Server zeigen, aber keine separaten Websites aufrufen. z.B. `www.meinedomain.de` und `www.meine-domain.de`.
