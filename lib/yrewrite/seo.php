@@ -32,6 +32,10 @@ class rex_yrewrite_seo
     /**
      * @var string
      */
+    public static $meta_image_field = 'yrewrite_image';
+    /**
+     * @var string
+     */
     public static $meta_changefreq_field = 'yrewrite_changefreq';
     /**
      * @var string
@@ -156,6 +160,11 @@ class rex_yrewrite_seo
     public function getDescription()
     {
         return $this->cleanString($this->article->getValue(self::$meta_description_field));
+    }
+
+    public function getImage()
+    {
+        return $this->cleanString($this->article->getValue(self::$meta_image_field));
     }
 
     public function getCanonicalUrl()
@@ -290,13 +299,21 @@ class rex_yrewrite_seo
                             }
                         }
 
-                        $sitemap[] =
+                        $sitemap_entry =
                           "\n".'<url>'.
-                          "\n".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
-                          "\n".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'. // serverzeitzone passt
-                          "\n".'<changefreq>'.$changefreq.'</changefreq>'.
-                          "\n".'<priority>'.$priority.'</priority>'.
+                          "\n\t".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
+                          "\n\t".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'; // Serverzeitzone passt
+                        if ($article->getValue(self::$meta_image_field)) {
+                            $media = rex_media::get((string) $article->getValue(self::$meta_image_field));
+                            $sitemap_entry .= "\n\t".'<image:image>'.
+                                "\n\t\t".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), '/').rex_media_manager::getUrl('rex_media_medium', $media->getFileName()).'</image:loc>'.
+                                ($media->getTitle() ? "\n\t\t".'<image:title>'.rex_escape($media->getTitle()).'</image:title>' : '').
+                                "\n\t".'</image:image>';
+                        }
+                        $sitemap_entry .= "\n\t".'<changefreq>'.$changefreq.'</changefreq>'.
+                          "\n\t".'<priority>'.$priority.'</priority>'.
                           "\n".'</url>';
+                        $sitemap[] = $sitemap_entry;
                     }
                 }
             }
