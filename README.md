@@ -267,6 +267,12 @@ echo $seo->getDescriptionTag();
 echo $seo->getRobotsTag();
 echo $seo->getHreflangTags();
 echo $seo->getCanonicalUrlTag();
+
+echo '<meta property="og:title" content="'. $seo->getTitle() .'" />';
+echo '<meta property="og:image" content="/media/'. $seo->getImage() .' />';
+echo '<meta property="og:description" content="'. $seo->getDescription().'" />';
+echo '<meta property="og:url" content="'. $seo->getCanonicalUrl().'" />';
+
 ```
 
 ## Navigation Factory in Abhängigkeit der gewählten Domain
