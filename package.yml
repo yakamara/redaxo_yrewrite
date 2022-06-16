@@ -20,7 +20,7 @@ requires:
         version: '>=7.3'
     redaxo: '^5.7'
     packages:
-        media_manager: '>=2.12'
-        mediapool: '>=2.11'
+        media_manager: '^2.12'
+        mediapool: '^2.11'
         structure: '^2.7.0'
         yform: '>=3.2,<5.0.0-dev'
