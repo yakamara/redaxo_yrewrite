@@ -83,6 +83,18 @@ class rex_yrewrite_seo
             $tagsOg['og:description'] = '<meta property="og:description" content="'.$description.'" />';
             $tagsTwitter['twitter:description'] = '<meta name="twitter:description" content="'.$description.'" />';
         }
+        
+        $image = $this->getImage();
+        if ('' != $image) {
+            $media = rex_media::get($image);
+            $tagsOg['og:image'] = '<meta property="og:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('rex_media_medium', $image).'" />';
+            if($media) {
+            	if($media->getTitle()) {
+	            	$tagsOg['og:image:alt'] = '<meta property="og:image:alt" content="'.rex_escape($media->getTitle()).'" />';
+	            }
+	            $tagsOg['og:image:type'] = '<meta property="og:image:type" content="'.rex_escape($media->getType()).'" />';
+	        }
+        }
 
         $content = 'noindex, nofollow';
         if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
