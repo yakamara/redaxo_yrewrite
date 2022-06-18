@@ -14,9 +14,9 @@ Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben.
 
 * Mehrere Domains in einer Webseite verwaltbar
 * Sprachabhängigkeiten von Domains zuweisbar
-* SEO Features: Domain- und sprachabhängige robots und sitemap Dateien
+* Domain- und sprachabhängige ROBOTS.txt-Anweisungen und XML-Sitemaps
 * Individuelle URL pro Artikel möglich
-* Seitentitel Schema definierbar / pro Domain/Sprache
+* Seitentitel-Schema definierbar / pro Domain/Sprache
 * Alias Domains die auf die Hauptdomain verweisen
 * Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln, sogar Protokoll-Tausch in bspw. `tel:`, `mailto:` u.a.
 * Canonical Urls
@@ -258,7 +258,7 @@ rex_yrewrite::getDomainByArticleId(REX_ARTICLE_ID)->getName();
 
 Beispiel-Rückgabewert: `meine-domain.de`
 
-## Meta-Tags auslesen (`description`, `title`, usw.)
+## Meta-Tags auslesen (`description`, `title`, `image` usw.)
 
 Diesen Codeabschnitt in den `<head>`-Bereich des Templates kopieren:
 
