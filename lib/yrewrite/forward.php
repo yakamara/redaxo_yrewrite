@@ -48,7 +48,8 @@ class rex_yrewrite_forward
                 continue;
             }
 
-            if ($p['url'] !== $url && $p['url'] . '/' !== $url) {
+            $pUrl = urldecode($p['url']);
+            if ($pUrl !== $url && $pUrl . '/' !== $url) {
                 continue;
             }
 
