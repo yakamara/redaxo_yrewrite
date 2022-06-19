@@ -87,7 +87,7 @@ class rex_yrewrite_seo
         $image = $this->getImage();
         if ('' != $image) {
             $media = rex_media::get($image);
-            $tagsOg['og:image'] = '<meta property="og:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('rex_media_medium', $image).'" />';
+            $tagsOg['og:image'] = '<meta property="og:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'" />';
             if($media) {
             	if($media->getTitle()) {
 	            	$tagsOg['og:image:alt'] = '<meta property="og:image:alt" content="'.rex_escape($media->getTitle()).'" />';
