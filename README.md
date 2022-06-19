@@ -3,7 +3,7 @@
 ## Übersicht
 
 Das AddOn YRewrite für REDAXO erweitert das CMS um "sprechende" URLs und unterstützt den Betrieb mehrerer Domains.
-REDAXO ohne Rewriter-AddOn erstellt Urls nach dem Schema `index.php?article_id=13&clang=1`zur Vefügung. YRewrite stellt weitere Schemen zur Vefügung und sorgt für lesbare Urls wie z.B. `/de/news/archiv.html`.
+REDAXO ohne Rewriter-AddOn erstellt Urls nach dem Schema `index.php?article_id=13&clang=1`zur Vefügung. YRewrite  bietet lesbare URLs wie z.B. `/de/news/archiv/` in verschiedenen Schemata.
 
 Mehrere Domains können dann sinnvoll sein, wenn
 
