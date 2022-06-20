@@ -269,7 +269,7 @@ echo $seo->getTags();
 
 Dies erzeugt folgende Ausgabe:
 
-```
+```html
 <meta name="description" content="Der Text aus dem Beschreibungs-Feld">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://example.org/de/" />
