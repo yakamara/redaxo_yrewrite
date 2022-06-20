@@ -273,12 +273,12 @@ Dies erzeugt folgende Ausgabe:
 <meta name="description" content="Der Text aus dem Beschreibungs-Feld">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://example.org/de/" />
-<link rel="alternate" hreflang="de" href="https://beispiel.de/de/" />
+<link rel="alternate" hreflang="de" href="https://exampleorg/de/" />
 <link rel="alternate" hreflang="en" href="https://example.org/en/" />
 <meta property="og:title" content="Artikelname / Websitetitel" />
 <meta property="og:description" content="Der Text aus dem Beschreibungs-Feld" />
 <meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
-<meta property="og:image:alt" content="Testbild" />
+<meta property="og:image:alt" content="Der Bildtitel aus dem Medienpool" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:url" href="https://example.org/de/" />
 <meta name="twitter:card" content="summary" />
