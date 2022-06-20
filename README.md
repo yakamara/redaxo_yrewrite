@@ -283,7 +283,7 @@ Dies erzeugt folgende Ausgabe:
 <meta property="og:url" href="https://example.org/de/" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Artikelname / Websitetitel" />
-<meta name="twitter:description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!" />
+<meta name="twitter:description" content="Der Text aus dem Beschreibungs-Feld" />
 <meta name="twitter:url" content="https://example.org/de/" />
 ```
 
