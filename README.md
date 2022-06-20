@@ -264,11 +264,7 @@ Diesen Codeabschnitt in den `<head>`-Bereich des Templates kopieren:
 
 ```
 $seo = new rex_yrewrite_seo();
-echo $seo->getTitleTag();
-echo $seo->getDescriptionTag();
-echo $seo->getRobotsTag();
-echo $seo->getHreflangTags();
-echo $seo->getCanonicalUrlTag();
+echo $seo->getTags();
 ```
 
 ## Navigation Factory in Abhängigkeit der gewählten Domain
