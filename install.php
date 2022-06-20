@@ -78,7 +78,7 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_domain') . '` CONVERT TO 
 $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_alias') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
-rex_package::getg("yrewrite")->clearCache(); 
+rex_package::get("yrewrite")->clearCache(); 
 
 if (!class_exists('rex_yrewrite_settings')) {
     require_once 'lib/yrewrite/settings.php';
