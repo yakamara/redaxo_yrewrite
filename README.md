@@ -284,7 +284,7 @@ Dies erzeugt folgende Ausgabe:
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Artikelname / Websitetitel" />
 <meta name="twitter:description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!" />
-<meta name="twitter:url" content="https://beispiel.de/de/" />
+<meta name="twitter:url" content="https://example.org/de/" />
 ```
 
 ## Navigation Factory in Abhängigkeit der gewählten Domain
