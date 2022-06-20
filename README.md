@@ -275,7 +275,7 @@ Dies erzeugt folgende Ausgabe:
 <link rel="canonical" href="https://beispiel.de/de/" />
 <link rel="alternate" hreflang="de" href="https://beispiel.de/de/" />
 <link rel="alternate" hreflang="en" href="https://example.org/en/" />
-<meta property="og:title" content="Modultests / REDAXO Spielwiese" />
+<meta property="og:title" content="Artikelname / Websitetitel" />
 <meta property="og:description" content="Der Text aus dem Beschreibungs-Feld" />
 <meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
 <meta property="og:image:alt" content="Testbild" />
