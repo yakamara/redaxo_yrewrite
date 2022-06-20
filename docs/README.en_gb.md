@@ -257,8 +257,29 @@ Example return value: 'meine-domain.de'
 
 copy this code section into the '<head>' section of the template:
 
+```php
+$seo = new rex_yrewrite_seo();
+echo $seo->getTags();
 ```
-$seo = new rex_yrewrite_seo(); echo $seo->getTitleTag(); echo $seo->getDescriptionTag(); echo $seo->getRobotsTag(); echo $seo->getHreflangTags(); echo $seo->getCanonicalUrlTag();
+
+Output is:
+
+```html
+<meta name="description" content="Text entered in description field">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://example.org/de/" />
+<link rel="alternate" hreflang="de" href="https://example.org/de/" />
+<link rel="alternate" hreflang="en" href="https://example.org/en/" />
+<meta property="og:title" content="Articlename / Websitetitle" />
+<meta property="og:description" content="Text entered in description field" />
+<meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
+<meta property="og:image:alt" content="Picture title from mediapool" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:url" href="https://example.org/de/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Articlename / Websitetitle" />
+<meta name="twitter:description" content="Text entered in description field" />
+<meta name="twitter:url" content="https://example.org/de/" />
 ```
 
 ## Navigation Factory depending on the selected domain
