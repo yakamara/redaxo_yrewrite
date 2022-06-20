@@ -274,7 +274,7 @@ Dies erzeugt folgende Ausgabe:
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://beispiel.de/de/" />
 <link rel="alternate" hreflang="de" href="https://beispiel.de/de/" />
-<link rel="alternate" hreflang="en" href="https://beispiel.de/en/" />
+<link rel="alternate" hreflang="en" href="https://example.org/en/" />
 <meta property="og:title" content="Modultests / REDAXO Spielwiese" />
 <meta property="og:description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!" />
 <meta property="og:image" content="https://beispiel.de/media/yrewrite_seo_image/pic.jpg" />
