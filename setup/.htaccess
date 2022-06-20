@@ -121,5 +121,6 @@ AddDefaultCharset utf-8
     RewriteCond %{REQUEST_URI} !^/?redaxo/.*$
 
     RewriteRule ^(.*)$ %{ENV:BASE}/index.php?%{QUERY_STRING} [L]
+    RewriteRule ^index.php(.*)$ /$1 [R=301,NC,L]
 
 </IfModule>
