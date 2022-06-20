@@ -282,7 +282,7 @@ Dies erzeugt folgende Ausgabe:
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:url" href="https://example.org/de/" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Modultests / REDAXO Spielwiese" />
+<meta name="twitter:title" content="Artikelname / Websitetitel" />
 <meta name="twitter:description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!" />
 <meta name="twitter:url" content="https://beispiel.de/de/" />
 ```
