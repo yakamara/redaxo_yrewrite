@@ -262,7 +262,7 @@ Beispiel-Rückgabewert: `meine-domain.de`
 
 Diesen Codeabschnitt in den `<head>`-Bereich des Templates kopieren:
 
-```
+```php
 $seo = new rex_yrewrite_seo();
 echo $seo->getTags();
 ```
