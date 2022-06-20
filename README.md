@@ -280,7 +280,7 @@ Dies erzeugt folgende Ausgabe:
 <meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
 <meta property="og:image:alt" content="Testbild" />
 <meta property="og:image:type" content="image/jpeg" />
-<meta property="og:url" href="https://beispiel.de/de/" />
+<meta property="og:url" href="https://example.org/de/" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Modultests / REDAXO Spielwiese" />
 <meta name="twitter:description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!" />
