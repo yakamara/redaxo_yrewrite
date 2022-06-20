@@ -2,7 +2,10 @@
 
 ## Übersicht
 
-Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben. Mehrere Domains können dann sinnvoll sein, wenn
+Das AddOn YRewrite für REDAXO erweitert das CMS um "sprechende" URLs und unterstützt den Betrieb mehrerer Domains.
+REDAXO ohne Rewriter-AddOn erstellt Urls nach dem Schema `index.php?article_id=13&clang=1`zur Vefügung. YRewrite  bietet lesbare URLs wie z.B. `/de/news/archiv/` in verschiedenen Schemata.
+
+Mehrere Domains können dann sinnvoll sein, wenn
 
 * mehrere Websites eines Kunden in einer Installation verwaltet werden,
 * verschiedene Sprachen (`clang`) einer Website unter unterschiedlichen Domains oder Subdomains erreichbar sind,
