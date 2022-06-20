@@ -270,7 +270,7 @@ echo $seo->getTags();
 Dies erzeugt folgende Ausgabe:
 
 ```
-<meta name="description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!">
+<meta name="description" content="Der Text aus dem Beschreibungs-Feld">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://beispiel.de/de/" />
 <link rel="alternate" hreflang="de" href="https://beispiel.de/de/" />
