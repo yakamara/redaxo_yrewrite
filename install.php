@@ -81,16 +81,8 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO
 // Add media manager type
 $c->setQuery("SELECT * FROM ". rex::getTable('media_manager_type') ." WHERE name = 'yrewrite_seo_image'");
 if($c->getRows() == 0) {
-	$data = ['status' => 0, 'name' => 'yrewrite_seo_image', 'description' => 'YRewrite SEO Vorschaubild für Sitemap und Open Graph Tags'];
-	$sql = rex_sql::factory();
-	$sql->setTable(rex::getTable('media_manager_type'));
-    $sql->addRecord(static function (rex_sql $record) use ($data) {
-        $record
-            ->setValues($data)
-            ->addGlobalCreateFields()
-            ->addGlobalUpdateFields();
-    });
-	$sql->insertOrUpdate();
+	$c->setQuery("INSERT INTO ". rex::getTable('media_manager_type') ." (`status`, `name`, `description`) VALUES
+		(0, 'yrewrite_seo_image', 'YRewrite SEO Vorschaubild für Sitemap und Open Graph Tags');");
 }
 
 rex_delete_cache();
