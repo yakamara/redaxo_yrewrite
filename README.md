@@ -267,6 +267,26 @@ $seo = new rex_yrewrite_seo();
 echo $seo->getTags();
 ```
 
+Dies erzeugt folgende Ausgabe:
+
+```
+<meta name="description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://beispiel.de/de/" />
+<link rel="alternate" hreflang="de" href="https://beispiel.de/de/" />
+<link rel="alternate" hreflang="en" href="https://beispiel.de/en/" />
+<meta property="og:title" content="Modultests / REDAXO Spielwiese" />
+<meta property="og:description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!" />
+<meta property="og:image" content="https://beispiel.de/media/yrewrite_seo_image/pic.jpg" />
+<meta property="og:image:alt" content="Testbild" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:url" href="https://beispiel.de/de/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Modultests / REDAXO Spielwiese" />
+<meta name="twitter:description" content="Redaxo Spielwiese zum Testen - Achtung toxisch!" />
+<meta name="twitter:url" content="https://beispiel.de/de/" />
+```
+
 ## Navigation Factory in Abhängigkeit der gewählten Domain
 
 Weitere Informaionen zur Navigation Factory des REDAXO-Cores in der API-Dokumentation unter https://REDAXO.org/api/master/ und bei den Tricks von FriendsOfREDAXO: https://github.com/friendsofREDAXO/tricks/
