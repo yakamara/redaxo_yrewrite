@@ -36,8 +36,8 @@ if (rex_string::versionCompare($this->getVersion(), '2.1', '<=')) {
         ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
         ->alter();
 
-    rex_delete_cache();
-}
+        rex_package::get("yrewrite")->clearCache(); 
+    }
 
 if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
     $where = 'clangs NOT LIKE "%,%"';
