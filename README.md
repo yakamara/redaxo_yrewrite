@@ -277,7 +277,7 @@ Dies erzeugt folgende Ausgabe:
 <link rel="alternate" hreflang="en" href="https://example.org/en/" />
 <meta property="og:title" content="Modultests / REDAXO Spielwiese" />
 <meta property="og:description" content="Der Text aus dem Beschreibungs-Feld" />
-<meta property="og:image" content="https://beispiel.de/media/yrewrite_seo_image/pic.jpg" />
+<meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
 <meta property="og:image:alt" content="Testbild" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:url" href="https://beispiel.de/de/" />
