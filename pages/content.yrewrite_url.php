@@ -65,6 +65,7 @@ if ($isStartarticle) {
     $yform->setValueField('text', ['yrewrite_url', $addon->i18n('url_type_custom'), 'notice' => '&nbsp;', 'required' => 'required']);
 
     $yform->setValueField('be_link', ['yrewrite_redirection_internal', $addon->i18n('url_type_redirection_internal')]);
+    $yform->setValidateField('compare_value', ['yrewrite_redirection_internal', $article_id, '==', rex_i18n::msg('yrewrite_warning_redirect_to_self')]);
 
     $yform->setValueField('text', ['yrewrite_redirection_external', $addon->i18n('url_type_redirection_external'), 'attributes' => [
         'type' => 'url',
@@ -86,7 +87,7 @@ if ($isStartarticle) {
     }]);
 
     $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => static function ($func, $yrewrite_url) {
-        return strlen($yrewrite_url) > 250;
+        return $yrewrite_url && strlen($yrewrite_url) > 250;
     }, 'params' => [], 'message' => rex_i18n::msg('yrewrite_warning_nottolong')]);
 
     $yform->setValidateField('customfunction', ['name' => 'yrewrite_url', 'function' => static function ($func, $yrewrite_url) {
