@@ -103,7 +103,9 @@ class rex_yrewrite_seo
         $tags['robots'] = '<meta name="robots" content="'.$content.'">';
 
         $canonicalUrl = rex_escape($this->getCanonicalUrl());
-        $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
+        if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
+            $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
+        }
         $tagsOg['og:url'] = '<meta property="og:url" href="'.$canonicalUrl.'" />';
         $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'" />';
 

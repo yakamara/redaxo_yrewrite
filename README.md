@@ -2,7 +2,10 @@
 
 ## Übersicht
 
-Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben. Mehrere Domains können dann sinnvoll sein, wenn
+Das AddOn YRewrite für REDAXO erweitert das CMS um "sprechende" URLs und unterstützt den Betrieb mehrerer Domains.
+REDAXO ohne Rewriter-AddOn erstellt Urls nach dem Schema `index.php?article_id=13&clang=1`zur Vefügung. YRewrite  bietet lesbare URLs wie z.B. `/de/news/archiv/` in verschiedenen Schemata.
+
+Mehrere Domains können dann sinnvoll sein, wenn
 
 * mehrere Websites eines Kunden in einer Installation verwaltet werden,
 * verschiedene Sprachen (`clang`) einer Website unter unterschiedlichen Domains oder Subdomains erreichbar sind,
@@ -14,9 +17,9 @@ Dieses Addon bietet eine Möglichkeit, REDAXO mit mehreren Domains zu betreiben.
 
 * Mehrere Domains in einer Webseite verwaltbar
 * Sprachabhängigkeiten von Domains zuweisbar
-* SEO Features: Domain- und sprachabhängige robots und sitemap Dateien
+* Domain- und sprachabhängige ROBOTS.txt-Anweisungen und XML-Sitemaps
 * Individuelle URL pro Artikel möglich
-* Seitentitel Schema definierbar / pro Domain/Sprache
+* Seitentitel-Schema definierbar / pro Domain/Sprache
 * Alias Domains die auf die Hauptdomain verweisen
 * Allgemeine Weiterleitungen. URLs zu internen Artikeln, Dateien, externen Artikeln, sogar Protokoll-Tausch in bspw. `tel:`, `mailto:` u.a.
 * Canonical Urls
@@ -101,6 +104,8 @@ Diese Vorgehensweise für alle gewünschten Domains wiederholen.
 > **Tipp:** Die Domain auch in der Google Search Console hinterlegen und die `sitemap.xml` dort hinzufügen, um das Crawling zu beschleunigen. Die Domain sollte in allen vier Variationen hinterlegt werden, also mit/ohne `https` und mit/ohne `www.`. Die `sitemap.xml` jedoch nur in der Hauptdomain, am besten mit `https://` und `www.`
 
 > **Hinweis:** Domains mit Umlauten bitte derzeit decodiert eintragen. Umwandlung bspw. mit https://www.punycoder.com
+
+> **Hinweis:** Informationen zu Best Practice zu Domains und mehrsprachigen Websites auch unter [Multiregionale und mehrsprachige Websites verwalten](https://developers.google.com/search/docs/advanced/crawling/managing-multi-regional-sites?hl=de) aus der Google Search Central Dokumentation.
 
 ## Alias-Domain hinzufügen
 
@@ -256,7 +261,7 @@ rex_yrewrite::getDomainByArticleId(REX_ARTICLE_ID)->getName();
 
 Beispiel-Rückgabewert: `meine-domain.de`
 
-## Meta-Tags auslesen (`description`, `title`, usw.)
+## Meta-Tags auslesen (`description`, `title`, `image` usw.)
 
 Diesen Codeabschnitt in den `<head>`-Bereich des Templates kopieren:
 
