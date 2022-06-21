@@ -79,9 +79,9 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_alias') . '` CONVERT TO C
 $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
 // Add media manager type
-$c->setQuery("SELECT * FROM ". rex::getTable('media_manager_type') ." WHERE name = 'yrewrite_seo_image'");
-if($c->getRows() == 0) {
-	$c->setQuery("INSERT INTO ". rex::getTable('media_manager_type') ." (`status`, `name`, `description`) VALUES
+$c->setQuery('SELECT * FROM '. rex::getTable('media_manager_type') ." WHERE name = 'yrewrite_seo_image'");
+if (0 == $c->getRows()) {
+    $c->setQuery('INSERT INTO '. rex::getTable('media_manager_type') ." (`status`, `name`, `description`) VALUES
 		(0, 'yrewrite_seo_image', 'YRewrite SEO Vorschaubild für Sitemap und Open Graph Tags');");
 }
 
