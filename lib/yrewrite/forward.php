@@ -49,6 +49,7 @@ class rex_yrewrite_forward
             }
 
             $pUrl = urldecode($p['url']);
+            /** @psalm-suppress RedundantCondition https://github.com/vimeo/psalm/issues/8125 */
             if ($pUrl !== $url && $pUrl . '/' !== $url) {
                 continue;
             }
