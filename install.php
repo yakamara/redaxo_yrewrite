@@ -82,7 +82,7 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yrewrite_forward') . '` CONVERT TO
 $c->setQuery('SELECT * FROM '. rex::getTable('media_manager_type') ." WHERE name = 'yrewrite_seo_image'");
 if (0 == $c->getRows()) {
     $c->setQuery('INSERT INTO '. rex::getTable('media_manager_type') ." (`status`, `name`, `description`) VALUES
-		(0, 'yrewrite_seo_image', 'YRewrite SEO Vorschaubild für Sitemap und Open Graph Tags');");
+        (0, 'yrewrite_seo_image', 'YRewrite SEO Vorschaubild für Sitemap und Open Graph Tags');");
 }
 
 rex_delete_cache();
