@@ -265,13 +265,31 @@ Beispiel-Rückgabewert: `meine-domain.de`
 
 Diesen Codeabschnitt in den `<head>`-Bereich des Templates kopieren:
 
-```
+```php
 $seo = new rex_yrewrite_seo();
-echo $seo->getTitleTag();
-echo $seo->getDescriptionTag();
-echo $seo->getRobotsTag();
-echo $seo->getHreflangTags();
-echo $seo->getCanonicalUrlTag();
+echo $seo->getTags();
+```
+
+Dies erzeugt folgende Ausgabe:
+
+```html
+<meta name="description" content="Der Text aus dem Beschreibungs-Feld">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://example.org/de/" />
+<link rel="alternate" hreflang="de" href="https://example.org/de/" />
+<link rel="alternate" hreflang="en" href="https://example.org/en/" />
+<meta property="og:title" content="Artikelname / Websitetitel" />
+<meta property="og:description" content="Der Text aus dem Beschreibungs-Feld" />
+<meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
+<meta property="og:image:alt" content="Der Bildtitel aus dem Medienpool" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:url" href="https://example.org/de/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Artikelname / Websitetitel" />
+<meta name="twitter:description" content="Der Text aus dem Beschreibungs-Feld" />
+<meta name="twitter:url" content="https://example.org/de/" />
+<meta name="twitter:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />';
+<meta name="twitter:image:alt" content="Der Bildtitel aus dem Medienpool" />
 ```
 
 ## Navigation Factory in Abhängigkeit der gewählten Domain
