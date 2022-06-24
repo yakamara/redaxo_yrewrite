@@ -280,6 +280,8 @@ Output is:
 <meta name="twitter:title" content="Articlename / Websitetitle" />
 <meta name="twitter:description" content="Text entered in description field" />
 <meta name="twitter:url" content="https://example.org/de/" />
+<meta name="twitter:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />';
+<meta name="twitter:image:alt" content="Picture title from mediapool" />
 ```
 
 ## Navigation Factory depending on the selected domain
