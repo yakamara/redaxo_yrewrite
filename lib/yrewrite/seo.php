@@ -84,6 +84,22 @@ class rex_yrewrite_seo
             $tagsTwitter['twitter:description'] = '<meta name="twitter:description" content="'.$description.'" />';
         }
 
+        $image = $this->getImage();
+        if ('' != $image) {
+            $media = rex_media::get($image);
+            $tagsOg['og:image'] = '<meta property="og:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'" />';
+            if ($media) {
+                if ($media->getTitle()) {
+                    $tagsOg['og:image:alt'] = '<meta property="og:image:alt" content="'.rex_escape($media->getTitle()).'" />';
+                }
+                $tagsOg['og:image:type'] = '<meta property="og:image:type" content="'.rex_escape($media->getType()).'" />';
+            }
+            $tagsOg['twitter:image'] = '<meta property="twitter:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'" />';
+            if ($media && $media->getTitle()) {
+                $tagsOg['twitter:image:alt'] = '<meta property="twitter:image:alt" content="'.rex_escape($media->getTitle()).'" />';
+            }
+        }
+
         $content = 'noindex, nofollow';
         if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
             $content = 'index, follow';
@@ -308,7 +324,7 @@ class rex_yrewrite_seo
                         if ($article->getValue(self::$meta_image_field)) {
                             $media = rex_media::get((string) $article->getValue(self::$meta_image_field));
                             $sitemap_entry .= "\n\t".'<image:image>'.
-                                "\n\t\t".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), '/').rex_media_manager::getUrl('rex_media_medium', $media->getFileName()).'</image:loc>'.
+                                "\n\t\t".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $media->getFileName()).'</image:loc>'.
                                 ($media->getTitle() ? "\n\t\t".'<image:title>'.rex_escape($media->getTitle()).'</image:title>' : '').
                                 "\n\t".'</image:image>';
                         }
