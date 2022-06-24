@@ -288,6 +288,8 @@ Dies erzeugt folgende Ausgabe:
 <meta name="twitter:title" content="Artikelname / Websitetitel" />
 <meta name="twitter:description" content="Der Text aus dem Beschreibungs-Feld" />
 <meta name="twitter:url" content="https://example.org/de/" />
+<meta name="twitter:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />';
+<meta name="twitter:image:alt" content="Der Bildtitel aus dem Medienpool" />
 ```
 
 ## Navigation Factory in Abhängigkeit der gewählten Domain
