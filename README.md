@@ -301,8 +301,8 @@ rex_extension::register('YREWRITE_SEO_TAGS', function(rex_extension_point $ep) {
     // title-Tag ändern
     $title = rex_escape('Ein geänderter Titel');
     $tags['title'] = '<title>'.$title.'</title>';
-    $tagsOg['og:title'] = '<meta property="og:title" content="'.$title.'" />';
-    $tagsTwitter['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
+    $tags['og:title'] = '<meta property="og:title" content="'.$title.'" />';
+    $tags['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
     
     // favicon-Tags hinzufügen
     $tags['favicon'] = '
