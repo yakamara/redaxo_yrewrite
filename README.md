@@ -295,7 +295,7 @@ Dies erzeugt folgende Ausgabe:
 ## Meta-Tags erweitern / ändern
 
 ```php
-\rex_extension::register('YREWRITE_SEO_TAGS', function(\rex_extension_point $ep) {
+rex_extension::register('YREWRITE_SEO_TAGS', function(rex_extension_point $ep) {
     $tags = $ep->getSubject();
     
     // title-Tag ändern
