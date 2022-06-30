@@ -292,6 +292,34 @@ Dies erzeugt folgende Ausgabe:
 <meta name="twitter:image:alt" content="Der Bildtitel aus dem Medienpool" />
 ```
 
+## Meta-Tags erweitern / ändern
+
+```php
+rex_extension::register('YREWRITE_SEO_TAGS', function(rex_extension_point $ep) {
+    $tags = $ep->getSubject();
+    
+    // title-Tag ändern
+    $title = rex_escape('Ein geänderter Titel');
+    $tags['title'] = '<title>'.$title.'</title>';
+    $tags['og:title'] = '<meta property="og:title" content="'.$title.'" />';
+    $tags['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
+    
+    // favicon-Tags hinzufügen
+    $tags['favicon'] = '
+            <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
+            <link rel="manifest" href="/assets/favicon/site.webmanifest" />
+            <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+            <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
+            <meta name="msapplication-TileColor" content="#ffffff" />
+            <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml" />
+            <meta name="theme-color" content="#ffffff" />';
+    $ep->setSubject($tags);
+});
+
+```
+
 ## Navigation Factory in Abhängigkeit der gewählten Domain
 
 Weitere Informaionen zur Navigation Factory des REDAXO-Cores in der API-Dokumentation unter https://REDAXO.org/api/master/ und bei den Tricks von FriendsOfREDAXO: https://github.com/friendsofREDAXO/tricks/
