@@ -94,9 +94,9 @@ class rex_yrewrite_seo
                 }
                 $tagsOg['og:image:type'] = '<meta property="og:image:type" content="'.rex_escape($media->getType()).'" />';
             }
-            $tagsOg['twitter:image'] = '<meta property="twitter:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'" />';
+            $tagsOg['twitter:image'] = '<meta name="twitter:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'" />';
             if ($media && $media->getTitle()) {
-                $tagsOg['twitter:image:alt'] = '<meta property="twitter:image:alt" content="'.rex_escape($media->getTitle()).'" />';
+                $tagsOg['twitter:image:alt'] = '<meta name="twitter:image:alt" content="'.rex_escape($media->getTitle()).'" />';
             }
         }
 
