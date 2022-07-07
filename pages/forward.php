@@ -195,6 +195,42 @@ if ($showlist) {
     }
     );
 
+    $list->addColumn('forward_target', '');
+    $list->setColumnLabel('forward_target', $this->i18n('forward_type'));
+    $list->setColumnFormat('forward_target', 'custom', static function (array $params) {
+        $list = $params['list'];
+
+        switch ($list->getValue('type')) {
+            case 'article':
+                $article = rex_article::get($list->getValue('article_id'), $list->getValue('clang'));
+                if (!$article) {
+                    return rex_i18n::msg('yrewrite_forward_article_deleted');
+                }
+                if (!$article->isOnline()) {
+                    return rex_i18n::msg('yrewrite_forward_article_offline');
+                }
+
+                return $article->getUrl();
+                break;
+
+            case 'extern':
+                return $list->getValue('extern');
+                break;
+
+            case 'media':
+                $media = rex_media::get($list->getValue('media'));
+                if (!$media) {
+                    return rex_i18n::msg('yrewrite_forward_media_deleted');
+                }
+
+                return $media->getUrl();
+                break;
+
+            default:
+                return $params['value'];
+        }
+    });
+
     $list->addColumn(rex_i18n::msg('function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));
     $list->setColumnLayout(rex_i18n::msg('function'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams(rex_i18n::msg('function'), ['data_id' => '###id###', 'func' => 'edit', 'start' => rex_request('start', 'string')]);
