@@ -169,7 +169,7 @@ if ($showlist) {
     $list->setColumnLabel('status', $this->i18n('forward_status'));
     // $list->setColumnLabel('url', $this->i18n('forward_url'));
     $list->removeColumn('url');
-    $list->setColumnLabel('type', $this->i18n('forward_type'));
+    $list->removeColumn('type');
 
     $list->setColumnLabel('movetype', $this->i18n('yrewrite_forward_movetype'));
 
