@@ -196,7 +196,6 @@ if ($showlist) {
     );
 
     $list->addColumn('forward_target', '', 3);
-    $list->setColumnSortable('forward_target');
     $list->setColumnLabel('forward_target', $this->i18n('forward_type'));
     $list->setColumnFormat('forward_target', 'custom', static function (array $params) {
         $list = $params['list'];
