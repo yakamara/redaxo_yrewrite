@@ -36,7 +36,7 @@ if (rex_string::versionCompare($this->getVersion(), '2.1', '<=')) {
         ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
         ->alter();
 
-    rex_package::get('yrewrite')->clearCache();
+    rex_package::require('yrewrite')->clearCache();
 }
 
 if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {

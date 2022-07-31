@@ -88,7 +88,7 @@ if (0 == $c->getRows()) {
         ('.$last_id .', \'resize\', \'{\"rex_effect_resize\":{\"rex_effect_resize_width\":\"4096\",\"rex_effect_resize_height\":\"4096\",\"rex_effect_resize_style\":\"maximum\",\"rex_effect_resize_allow_enlarge\":\"not_enlarge\"}}\', 1, CURRENT_TIMESTAMP);');
 }
 
-rex_package::get('yrewrite')->clearCache();
+rex_package::require('yrewrite')->clearCache();
 
 if (!class_exists('rex_yrewrite_settings')) {
     require_once 'lib/yrewrite/settings.php';
