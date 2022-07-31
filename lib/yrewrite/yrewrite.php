@@ -559,7 +559,7 @@ class rex_yrewrite
 
     public static function deleteCache()
     {
-        rex_delete_cache();
+        rex_package::require('yrewrite')->clearCache();
     }
 
     public static function getFullPath($link = '')

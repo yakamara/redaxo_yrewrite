@@ -28,4 +28,4 @@ $sql->setQuery(sprintf('DROP TABLE IF EXISTS `%s`;', rex::getTable('yrewrite_ali
 
 $sql->setQuery(sprintf('DROP TABLE IF EXISTS `%s`;', rex::getTable('yrewrite_forward')));
 
-rex_delete_cache();
+rex_package::require('yrewrite')->clearCache();
