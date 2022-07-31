@@ -176,6 +176,10 @@ yrewrite_forward_302 = 302 - Found / gefunden
 yrewrite_forward_303 = 303 - See Other / normale Weiterleitung
 yrewrite_forward_307 = 307 - Temporary Redirect / vorübergehende Weiterleitung
 
+yrewrite_forward_article_deleted = [Artikel gelöscht]
+yrewrite_forward_article_offline = [Artikel offline]
+yrewrite_forward_media_deleted = [Medium gelöscht]
+
 yrewrite_auto_redirect = Automatische 301-Weiterleitungen setzen, wenn ein Artikel umbenannt oder verschoben wird. (Sollte bei der Entwicklung ausgeschaltet sein und erst im Livebetrieb eingeschaltet werden.)
 yrewrite_auto_redirect_days = Anzahl Tage, bis automatische Weiterleitungen inaktiv werden.
 yrewrite_auto_redirect_days_info = <code>0</code> eintragen, um die automatische Deaktivierung auszuschalten.

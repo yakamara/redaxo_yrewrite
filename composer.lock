@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e84c965b5a30a64ce0bc9a66ce158b5",
+    "content-hash": "df9b0f1e4c6b45285007a14035640a18",
     "packages": [],
     "packages-dev": [
         {
@@ -503,16 +503,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.13.2",
+            "version": "1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "5b668aef16090008790395c02c893b1ba13f7e08"
+                "reference": "648b0343343565c4a056bfc8392201385e8d89f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5b668aef16090008790395c02c893b1ba13f7e08",
-                "reference": "5b668aef16090008790395c02c893b1ba13f7e08",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/648b0343343565c4a056bfc8392201385e8d89f0",
+                "reference": "648b0343343565c4a056bfc8392201385e8d89f0",
                 "shasum": ""
             },
             "require": {
@@ -524,9 +524,10 @@
             "require-dev": {
                 "doctrine/cache": "^1.11 || ^2.0",
                 "doctrine/coding-standard": "^6.0 || ^8.1",
-                "phpstan/phpstan": "^0.12.20",
+                "phpstan/phpstan": "^1.4.10 || ^1.8.0",
                 "phpunit/phpunit": "^7.5 || ^8.0 || ^9.1.5",
-                "symfony/cache": "^4.4 || ^5.2"
+                "symfony/cache": "^4.4 || ^5.2",
+                "vimeo/psalm": "^4.10"
             },
             "type": "library",
             "autoload": {
@@ -569,9 +570,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.13.2"
+                "source": "https://github.com/doctrine/annotations/tree/1.13.3"
             },
-            "time": "2021-08-05T19:00:23+00:00"
+            "time": "2022-07-02T10:48:51+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -1636,16 +1637,16 @@
         },
         {
             "name": "redaxo/source",
-            "version": "5.13.3",
+            "version": "5.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/redaxo/redaxo.git",
-                "reference": "f49f55381bb2950e1f6397f6d18f7ed591c0c613"
+                "reference": "141b07a640ba04c4112958301c4df1f20e4395ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/redaxo/redaxo/zipball/f49f55381bb2950e1f6397f6d18f7ed591c0c613",
-                "reference": "f49f55381bb2950e1f6397f6d18f7ed591c0c613",
+                "url": "https://api.github.com/repos/redaxo/redaxo/zipball/141b07a640ba04c4112958301c4df1f20e4395ea",
+                "reference": "141b07a640ba04c4112958301c4df1f20e4395ea",
                 "shasum": ""
             },
             "require": {
@@ -1660,27 +1661,27 @@
                 "erusev/parsedown-extra": "0.8.1",
                 "filp/whoops": "2.14.5",
                 "itsgoingd/clockwork": "v5.1.6",
-                "phpmailer/phpmailer": "v6.6.0",
+                "phpmailer/phpmailer": "v6.6.3",
                 "psr/container": "1.1.1",
                 "psr/http-message": "1.0.1",
                 "psr/log": "1.1.4",
                 "ramsey/collection": "1.2.2",
                 "ramsey/http-range": "1.0.0",
-                "scssphp/scssphp": "v1.10.2",
+                "scssphp/scssphp": "v1.10.3",
                 "splitbrain/php-archive": "1.3.1",
-                "symfony/console": "v5.4.8",
-                "symfony/deprecation-contracts": "v2.5.1",
-                "symfony/http-foundation": "v5.4.8",
+                "symfony/console": "v5.4.10",
+                "symfony/deprecation-contracts": "v2.5.2",
+                "symfony/http-foundation": "v5.4.10",
                 "symfony/polyfill-ctype": "*",
                 "symfony/polyfill-php70": "*",
                 "symfony/polyfill-php72": "*",
                 "symfony/polyfill-php73": "*",
-                "symfony/polyfill-php80": "v1.25.0",
-                "symfony/polyfill-php81": "v1.25.0",
-                "symfony/service-contracts": "v2.5.1",
-                "symfony/string": "v5.4.8",
-                "symfony/var-dumper": "v5.4.8",
-                "symfony/yaml": "v5.4.3",
+                "symfony/polyfill-php80": "v1.26.0",
+                "symfony/polyfill-php81": "v1.26.0",
+                "symfony/service-contracts": "v2.5.2",
+                "symfony/string": "v5.4.10",
+                "symfony/var-dumper": "v5.4.9",
+                "symfony/yaml": "v5.4.10",
                 "voku/anti-xss": "4.1.39",
                 "voku/portable-ascii": "2.0.1",
                 "voku/portable-utf8": "6.0.4"
@@ -1688,18 +1689,19 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "3.4.0",
                 "friendsofredaxo/linter": "1.3.0",
+                "jetbrains/phpstorm-attributes": "^1.0",
                 "phpstan/extension-installer": "1.1.0",
-                "phpstan/phpstan": "1.6.4",
+                "phpstan/phpstan": "1.8.2",
                 "phpstan/phpstan-deprecation-rules": "1.0.0",
                 "phpstan/phpstan-phpunit": "1.1.1",
-                "phpstan/phpstan-symfony": "1.1.8",
+                "phpstan/phpstan-symfony": "1.2.8",
                 "phpunit/phpunit": "^9.5",
-                "psalm/plugin-phpunit": "0.16.1",
-                "psalm/plugin-symfony": "3.1.4",
-                "rector/rector": "0.12.23",
+                "psalm/plugin-phpunit": "0.17.0",
+                "psalm/plugin-symfony": "3.1.8",
+                "rector/rector": "0.13.9",
                 "redaxo/php-cs-fixer-config": "1.0.0",
                 "redaxo/psalm-plugin": "1.0.0",
-                "vimeo/psalm": "4.23.0"
+                "vimeo/psalm": "4.24.0"
             },
             "bin": [
                 "redaxo/bin/console"
@@ -1747,7 +1749,7 @@
             "description": "REDAXO CMS source repository (for static analysis)",
             "support": {
                 "issues": "https://github.com/redaxo/redaxo/issues",
-                "source": "https://github.com/redaxo/redaxo/tree/5.13.3"
+                "source": "https://github.com/redaxo/redaxo/tree/5.14.0"
             },
             "funding": [
                 {
@@ -1755,7 +1757,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-03T09:49:44+00:00"
+            "time": "2022-07-25T10:36:57+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -1974,7 +1976,7 @@
         },
         {
             "name": "symfony/event-dispatcher-contracts",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher-contracts.git",
@@ -2033,7 +2035,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/v2.5.1"
+                "source": "https://github.com/symfony/event-dispatcher-contracts/tree/v2.5.2"
             },
             "funding": [
                 {
@@ -2053,16 +2055,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v5.4.9",
+            "version": "v5.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "36a017fa4cce1eff1b8e8129ff53513abcef05ba"
+                "reference": "6699fb0228d1bc35b12aed6dd5e7455457609ddd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/36a017fa4cce1eff1b8e8129ff53513abcef05ba",
-                "reference": "36a017fa4cce1eff1b8e8129ff53513abcef05ba",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/6699fb0228d1bc35b12aed6dd5e7455457609ddd",
+                "reference": "6699fb0228d1bc35b12aed6dd5e7455457609ddd",
                 "shasum": ""
             },
             "require": {
@@ -2097,7 +2099,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v5.4.9"
+                "source": "https://github.com/symfony/filesystem/tree/v5.4.11"
             },
             "funding": [
                 {
@@ -2113,20 +2115,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-20T13:55:35+00:00"
+            "time": "2022-07-20T13:00:38+00:00"
         },
         {
             "name": "symfony/finder",
-            "version": "v5.4.8",
+            "version": "v5.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "9b630f3427f3ebe7cd346c277a1408b00249dad9"
+                "reference": "7872a66f57caffa2916a584db1aa7f12adc76f8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/9b630f3427f3ebe7cd346c277a1408b00249dad9",
-                "reference": "9b630f3427f3ebe7cd346c277a1408b00249dad9",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/7872a66f57caffa2916a584db1aa7f12adc76f8c",
+                "reference": "7872a66f57caffa2916a584db1aa7f12adc76f8c",
                 "shasum": ""
             },
             "require": {
@@ -2160,7 +2162,7 @@
             "description": "Finds files and directories via an intuitive fluent interface",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/finder/tree/v5.4.8"
+                "source": "https://github.com/symfony/finder/tree/v5.4.11"
             },
             "funding": [
                 {
@@ -2176,20 +2178,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-15T08:07:45+00:00"
+            "time": "2022-07-29T07:37:50+00:00"
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v5.4.3",
+            "version": "v5.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "cc1147cb11af1b43f503ac18f31aa3bec213aba8"
+                "reference": "54f14e36aa73cb8f7261d7686691fd4d75ea2690"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/cc1147cb11af1b43f503ac18f31aa3bec213aba8",
-                "reference": "cc1147cb11af1b43f503ac18f31aa3bec213aba8",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/54f14e36aa73cb8f7261d7686691fd4d75ea2690",
+                "reference": "54f14e36aa73cb8f7261d7686691fd4d75ea2690",
                 "shasum": ""
             },
             "require": {
@@ -2229,7 +2231,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v5.4.3"
+                "source": "https://github.com/symfony/options-resolver/tree/v5.4.11"
             },
             "funding": [
                 {
@@ -2245,7 +2247,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:53:40+00:00"
+            "time": "2022-07-20T13:00:38+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2332,16 +2334,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v5.4.8",
+            "version": "v5.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "597f3fff8e3e91836bb0bd38f5718b56ddbde2f3"
+                "reference": "6e75fe6874cbc7e4773d049616ab450eff537bf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/597f3fff8e3e91836bb0bd38f5718b56ddbde2f3",
-                "reference": "597f3fff8e3e91836bb0bd38f5718b56ddbde2f3",
+                "url": "https://api.github.com/repos/symfony/process/zipball/6e75fe6874cbc7e4773d049616ab450eff537bf1",
+                "reference": "6e75fe6874cbc7e4773d049616ab450eff537bf1",
                 "shasum": ""
             },
             "require": {
@@ -2374,7 +2376,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v5.4.8"
+                "source": "https://github.com/symfony/process/tree/v5.4.11"
             },
             "funding": [
                 {
@@ -2390,7 +2392,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-08T05:07:18+00:00"
+            "time": "2022-06-27T16:58:25+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -2456,16 +2458,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.23.0",
+            "version": "v4.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "f1fe6ff483bf325c803df9f510d09a03fd796f88"
+                "reference": "d7cd84c4ebca74ba3419b9601f81d177bcbe2aac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f1fe6ff483bf325c803df9f510d09a03fd796f88",
-                "reference": "f1fe6ff483bf325c803df9f510d09a03fd796f88",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/d7cd84c4ebca74ba3419b9601f81d177bcbe2aac",
+                "reference": "d7cd84c4ebca74ba3419b9601f81d177bcbe2aac",
                 "shasum": ""
             },
             "require": {
@@ -2557,9 +2559,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/4.23.0"
+                "source": "https://github.com/vimeo/psalm/tree/v4.25.0"
             },
-            "time": "2022-04-28T17:35:49+00:00"
+            "time": "2022-07-25T17:04:37+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -2676,12 +2678,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yakamara/redaxo_yform.git",
-                "reference": "3376ff365a0ab740a6d866c72210c14a13f8b7e4"
+                "reference": "c5c89eb60028b474acdccc8eaf0c16ff9d7413de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yakamara/redaxo_yform/zipball/3376ff365a0ab740a6d866c72210c14a13f8b7e4",
-                "reference": "3376ff365a0ab740a6d866c72210c14a13f8b7e4",
+                "url": "https://api.github.com/repos/yakamara/redaxo_yform/zipball/c5c89eb60028b474acdccc8eaf0c16ff9d7413de",
+                "reference": "c5c89eb60028b474acdccc8eaf0c16ff9d7413de",
                 "shasum": ""
             },
             "require-dev": {
@@ -2700,7 +2702,7 @@
                 "issues": "https://github.com/yakamara/redaxo_yform/issues",
                 "source": "https://github.com/yakamara/redaxo_yform/tree/master"
             },
-            "time": "2022-06-16T09:56:16+00:00"
+            "time": "2022-07-27T07:33:24+00:00"
         }
     ],
     "aliases": [],

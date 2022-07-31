@@ -76,8 +76,8 @@ class rex_yrewrite
         }
         self::$domainsByName[$domain->getName()] = $domain;
 
-        if ($domain->getId()) {
-            self::$domainsById[$domain->getId()] = $domain;
+        if ($id = $domain->getId()) {
+            self::$domainsById[$id] = $domain;
         }
     }
 
