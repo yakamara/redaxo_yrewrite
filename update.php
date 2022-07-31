@@ -33,7 +33,7 @@ if (rex_string::versionCompare($this->getVersion(), '2.1', '<=')) {
 
     rex_sql_table::get(rex::getTable('yrewrite_forward'))
         ->removeColumn('domain')
-        ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
+        ->ensureColumn(new rex_sql_column('expiry_date', 'date', true))
         ->alter();
 
     rex_package::require('yrewrite')->clearCache();
@@ -52,4 +52,12 @@ if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
         ->update();
 
     rex_yrewrite::deleteCache();
+}
+
+if (rex_version::compare($this->getVersion(), '2.9-dev', '<=')) {
+    rex_sql::factory()
+        ->setTable(rex::getTable('yrewrite_forward'))
+        ->setWhere('expiry_date = "0000-00-00"')
+        ->setValue('expiry_date', null)
+        ->update();
 }

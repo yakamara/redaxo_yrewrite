@@ -69,7 +69,7 @@ $table
     ->ensureColumn(new rex_sql_column('extern', 'varchar(512)'))
     ->ensureColumn(new rex_sql_column('media', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('movetype', 'varchar(191)'))
-    ->ensureColumn(new rex_sql_column('expiry_date', 'date'))
+    ->ensureColumn(new rex_sql_column('expiry_date', 'date', true))
     //->ensureIndex(new rex_sql_index('domain_id_url', ['domain_id', 'url'], rex_sql_index::UNIQUE))
     ->ensure();
 
