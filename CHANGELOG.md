@@ -1,6 +1,32 @@
 Changelog
 =========
 
+Version 2.9.0 – XX.XX.2022
+--------------------------
+
+### Neu
+
+* SEO-Daten:
+    - Bild kann hinterlegt werden (mit neuem Media-Manager-Effekt `yrewrite_seo_image`) (@TobiasKrais)
+    - Neue Methode `getTags`, die alle Tags gemeinsam liefert (bisherige und zusätzliche bzgl. `og:` und `twitter:`); Anpassungen über EP `YREWRITE_SEO_TAGS` möglich (@tbaddade, @TobiasKrais)
+    - Bisherige Einzelmethoden für die Tags (`getTitleTag` etc.) als deprecated gesetzt (@tbaddade)
+* Weiterleitungen: 
+    - Ziel wird als URL in der Liste angezeigt (@DanielWeitenauer)
+    - Deaktivierungsdatum kann manuell gesetzt/geändert werden, das Datum wird formatiert ausgegeben und es wird der Wert "0000-00-00" vermieden (@gharlan)
+* Bei Frontend-Aufruf über Parameter `?article_id=X&clang=Y` wird auf die Artikel-URL umgeleitet (@gharlan)
+* YRewrite löscht nicht mehr den gesamten REDAXO-Cache, sondern nur den eigenen (@alxndr-w)
+* Hilfe erweitert/optimiert (@alxndr-w, @skerbis, @TobiasKrais, @tbaddade)
+
+### Bugfixes
+
+* Artikel, die als Mountpoint/Startartikel/Fehlerartikel verwendet werden, können nicht mehr gelöscht werden (@TobiasKrais)
+* Weiterleitungen mit URL-kodierten Zeichen wie `%20` funktionierten nicht (@gharlan)
+* Artikel-Weiterleitung auf sich selbst wird verhindert (@gharlan)
+* SEO-Daten: Default-Werte wurden teils nicht richtig berücksichtigt (@gharlan)
+* Fehler, wenn der Client keinen `Host`-Header sendet, beseitigt (@gharlan)
+* Warning in Sitemap beseitigt (@tyrant88)
+
+
 Version 2.8.3 – 15.12.2021
 --------------------------
 
