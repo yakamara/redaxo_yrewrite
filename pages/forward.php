@@ -60,6 +60,8 @@ if ('' != $func) {
     $yform->setValueField('be_media', ['media', $this->i18n('forward_media')]);
     $yform->setValueField('html', ['', '</div>']);
 
+    $yform->setValueField('date', ['expiry_date', $this->i18n('expiry_date'), idate('Y')]);
+
     echo '<script>
 
 jQuery(document).ready(function() {
@@ -79,6 +81,12 @@ jQuery(document).ready(function() {
 });
 
 </script>';
+
+    $yform->setActionField('callback', [function () use ($yform) {
+        if ('0000-00-00' === ($yform->objparams['value_pool']['sql']['expiry_date'] ?? null)) {
+            $yform->objparams['value_pool']['sql']['expiry_date'] = null;
+        }
+    }]);
 
     if ('delete' == $func) {
         if (!$csrf->isValid()) {
@@ -156,6 +164,7 @@ if ($showlist) {
     $list->setColumnSortable('status');
 
     $list->setColumnLabel('expiry_date', $this->i18n('expiry_date'));
+    $list->setColumnFormat('expiry_date', 'intlDate');
 
     $list->setColumnLabel('domain_id', $this->i18n('forward_url'));
     $list->setColumnFormat('domain_id', 'custom', static function ($params) {

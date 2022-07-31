@@ -386,7 +386,7 @@ class rex_yrewrite
             foreach ($old_paths['paths'] as $domain_name => $old_article_paths) {
                 $domain = self::getDomainByName($domain_name);
                 $domain_id = $domain->getId();
-                $expiry_date = '0000-00-00';
+                $expiry_date = null;
                 if ($domain->getAutoRedirectDays()) {
                     $expiry_date = date('Y-m-d', time() + $domain->getAutoRedirectDays() * 24 * 60 * 60);
                 }
