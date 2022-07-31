@@ -7,7 +7,7 @@
         "redaxo/php-cs-fixer-config": "^1.0",
         "redaxo/psalm-plugin": "^1.0",
         "redaxo/source": "^5.8",
-        "vimeo/psalm": "^4.23",
+        "vimeo/psalm": "^4.25",
         "yakamara/redaxo_yform": "dev-master"
     },
 
