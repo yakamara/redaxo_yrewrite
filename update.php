@@ -54,7 +54,6 @@ if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
     rex_yrewrite::deleteCache();
 }
 
-
 if (rex_version::compare($this->getVersion(), '2.9-dev', '<=')) {
     rex_sql::factory()
         ->setTable(rex::getTable('yrewrite_forward'))

@@ -82,7 +82,7 @@ jQuery(document).ready(function() {
 
 </script>';
 
-    $yform->setActionField('callback', [function () use ($yform) {
+    $yform->setActionField('callback', [static function () use ($yform) {
         if ('0000-00-00' === ($yform->objparams['value_pool']['sql']['expiry_date'] ?? null)) {
             $yform->objparams['value_pool']['sql']['expiry_date'] = null;
         }
