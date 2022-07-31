@@ -18,9 +18,9 @@ $table
     ->ensureColumn(new rex_sql_column('yrewrite_title', 'varchar(191)'), 'yrewrite_redirection')
     ->ensureColumn(new rex_sql_column('yrewrite_description', 'text'), 'yrewrite_title')
     ->ensureColumn(new rex_sql_column('yrewrite_image', 'varchar(191)'), 'yrewrite_description')
-    ->ensureColumn(new rex_sql_column('yrewrite_changefreq', 'varchar(10)'), 'yrewrite_image')
-    ->ensureColumn(new rex_sql_column('yrewrite_priority', 'varchar(5)'), 'yrewrite_changefreq')
-    ->ensureColumn(new rex_sql_column('yrewrite_index', 'tinyint(1)'), 'yrewrite_priority')
+    ->ensureColumn(new rex_sql_column('yrewrite_changefreq', 'varchar(10)', true), 'yrewrite_image')
+    ->ensureColumn(new rex_sql_column('yrewrite_priority', 'varchar(5)', true), 'yrewrite_changefreq')
+    ->ensureColumn(new rex_sql_column('yrewrite_index', 'tinyint(1)', true), 'yrewrite_priority')
     ->ensureColumn(new rex_sql_column('yrewrite_canonical_url', 'text'), 'yrewrite_index')
     ->alter()
 ;

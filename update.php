@@ -56,6 +56,12 @@ if (rex_string::versionCompare($this->getVersion(), '2.7-dev', '<=')) {
 
 if (rex_version::compare($this->getVersion(), '2.9-dev', '<=')) {
     rex_sql::factory()
+        ->setTable(rex::getTable('article'))
+        ->setRawValue('yrewrite_changefreq', 'IF(yrewrite_changefreq = "", NULL, yrewrite_changefreq)')
+        ->setRawValue('yrewrite_priority', 'IF(yrewrite_priority = "", NULL, yrewrite_priority)')
+        ->update();
+
+    rex_sql::factory()
         ->setTable(rex::getTable('yrewrite_forward'))
         ->setWhere('expiry_date = "0000-00-00"')
         ->setValue('expiry_date', null)

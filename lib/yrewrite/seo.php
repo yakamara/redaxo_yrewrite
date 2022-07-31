@@ -100,14 +100,16 @@ class rex_yrewrite_seo
             }
         }
 
+        $index = $this->article->getValue(self::$meta_index_field) ?? self::$index_setting_default;
+
         $content = 'noindex, nofollow';
-        if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
+        if (1 == $index || (0 == $index && $this->article->isOnline())) {
             $content = 'index, follow';
         }
         $tags['robots'] = '<meta name="robots" content="'.$content.'">';
 
         $canonicalUrl = rex_escape($this->getCanonicalUrl());
-        if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
+        if (1 == $index || (0 == $index && $this->article->isOnline())) {
             $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
         }
         $tagsOg['og:url'] = '<meta property="og:url" href="'.$canonicalUrl.'" />';
@@ -144,10 +146,12 @@ class rex_yrewrite_seo
     /** @deprecated use getTags instead */
     public function getRobotsTag()
     {
-        if (1 == $this->article->getValue(self::$meta_index_field) || (0 == $this->article->getValue(self::$meta_index_field) && $this->article->isOnline())) {
+        $index = $this->article->getValue(self::$meta_index_field) ?? self::$index_setting_default;
+
+        if (1 == $index || (0 == $index && $this->article->isOnline())) {
             return '<meta name="robots" content="index, follow">';
         }
-        if (2 == $this->article->getValue(self::$meta_index_field)) {
+        if (2 == $index) {
             return '<meta name="robots" content="noindex, follow">';
         }
         return '<meta name="robots" content="noindex, nofollow">';
@@ -289,11 +293,12 @@ class rex_yrewrite_seo
                     }
 
                     $article = rex_article::get($article_id, $clang_id);
+                    $index = $article->getValue(self::$meta_index_field) ?? self::$index_setting_default;
 
                     if (
                         ($article) &&
                         $article->isPermitted() &&
-                        (1 == $article->getValue(self::$meta_index_field) || ($article->isOnline() && 0 == $article->getValue(self::$meta_index_field))) &&
+                        (1 == $index || ($article->isOnline() && 0 == $index)) &&
                         ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())
                     ) {
                         $changefreq = $article->getValue(self::$meta_changefreq_field);
