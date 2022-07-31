@@ -42,7 +42,11 @@ class rex_yrewrite_path_resolver
 
         $host = rex_yrewrite::getHost();
 
-        $domain = $this->resolveDomain($host, $url, $params);
+        if (null === $host) {
+            $domain = $this->domainsByName['default'];
+        } else {
+            $domain = $this->resolveDomain($host, $url, $params);
+        }
 
         $currentScheme = rex_yrewrite::isHttps() ? 'https' : 'http';
         $domainScheme = $domain->getScheme();
