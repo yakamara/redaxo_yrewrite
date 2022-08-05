@@ -217,7 +217,7 @@ class rex_yrewrite
 
     public static function prepare()
     {
-        if (rex::isFrontend() && $articleId = rex_request('article_id', 'int')) {
+        if (rex::isFrontend() && 'get' === rex_request_method() && $articleId = rex_get('article_id', 'int')) {
             $params = $_GET;
             unset($params['article_id']);
             unset($params['clang']);
