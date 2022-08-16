@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.9.1 – 16.08.2022
+--------------------------
+
+### Bugfixes
+
+* Umleitung bei Frontendaufrufen mit `?article_id=X`-Parameter nicht mehr bei API-Aufrufen und bei POST-Requests, um kompatibler zum Verhalten vor v2.9 zu sein (@gharlan)
+
+
 Version 2.9.0 – 03.08.2022
 --------------------------
 
