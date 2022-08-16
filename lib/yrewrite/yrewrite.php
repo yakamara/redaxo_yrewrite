@@ -217,7 +217,7 @@ class rex_yrewrite
 
     public static function prepare()
     {
-        if (rex::isFrontend() && $articleId = rex_request('article_id', 'int')) {
+        if (rex::isFrontend() && 'get' === rex_request_method() && !rex_get('rex-api-call') && $articleId = rex_get('article_id', 'int')) {
             $params = $_GET;
             unset($params['article_id']);
             unset($params['clang']);
@@ -225,14 +225,18 @@ class rex_yrewrite
             rex_response::sendRedirect($url, rex_response::HTTP_MOVED_PERMANENTLY);
         }
 
-        if (!isset($_SERVER['REQUEST_URI'])) {
-            $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
-            if (!empty($_SERVER['QUERY_STRING'])) {
-                $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+        if ($articleId = rex_request('article_id', 'int')) {
+            $url = rex_getUrl($articleId);
+        } else {
+            if (!isset($_SERVER['REQUEST_URI'])) {
+                $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+                if (!empty($_SERVER['QUERY_STRING'])) {
+                    $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+                }
             }
-        }
 
-        $url = urldecode($_SERVER['REQUEST_URI']);
+            $url = urldecode($_SERVER['REQUEST_URI']);
+        }
 
         $resolver = new rex_yrewrite_path_resolver(self::$domainsByName, self::$domainsByMountId, self::$aliasDomains, self::$paths['paths'] ?? [], self::$paths['redirections'] ?? []);
         $resolver->resolve($url);
