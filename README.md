@@ -134,7 +134,7 @@ Die `sitemap.xml` kann pro Domain bspw. in der Google Search Console eingetragen
 
 ## YRewrite-Objekt
 
-Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/yrewrite.php
+Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/yrewrite.php
 
 ```
     $yrewrite = new rex_yrewrite;
@@ -148,7 +148,7 @@ Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/yrewrite
 
 ## YRewrite-Domain-Objekt
 
-Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/domain.php
+Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/domain.php
 
 ```
 $domain = rex_yrewrite::getCurrentDomain();
@@ -188,7 +188,7 @@ getHost()
 ```
 ## YRewrite-SEO-Objekt
 
-Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/seo.php
+Siehe auch: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/seo.php
 
 
 ```
