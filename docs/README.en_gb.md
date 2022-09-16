@@ -129,7 +129,7 @@ The `sitemap.xml` can be entered per domain, for example, in the Google Search C
 
 ## YRewrite Object
 
-See also: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/yrewrite.php
+See also: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/yrewrite.php
 
 ```
     $yrewrite = new rex_yrewrite;
@@ -142,7 +142,7 @@ See also: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/yrewrite.p
 
 ## YRewrite domain object
 
-See also: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/domain.php
+See also: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/domain.php
 
 ```
 $domain = rex_yrewrite::getCurrentDomain(); dump($domain); optionally display all properties and methods
@@ -181,7 +181,7 @@ getHost()
 ```
 ## YRewrite SEO Object
 
-See also: https://github.com/yakamara/REDAXO_yrewrite/blob/master/lib/seo.php
+See also: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/seo.php
 
 
 ```
