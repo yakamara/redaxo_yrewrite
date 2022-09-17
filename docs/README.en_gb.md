@@ -129,7 +129,7 @@ The `sitemap.xml` can be entered per domain, for example, in the Google Search C
 
 ## YRewrite Object
 
-See also: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/yrewrite.php
+See also: https://github.com/yakamara/redaxo_yrewrite/blob/main/lib/yrewrite/yrewrite.php
 
 ```
     $yrewrite = new rex_yrewrite;
@@ -142,7 +142,7 @@ See also: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/yrewrite.php
 
 ## YRewrite domain object
 
-See also: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/domain.php
+See also: https://github.com/yakamara/redaxo_yrewrite/blob/main/lib/yrewrite/domain.php
 
 ```
 $domain = rex_yrewrite::getCurrentDomain(); dump($domain); optionally display all properties and methods
@@ -181,7 +181,7 @@ getHost()
 ```
 ## YRewrite SEO Object
 
-See also: https://github.com/yakamara/REDAXO_yrewrite/blob/main/lib/seo.php
+See also: https://github.com/yakamara/redaxo_yrewrite/blob/main/lib/yrewrite/seo.php
 
 
 ```
@@ -470,6 +470,6 @@ class rex_project_rewrite_scheme extends rex_yrewrite_scheme
 
 # Further support
 
-* Report a bug via GitHub: https://github.com/yakamara/REDAXO_yrewrite/issues/
+* Report a bug via GitHub: https://github.com/yakamara/redaxo_yrewrite/issues/
 * Help via REDAXO Slack channel: https://friendsofREDAXO.slack.com/
 * Tricks via FriendsOfREDAXO: https://friendsofredaxo.github.io/tricks/ at Addons > YRewrite
