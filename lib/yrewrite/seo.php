@@ -112,7 +112,7 @@ class rex_yrewrite_seo
         if (1 == $index || (0 == $index && $this->article->isOnline())) {
             $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
         }
-        $tagsOg['og:url'] = '<meta property="og:url" href="'.$canonicalUrl.'" />';
+        $tagsOg['og:url'] = '<meta property="og:url" content="'.$canonicalUrl.'" />';
         $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'" />';
 
         $hrefs = $this->getHrefLangs();
