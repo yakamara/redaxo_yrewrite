@@ -59,13 +59,18 @@ class rex_yrewrite_seo
             $clang = rex_clang::getCurrentId();
         }
 
-        if (($article = rex_article::get($article_id, $clang))) {
+        if ($article = rex_article::get($article_id, $clang)) {
             $this->article = $article;
             $this->domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
         }
     }
 
     public function getTags(): string
+    {
+        return implode("\n", $this->getTagsArray());
+    }
+
+    public function getTagsArray(): array
     {
         $tags = [];
         $tagsOg = [];
@@ -121,8 +126,9 @@ class rex_yrewrite_seo
         }
 
         $tags += $tagsOg + $tagsTwitter;
+        /** @var $tags array */
         $tags = rex_extension::registerPoint(new \rex_extension_point('YREWRITE_SEO_TAGS', $tags));
-        return implode("\n", $tags);
+        return $tags;
     }
 
     /** @deprecated use getTags instead */
@@ -282,7 +288,7 @@ class rex_yrewrite_seo
 
             $domain_article_id = $domain->getStartId();
             $paths = 0;
-            if (($dai = rex_article::get($domain_article_id))) {
+            if ($dai = rex_article::get($domain_article_id)) {
                 $paths = count($dai->getParentTree());
             }
 
@@ -296,7 +302,7 @@ class rex_yrewrite_seo
                     $index = $article->getValue(self::$meta_index_field) ?? self::$index_setting_default;
 
                     if (
-                        ($article) &&
+                        $article &&
                         $article->isPermitted() &&
                         (1 == $index || ($article->isOnline() && 0 == $index)) &&
                         ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())
