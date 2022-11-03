@@ -283,7 +283,7 @@ Dies erzeugt folgende Ausgabe:
 <meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
 <meta property="og:image:alt" content="Der Bildtitel aus dem Medienpool" />
 <meta property="og:image:type" content="image/jpeg" />
-<meta property="og:url" href="https://example.org/de/" />
+<meta property="og:url" content="https://example.org/de/" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Artikelname / Websitetitel" />
 <meta name="twitter:description" content="Der Text aus dem Beschreibungs-Feld" />
