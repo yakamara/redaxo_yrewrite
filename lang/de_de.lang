@@ -33,7 +33,7 @@ yrewrite_domain = Domain
 yrewrite_domain_info = http/https ist optional. Wenn man es angibt, leiten alle Links immer auf das angegebene Protokoll. Lässt man es weg, wird das jeweils aktuelle verwendet. Slash am Ende oder nicht ist egal, das wird vom AddOn normalisiert. "www" muss angegeben werden, wenn denn die Domain mit "www" genutzt wird. Für YRewrite ist es eine normale Subdomain. Läuft REDAXO in einem Unterordner, muss dieser mit notiert werden. Beispiel: <code>http://domain.de/unterordner/</code>
 
 yrewrite_mount_id = Mountpoint der Domain
-yrewrite_mount_info = Startpunkt der Domain. Der Startpunkt kann in jeder Tiefe der Struktur vergeben werden. Die oben angegebene Domain gilt ab dort für alle weiteren Kategorien/Artikel. Zum Beispiel kann eine zweite Domain innerhalb der Struktur einer anderen Domain einen Startpunkt bekommen. Freilassen, wenn Root-Kategorien als URL benötigt werden.
+yrewrite_mount_info = Mountpoint festlegen (optional). Wenn nur ein Teil der Artikel-Struktur über die Domain aufrufbar sein sollen, wählt man den Startartikel einer Kategorie, die diese Inhalte enthält. Wird kein Mountpoint festgelegt, sind alle Inhalte dieser Domain zugeordnet (Standard). Freilassen, wenn Root-Kategorien als URL benötigt werden.
 
 yrewrite_start_id = Startartikel der Domain
 yrewrite_start_info = Artikel angeben, der als Startartikel der Domain aufgerufen wird. Kann via rex_article::getSiteStartArticle() geholt werden.
