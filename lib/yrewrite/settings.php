@@ -9,7 +9,7 @@
 class rex_yrewrite_settings
 {
     /**
-     * @return rex_addon
+     * @return rex_addon|rex_addon_interface
      */
     protected static function getAddon()
     {
