@@ -10,11 +10,11 @@
 
 class rex_yrewrite_forward
 {
-    public static string $pathfile = '';
-    public static array $paths = [];
+    public static $pathfile = '';
+    public static $paths = [];
 
     /** @var array|string[] */
-    public static array $movetypes = [
+    public static $movetypes = [
         '301' => '301 - Moved Permanently',
         '302' => '302 - Found',
         '303' => '303 - See Other',

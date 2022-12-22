@@ -9,11 +9,11 @@
 class rex_yrewrite_settings
 {
     /**
-     * @return rex_addon|rex_addon_interface
+     * @return rex_addon
      */
     protected static function getAddon()
     {
-        return rex_addon::get('yrewrite');
+        return rex_addon::require('yrewrite');
     }
 
     /**
