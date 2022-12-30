@@ -16,14 +16,14 @@ AddDefaultCharset utf-8
 	AddType video/x-flv .flv
 	AddType audio/mpeg .mp3
 	AddType audio/ogg .ogg
-	AddType application/javascript .js
+	AddType text/javascript .js
 	AddType application/json .json
 	AddType application/xml .xml
 	AddType application/x-shockwave-flash .swf
 	AddType application/vnd.ms-fontobject .eot
 	AddType application/x-font-ttf .ttf
-	AddType application/font-woff .woff
-	AddType application/font-woff2 .woff2
+	AddType font/font-woff .woff
+	AddType font/font-woff2 .woff2
 	AddType application/wasm .wasm
 	AddType font/opentype .otf
 </IfModule>
@@ -35,7 +35,7 @@ AddDefaultCharset utf-8
 	AddOutputFilterByType DEFLATE text/xml
 	AddOutputFilterByType DEFLATE text/css
 	AddOutputFilterByType DEFLATE image/svg+xml
-	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE text/javascript
 	AddOutputFilterByType DEFLATE application/json
 	AddOutputFilterByType DEFLATE application/xml
 	AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
@@ -61,14 +61,14 @@ AddDefaultCharset utf-8
 #	ExpiresByType video/ogg "access plus 4 weeks"
 #	ExpiresByType video/webm "access plus 4 weeks"
 #	ExpiresByType video/x-flv "access plus 4 weeks"
-#	ExpiresByType application/javascript "access plus 4 weeks"
+#	ExpiresByType text/javascript "access plus 4 weeks"
 #	ExpiresByType application/json "access plus 0 seconds"
 #	ExpiresByType application/xml "access plus 0 seconds"
 #	ExpiresByType application/x-shockwave-flash "access plus 4 weeks"
 #	ExpiresByType application/vnd.ms-fontobject "access plus 4 weeks"
 #	ExpiresByType application/x-font-ttf "access plus 4 weeks"
-#	ExpiresByType application/font-woff "access plus 4 weeks"
-#	ExpiresByType application/font-woff2 "access plus 4 weeks"
+#	ExpiresByType font/font-woff "access plus 4 weeks"
+#	ExpiresByType font/font-woff2 "access plus 4 weeks"
 #	ExpiresByType font/opentype "access plus 4 weeks"
 #</IfModule>
 
