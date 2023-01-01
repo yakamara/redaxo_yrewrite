@@ -13,7 +13,7 @@ class rex_yrewrite_settings
      */
     protected static function getAddon()
     {
-        return rex_addon::get('yrewrite');
+        return rex_addon::require('yrewrite');
     }
 
     /**
