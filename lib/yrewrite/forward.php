@@ -13,12 +13,12 @@ class rex_yrewrite_forward
     public static $pathfile = '';
     public static $paths = [];
 
-    /** @var array|string[] */
+    /** @var array<int, string> */
     public static $movetypes = [
-        '301' => '301 - Moved Permanently',
-        '302' => '302 - Found',
-        '303' => '303 - See Other',
-        '307' => '307 - Temporary Redirect',
+        301 => '301 - Moved Permanently',
+        302 => '302 - Found',
+        303 => '303 - See Other',
+        307 => '307 - Temporary Redirect',
     ];
 
     public static function init(): void
