@@ -33,7 +33,7 @@ yrewrite_domain = Domain
 yrewrite_domain_info = http/https is optional. If entered, all links will be redirected to the specified protocol. If left blank, the current protocol will continue to be used. Slash at the end will be caught by the AddOn. www has to be specified if the domain should be used with "www". YRewrite treats www as a normal subdomain. If REDAXO runs in a subfolder, it needs to be specified here. Example: http://domain.com/subfolder/
 
 yrewrite_mount_id = Mount article of Domain
-yrewrite_mount_info = Set mountpoint (optional). If only part of the article structure is to be accessible via the domain, select the start article of a category that contains this content. If no mountpoint is specified, all contents are assigned to this domain (default). Leave blank if root categories are required as URL.
+yrewrite_mount_info = Set mountpoint (optional). If only part of the article structure is to be accessible via the domain, select the start article of a category that contains this content. If no mountpoint is specified, all articles are reachable through this domain, which are not assigned to any other domain yet (default). Leave blank if root categories are required as URL.
 
 yrewrite_start_id = Start article of domain
 yrewrite_start_info = Specify article which will be used as the domain start article. Can be retrieved by using rex_article::getSiteStartArticle()
