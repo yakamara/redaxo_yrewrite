@@ -202,8 +202,12 @@ class rex_yrewrite_seo
     public function getHrefLangs()
     {
         $current_mount_id = $this->domain->getMountId();
-
         $lang_domains = [];
+
+        if ($this->domain->isStartClangAuto() && $this->domain->getStartId() === rex_article::getCurrentId()) {
+            $lang_domains['x-default'] = $this->domain->getUrl();
+        }
+
         foreach (rex_yrewrite::getDomains() as $domain) {
             if ($current_mount_id == $domain->getMountId()) {
                 foreach ($domain->getClangs() as $clang) {
