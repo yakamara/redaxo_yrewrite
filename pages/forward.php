@@ -220,11 +220,9 @@ if ($showlist) {
                 }
 
                 return $article->getUrl();
-                break;
 
             case 'extern':
                 return $list->getValue('extern');
-                break;
 
             case 'media':
                 $media = rex_media::get($list->getValue('media'));
@@ -233,7 +231,6 @@ if ($showlist) {
                 }
 
                 return $media->getUrl();
-                break;
 
             default:
                 return $params['value'];
