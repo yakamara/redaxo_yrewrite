@@ -36,9 +36,9 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
             'CAT_ADDED',   'CAT_UPDATED',   'CAT_DELETED', 'CAT_STATUS',  'CAT_MOVED',
             'ART_ADDED',   'ART_UPDATED',   'ART_DELETED', 'ART_STATUS',  'ART_MOVED', 'ART_COPIED',
             'ART_META_UPDATED', 'ART_TO_STARTARTICLE', 'ART_TO_CAT', 'CAT_TO_ART',
-            /*'CLANG_ADDED',*/ 'CLANG_UPDATED', /*'CLANG_DELETED',*/
-            /*'ARTICLE_GENERATED'*/
-            //'ALL_GENERATED'
+            /* 'CLANG_ADDED', */ 'CLANG_UPDATED', /* 'CLANG_DELETED', */
+            /* 'ARTICLE_GENERATED' */
+            // 'ALL_GENERATED'
         ];
         foreach ($extensionPoints as $extensionPoint) {
             rex_extension::register($extensionPoint, static function (rex_extension_point $ep) {
@@ -57,7 +57,9 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
 
             $sql = rex_sql::factory();
             $sql->setQuery('SELECT id, domain FROM `' . rex::getTablePrefix() . 'yrewrite_domain` '
-                .'WHERE start_id = '. $article_id .' OR mount_id = '. $article_id .' OR notfound_id = '. $article_id);
+                .'WHERE start_id = :article_id OR mount_id = :article_id OR notfound_id = :article_id', [
+                    'article_id' => $article_id,
+                ]);
 
             // Warnings
             for ($i = 0; $i < $sql->getRows(); ++$i) {
@@ -93,7 +95,7 @@ rex_extension::register('PACKAGES_INCLUDED', function ($params) {
         });
     }
 
-    //rex_extension::register('ALL_GENERATED', 'rex_yrewrite::init');
+    // rex_extension::register('ALL_GENERATED', 'rex_yrewrite::init');
     rex_extension::register('URL_REWRITE', static function (rex_extension_point $ep) {
         $params = $ep->getParams();
         $params['subject'] = $ep->getSubject();
