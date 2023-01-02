@@ -2,6 +2,7 @@
 <xsl:stylesheet version="2.0"
                 xmlns:html="http://www.w3.org/TR/REC-html40"
                 xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+                xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
                 xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
@@ -80,9 +81,10 @@
                     <table id="sitemap" cellpadding="3">
                         <thead>
                             <tr>
-                                <th width="75%">URL</th>
+                                <th width="70%">URL</th>
                                 <th width="5%">Priority</th>
                                 <th width="5%">Images</th>
+                                <th width="5%">Videos</th>
                                 <th width="5%">Change Freq.</th>
                                 <th width="10%">Last Change</th>
                             </tr>
@@ -105,6 +107,9 @@
                                     </td>
                                     <td>
                                         <xsl:value-of select="count(image:image)"/>
+                                    </td>
+                                    <td>
+                                        <xsl:value-of select="count(video:video)"/>
                                     </td>
                                     <td>
                                         <xsl:value-of select="concat(translate(substring(sitemap:changefreq, 1, 1),concat($lower, $upper),concat($upper, $lower)),substring(sitemap:changefreq, 2))"/>
