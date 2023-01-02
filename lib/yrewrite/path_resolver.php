@@ -71,6 +71,12 @@ class rex_yrewrite_path_resolver
         if ('' === $url && $domain->isStartClangAuto()) {
             $startClang = $this->resolveAutoStartClang($domain);
 
+            $hreflangs = [];
+            foreach ((new rex_yrewrite_seo())->getHrefLangs() as $lang => $href) {
+                $hreflangs[] = "<$href>;  rel=\"alternate\"; hreflang=\"$lang\"";
+            }
+            header('Link: '.implode(', ', $hreflangs));
+
             $this->redirect($currentScheme . '://' . $host, rex_getUrl($domain->getStartId(), $startClang), $params, '302 Found');
         }
 
