@@ -163,18 +163,18 @@ class rex_yrewrite_seo
         if ('' == $title_scheme) {
             $title_scheme = self::$title_scheme_default;
         }
-
+    
+        $title = $title_scheme;
         $ytitle = '';
+        
         if ($this->article && '' != $this->article->getValue(self::$meta_title_field)) {
-            $ytitle = $this->article->getValue(self::$meta_title_field);
+            $title = $ytitle = $this->article->getValue(self::$meta_title_field);
         }
         if ('' == $ytitle) {
             $ytitle = $this->article->getValue('name');
+            $title = str_replace('%T', $ytitle, $title);
+            $title = str_replace('%SN', rex::getServerName(), $title);
         }
-
-        $title = $title_scheme;
-        $title = str_replace('%T', $ytitle, $title);
-        $title = str_replace('%SN', rex::getServerName(), $title);
 
         return $this->cleanString($title);
     }
