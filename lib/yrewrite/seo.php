@@ -214,7 +214,6 @@ class rex_yrewrite_seo
                         }
                     }
                 }
-                break;
             }
         }
 
