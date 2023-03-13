@@ -17,7 +17,7 @@ $readme = preg_replace('/http.*\/assets\//', '/assets/addons/'.$this->getName().
 $h2_chapter = explode("\n# ", "\n".$readme);
 
 $readme_chapters = [];
-
+$navi_list = [];
 $docs_chapter_active = rex_request('docs_chapter_active', 'string', false);
 
 foreach ($h2_chapter as $h2_index => $h2_content) {
@@ -51,15 +51,15 @@ if (!isset($readme_chapters[$docs_chapter_active])) {
     $docs_chapter_active = key($readme_chapters);
 }
 $navi_view = implode("\n", $navi_list);
-    $blocks_view = $readme_chapters[$docs_chapter_active];
+$blocks_view = $readme_chapters[$docs_chapter_active];
 
-    $miu = rex_markdown::factory();
+$miu = rex_markdown::factory();
 
 // Navigation
 
 $blocks_view = $miu->parse($blocks_view);
 $fragment = new rex_fragment();
-$fragment->setVar('title', $this->i18n('docs').' [ <a target="_blank" href="'.$this->getSupportPage().'blob/master/README.md">bearbeiten</a> ]', false);
+$fragment->setVar('title', $this->i18n('docs').' [ <a target="_blank" href="'.$this->getSupportPage().'blob/main/README.md">bearbeiten</a> ]', false);
 $fragment->setVar('body', $blocks_view, false);
 $content = $fragment->parse('core/page/section.php');
 

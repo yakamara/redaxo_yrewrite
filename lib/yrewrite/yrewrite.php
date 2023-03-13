@@ -219,10 +219,13 @@ class rex_yrewrite
     {
         if (rex::isFrontend() && 'get' === rex_request_method() && !rex_get('rex-api-call') && $articleId = rex_get('article_id', 'int')) {
             $params = $_GET;
-            unset($params['article_id']);
-            unset($params['clang']);
-            $url = self::getFullUrlByArticleId($articleId, null, $params, '&');
-            rex_response::sendRedirect($url, rex_response::HTTP_MOVED_PERMANENTLY);
+            $article = rex_article::get($params['article_id'], $params['clang']);
+            if ($article instanceof rex_article) {
+                unset($params['article_id']);
+                unset($params['clang']);
+                $url = self::getFullUrlByArticleId($articleId, null, $params, '&');
+                rex_response::sendRedirect($url, rex_response::HTTP_MOVED_PERMANENTLY);
+            }
         }
 
         if ($articleId = rex_request('article_id', 'int')) {

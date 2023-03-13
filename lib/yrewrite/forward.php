@@ -13,14 +13,15 @@ class rex_yrewrite_forward
     public static $pathfile = '';
     public static $paths = [];
 
+    /** @var array<int, string> */
     public static $movetypes = [
-        '301' => '301 - Moved Permanently',
-        '302' => '302 - Found',
-        '303' => '303 - See Other',
-        '307' => '307 - Temporary Redirect',
+        301 => '301 - Moved Permanently',
+        302 => '302 - Found',
+        303 => '303 - See Other',
+        307 => '307 - Temporary Redirect',
     ];
 
-    public static function init()
+    public static function init(): void
     {
         self::$pathfile = rex_path::addonCache('yrewrite', 'forward_pathlist.json');
         self::readPathFile();
@@ -80,7 +81,7 @@ class rex_yrewrite_forward
 
     // ------------------------------
 
-    public static function readPathFile()
+    public static function readPathFile(): void
     {
         if (!file_exists(self::$pathfile)) {
             self::generatePathFile();
@@ -89,7 +90,7 @@ class rex_yrewrite_forward
         }
     }
 
-    public static function generatePathFile()
+    public static function generatePathFile(): void
     {
         $gc = rex_sql::factory();
         $content = $gc->getArray('select * from '.rex::getTable('yrewrite_forward'));
@@ -99,6 +100,7 @@ class rex_yrewrite_forward
             $row['url'] = mb_strtolower($url[0]);
 
             if (isset($url[1])) {
+                /** @phpstan-ignore-next-line */
                 parse_str($url[1], $row['params']);
             }
         }

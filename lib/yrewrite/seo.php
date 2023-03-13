@@ -112,7 +112,7 @@ class rex_yrewrite_seo
         if (1 == $index || (0 == $index && $this->article->isOnline())) {
             $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
         }
-        $tagsOg['og:url'] = '<meta property="og:url" href="'.$canonicalUrl.'" />';
+        $tagsOg['og:url'] = '<meta property="og:url" content="'.$canonicalUrl.'" />';
         $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'" />';
 
         $hrefs = $this->getHrefLangs();
@@ -202,8 +202,12 @@ class rex_yrewrite_seo
     public function getHrefLangs()
     {
         $current_mount_id = $this->domain->getMountId();
-
         $lang_domains = [];
+
+        if ($this->domain->isStartClangAuto() && $this->domain->getStartId() === rex_article::getCurrentId()) {
+            $lang_domains['x-default'] = $this->domain->getUrl();
+        }
+
         foreach (rex_yrewrite::getDomains() as $domain) {
             if ($current_mount_id == $domain->getMountId()) {
                 foreach ($domain->getClangs() as $clang) {
@@ -347,7 +351,7 @@ class rex_yrewrite_seo
         header('Content-Type: application/xml');
         $content = '<?xml version="1.0" encoding="UTF-8"?>';
         $content .= "\n".'<?xml-stylesheet type="text/xsl" href="assets/addons/yrewrite/xsl-stylesheets/xml-sitemap.xsl"?>';
-        $content .= "\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">';
+        $content .= "\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">';
         $content .= implode("\n", $sitemap);
         $content .= "\n".'</urlset>';
         echo $content;
