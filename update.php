@@ -11,18 +11,18 @@ if (rex_version::compare($this->getVersion(), '2.1', '<=')) {
         'INSERT INTO `%s` (domain_id, alias_domain, clang_start)
             SELECT d.id, a.domain, a.clang_start FROM `%s` a INNER JOIN `%2$s` d ON d.domain = a.alias_domain AND d.alias_domain = "" WHERE a.alias_domain != ""',
         rex::getTable('yrewrite_alias'),
-        rex::getTable('yrewrite_domain')
+        rex::getTable('yrewrite_domain'),
     ));
 
     $sql->setQuery(sprintf(
         'DELETE FROM `%s` WHERE alias_domain != ""',
-        rex::getTable('yrewrite_domain')
+        rex::getTable('yrewrite_domain'),
     ));
 
     $sql->setQuery(sprintf(
         'UPDATE `%s` f SET domain_id = (SELECT id FROM `%s` d WHERE d.domain = f.domain)',
         rex::getTable('yrewrite_forward'),
-        rex::getTable('yrewrite_domain')
+        rex::getTable('yrewrite_domain'),
     ));
 
     rex_sql_table::get(rex::getTable('yrewrite_domain'))

@@ -46,7 +46,7 @@ if ($isStartarticle) {
            IF(yrewrite_url_type = "REDIRECTION_INTERNAL", yrewrite_redirection, "") AS yrewrite_redirection_internal,
            IF(yrewrite_url_type = "REDIRECTION_EXTERNAL", yrewrite_redirection, "") AS yrewrite_redirection_external
         FROM '.rex::getTable('article').'
-        WHERE id='.$article_id.' and clang_id='.$clang
+        WHERE id='.$article_id.' and clang_id='.$clang,
     );
     $yform->setObjectparams('sql_object', $sql);
 
@@ -128,7 +128,7 @@ if ($isStartarticle) {
 
     if ('AUTO' === rex_article::get($article_id, $clang)->getValue('yrewrite_url_type')) {
         $autoUrl = rex_getUrl();
-        if (0 === strpos($autoUrl, $domain->getUrl())) {
+        if (str_starts_with($autoUrl, $domain->getUrl())) {
             $autoUrl = substr($autoUrl, strlen($domain->getUrl()));
         } else {
             $autoUrl = substr($autoUrl, strlen($domain->getPath()));

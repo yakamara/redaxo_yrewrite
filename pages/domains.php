@@ -29,7 +29,7 @@ if ('' != $func) {
     $yform->setValueField('text', ['domain', $this->i18n('domain'), 'notice' => '<small>'.$this->i18n('domain_info').'</small>']);
     $yform->setValidateField('empty', ['domain', $this->i18n('no_domain_defined')]);
     $yform->setValidateField('unique', ['domain', $this->i18n('domain_already_defined')]);
-    $yform->setValidateField('preg_match', ['domain', '/^(?:http[s]?:\/\/)?[a-zA-Z0-9][a-zA-Z0-9._-]*(?::\d+)?(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$' . '/', $this->i18n('domain_not_well_formed')]);
+    $yform->setValidateField('preg_match', ['domain', '/^(?:http[s]?:\/\/)?[a-zA-Z0-9][a-zA-Z0-9._-]*(?::\d+)?(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$/', $this->i18n('domain_not_well_formed')]);
 
     $yform->setValueField('be_link', ['mount_id', $this->i18n('mount_id'), 'notice' => '<small>'.$this->i18n('mount_info').'</small>']);
 
@@ -182,7 +182,7 @@ if ($showlist) {
         if (0 == $id) {
             return $this->i18n('root');
         }
-        if (($article = rex_article::get($id))) {
+        if ($article = rex_article::get($id)) {
             if ($article->isStartArticle()) {
                 $link = 'index.php?page=structure&category_id='.$id.'&clang=1';
             } else {

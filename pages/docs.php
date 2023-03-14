@@ -39,7 +39,7 @@ foreach ($h2_chapter as $h2_index => $h2_content) {
         $readme_chapters[$h2_index] = $readme_h2_content;
         foreach ($navi_elements as $h3_index => $navi_element) {
             $navi_list[] = '<a class="list-group-item" href="index.php?page='.$this->getName().'/docs&amp;docs_chapter_active='.$h2_index.'#'.rex_string::normalize($navi_element).'">'.$navi_element.'</a>';
-            $readme_chapters[$h2_index] .= ''.'<a id="'.rex_string::normalize($navi_element).'"></a>'."\n## ".$navi_element.$blocks[$h3_index]."\n";
+            $readme_chapters[$h2_index] .= '<a id="'.rex_string::normalize($navi_element).'"></a>'."\n## ".$navi_element.$blocks[$h3_index]."\n";
         }
         $navi_list[] = '</div></div>';
     }

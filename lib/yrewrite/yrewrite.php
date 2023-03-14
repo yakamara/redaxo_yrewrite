@@ -269,7 +269,7 @@ class rex_yrewrite
             }
         }
 
-        //$url = urldecode($_SERVER['REQUEST_URI']);
+        // $url = urldecode($_SERVER['REQUEST_URI']);
         $domainName = self::getHost();
 
         $path = '';
@@ -363,11 +363,11 @@ class rex_yrewrite
                 $generator->generate(rex_article::get($params['id'], $params['clang']));
 
                 break;
-            // update all
+                // update all
             case 'CLANG_DELETED':
             case 'CLANG_ADDED':
             case 'CLANG_UPDATED':
-            //case 'ALL_GENERATED':
+                // case 'ALL_GENERATED':
             default:
                 $generator->generateAll();
                 break;
@@ -485,7 +485,7 @@ class rex_yrewrite
             }
 
             $name = (string) $domain['domain'];
-            if (false === strpos($name, '//')) {
+            if (!str_contains($name, '//')) {
                 $name = '//'.$name;
             }
             $parts = parse_url($name);
