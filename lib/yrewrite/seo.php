@@ -91,6 +91,8 @@ class rex_yrewrite_seo
         $content = 'noindex, nofollow';
         if (1 == $index || (0 == $index && $this->article->isOnline())) {
             $content = 'index, follow';
+        } elseif (2 == $index) {
+            $content = 'noindex, follow';
         }
         $tags['robots'] = '<meta name="robots" content="'.$content.'">';
 
