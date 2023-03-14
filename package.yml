@@ -1,5 +1,5 @@
 package: yrewrite
-version: '2.9.1'
+version: '2.10.0-dev'
 author: Jan Kristinus, Gregor Harlan
 supportpage: https://github.com/yakamara/redaxo_yrewrite
 docspage: https://github.com/yakamara/redaxo_yrewrite/edit/main/README.md
@@ -13,11 +13,11 @@ page:
         alias_domains: { title: 'translate:alias_domains', perm: admin }
         forward: { title: 'translate:forward', perm: 'yrewrite[forward]' }
         setup: { title: 'translate:setup', perm: admin }
-        docs: { title: 'translate:docs', icon: rex-icon fa-info-circle, itemclass: pull-right }
+        docs: { title: 'translate:docs', icon: rex-icon fa-info-circle, itemClass: pull-right }
 
 requires:
     php:
-        version: '>=7.3'
+        version: '>=8.1'
     redaxo: '^5.13'
     packages:
         media_manager: '^2.12'

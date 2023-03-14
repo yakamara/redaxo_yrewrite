@@ -197,10 +197,7 @@ class rex_yrewrite_domain
         return $this->autoRedirectDays;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
