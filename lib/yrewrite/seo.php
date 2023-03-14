@@ -21,33 +21,19 @@ class rex_yrewrite_seo
     public static $robots_default = "User-agent: *\nDisallow:";
     public static $title_scheme_default = '%T / %SN';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_title_field = 'yrewrite_title';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_description_field = 'yrewrite_description';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_image_field = 'yrewrite_image';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_changefreq_field = 'yrewrite_changefreq';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_priority_field = 'yrewrite_priority';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_index_field = 'yrewrite_index';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_canonical_url_field = 'yrewrite_canonical_url';
 
     public function __construct($article_id = 0, $clang = null)
@@ -59,7 +45,7 @@ class rex_yrewrite_seo
             $clang = rex_clang::getCurrentId();
         }
 
-        if (($article = rex_article::get($article_id, $clang))) {
+        if ($article = rex_article::get($article_id, $clang)) {
             $this->article = $article;
             $this->domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
         }
@@ -285,7 +271,7 @@ class rex_yrewrite_seo
 
             $domain_article_id = $domain->getStartId();
             $paths = 0;
-            if (($dai = rex_article::get($domain_article_id))) {
+            if ($dai = rex_article::get($domain_article_id)) {
                 $paths = count($dai->getParentTree());
             }
 
@@ -299,7 +285,7 @@ class rex_yrewrite_seo
                     $index = $article->getValue(self::$meta_index_field) ?? self::$index_setting_default;
 
                     if (
-                        ($article) &&
+                        $article &&
                         $article->isPermitted() &&
                         (1 == $index || ($article->isOnline() && 0 == $index)) &&
                         ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())
