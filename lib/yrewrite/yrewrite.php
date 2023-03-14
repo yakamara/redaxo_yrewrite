@@ -219,7 +219,7 @@ class rex_yrewrite
     {
         if (rex::isFrontend() && 'get' === rex_request_method() && !rex_get('rex-api-call') && $articleId = rex_get('article_id', 'int')) {
             $params = $_GET;
-            $article = rex_article::get($params['article_id'], $params['clang']);
+            $article = rex_article::get((int) $params['article_id'], (int) $params['clang']);
             if ($article instanceof rex_article) {
                 unset($params['article_id']);
                 unset($params['clang']);
