@@ -56,7 +56,7 @@ class rex_yrewrite_forward
             }
 
             foreach ($p['params'] ?? [] as $key => $value) {
-                if (rex_get($key) !== $value) {
+                if (rex_get($key, 'string', null) !== $value) {
                     continue 2;
                 }
             }
