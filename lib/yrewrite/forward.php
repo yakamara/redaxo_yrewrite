@@ -42,6 +42,8 @@ class rex_yrewrite_forward
         $domain = $params['domain'];
         $url = mb_strtolower($params['url']);
 
+        $forward_url = '';
+        $matchingParams = -1;
         foreach (self::$paths as $p) {
             $forwardDomain = rex_yrewrite::getDomainById($p['domain_id']);
 
@@ -55,13 +57,16 @@ class rex_yrewrite_forward
                 continue;
             }
 
+            if (count($p['params'] ?? []) <= $matchingParams) {
+                continue;
+            }
+
             foreach ($p['params'] ?? [] as $key => $value) {
-                if (rex_get($key) !== $value) {
+                if (rex_get($key, 'string', null) !== $value) {
                     continue 2;
                 }
             }
 
-            $forward_url = '';
             if ('article' == $p['type'] && ($art = rex_article::get($p['article_id'], $p['clang']))) {
                 $forward_url = rex_getUrl($p['article_id'], $p['clang']);
             } elseif ('media' == $p['type'] && ($media = rex_media::get($p['media']))) {
@@ -71,11 +76,16 @@ class rex_yrewrite_forward
             }
 
             if ('' != $forward_url) {
-                header('HTTP/1.1 '.self::$movetypes[$p['movetype']]);
-                header('Location: ' . $forward_url);
-                exit;
+                $matchingParams = count($p['params'] ?? []);
             }
         }
+
+        if ('' != $forward_url) {
+            header('HTTP/1.1 '.self::$movetypes[$p['movetype']]);
+            header('Location: ' . $forward_url);
+            exit;
+        }
+
         return false;
     }
 
