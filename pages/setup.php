@@ -42,10 +42,12 @@ $content = '
             <h3>' . $this->i18n('info_seo') . '</h3>
             <p>' . rex_i18n::rawMsg('yrewrite_info_seo_text') . '
 
-            <br /><br />'.highlight_string('<?php
-		$seo = new rex_yrewrite_seo();
-		echo $seo->getTags();
-	    ?>', true).'
+            <br /><br />'.highlight_string(<<<'PHP'
+                <?php
+                    $seo = new rex_yrewrite_seo();
+                    echo $seo->getTags();
+                ?>
+                PHP, true).'
             </p>
             ';
 
