@@ -43,11 +43,11 @@ $content = '
             <p>' . rex_i18n::rawMsg('yrewrite_info_seo_text') . '
 
             <br /><br />'.highlight_string(<<<'PHP'
-                <?php
-                    $seo = new rex_yrewrite_seo();
-                    echo $seo->getTags();
-                ?>
-                PHP, true).'
+    <?php
+        $seo = new rex_yrewrite_seo();
+        echo $seo->getTags();
+    ?>
+    PHP, true).'
             </p>
             ';
 
