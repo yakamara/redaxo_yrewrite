@@ -62,7 +62,7 @@ class rex_yrewrite_path_resolver
             return;
         }
 
-        if (0 === strpos($url, $domain->getPath())) {
+        if (str_starts_with($url, $domain->getPath())) {
             $url = substr($url, strlen($domain->getPath()));
         }
 
@@ -135,7 +135,7 @@ class rex_yrewrite_path_resolver
         rex_response::setStatus(rex_response::HTTP_NOT_FOUND);
         foreach ($this->paths[$domain->getName()][$domain->getStartId()] ?? [] as $clang => $clangUrl) {
             $rex_clang = rex_clang::get($clang);
-            if ($clang != $domain->getStartClang() && '' != $clangUrl && $rex_clang->isOnline() && 0 === strpos($url, $clangUrl)) {
+            if ($clang != $domain->getStartClang() && '' != $clangUrl && $rex_clang->isOnline() && str_starts_with($url, $clangUrl)) {
                 rex_clang::setCurrentId($clang);
                 return;
             }
@@ -180,7 +180,7 @@ class rex_yrewrite_path_resolver
             }
             // forward to original domain permanent move 301
 
-            if (0 === strpos($url, $domain->getPath())) {
+            if (str_starts_with($url, $domain->getPath())) {
                 $url = substr($url, strlen($domain->getPath()));
             }
 
@@ -230,7 +230,7 @@ class rex_yrewrite_path_resolver
                     break 2;
                 }
 
-                if (0 === strpos($code, $clangCode.'_')) {
+                if (str_starts_with($code, $clangCode.'_')) {
                     $startClangFallback = $clang->getId();
                 }
             }

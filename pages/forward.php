@@ -149,7 +149,7 @@ if ($showlist) {
     }
 
     $list = rex_list::factory($sql, 100);
-//    $list->setColumnFormat('id', 'Id');
+    //    $list->setColumnFormat('id', 'Id');
     $list->addParam('page', 'yrewrite/forward');
 
     $tdIcon = '<i class="fa fa-sitemap"></i>';
@@ -182,12 +182,12 @@ if ($showlist) {
 
     $list->setColumnLabel('movetype', $this->i18n('yrewrite_forward_movetype'));
 
-//    $list->removeColumn('id');
+    //    $list->removeColumn('id');
     $list->removeColumn('article_id');
     $list->removeColumn('clang');
     $list->removeColumn('extern');
     $list->removeColumn('media');
-//    $list->removeColumn('movetype');
+    //    $list->removeColumn('movetype');
     $list->removeColumn('domain');
 
     // $list->setColumnLabel('status', rex_i18n::msg('b_function'));
@@ -201,7 +201,7 @@ if ($showlist) {
             $str = '<span class="rex-offline">'.rex_i18n::msg('yrewrite_forward_inactive').'</span>';
         }
         return $str;
-    }
+    },
     );
 
     $list->addColumn('forward_target', '', 3);

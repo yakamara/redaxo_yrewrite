@@ -21,33 +21,19 @@ class rex_yrewrite_seo
     public static $robots_default = "User-agent: *\nDisallow:";
     public static $title_scheme_default = '%T / %SN';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_title_field = 'yrewrite_title';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_description_field = 'yrewrite_description';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_image_field = 'yrewrite_image';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_changefreq_field = 'yrewrite_changefreq';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_priority_field = 'yrewrite_priority';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_index_field = 'yrewrite_index';
-    /**
-     * @var string
-     */
+    /** @var string */
     public static $meta_canonical_url_field = 'yrewrite_canonical_url';
 
     public function __construct($article_id = 0, $clang = null)
@@ -59,7 +45,7 @@ class rex_yrewrite_seo
             $clang = rex_clang::getCurrentId();
         }
 
-        if (($article = rex_article::get($article_id, $clang))) {
+        if ($article = rex_article::get($article_id, $clang)) {
             $this->article = $article;
             $this->domain = rex_yrewrite::getDomainByArticleId($article_id, $clang);
         }
@@ -70,33 +56,33 @@ class rex_yrewrite_seo
         $tags = [];
         $tagsOg = [];
         $tagsTwitter = [];
-        $tagsTwitter['twitter:card'] = '<meta name="twitter:card" content="summary" />';
+        $tagsTwitter['twitter:card'] = '<meta name="twitter:card" content="summary">';
 
         $title = rex_escape($this->getTitle());
         $tags['title'] = '<title>'.$title.'</title>';
-        $tagsOg['og:title'] = '<meta property="og:title" content="'.$title.'" />';
-        $tagsTwitter['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
+        $tagsOg['og:title'] = '<meta property="og:title" content="'.$title.'">';
+        $tagsTwitter['twitter:title'] = '<meta name="twitter:title" content="'.$title.'">';
 
         $description = rex_escape($this->getDescription());
         if ('' != $description) {
             $tags['description'] = '<meta name="description" content="'.$description.'">';
-            $tagsOg['og:description'] = '<meta property="og:description" content="'.$description.'" />';
-            $tagsTwitter['twitter:description'] = '<meta name="twitter:description" content="'.$description.'" />';
+            $tagsOg['og:description'] = '<meta property="og:description" content="'.$description.'">';
+            $tagsTwitter['twitter:description'] = '<meta name="twitter:description" content="'.$description.'">';
         }
 
         $image = $this->getImage();
         if ('' != $image) {
             $media = rex_media::get($image);
-            $tagsOg['og:image'] = '<meta property="og:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'" />';
+            $tagsOg['og:image'] = '<meta property="og:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'">';
             if ($media) {
                 if ($media->getTitle()) {
-                    $tagsOg['og:image:alt'] = '<meta property="og:image:alt" content="'.rex_escape($media->getTitle()).'" />';
+                    $tagsOg['og:image:alt'] = '<meta property="og:image:alt" content="'.rex_escape($media->getTitle()).'">';
                 }
-                $tagsOg['og:image:type'] = '<meta property="og:image:type" content="'.rex_escape($media->getType()).'" />';
+                $tagsOg['og:image:type'] = '<meta property="og:image:type" content="'.rex_escape($media->getType()).'">';
             }
-            $tagsOg['twitter:image'] = '<meta name="twitter:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'" />';
+            $tagsOg['twitter:image'] = '<meta name="twitter:image" content="'.rtrim($this->domain->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $image).'">';
             if ($media && $media->getTitle()) {
-                $tagsOg['twitter:image:alt'] = '<meta name="twitter:image:alt" content="'.rex_escape($media->getTitle()).'" />';
+                $tagsOg['twitter:image:alt'] = '<meta name="twitter:image:alt" content="'.rex_escape($media->getTitle()).'">';
             }
         }
 
@@ -105,19 +91,21 @@ class rex_yrewrite_seo
         $content = 'noindex, nofollow';
         if (1 == $index || (0 == $index && $this->article->isOnline())) {
             $content = 'index, follow';
+        } elseif (2 == $index) {
+            $content = 'noindex, follow';
         }
         $tags['robots'] = '<meta name="robots" content="'.$content.'">';
 
         $canonicalUrl = rex_escape($this->getCanonicalUrl());
         if (1 == $index || (0 == $index && $this->article->isOnline())) {
-            $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'" />';
+            $tags['canonical'] = '<link rel="canonical" href="'.$canonicalUrl.'">';
         }
-        $tagsOg['og:url'] = '<meta property="og:url" content="'.$canonicalUrl.'" />';
-        $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'" />';
+        $tagsOg['og:url'] = '<meta property="og:url" content="'.$canonicalUrl.'">';
+        $tagsTwitter['twitter:url'] = '<meta name="twitter:url" content="'.$canonicalUrl.'">';
 
         $hrefs = $this->getHrefLangs();
         foreach ($hrefs as $code => $url) {
-            $tags['hreflang:'.$code] = '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+            $tags['hreflang:'.$code] = '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '">';
         }
 
         $tags += $tagsOg + $tagsTwitter;
@@ -140,7 +128,7 @@ class rex_yrewrite_seo
     /** @deprecated use getTags instead */
     public function getCanonicalUrlTag()
     {
-        return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'" />';
+        return '<link rel="canonical" href="'.rex_escape($this->getCanonicalUrl()).'">';
     }
 
     /** @deprecated use getTags instead */
@@ -219,7 +207,6 @@ class rex_yrewrite_seo
                         }
                     }
                 }
-                break;
             }
         }
 
@@ -233,7 +220,7 @@ class rex_yrewrite_seo
         $lang_domains = $this->getHrefLangs();
 
         foreach ($lang_domains as $code => $url) {
-            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '" />';
+            $return .= '<link rel="alternate" hreflang="' . $code . '" href="' . $url . '">';
         }
         return $return;
     }
@@ -287,7 +274,7 @@ class rex_yrewrite_seo
 
             $domain_article_id = $domain->getStartId();
             $paths = 0;
-            if (($dai = rex_article::get($domain_article_id))) {
+            if ($dai = rex_article::get($domain_article_id)) {
                 $paths = count($dai->getParentTree());
             }
 
@@ -301,7 +288,7 @@ class rex_yrewrite_seo
                     $index = $article->getValue(self::$meta_index_field) ?? self::$index_setting_default;
 
                     if (
-                        ($article) &&
+                        $article &&
                         $article->isPermitted() &&
                         (1 == $index || ($article->isOnline() && 0 == $index)) &&
                         ($article_id != $domain->getNotfoundId() || $article_id == $domain->getStartId())

@@ -275,21 +275,21 @@ Dies erzeugt folgende Ausgabe:
 ```html
 <meta name="description" content="Der Text aus dem Beschreibungs-Feld">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://example.org/de/" />
-<link rel="alternate" hreflang="de" href="https://example.org/de/" />
-<link rel="alternate" hreflang="en" href="https://example.org/en/" />
-<meta property="og:title" content="Artikelname / Websitetitel" />
-<meta property="og:description" content="Der Text aus dem Beschreibungs-Feld" />
-<meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />
-<meta property="og:image:alt" content="Der Bildtitel aus dem Medienpool" />
-<meta property="og:image:type" content="image/jpeg" />
-<meta property="og:url" content="https://example.org/de/" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Artikelname / Websitetitel" />
-<meta name="twitter:description" content="Der Text aus dem Beschreibungs-Feld" />
-<meta name="twitter:url" content="https://example.org/de/" />
-<meta name="twitter:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg" />';
-<meta name="twitter:image:alt" content="Der Bildtitel aus dem Medienpool" />
+<link rel="canonical" href="https://example.org/de/">
+<link rel="alternate" hreflang="de" href="https://example.org/de/">
+<link rel="alternate" hreflang="en" href="https://example.org/en/">
+<meta property="og:title" content="Artikelname / Websitetitel">
+<meta property="og:description" content="Der Text aus dem Beschreibungs-Feld">
+<meta property="og:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg">
+<meta property="og:image:alt" content="Der Bildtitel aus dem Medienpool">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:url" content="https://example.org/de/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Artikelname / Websitetitel">
+<meta name="twitter:description" content="Der Text aus dem Beschreibungs-Feld">
+<meta name="twitter:url" content="https://example.org/de/">
+<meta name="twitter:image" content="https://example.org/media/yrewrite_seo_image/seo-image.jpg">';
+<meta name="twitter:image:alt" content="Der Bildtitel aus dem Medienpool">
 ```
 
 ## Meta-Tags erweitern / ändern
@@ -301,20 +301,20 @@ rex_extension::register('YREWRITE_SEO_TAGS', function(rex_extension_point $ep) {
     // title-Tag ändern
     $title = rex_escape('Ein geänderter Titel');
     $tags['title'] = '<title>'.$title.'</title>';
-    $tags['og:title'] = '<meta property="og:title" content="'.$title.'" />';
-    $tags['twitter:title'] = '<meta name="twitter:title" content="'.$title.'" />';
+    $tags['og:title'] = '<meta property="og:title" content="'.$title.'">';
+    $tags['twitter:title'] = '<meta name="twitter:title" content="'.$title.'">';
     
     // favicon-Tags hinzufügen
     $tags['favicon'] = '
-            <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-            <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
-            <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
-            <link rel="manifest" href="/assets/favicon/site.webmanifest" />
-            <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
-            <link rel="shortcut icon" href="/assets/favicon/favicon.ico" />
-            <meta name="msapplication-TileColor" content="#ffffff" />
-            <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml" />
-            <meta name="theme-color" content="#ffffff" />';
+            <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+            <link rel="manifest" href="/assets/favicon/site.webmanifest">
+            <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+            <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+            <meta name="msapplication-TileColor" content="#ffffff">
+            <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml">
+            <meta name="theme-color" content="#ffffff">';
     $ep->setSubject($tags);
 });
 
@@ -512,4 +512,3 @@ class rex_project_rewrite_scheme extends rex_yrewrite_scheme
 * Bug melden via GitHub: https://github.com/yakamara/redaxo_yrewrite/issues/
 * Hilfe via REDAXO Slack-Channel: https://friendsofREDAXO.slack.com/
 * Tricks via FriendsOfREDAXO: https://friendsofredaxo.github.io/tricks/ bei Addons > YRewrite
-
