@@ -172,9 +172,10 @@ class rex_yrewrite_seo
         }
         if ('' == $ytitle) {
             $ytitle = $this->article->getValue('name');
-            $title = str_replace('%T', $ytitle, $title);
-            $title = str_replace('%SN', rex::getServerName(), $title);
         }
+        
+        $title = str_replace('%T', $ytitle, $title);
+        $title = str_replace('%SN', rex::getServerName(), $title);
 
         return $this->cleanString($title);
     }
