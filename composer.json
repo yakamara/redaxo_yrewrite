@@ -11,8 +11,8 @@
         "j13k/yaml-lint": "@dev",
         "redaxo/php-cs-fixer-config": "^2.1.1",
         "redaxo/psalm-plugin": "^2.0",
-        "redaxo/source": "^5.15",
-        "vimeo/psalm": "^5.8.0",
+        "redaxo/source": "^5.15.1",
+        "vimeo/psalm": "^5.9.0",
         "yakamara/redaxo_yform": "dev-master"
     },
 
