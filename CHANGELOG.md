@@ -1,6 +1,29 @@
 Changelog
 =========
 
+Version 2.10.0 – 31.03.2023
+---------------------------
+
+### Neu
+
+* Neue PHP-Mindestversion 8.1 (@gharlan)
+* Eigene Seitentitel werden direkt genutzt, ohne Domain-Titelschema (@bitshiftersgmbh)
+* hreflangs: `x-default` wird gesetzt bei Auto-Sprachweiterleitung (@gharlan)
+* Weiterleitungen: Bei mehreren Matches, wird die Weiterleitung mit den meisten Params genutzt (@gharlan)
+* Weiterleitungen: Params ohne Werte werden unterstützt (`?foo&bar`) (@gharlan)
+* Sitemap: Vorbereitung für Videos (@TobiasKrais)
+* Mimetypes in `.htaccess` aktualisiert (@tyrant88)
+* Meta- und Link-Tags ohne schließenden Slash (@gharlan)
+* Doku-Optimierungen/Erweiterungen (@alxndr-w, @geraldurbas, @madiko, @tyrant88)
+
+### Bugfixes
+
+* `og:url`-Tag korrigiert (@isospin)
+* Weiterleitungsschleife beseitigt bei Aufrufen über `?article_ix=X` mit nicht existenter Artikel-ID (@TobiasKrais)
+* hreflangs wurden nicht korrekt gesetzt bei sprachspezifischen Domains mit gleichem Mountpoint (@marcohanke)
+* SEO-Tags: Auswahl `noindex, follow` wurde nicht korrekt beachtet (@gharlan)
+
+
 Version 2.9.1 – 16.08.2022
 --------------------------
 
@@ -291,4 +314,3 @@ Version 2.0.0 – 02.02.2016
 - Fürs Verständnis aus "undefined" -> "default" gemacht.
 - Standard-URL-Schema geändert .. aus .html -> /
 - Canonical Urls ergänzt
-
