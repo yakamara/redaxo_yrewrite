@@ -147,21 +147,15 @@ class rex_yrewrite_seo
 
     public function getTitle()
     {
-        $title_scheme = htmlspecialchars_decode(trim($this->domain->getTitle()));
-        if ('' == $title_scheme) {
-            $title_scheme = self::$title_scheme_default;
+        $title = $this->article->getValue(self::$meta_title_field);
+        if ('' == $title) {
+            $title = htmlspecialchars_decode(trim($this->domain->getTitle()));
+        }
+        if ('' == $title) {
+            $title = self::$title_scheme_default;
         }
 
-        $ytitle = '';
-        if ($this->article && '' != $this->article->getValue(self::$meta_title_field)) {
-            $ytitle = $this->article->getValue(self::$meta_title_field);
-        }
-        if ('' == $ytitle) {
-            $ytitle = $this->article->getValue('name');
-        }
-
-        $title = $title_scheme;
-        $title = str_replace('%T', $ytitle, $title);
+        $title = str_replace('%T', $this->article->getValue('name'), $title);
         $title = str_replace('%SN', rex::getServerName(), $title);
 
         return $this->cleanString($title);
