@@ -163,12 +163,14 @@ class rex_yrewrite_seo
 
     public function getDescription()
     {
-        return $this->cleanString($this->article->getValue(self::$meta_description_field));
+        $description = $this->article->getValue(self::$meta_description_field);
+        return $this->cleanString(rex_extension::registerPoint(new rex_extension_point('YREWRITE_SEO_DESCRIPTION', $description, ['article' => $this->article])));
     }
 
     public function getImage()
     {
-        return $this->cleanString($this->article->getValue(self::$meta_image_field));
+        $image = $this->article->getValue(self::$meta_image_field);
+        return $this->cleanString(rex_extension::registerPoint(new rex_extension_point('YREWRITE_SEO_IMAGE', $image, ['article' => $this->article])));
     }
 
     public function getCanonicalUrl()
@@ -327,7 +329,9 @@ class rex_yrewrite_seo
             }
             $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_DOMAIN_SITEMAP', $sitemap, ['domain' => $domain]));
         }
-        $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP', $sitemap));
+        $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP', $sitemap, [
+            'article' => $this->article
+        ]));
 
         rex_response::cleanOutputBuffers();
         header('Content-Type: application/xml');
