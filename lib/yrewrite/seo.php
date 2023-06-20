@@ -311,8 +311,8 @@ class rex_yrewrite_seo
                           "\n".'<url>'.
                           "\n\t".'<loc>'.rex_yrewrite::getFullPath($path[$clang_id]).'</loc>'.
                           "\n\t".'<lastmod>'.date(DATE_W3C, $article->getUpdateDate()).'</lastmod>'; // Serverzeitzone passt
-                        if ($article->getValue(self::$meta_image_field)) {
-                            $media = rex_media::get((string) $article->getValue(self::$meta_image_field));
+                        $media = rex_media::get((string) $article->getValue(self::$meta_image_field));
+                        if ($media) {
                             $sitemap_entry .= "\n\t".'<image:image>'.
                                 "\n\t\t".'<image:loc>'.rtrim(rex_yrewrite::getDomainByArticleId($article->getId())->getUrl(), '/').rex_media_manager::getUrl('yrewrite_seo_image', $media->getFileName()).'</image:loc>'.
                                 ($media->getTitle() ? "\n\t\t".'<image:title>'.rex_escape($media->getTitle()).'</image:title>' : '').
