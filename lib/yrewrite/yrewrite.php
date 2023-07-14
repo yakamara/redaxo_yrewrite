@@ -554,7 +554,7 @@ class rex_yrewrite
 
     public static function copyHtaccess()
     {
-        rex_file::copy(rex_path::addon('yrewrite', 'setup/.htaccess'), rex_path::frontend('.htaccess'));
+        return (rex_file::copy(rex_path::addon('yrewrite', 'setup/.htaccess'), rex_path::frontend('.htaccess')));
     }
 
     public static function isHttps()
