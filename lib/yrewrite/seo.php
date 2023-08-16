@@ -329,9 +329,7 @@ class rex_yrewrite_seo
             }
             $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_DOMAIN_SITEMAP', $sitemap, ['domain' => $domain]));
         }
-        $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP', $sitemap, [
-            'article' => $this->article
-        ]));
+        $sitemap = rex_extension::registerPoint(new rex_extension_point('YREWRITE_SITEMAP', $sitemap));
 
         rex_response::cleanOutputBuffers();
         header('Content-Type: application/xml');
