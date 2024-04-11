@@ -62,7 +62,7 @@ if ('' != $func) {
 
     $yform->setValueField('date', ['expiry_date', $this->i18n('expiry_date'), idate('Y')]);
 
-    echo '<script>
+    echo '<script type="text/javascript" nonce="' . rex_response::getNonce() . '">
 
 jQuery(document).ready(function() {
   function rex_yrewrite_update_form() {

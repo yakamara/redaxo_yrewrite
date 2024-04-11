@@ -48,7 +48,7 @@ if ('' != $func) {
     $yform->setValueField('text', ['auto_redirect_days', $this->i18n('yrewrite_auto_redirect_days'), 'notice' => '<small>'.$this->i18n('yrewrite_auto_redirect_days_info').'</small>']);
 
     $js = '
-        <script>
+        <script type="text/javascript" nonce="' . rex_response::getNonce() . '">
             (function () {
                 var startClangAuto = document.getElementById(\'yform-yrewrite_domains_form-field-10\');
                 var startClangHidden = document.getElementById(\'yform-yrewrite_domains_form-field-12\');
