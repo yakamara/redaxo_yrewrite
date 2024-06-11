@@ -220,7 +220,7 @@ class rex_yrewrite_seo
 
     public function cleanString($str)
     {
-        return str_replace(["\n", "\r"], [' ', ''], $str);
+        return str_replace(["\n", "\r"], [' ', ''], ($str ?? ''));
     }
 
     // ----- global static functions
