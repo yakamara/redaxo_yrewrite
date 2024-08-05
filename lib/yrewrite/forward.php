@@ -2,7 +2,9 @@
 
 /**
  * YREWRITE Addon.
- * 
+ *
+ * @author jan.kristinus@yakamara.de
+ *
  * @package redaxo\yrewrite
  */
 
