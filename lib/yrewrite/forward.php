@@ -2,9 +2,7 @@
 
 /**
  * YREWRITE Addon.
- *
- * @author jan.kristinus@yakamara.de
- *
+ * 
  * @package redaxo\yrewrite
  */
 
@@ -52,8 +50,13 @@ class rex_yrewrite_forward
             }
 
             $pUrl = urldecode($p['url']);
-            /** @psalm-suppress RedundantCondition https://github.com/vimeo/psalm/issues/8125 */
-            if ($pUrl !== $url && $pUrl . '/' !== $url) {
+            $wildcardPos = strpos($pUrl, '*');
+            if ($wildcardPos !== false) {
+                $baseUrl = substr($pUrl, 0, $wildcardPos);
+                if (substr($url, 0, $wildcardPos) !== $baseUrl) {
+                    continue;
+                }
+            } elseif ($pUrl !== $url && $pUrl . '/' !== $url) {
                 continue;
             }
 
