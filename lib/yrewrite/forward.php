@@ -2,9 +2,7 @@
 
 /**
  * YREWRITE Addon.
- *
- * @author jan.kristinus@yakamara.de
- *
+ * 
  * @package redaxo\yrewrite
  */
 
@@ -32,7 +30,7 @@ class rex_yrewrite_forward
     public static function getForward($params)
     {
         // Url wurde von einer anderen Extension bereits gesetzt
-        if (isset($params['subject']) && '' != $params['subject']) {
+        if (isset($params['subject']) && $params['subject'] != '') {
             return $params['subject'];
         }
 
@@ -72,20 +70,20 @@ class rex_yrewrite_forward
                 }
             }
 
-            if ('article' == $p['type'] && ($art = rex_article::get($p['article_id'], $p['clang']))) {
+            if ($p['type'] == 'article' && ($art = rex_article::get($p['article_id'], $p['clang']))) {
                 $forward_url = rex_getUrl($p['article_id'], $p['clang']);
-            } elseif ('media' == $p['type'] && ($media = rex_media::get($p['media']))) {
+            } elseif ($p['type'] == 'media' && ($media = rex_media::get($p['media']))) {
                 $forward_url = rex_url::media($p['media']);
-            } elseif ('extern' == $p['type'] && '' != $p['extern']) {
+            } elseif ($p['type'] == 'extern' && $p['extern'] != '') {
                 $forward_url = $p['extern'];
             }
 
-            if ('' != $forward_url) {
+            if ($forward_url != '') {
                 $matchingParams = count($p['params'] ?? []);
             }
         }
 
-        if ('' != $forward_url) {
+        if ($forward_url != '') {
             header('HTTP/1.1 '.self::$movetypes[$p['movetype']]);
             header('Location: ' . $forward_url);
             exit;
@@ -115,7 +113,7 @@ class rex_yrewrite_forward
             $row['url'] = mb_strtolower($url[0]);
 
             if (isset($url[1])) {
-                /** @phpstan-ignore-next-line */
+                /** @psalm-suppress RedundantCondition https://github.com/vimeo/psalm/issues/8125 */
                 parse_str($url[1], $row['params']);
             }
         }
