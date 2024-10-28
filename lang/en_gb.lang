@@ -113,6 +113,7 @@ yrewrite_index_noindex = do not allow Search Engine to index page / do not displ
 yrewrite_index_noindex_follow = do not allow Search Engine to index page and follow its links / do not display in Sitemap (NoIndex)
 
 yrewrite_htaccess_hasbeenset = .htaccess file has been created or overwritten
+yrewrite_htaccess_not_copied = .htaccess file could not be written.
 yrewrite_htaccess_set = Set .htaccess file
 
 yrewrite_htaccess_info = A .htaccess file is required in the root directory to run YRewrite. I there is a .htaccess file already, it will be overwritten (can not be undone).
