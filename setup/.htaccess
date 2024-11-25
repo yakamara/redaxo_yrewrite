@@ -17,6 +17,7 @@ AddDefaultCharset utf-8
 	AddType audio/mpeg .mp3
 	AddType audio/ogg .ogg
 	AddType text/javascript .js
+        AddType text/javascript .mjs
 	AddType application/json .json
 	AddType application/xml .xml
 	AddType application/x-shockwave-flash .swf
