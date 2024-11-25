@@ -114,6 +114,7 @@ yrewrite_index_noindex = Indexierung verbieten / nicht in Sitemap anzeigen (NoIn
 yrewrite_index_noindex_follow = Indexierung verbieten und Links folgen / nicht in Sitemap anzeigen (NoIndex)
 
 yrewrite_htaccess_hasbeenset = .htaccess-Datei wurde gesetzt/ersetzt
+yrewrite_htaccess_not_copied = .htaccess-Datei konnte nicht kopiert werden
 yrewrite_htaccess_set = .htaccess-Datei setzen
 
 yrewrite_htaccess_info = Um YRewrite in Betrieb zu nehmen, wird eine .htaccess-Datei im Root-Ordner erstellt. Ist eine andere .htaccess-Datei bereits vorhanden, wird diese ersetzt. Bitte ggf. die .htaccess-Datei vorher sichern.

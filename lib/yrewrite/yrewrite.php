@@ -536,6 +536,9 @@ class rex_yrewrite
         }
     }
 
+    /**
+     * @return void
+     */
     public static function readConfig()
     {
         if (!file_exists(self::$configfile)) {
@@ -544,6 +547,9 @@ class rex_yrewrite
         include self::$configfile;
     }
 
+    /**
+     * @return void
+     */
     public static function readPathFile()
     {
         if (!file_exists(self::$pathfile)) {
@@ -552,11 +558,17 @@ class rex_yrewrite
         self::$paths = rex_file::getCache(self::$pathfile);
     }
 
+    /**
+     * @return bool
+     */
     public static function copyHtaccess()
     {
-        rex_file::copy(rex_path::addon('yrewrite', 'setup/.htaccess'), rex_path::frontend('.htaccess'));
+        return rex_file::copy(rex_path::addon('yrewrite', 'setup/.htaccess'), rex_path::frontend('.htaccess'));
     }
 
+    /**
+     * @return bool
+     */
     public static function isHttps()
     {
         if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) {
@@ -570,6 +582,9 @@ class rex_yrewrite
         rex_package::require('yrewrite')->clearCache();
     }
 
+    /**
+     * @return string
+     */
     public static function getFullPath($link = '')
     {
         $domain = self::getHost();
@@ -581,6 +596,9 @@ class rex_yrewrite
         return $http . $domain . $subfolder . $link;
     }
 
+    /**
+     * @return string
+     */
     public static function getHost()
     {
         if (isset($_SERVER['HTTP_X_FORWARDED_SERVER'])) {
