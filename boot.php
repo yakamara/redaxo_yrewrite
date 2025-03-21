@@ -1,15 +1,9 @@
 <?php
 
-/**
- * YREWRITE Addon.
- *
- * @author jan.kristinus@yakamara.de
- *
- * @package redaxo\yrewrite
- *
- * @psalm-scope-this rex_addon
- * @var rex_addon $this
- */
+/** @var rex_addon $this */
+
+use FriendsOfRedaxo\Api\RouteCollection;
+use Yakamara\YRewrite\Api\RoutePackage\YRewrite;
 
 if (!rex::isBackend()) {
     $path = rtrim(dirname($_SERVER['SCRIPT_NAME']), DIRECTORY_SEPARATOR) . '/';
@@ -21,6 +15,12 @@ if (!rex::isBackend()) {
 // Additional permissions for url & seo editing
 rex_perm::register('yrewrite[url]', rex_i18n::msg('yrewrite_perm_url_edit'));
 rex_perm::register('yrewrite[seo]', rex_i18n::msg('yrewrite_perm_seo_edit'));
+
+// API AddOn Routes
+if (rex_addon::get('api')->isAvailable()) {
+    // kompletter Namespace
+    RouteCollection::registerRoutePackage(new YRewrite());
+}
 
 rex_extension::register('PACKAGES_INCLUDED', function ($params) {
     rex_yrewrite::init();
