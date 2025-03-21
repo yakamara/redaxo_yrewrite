@@ -17,6 +17,7 @@ AddDefaultCharset utf-8
 	AddType audio/mpeg .mp3
 	AddType audio/ogg .ogg
 	AddType text/javascript .js
+        AddType text/javascript .mjs
 	AddType application/json .json
 	AddType application/xml .xml
 	AddType application/x-shockwave-flash .swf
@@ -89,6 +90,10 @@ AddDefaultCharset utf-8
     # Copied from https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
     RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
     RewriteRule ^(.*) - [E=BASE:%1]
+
+    # Sets the HTTP_AUTHORIZATION header removed by Apache
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
     # SEO
     # example.org/sitemap.xml will be generated adhoc by YRewrite
